@@ -1,0 +1,41 @@
+﻿<hc:Window x:Class = "LiveBoost.Views.CombinationMainWindow" xmlns:prism = "http://prismlibrary.com/"
+           SnapsToDevicePixels = "True" xmlns:hc = "https://handyorg.github.io/handycontrol"
+           xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:views = "clr-namespace:LiveBoost.Views" mc:Ignorable = "d" Title = "LiveBoost" Width = "1653"
+           Height = "960" prism:ViewModelLocator.AutoWireViewModel = "True" BorderBrush = "Transparent"
+           BorderThickness = "0" Background = "Transparent" AllowsTransparency = "True" FontFamily = "Microsoft YaHei"
+           Icon = "pack://application:,,,/Images/IconModule/Icon@3x.png" ShowNonClientArea = "False"
+           ResizeMode = "CanMinimize" WindowStartupLocation = "CenterScreen" WindowStyle = "None" >
+    <Window.InputBindings>
+        <KeyBinding Gesture = "Control+Alt+Left" Command = "{Binding RecordPlaybackFfPlayerBackwardCmd}" />
+        <KeyBinding Gesture = "Control+Alt+Right" Command = "{Binding RecordPlaybackFfPlayerForwardCmd}" />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!-- 标题栏 -->
+        <views:CombinationTitleBar Grid.Row = "0" />
+        <!-- 主窗口内容 -->
+        <Border Grid.Row = "1" Background = "#484A4E" CornerRadius = "0 0 5 5" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width = "Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <!-- 信号监看-播单推流 -->
+                <Grid Grid.Column = "0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height = "Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <views:CombinationRecordAccessPage Grid.Row = "0" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</hc:Window>
