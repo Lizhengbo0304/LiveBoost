@@ -1,5 +1,7 @@
 ﻿// 创建时间：2023-09-04-10:56
-// 修改时间：2023-09-05-17:59
+// 修改时间：2023-09-06-9:03
+
+using UrlHelper = LiveBoost.Tools.UrlHelper;
 
 namespace LiveBoost;
 
@@ -116,6 +118,21 @@ public class AppProgram
                     App.Shutdown();
                 }
 
+                break;
+            }
+            case CombinationMainWindow mainWnd:
+            {
+                mainWnd.Closed -= AppMainWndOnClosed;
+                if ( App.MainWindow == null )
+                {
+                    IsClosed = true;
+                    GlobalEvent.Instance.GetEvent<CloseChildPlayerProcess>().Publish();
+                    App.Shutdown();
+                }
+                else
+                {
+                    LoginWnd!.Closed += AppMainWndOnClosed;
+                }
                 break;
             }
         }

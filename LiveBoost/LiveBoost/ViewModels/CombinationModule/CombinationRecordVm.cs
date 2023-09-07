@@ -1,18 +1,25 @@
 ﻿// 创建时间：2023-09-05-14:39
-// 修改时间：2023-09-05-17:59
+// 修改时间：2023-09-06-9:03
+
+using LiveBoost.Controls;
+using UrlHelper = LiveBoost.Tools.UrlHelper;
 
 namespace LiveBoost.ViewModels;
 
-public partial class CombinationMainWindowVm
+public sealed partial class CombinationMainWindowVm
 {
 #region Command
-
     /// <summary>
     ///     收录通道翻页命令
     /// </summary>
     public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCmd => new(info =>
     {
-        CurrentRecordAccesses = TotalRecordAccesses?.Skip(( info.Info - 1 ) * 4).Take(4).ToList();
+        // 设置首页通道
+        for ( var i = 0; i < RecordItems.Count; i++ )
+        {
+            var recordItem = RecordItems[i];
+            recordItem.RecordAccess = TotalRecordAccesses?.Skip(( info.Info - 1 ) * 4 + i).ToList()[0];
+        }
     });
 
 #endregion
@@ -96,7 +103,13 @@ public partial class CombinationMainWindowVm
     /// <summary>
     ///     当前页收录通道
     /// </summary>
-    public List<RecordAccess?>? CurrentRecordAccesses { get; set; }
+    public List<CombinationItem> RecordItems { get; set; } = new List<CombinationItem>()
+    {
+        new CombinationItem(),
+        new CombinationItem(),
+        new CombinationItem(),
+        new CombinationItem()
+    };
     /// <summary>
     ///     通道总页数
     /// </summary>

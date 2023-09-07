@@ -4,12 +4,12 @@
         <!-- HandyControlTheme -->
         <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/skindark.xaml" />
-        <!-- BaseStyle -->
-        <ResourceDictionary Source = "pack://application:,,,/Themes/Style/Base/ButtonStyle.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/Themes/Style/Base/ListViewStyle.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/Themes/Style/Base/TreeStyle.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/Themes/Style/Base/FileHierarchyStyle.xaml" />
+        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
         <!-- Controls -->
-        <ResourceDictionary Source = "pack://application:,,,/Themes/Style/Controls/CombinationItemStyle.xaml" />
+        <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/Controls/CombinationItemStyle.xaml" />
+        <!-- CombinationStyle -->
+        <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />
+        <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/SearchBarStyle.xaml" />
+        <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/TabControlStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

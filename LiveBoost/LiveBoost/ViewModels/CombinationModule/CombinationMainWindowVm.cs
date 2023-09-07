@@ -1,20 +1,30 @@
 ﻿// 创建时间：2023-09-05-14:38
-// 修改时间：2023-09-05-17:59
+// 修改时间：2023-09-06-9:03
+
+using HandyControl.Controls;
 
 namespace LiveBoost.ViewModels;
 
-public partial class CombinationMainWindowVm : INotifyPropertyChanged
+public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
 {
 #region Ctor
 
-    public CombinationMainWindowVm()
+    public CombinationMainWindowVm(MediaElement mediaElement,SimplePanel simple)
     {
         // 初始化串口
         InitializeSerialPort();
+
+        // 初始化收录
         Task.Run(async () =>
         {
             await InitializeRecordAccessesAsync();
+            await InitializePlayAccessesAsync();
         });
+        // 播放器初始化
+        MdActive = mediaElement;
+        MdPanel = simple;
+        MdElement = MdActive;
+        MdElement.RenderingAudio += FfPlayOnRenderingAudio;
     }
 
 #endregion
@@ -77,12 +87,12 @@ public partial class CombinationMainWindowVm : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if ( EqualityComparer<T>.Default.Equals(field, value) )
         {

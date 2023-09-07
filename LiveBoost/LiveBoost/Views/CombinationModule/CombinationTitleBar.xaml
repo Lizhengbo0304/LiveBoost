@@ -3,12 +3,12 @@
         xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" hc:WindowAttach.IsDragElement = "True"
-        BorderBrush = "#72767A" BorderThickness = "0,0,0,1" CornerRadius = "5 5 0 0"
-        xmlns:controls = "clr-namespace:LiveBoost.Controls" xmlns:liveBoost = "clr-namespace:LiveBoost"
-        xmlns:fly = "clr-namespace:LiveBoost.Data" xmlns:hc = "https://handyorg.github.io/handycontrol"
+        BorderBrush = "#72767A" BorderThickness = "0,0,0,1"
+        xmlns:liveBoost = "clr-namespace:LiveBoost"
+       xmlns:hc = "https://handyorg.github.io/handycontrol"
         mc:Ignorable = "d" d:DesignHeight = "300" d:DesignWidth = "300" >
     <Border.Background>
-        <ImageBrush ImageSource = "pack://application:,,,/Images/TitleBarModule/TitleBar.png" Stretch = "UniformToFill" />
+        <ImageBrush ImageSource = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar.png" Stretch = "UniformToFill" />
     </Border.Background>
 
     <Grid>
@@ -21,11 +21,11 @@
             <ColumnDefinition Width = "Auto" />
         </Grid.ColumnDefinitions>
         <Image Grid.Column = "0" Width = "191" Height = "27" Margin = "23,5,0,0"
-               Source = "pack://application:,,,/Images/TitleBarModule/Logo.png" />
+               Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/Logo.png" />
 
-        <Button Grid.Column = "1" Margin = "0,0,6,0" HorizontalAlignment = "Right" controls:IconElement.Height = "20"
-                controls:IconElement.Source = "pack://application:,,,/Images/LoginModule/Login_U.png"
-                controls:IconElement.Width = "20" IsHitTestVisible = "False" Style = "{StaticResource IconButtonStyle}" />
+        <Button Grid.Column = "1" Margin = "0,0,6,0" HorizontalAlignment = "Right" IconElement.Height = "20"
+                IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login_U.png"
+                IconElement.Width = "20" IsHitTestVisible = "False" Style = "{StaticResource IconButtonStyle}" />
         <TextBlock Grid.Column = "2" VerticalAlignment = "Center" FontSize = "14" Foreground = "#9A9A9A" >
             <TextBlock.Text>
                 <Binding Source = "{x:Static liveBoost:AppProgram.Instance}" >
@@ -35,20 +35,20 @@
         </TextBlock>
         <TextBlock Grid.Column = "3" Margin = "0,0,17,0" VerticalAlignment = "Center" FontSize = "14"
                    Foreground = "#9A9A9A"
-                   Text = "{Binding Source={x:Static fly:Ticker.Instance}, Path=Now, StringFormat={}{0:yyyy年MM月dd日 HH:mm:ss}}" />
-        <Button Grid.Column = "4" Width = "40" Height = "40" controls:IconElement.Height = "10"
-                controls:IconElement.Source = "pack://application:,,,/Images/TitleBarModule/TitleBar_Min.png"
-                controls:IconElement.Width = "10" hc:BackgroundSwitchElement.MouseDownBackground = "DarkSlateGray"
+                   Text = "{Binding Source={x:Static Ticker.Instance}, Path=Now, StringFormat={}{0:yyyy年MM月dd日 HH:mm:ss}}" />
+        <Button Grid.Column = "4" Width = "40" Height = "40" IconElement.Height = "10"
+                IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar_Min.png"
+                IconElement.Width = "10" hc:BackgroundSwitchElement.MouseDownBackground = "DarkSlateGray"
                 hc:BackgroundSwitchElement.MouseHoverBackground = "DarkSlateGray"
-                Command = "fly:ControlCommands.MinWindowCommand"
+                Command = "ControlCommands.MinWindowCommand"
                 CommandParameter = "{Binding RelativeSource={RelativeSource Self}}"
                 Style = "{StaticResource IconButtonStyle}" ToolTip = "最小化" />
-        <Button Grid.Column = "5" Width = "40" Height = "40" controls:IconElement.Height = "10"
-                controls:IconElement.Source = "pack://application:,,,/Images/TitleBarModule/TitleBar_Close.png"
-                controls:IconElement.Width = "10"
+        <Button Grid.Column = "5" Width = "40" Height = "40" IconElement.Height = "10"
+                IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar_Close.png"
+                IconElement.Width = "10"
                 hc:BackgroundSwitchElement.MouseDownBackground = "{StaticResource DangerBrush}"
                 hc:BackgroundSwitchElement.MouseHoverBackground = "{StaticResource DangerBrush}"
-                Command = "fly:ControlCommands.CloseWindowCommand"
+                Command = "ControlCommands.CloseWindowCommand"
                 CommandParameter = "{Binding RelativeSource={RelativeSource Self}}"
                 Style = "{StaticResource IconButtonStyle}" ToolTip = "关闭" />
     </Grid>

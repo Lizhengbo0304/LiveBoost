@@ -1,12 +1,14 @@
 ﻿// 创建时间：2023-09-04-10:58
-// 修改时间：2023-09-05-17:59
+// 修改时间：2023-09-06-9:03
 
 #region
 
 global using MessageBox = HandyControl.Controls.MessageBox;
+global using MediaElement = Unosquare.FFME.MediaElement;
+global using LiveBoost.Toolkit.Tools;
 global using LiveBoost.Tools;
-global using LiveBoost.Data;
-global using LiveBoost.Controls;
+global using LiveBoost.Toolkit.Data;
+global using LiveBoost.Toolkit.Controls;
 global using System.Windows.Controls;
 global using System.ComponentModel;
 global using System.IO;
@@ -36,12 +38,11 @@ global using System.Configuration;
 global using System.Linq;
 global using System.Diagnostics;
 global using System.Reflection;
-global using log4net;
-global using log4net.Config;
 global using System.IO.Ports;
 global using HandyControl.Data;
 global using LiveBoost.Views;
 global using Prism.Ioc;
 global using Unosquare.FFME;
-
+global using LiveBoost.ViewModels;
+global using Unosquare.FFME.Common;
 #endregion

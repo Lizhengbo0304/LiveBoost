@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveBoost", "LiveBoost\LiveBoost.csproj", "{C5CA872D-C953-4571-8B17-D81282A05CEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveBoost.Toolkit", "LiveBoost.Toolkit\LiveBoost.Toolkit.csproj", "{C32BA567-CBD2-4E54-80A7-EBDD753564AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveBoost.Player", "LiveBoost.Player\LiveBoost.Player.csproj", "{EE2BD172-7382-4F79-9AF0-75D2834755DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
@@ -12,5 +16,13 @@ Global
 		{C5CA872D-C953-4571-8B17-D81282A05CEF}.Release|x64.Build.0 = Release|x64
 		{C5CA872D-C953-4571-8B17-D81282A05CEF}.Debug|x64.ActiveCfg = Debug|x64
 		{C5CA872D-C953-4571-8B17-D81282A05CEF}.Debug|x64.Build.0 = Debug|x64
+		{C32BA567-CBD2-4E54-80A7-EBDD753564AA}.Debug|x64.ActiveCfg = Debug|x64
+		{C32BA567-CBD2-4E54-80A7-EBDD753564AA}.Debug|x64.Build.0 = Debug|x64
+		{C32BA567-CBD2-4E54-80A7-EBDD753564AA}.Release|x64.ActiveCfg = Release|x64
+		{C32BA567-CBD2-4E54-80A7-EBDD753564AA}.Release|x64.Build.0 = Release|x64
+		{EE2BD172-7382-4F79-9AF0-75D2834755DE}.Debug|x64.ActiveCfg = Debug|x64
+		{EE2BD172-7382-4F79-9AF0-75D2834755DE}.Debug|x64.Build.0 = Debug|x64
+		{EE2BD172-7382-4F79-9AF0-75D2834755DE}.Release|x64.ActiveCfg = Release|x64
+		{EE2BD172-7382-4F79-9AF0-75D2834755DE}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal

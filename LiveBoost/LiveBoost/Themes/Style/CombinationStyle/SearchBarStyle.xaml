@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:hc = "https://handyorg.github.io/handycontrol"
+                    xmlns:system = "clr-namespace:System;assembly=System.Runtime" >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key = "ChooseChannelSearchBarStyle" BasedOn = "{StaticResource TextBoxBaseStyle}"
+           TargetType = "hc:SearchBar" >
+        <Setter Property = "Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType = "hc:SearchBar" >
+                    <hc:SimplePanel x:Name = "root" >
+                        <Border x:Name = "border"
+                                CornerRadius = "{Binding Path=(hc:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}"
+                                BorderBrush = "{TemplateBinding BorderBrush}"
+                                BorderThickness = "{TemplateBinding BorderThickness}"
+                                Background = "{TemplateBinding Background}" SnapsToDevicePixels = "True" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width = "Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer Margin = "-2,0" Grid.Row = "0" Grid.Column = "0"
+                                          Padding = "{TemplateBinding Padding}"
+                                          VerticalContentAlignment = "{TemplateBinding VerticalContentAlignment}"
+                                          x:Name = "PART_ContentHost" Focusable = "false"
+                                          HorizontalScrollBarVisibility = "Hidden"
+                                          VerticalScrollBarVisibility = "Hidden" />
+                            <Button Height = "{x:Static system:Double.NaN}" Command = "hc:ControlCommands.Search"
+                                    Style = "{StaticResource ButtonIcon}" hc:IconElement.Width = "30"
+                                    VerticalAlignment = "Center" Margin = "0 0 15 0"
+                                    hc:IconElement.Geometry = "{StaticResource SearchGeometry}" Grid.Column = "1"
+                                    Foreground = "#737477" Focusable = "False" Grid.Row = "0" />
+                        </Grid>
+                    </hc:SimplePanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property = "IsEnabled" Value = "false" >
+                            <Setter Property = "Opacity" TargetName = "root" Value = "0.4" />
+                        </Trigger>
+                        <Trigger Property = "IsMouseOver" Value = "true" >
+                            <Setter Property = "BorderBrush" Value = "{DynamicResource SecondaryBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property = "IsFocused" Value = "true" >
+                            <Setter Property = "BorderBrush" Value = "{DynamicResource PrimaryBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

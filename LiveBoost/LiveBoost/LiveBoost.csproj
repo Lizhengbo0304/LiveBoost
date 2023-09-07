@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -23,8 +23,9 @@
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\x64\Release\</OutputPath>
+        <OutputPath>..\bin\x64\Release\</OutputPath>
         <PlatformTarget>x64</PlatformTarget>
+        <Prefer32bit>false</Prefer32bit>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
         <DebugSymbols>true</DebugSymbols>
@@ -33,77 +34,45 @@
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\x64\Debug\</OutputPath>
+        <OutputPath>..\bin\x64\Debug\</OutputPath>
         <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Xml"/>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
         <Reference Include="System.Xaml">
             <RequiredTargetFramework>4.0</RequiredTargetFramework>
         </Reference>
-        <Reference Include="WindowsBase"/>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
+        <Reference Include="WindowsBase" />
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Controls\Attach\ForegroundSwitchElement.cs"/>
-        <Compile Include="Controls\Attach\IconElement.cs"/>
-        <Compile Include="Controls\Attach\IconSwitchElement.cs"/>
-        <Compile Include="Controls\Attach\ItemsAttach.cs"/>
-        <Compile Include="Controls\Attach\ParentElement.cs"/>
-        <Compile Include="Controls\Attach\PasswordAttach.cs"/>
-        <Compile Include="Controls\CombinationList\CombinationItem.cs"/>
-        <Compile Include="Controls\CombinationList\CombinationListView.cs"/>
-        <Compile Include="Controls\FileHierarchy\FileHierarchy.cs"/>
-        <Compile Include="Controls\FileHierarchy\FileHierarchyItem.cs"/>
-        <Compile Include="Controls\FileHierarchy\FileHierarchyItemSelector.cs"/>
-        <Compile Include="Controls\FlyListView.cs"/>
-        <Compile Include="Data\Enum\ExecutionState.cs"/>
-        <Compile Include="Data\Enum\PlacementType.cs"/>
-        <Compile Include="Data\Enum\PlayMode.cs"/>
-        <Compile Include="Data\Interactivity\Commands\CloseWindowCommand.cs"/>
-        <Compile Include="Data\Interactivity\Commands\ControlCommands.cs"/>
-        <Compile Include="Data\Interactivity\Commands\MaxOrNorWindowCommand.cs"/>
-        <Compile Include="Data\Interactivity\Commands\MinWindowCommand.cs"/>
-        <Compile Include="Data\Interface\IFileHierarchy.cs"/>
-        <Compile Include="Data\Model\AppConfig.cs"/>
-        <Compile Include="Data\Model\EventList.cs"/>
-        <Compile Include="Data\Model\FlyItemsSourceChangedArgs.cs"/>
-        <Compile Include="Data\Model\GlobalEvent.cs"/>
-        <Compile Include="Data\Model\LazyProperty.cs"/>
-        <Compile Include="Data\Model\LoginUser.cs"/>
-        <Compile Include="Data\Model\NewtonsoftJsonSerializer.cs"/>
-        <Compile Include="Data\Model\ObservableList.cs"/>
-        <Compile Include="Data\Model\RecordAccess.cs"/>
-        <Compile Include="Data\Model\RecordChannel.cs"/>
-        <Compile Include="Data\Model\RecordServerConfig.cs"/>
-        <Compile Include="Data\Model\Ticker.cs"/>
-        <Compile Include="Data\Model\UntrustedCertClientFactory.cs"/>
-        <Compile Include="Tools\Extension\TryCatchExtension.cs"/>
-        <Compile Include="Tools\Helper\AesHelper.cs"/>
-        <Compile Include="Tools\Helper\ConfigHelper.cs"/>
-        <Compile Include="Tools\Helper\DateTimeHelper.cs"/>
-        <Compile Include="Tools\Helper\FindControlHelper.cs"/>
-        <Compile Include="Tools\Helper\LogHelper.cs"/>
-        <Compile Include="Tools\Helper\PortHelper.cs"/>
-        <Compile Include="Tools\Helper\ProcessHelper.cs"/>
-        <Compile Include="Tools\Helper\SystemSleepHelper.cs"/>
-        <Compile Include="Tools\Helper\UrlHelper\InitUrlHelper.cs"/>
-        <Compile Include="Tools\Helper\UrlHelper\LoginUrlHelper.cs"/>
-        <Compile Include="Tools\Helper\UrlHelper\RecordUrlHelper.cs"/>
-        <Compile Include="Tools\Helper\UrlHelper\UrlHelper.cs"/>
-        <Compile Include="Tools\Helper\WidthHelper.cs"/>
-        <Compile Include="ViewModels\CombinationModule\CombinationMainWindowVm.cs"/>
-        <Compile Include="ViewModels\CombinationModule\CombinationRecordVm.cs"/>
-        <Compile Include="ViewModels\LoginModule\LoginWindowVm.cs"/>
+        <Compile Include="Controls\CombinationList\CombinationItem.cs" />
+        <Compile Include="Controls\CombinationList\CombinationListView.cs" />
+        <Compile Include="Tools\UrlHelper\InitUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\LoginUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\PushUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\RecordUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\UrlHelper.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationMainWindowVm.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationPlayerVm.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationPushVm.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationRecordVm.cs" />
+        <Compile Include="ViewModels\LoginModule\LoginWindowVm.cs" />
         <Compile Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml.cs">
             <DependentUpon>CombinationChooseRecordChannelWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\CombinationModule\CombinationMainWindow.xaml.cs">
             <DependentUpon>CombinationMainWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\CombinationModule\CombinationMediaPlayerPage.xaml.cs">
+          <DependentUpon>CombinationMediaPlayerPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\CombinationModule\CombinationPushAccessPage.xaml.cs">
+          <DependentUpon>CombinationPushAccessPage.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\CombinationModule\CombinationRecordAccessPage.xaml.cs">
             <DependentUpon>CombinationRecordAccessPage.xaml</DependentUpon>
@@ -122,22 +91,22 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Page Include="Themes\Style\Base\ButtonStyle.xaml"/>
-        <Page Include="Themes\Style\Base\FileHierarchyStyle.xaml"/>
-        <Page Include="Themes\Style\Base\ListViewStyle.xaml"/>
-        <Page Include="Themes\Style\Base\TreeStyle.xaml"/>
-        <Page Include="Themes\Style\Controls\CombinationItemStyle.xaml"/>
-        <Page Include="Themes\Style\ProgressBarStyle.xaml"/>
-        <Page Include="Themes\Theme.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationMainWindow.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationRecordAccessPage.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationTitleBar.xaml"/>
-        <Page Include="Views\LoginModule\LoginWindow.xaml"/>
+        <Page Include="Themes\Style\CombinationStyle\ListViewStyle.xaml" />
+        <Page Include="Themes\Style\CombinationStyle\SearchBarStyle.xaml" />
+        <Page Include="Themes\Style\CombinationStyle\TabControlStyle.xaml" />
+        <Page Include="Themes\Style\Controls\CombinationItemStyle.xaml" />
+        <Page Include="Themes\Theme.xaml" />
+        <Page Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml" />
+        <Page Include="Views\CombinationModule\CombinationMainWindow.xaml" />
+        <Page Include="Views\CombinationModule\CombinationMediaPlayerPage.xaml" />
+        <Page Include="Views\CombinationModule\CombinationPushAccessPage.xaml" />
+        <Page Include="Views\CombinationModule\CombinationRecordAccessPage.xaml" />
+        <Page Include="Views\CombinationModule\CombinationTitleBar.xaml" />
+        <Page Include="Views\LoginModule\LoginWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="AppProgram.cs"/>
-        <Compile Include="GlobalUsing.cs"/>
+        <Compile Include="AppProgram.cs" />
+        <Compile Include="GlobalUsing.cs" />
         <Compile Include="Properties\AssemblyInfo.cs">
             <SubType>Code</SubType>
         </Compile>
@@ -152,20 +121,16 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config"/>
-        <None Include="Configs\LiveBoost.config">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <EmbeddedResource Include="Configs\log4net.config"/>
-        <None Include="Icon.ico"/>
+        <None Include="App.config" />
+        <None Include="Icon.ico" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Dll\"/>
-        <Folder Include="Themes\Basic\"/>
-        <Folder Include="ViewModels\NornalModule\"/>
-        <Folder Include="ViewModels\SingleModule\"/>
-        <Folder Include="Views\NornalModule\"/>
-        <Folder Include="Views\SingleModule\"/>
+        <Folder Include="Themes\Basic\" />
+        <Folder Include="Tools\" />
+        <Folder Include="ViewModels\NornalModule\" />
+        <Folder Include="ViewModels\SingleModule\" />
+        <Folder Include="Views\NornalModule\" />
+        <Folder Include="Views\SingleModule\" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AutoProperties.Fody" Version="1.25.0">
@@ -174,104 +139,32 @@
         <PackageReference Include="ConfigureAwait.Fody" Version="3.3.2">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Flurl.Http" Version="3.2.4"/>
+        <PackageReference Include="Flurl.Http" Version="3.2.4" />
         <PackageReference Include="Fody" Version="6.8.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1"/>
-        <PackageReference Include="HandyControl" Version="3.4.0"/>
-        <PackageReference Include="HandyIpc" Version="0.5.3"/>
-        <PackageReference Include="HandyIpc.NamedPipe" Version="0.5.0"/>
-        <PackageReference Include="HandyIpc.Serializer.Json" Version="0.5.0"/>
-        <PackageReference Include="log4net" Version="2.0.15"/>
-        <PackageReference Include="MD5" Version="2.0.4"/>
-        <PackageReference Include="MediaInfo.Wrapper" Version="21.9.3"/>
-        <PackageReference Include="Prism.Unity" Version="8.1.97"/>
+        <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
+        <PackageReference Include="HandyControl" Version="3.4.0" />
+        <PackageReference Include="HandyIpc" Version="0.5.3" />
+        <PackageReference Include="HandyIpc.NamedPipe" Version="0.5.0" />
+        <PackageReference Include="HandyIpc.Serializer.Json" Version="0.5.0" />
+        <PackageReference Include="log4net" Version="2.0.15" />
+        <PackageReference Include="MD5" Version="2.0.4" />
+        <PackageReference Include="Prism.Unity" Version="8.1.97" />
         <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7"/>
-        <PackageReference Include="Websocket.Client" Version="4.7.0"/>
-        <PackageReference Include="WindowsAPICodePackShell" Version="7.0.4"/>
-        <PackageReference Include="zgabi.FFME.Windows" Version="6.0.2"/>
+        <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
+        <PackageReference Include="Websocket.Client" Version="4.7.0" />
+        <PackageReference Include="WindowsAPICodePackShell" Version="7.0.4" />
+        <PackageReference Include="zgabi.FFME.Windows" Version="6.0.2" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="Configs\zh-CN.csv">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Resource Include="Images\ButtonModule\Button_Normal.png"/>
-        <Resource Include="Images\ButtonModule\Button_Small.png"/>
-        <Resource Include="Images\ButtonModule\Button_Solid.png"/>
-        <Resource Include="Images\ButtonModule\Default.png"/>
-        <Resource Include="Images\ButtonModule\Folder.png"/>
-        <Resource Include="Images\ButtonModule\UserIcon.png"/>
-        <Resource Include="Images\changed.png"/>
-        <Resource Include="Images\delete.png"/>
-        <Resource Include="Images\IconModule\Icon.png"/>
-        <Resource Include="Images\IconModule\Icon@3x.png"/>
-        <Resource Include="Images\LoginModule\ForgetPsd.png"/>
-        <Resource Include="Images\LoginModule\Login.png"/>
-        <Resource Include="Images\LoginModule\Login_Bg.jpg"/>
-        <Resource Include="Images\LoginModule\Login_Close.png"/>
-        <Resource Include="Images\LoginModule\Login_Min.png"/>
-        <Resource Include="Images\LoginModule\Login_P.png"/>
-        <Resource Include="Images\LoginModule\Login_Psd.png"/>
-        <Resource Include="Images\LoginModule\Login_U.png"/>
-        <Resource Include="Images\LoginModule\Login_User.png"/>
-        <Resource Include="Images\LoginModule\setting.png"/>
-        <Resource Include="Images\MainModule\add.png"/>
-        <Resource Include="Images\MainModule\collect.png"/>
-        <Resource Include="Images\MainModule\end.png"/>
-        <Resource Include="Images\MainModule\in.png"/>
-        <Resource Include="Images\MainModule\liveboost.png"/>
-        <Resource Include="Images\MainModule\next.png"/>
-        <Resource Include="Images\MainModule\out.png"/>
-        <Resource Include="Images\MainModule\OutTo.png"/>
-        <Resource Include="Images\MainModule\pause (2).png"/>
-        <Resource Include="Images\MainModule\pause.png"/>
-        <Resource Include="Images\MainModule\play.png"/>
-        <Resource Include="Images\MainModule\playerBd.png"/>
-        <Resource Include="Images\MainModule\pre.png"/>
-        <Resource Include="Images\MainModule\preview.png"/>
-        <Resource Include="Images\MainModule\Slider.png"/>
-        <Resource Include="Images\MainModule\start.png"/>
-        <Resource Include="Images\PlayListModule\computer.png"/>
-        <Resource Include="Images\PlayListModule\down.png"/>
-        <Resource Include="Images\PlayListModule\Folder.png"/>
-        <Resource Include="Images\PlayListModule\mobile.png"/>
-        <Resource Include="Images\PlayListModule\PlayerButton.png"/>
-        <Resource Include="Images\PlayListModule\up.png"/>
-        <Resource Include="Images\PlayListModule\矩形.png"/>
-        <Resource Include="Images\Recording.png"/>
-        <Resource Include="Images\RecordingTaskModule\GreenPoint.png"/>
-        <Resource Include="Images\RecordingTaskModule\Info.png"/>
-        <Resource Include="Images\RecordingTaskModule\RecordTaskTip.png"/>
-        <Resource Include="Images\RecordingTaskModule\Title.png"/>
-        <Resource Include="Images\SourceMonitoringModule\ALERT@3x.png"/>
-        <Resource Include="Images\SourceMonitoringModule\Clear.png"/>
-        <Resource Include="Images\SourceMonitoringModule\Fake.png"/>
-        <Resource Include="Images\SourceMonitoringModule\GrayPoint.png"/>
-        <Resource Include="Images\SourceMonitoringModule\RecordStart.png"/>
-        <Resource Include="Images\SourceMonitoringModule\RecordStop.png"/>
-        <Resource Include="Images\SourceMonitoringModule\RedPoint (2).png"/>
-        <Resource Include="Images\SourceMonitoringModule\RedPoint.png"/>
-        <Resource Include="Images\SourceMonitoringModule\信号源列表@2x.png"/>
-        <Resource Include="Images\SourceMonitoringModule\收录任务模版@2x.png"/>
-        <Resource Include="Images\TitleBarModule\Logo.png"/>
-        <Resource Include="Images\TitleBarModule\TitleBar.png"/>
-        <Resource Include="Images\TitleBarModule\TitleBar_Close.png"/>
-        <Resource Include="Images\TitleBarModule\TitleBar_Max.png"/>
-        <Resource Include="Images\TitleBarModule\TitleBar_Min.png"/>
-        <Resource Include="Images\TitleBarModule\TitleBar_Normal.png"/>
-        <Resource Include="Images\TitleBarModule\信号预监@2x.png"/>
-        <Resource Include="Images\TitleBarModule\信号预监选中@2x.png"/>
-        <Resource Include="Images\TitleBarModule\播单列表@2x.png"/>
-        <Resource Include="Images\TitleBarModule\播单列表选中@2x.png"/>
-        <Resource Include="Images\TitleBarModule\收录任务.png"/>
-        <Resource Include="Images\TitleBarModule\收录任务选中.png"/>
-        <Resource Include="Images\TitleBarModule\收录文件@2x.png"/>
-        <Resource Include="Images\TitleBarModule\收录文件选中@2x.png"/>
+      <ProjectReference Include="..\LiveBoost.Toolkit\LiveBoost.Toolkit.csproj">
+        <Project>{c32ba567-cbd2-4e54-80a7-ebdd753564aa}</Project>
+        <Name>LiveBoost.Toolkit</Name>
+      </ProjectReference>
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
