@@ -87,21 +87,34 @@
                 </TextBlock.Text>
             </TextBlock>
         </UniformGrid>
+         <Slider Grid.Row = "0" Cursor = "Hand" UseLayoutRounding = "True" Height = "20"
+                                IsSelectionRangeEnabled = "True" IsEnabled = "{Binding MdElement.IsOpen}"
+                                Minimum = "{Binding PlayerInpoint, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
+                                Visibility = "{Binding IsPlayListMode,Converter={StaticResource Boolean2VisibilityConverter}}"
+                                Maximum = "{Binding PlayerOutpoint, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
+                                Value = "{Binding MdElement.Position, Converter={StaticResource TimeSpanToMillSecondsConverter}, Mode=TwoWay}"
+                                MouseDown="Slider_OnMouseDown"
+                                VerticalAlignment = "Bottom" Foreground = "#0071FF" Background = "#646668"
+                                IsMoveToPointEnabled = "True" SelectionStart = "{Binding SliderIn}"
+                                SelectionEnd = "{Binding SliderOut}" Template = "{StaticResource PlayerSlider}" >
+                            <hc:Interaction.Triggers>
+                                <hc:EventTrigger EventName = "ValueChanged" >
+                                    <hc:EventToCommand Command = "{Binding SliderValueChangedCmd}"
+                                                       PassEventArgsToCommand = "True" />
+                                </hc:EventTrigger>
+                            </hc:Interaction.Triggers>
+                        </Slider>
         <Slider Grid.Row = "0" Cursor = "Hand" UseLayoutRounding = "True" Height = "20"
                 IsSelectionRangeEnabled = "True" IsEnabled = "{Binding MdElement.IsOpen}"
-                Minimum = "{Binding PlayerInpoint, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
-                Visibility = "{Binding IsPlayListMode,Converter={StaticResource Boolean2VisibilityConverter}}"
-                Maximum = "{Binding PlayerOutpoint, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
-                Value = "{Binding MdElement.Position, Converter={StaticResource TimeSpanToMillSecondsConverter}, Mode=TwoWay}"
-                VerticalAlignment = "Bottom" Foreground = "#0071FF" Background = "#646668"
-                IsMoveToPointEnabled = "True" SelectionStart = "{Binding SliderIn}"
-                SelectionEnd = "{Binding SliderOut}" Template = "{StaticResource PlayerSlider}" >
-            <hc:Interaction.Triggers>
-                <hc:EventTrigger EventName = "ValueChanged" >
-                    <hc:EventToCommand Command = "{Binding SliderValueChangedCmd}" PassEventArgsToCommand = "True" />
-                </hc:EventTrigger>
-            </hc:Interaction.Triggers>
-        </Slider>
+                Minimum = "{Binding MdElement.PlaybackStartTime,Converter={StaticResource TimeSpanToMillSecondsConverter}}"
+                Visibility = "{Binding IsPlayListMode,Converter={StaticResource Boolean2VisibilityReConverter}}"
+                Maximum = "{Binding MdElement.PlaybackEndTime,Converter={StaticResource TimeSpanToMillSecondsConverter}}"
+                MouseDown="Slider_OnMouseDown"
+                Value = "{Binding MdElement.Position,Converter={StaticResource TimeSpanToMillSecondsConverter}}"
+                VerticalAlignment = "Bottom" IsMoveToPointEnabled = "True"
+                SelectionStart = "{Binding SliderIn}" SelectionEnd = "{Binding SliderOut}"
+                Foreground = "#0071FF" Background = "#646668"
+                Template = "{StaticResource PlayerSlider}" />
 
         <hc:UniformSpacingPanel Grid.Row = "1" Spacing = "15" HorizontalAlignment = "Center" Margin = "0 10"
                                 IsEnabled = "{Binding MdElement.IsOpen}" >

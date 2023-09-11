@@ -182,10 +182,10 @@
                                                 <Button Margin = "20 5" Padding = "10 3" Content = "导出XML"
                                                         Command = "{Binding OutXml}"
                                                         Style = "{StaticResource IconButtonStyle}" />
-                                                <Separator Background = "#A0A0A0" />
-                                                <Button Margin = "20 5" Padding = "10 3" Content = "导出AAF"
-                                                        Command = "{Binding OutAAF}"
-                                                        Style = "{StaticResource IconButtonStyle}" />
+                                                <!-- <Separator Background = "#A0A0A0" /> -->
+                                                <!-- <Button Margin = "20 5" Padding = "10 3" Content = "导出AAF" -->
+                                                <!--         Command = "{Binding OutAAF}" -->
+                                                <!--         Style = "{StaticResource IconButtonStyle}" /> -->
                                             </StackPanel>
                                         </hc:SimplePanel>
 

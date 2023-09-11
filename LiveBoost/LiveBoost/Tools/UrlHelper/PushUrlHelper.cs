@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-07-11:57
-// 修改时间：2023-09-07-14:08
+// 修改时间：2023-09-07-16:22
 
 #region
 
@@ -96,6 +96,199 @@ public static partial class UrlHelper
         {
             MessageBox.Error(e.InnerException?.Message ?? e.Message, "新增播单");
             e.LogUrlError("新增播单");
+            return false;
+        }
+    }
+    /// <summary>
+    ///     播单推流，start,stop,pause,restore
+    /// </summary>
+    public static async Task<bool> PlayListPush(this PushAccess pushAccess, string operate)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/access/push/{operate}";
+        if ( url.StartsWith("https") || url.StartsWith("http") )
+        {
+            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
+        }
+        var para = new
+        {
+            accessId = pushAccess.AccessId,
+            playList = pushAccess.RecordFiles.ToJson()
+        };
+        try
+        {
+            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
+                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
+
+            var jobj = JObject.Parse(result);
+
+            // Success = 0 : 请求失败
+            if ( jobj["code"]?.Value<int>() == 200 )
+            {
+                return true;
+            }
+
+            MessageBox.Warning(jobj["msg"]?.Value<string>(), "播单操作");
+            return false;
+        }
+        catch ( Exception e )
+        {
+            MessageBox.Error(e.InnerException?.Message ?? e.Message, "播单操作");
+            e.LogUrlError("播单操作");
+            return false;
+        }
+    }
+    /// <summary>
+    ///     导出视频
+    /// </summary>
+    public static async Task<bool> OutPlayList2Video(this string playListId, string exportName, string templateId)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/template/export";
+        if ( url.StartsWith("https") || url.StartsWith("http") )
+        {
+            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
+        }
+        var para = new
+        {
+            exportName, playListId, templateId
+        };
+        try
+        {
+            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
+                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
+
+            var jobj = JObject.Parse(result);
+            if ( jobj["code"]?.Value<int>() == 200 )
+            {
+                MessageBox.Success("导出视频成功", "导出视频");
+            }
+            else
+            {
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "导出视频");
+            }
+
+            // Success = 0 : 请求失败
+            return jobj["code"]?.Value<int>() == 200;
+
+        }
+        catch ( Exception e )
+        {
+            MessageBox.Error(e.InnerException?.Message ?? e.Message, "导出视频");
+            e.LogUrlError("导出视频");
+            return false;
+        }
+    }
+
+    /// <summary>
+    ///     导出Xml
+    /// </summary>
+    public static async Task<bool> OutPlayList2Xml(this string playListId, string exportName)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/template/exportxml";
+        if ( url.StartsWith("https") || url.StartsWith("http") )
+        {
+            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
+        }
+        var para = new
+        {
+            exportName, playListId
+        };
+        try
+        {
+            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
+                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
+
+            var jobj = JObject.Parse(result);
+            if ( jobj["code"]?.Value<int>() == 200 )
+            {
+                MessageBox.Success("导出Xml成功", "导出Xml");
+            }
+            else
+            {
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "导出Xml");
+            }
+
+            // Success = 0 : 请求失败
+            return jobj["code"]?.Value<int>() == 200;
+
+        }
+        catch ( Exception e )
+        {
+            MessageBox.Error(e.InnerException?.Message ?? e.Message, "导出Xml");
+            e.LogUrlError("导出Xml");
+            return false;
+        }
+    }
+
+    /// <summary>
+    ///     客户端播单推流播单修改
+    /// </summary>
+    public static async Task<bool> EditPushPlayList(this PushAccess pushAccess)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/access/push/modify";
+        if ( url.StartsWith("https") || url.StartsWith("http") )
+        {
+            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
+        }
+        var para = new
+        {
+            accessId = pushAccess.AccessId,
+            playList = pushAccess.RecordFiles.ToJson()
+        };
+        try
+        {
+            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
+                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
+
+                var jobj = JObject.Parse(result);
+
+                // Success = 0 : 请求失败
+                if ( jobj["code"]?.Value<int>() == 200 )
+                {
+                    return true;
+                }
+
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑推流播单");
+                return false;
+        }
+        catch ( Exception e )
+        {
+            MessageBox.Error(e.InnerException?.Message ?? e.Message, "编辑推流播单");
+            e.LogUrlError("编辑推流播单");
+            return false;
+        }
+    }
+
+    /// <summary>
+    ///     编辑播单
+    /// </summary>
+    public static async Task<bool> EditPlayList(this RecordTemplate recordTemplate)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/template";
+        if ( url.StartsWith("https") || url.StartsWith("http") )
+        {
+            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
+        }
+
+        try
+        {
+            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
+                .PutJsonAsync(recordTemplate).ReceiveString().ConfigureAwait(false);
+
+                var jobj = JObject.Parse(result);
+
+                // Success = 0 : 请求失败
+                if ( jobj["code"]?.Value<int>() == 200 )
+                {
+                    return true;
+                }
+
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑播单");
+                return false;
+        }
+        catch ( Exception e )
+        {
+            MessageBox.Error(e.InnerException?.Message ?? e.Message, "编辑播单");
+            e.LogUrlError("编辑播单");
             return false;
         }
     }

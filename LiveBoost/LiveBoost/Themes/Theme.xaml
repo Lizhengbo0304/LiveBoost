@@ -11,5 +11,6 @@
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/SearchBarStyle.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/TabControlStyle.xaml" />
+        <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ComboBoxStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

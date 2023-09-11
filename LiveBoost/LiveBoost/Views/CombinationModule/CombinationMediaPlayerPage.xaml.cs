@@ -9,5 +9,12 @@ public partial class CombinationMediaPlayerPage
     {
         InitializeComponent();
     }
-}
 
+    private async void Slider_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if ( this.DataContext is CombinationMainWindowVm vm )
+        {
+            await vm.MdElement.Pause();
+        }
+    }
+}

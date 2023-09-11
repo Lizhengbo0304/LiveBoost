@@ -4,6 +4,8 @@
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" hc:WindowAttach.IsDragElement = "True"
         BorderBrush = "#72767A" BorderThickness = "0,0,0,1"
+        ClipToBounds="True"
+        CornerRadius="5 5 0 0"
         xmlns:liveBoost = "clr-namespace:LiveBoost"
        xmlns:hc = "https://handyorg.github.io/handycontrol"
         mc:Ignorable = "d" d:DesignHeight = "300" d:DesignWidth = "300" >
@@ -40,12 +42,14 @@
                 IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar_Min.png"
                 IconElement.Width = "10" hc:BackgroundSwitchElement.MouseDownBackground = "DarkSlateGray"
                 hc:BackgroundSwitchElement.MouseHoverBackground = "DarkSlateGray"
+                WindowChrome.IsHitTestVisibleInChrome="True"
                 Command = "ControlCommands.MinWindowCommand"
                 CommandParameter = "{Binding RelativeSource={RelativeSource Self}}"
                 Style = "{StaticResource IconButtonStyle}" ToolTip = "最小化" />
         <Button Grid.Column = "5" Width = "40" Height = "40" IconElement.Height = "10"
                 IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar_Close.png"
                 IconElement.Width = "10"
+                WindowChrome.IsHitTestVisibleInChrome="True"
                 hc:BackgroundSwitchElement.MouseDownBackground = "{StaticResource DangerBrush}"
                 hc:BackgroundSwitchElement.MouseHoverBackground = "{StaticResource DangerBrush}"
                 Command = "ControlCommands.CloseWindowCommand"

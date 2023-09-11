@@ -10,21 +10,6 @@ public sealed class RecordTemplate : INotifyPropertyChanged
 {
     public RecordTemplate() => RecordFiles = new ObservableList<RecordFile>();
 
-    #region Command
-
-    public DelegateCommand<IList> DeleteCmd => new(items =>
-    {
-        items.ToList<RecordFile>().ForEach(it =>
-        {
-            if ( RecordFiles.Contains(it) )
-            {
-                RecordFiles.RemoveItem(it);
-            }
-        });
-    });
-
-    #endregion
-
     #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -32,12 +17,11 @@ public sealed class RecordTemplate : INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        switch ( propertyName )
+        IsPush = propertyName switch
         {
-            case nameof(Status):
-                IsPush = Status == "2";
-                break;
-        }
+            nameof(Status) => Status == "2",
+            _ => IsPush
+        };
     }
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)

@@ -3,22 +3,27 @@
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable = "d" Title = "LiveBoost"
            xmlns:hc = "https://handyorg.github.io/handycontrol" xmlns:prism = "http://prismlibrary.com/"
-           prism:ViewModelLocator.AutoWireViewModel = "True" AllowsTransparency = "True" Background = "Transparent"
-           BorderThickness = "0" FontFamily = "Microsoft YaHei"
+           prism:ViewModelLocator.AutoWireViewModel = "True"
+           BorderThickness = "0" FontFamily = "Microsoft YaHei" Background="Transparent"
            Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png" ResizeMode = "CanMinimize"
            ShowInTaskbar = "True" WindowStartupLocation = "CenterScreen" WindowStyle = "None" Width = "1653"
            Height = "960" >
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0"
+                      UseAeroCaptionButtons="False" CaptionHeight="40"/>
+    </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <hc:SimplePanel Grid.Row = "0" Height = "42" >
-            <Border BorderBrush = "#72767A" BorderThickness = "0,0,0,1" IsHitTestVisible = "False" >
+            <Border BorderBrush = "#72767A" BorderThickness = "0,0,0,1" IsHitTestVisible = "False"
+                    CornerRadius="5 5 0 0">
                 <Image HorizontalAlignment = "Stretch" VerticalAlignment = "Stretch"
                        Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar.png" Stretch = "UniformToFill" />
             </Border>
-            <Grid hc:WindowAttach.IsDragElement = "True" Background = "#01000000" >
+            <Grid hc:WindowAttach.IsDragElement = "True" Background = "#01000000">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width = "Auto" />
@@ -34,6 +39,7 @@
                         IconElement.Height = "10"
                         IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar_Min.png"
                         IconElement.Width = "10"
+                        WindowChrome.IsHitTestVisibleInChrome="True"
                         hc:BackgroundSwitchElement.MouseDownBackground = "DarkSlateGray"
                         hc:BackgroundSwitchElement.MouseHoverBackground = "DarkSlateGray"
                         Command = "ControlCommands.MinWindowCommand"
@@ -43,6 +49,8 @@
                         IconElement.Height = "10"
                         IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar_Close.png"
                         IconElement.Width = "10"
+                        hc:BorderElement.CornerRadius="0 5 0 0"
+                        WindowChrome.IsHitTestVisibleInChrome="True"
                         hc:BackgroundSwitchElement.MouseDownBackground = "{StaticResource DangerBrush}"
                         hc:BackgroundSwitchElement.MouseHoverBackground = "{StaticResource DangerBrush}"
                         Command = "ControlCommands.CloseWindowCommand"

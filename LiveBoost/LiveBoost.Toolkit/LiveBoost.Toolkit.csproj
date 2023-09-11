@@ -106,6 +106,8 @@
         <Compile Include="Tools\Helper\AesHelper.cs" />
         <Compile Include="Tools\Helper\ConfigHelper.cs" />
         <Compile Include="Tools\Helper\DateTimeHelper.cs" />
+        <Compile Include="Tools\Helper\FFMpegTool.cs" />
+        <Compile Include="Tools\Helper\FileHelper.cs" />
         <Compile Include="Tools\Helper\FindControlHelper.cs" />
         <Compile Include="Tools\Helper\HwndHelper.cs" />
         <Compile Include="Tools\Helper\LoadImageHelper.cs" />
@@ -274,6 +276,7 @@
           <PrivateAssets>all</PrivateAssets>
       </PackageReference>
       <PackageReference Include="WindowsAPICodePackShell" Version="7.0.4" />
+      <PackageReference Include="zgabi.FFME.Windows" Version="6.0.2" />
     </ItemGroup>
     <ItemGroup>
       <Content Include="FodyWeavers.xml" />

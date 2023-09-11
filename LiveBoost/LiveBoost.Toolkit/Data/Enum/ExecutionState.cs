@@ -7,33 +7,29 @@ namespace LiveBoost.Toolkit.Data;
 public enum ExecutionState : uint
 {
     /// <summary>
-    ///     Forces the system to be in the working state by resetting the system idle timer.
+    /// 表示系统需要处于工作状态，通过重置系统空闲计时器来实现。
     /// </summary>
     SystemRequired = 0x01,
 
     /// <summary>
-    ///     Forces the display to be on by resetting the display idle timer.
+    /// 表示需要保持显示器开启，通过重置显示器空闲计时器来实现。
     /// </summary>
     DisplayRequired = 0x02,
 
     /// <summary>
-    ///     This value is not supported. If <see
-    ///                                         cref = "UserPresent" /> is combined with other esFlags values, the call will fail and none of the specified states will be set.
+    /// [已过时] 用户当前处于活动状态。
     /// </summary>
     [Obsolete("This value is not supported.")]
     UserPresent = 0x04,
 
     /// <summary>
-    ///     Enables away mode. This value must be specified with <see
-    ///                                                              cref = "Continuous" />.
-    ///     <para />
-    ///     Away mode should be used only by media-recording and media-distribution applications that must perform critical background processing on desktop computers while the computer appears to be sleeping.
+    /// 启用离开模式，必须与 Continuous 一起使用。
+    /// 离开模式应该仅由需要在计算机休眠时执行关键后台处理的媒体录制和媒体分发应用程序使用。
     /// </summary>
     AwaymodeRequired = 0x40,
 
     /// <summary>
-    ///     Informs the system that the state being set should remain in effect until the next call that uses <see
-    ///         cref = "Continuous" /> and one of the other state flags is cleared.
+    /// 指示设置的状态将保持有效，直到下一次使用 Continuous 和其他状态标志之一的调用将其清除。
     /// </summary>
     Continuous = 0x80000000
 }

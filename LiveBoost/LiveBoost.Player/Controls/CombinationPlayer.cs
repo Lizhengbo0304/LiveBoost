@@ -115,53 +115,44 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     private readonly object drawVuMeterRmsLock = new();
 
     #endregion
-    private void FfPlayOnRenderingAudio(object sender, RenderingAudioEventArgs e)
-    {
-        // 分析即将渲染的音频数据
-        // 如果不存在音频，则不需要分析
-        if ( e.EngineState.HasAudio == false )
+        private void FfPlayOnRenderingAudio(object sender, RenderingAudioEventArgs e)
         {
-            return;
-        }
-        // 把音频数据分为左右声道
-        if ( drawVuMeterLeftSamples == null || drawVuMeterLeftSamples.Length != e.SamplesPerChannel )
-        {
-            drawVuMeterLeftSamples = new short[e.SamplesPerChannel];
-        }
-
-        if ( drawVuMeterRightSamples == null || drawVuMeterRightSamples.Length != e.SamplesPerChannel )
-        {
-            drawVuMeterRightSamples = new short[e.SamplesPerChannel];
-        }
-
-        // Iterate through the buffer
-        var isLeftSample = true;
-        var sampleIndex = 0;
-        var bufferData = e.GetBufferData();
-        for ( var i = 0; i < e.BufferLength; i += e.BitsPerSample / 8 )
-        {
-            if ( isLeftSample )
+            // 分析即将渲染的音频数据
+            // 如果不存在音频，则不需要分析
+            if ( e.EngineState.HasAudio == false )
             {
-                drawVuMeterLeftSamples[sampleIndex] = BitConverter.ToInt16(bufferData, i);
-
+                return;
             }
-            else
+            // 把音频数据分为左右声道
+            if ( drawVuMeterLeftSamples == null || drawVuMeterLeftSamples.Length != e.SamplesPerChannel )
             {
-                drawVuMeterRightSamples[sampleIndex] = BitConverter.ToInt16(bufferData, i);
+                drawVuMeterLeftSamples = new short[e.SamplesPerChannel];
             }
 
-            sampleIndex += !isLeftSample ? 1 : 0;
-            isLeftSample = !isLeftSample;
+            if ( drawVuMeterRightSamples == null || drawVuMeterRightSamples.Length != e.SamplesPerChannel )
+            {
+                drawVuMeterRightSamples = new short[e.SamplesPerChannel];
+            }
+
+            var bufferData = e.GetBufferData();
+
+            // 使用 Buffer.BlockCopy 替代循环和 BitConverter.ToInt16
+            Buffer.BlockCopy(bufferData, 0, drawVuMeterLeftSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制左声道数据
+            Buffer.BlockCopy(bufferData, e.SamplesPerChannel * sizeof(short), drawVuMeterRightSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制右声道数据
+
+            // 使用 Parallel.Invoke 同时计算左右声道的 RMS 值
+            double leftValue = 0.0, rightValue = 0.0;
+            lock ( drawVuMeterRmsLock )
+            {
+                Parallel.Invoke(
+                    () => { leftValue = VolumeHelper.CalculateRms(drawVuMeterLeftSamples); },
+                    () => { rightValue = VolumeHelper.CalculateRms(drawVuMeterRightSamples); }
+                );
+                DrawVuMeterLeftValue = leftValue;
+                DrawVuMeterRightValue = rightValue;
+            }
         }
 
-
-        // Compute the RMS of the samples and save it for the given point in time.
-        lock ( drawVuMeterRmsLock )
-        {
-            DrawVuMeterLeftValue = VolumeHelper.CalculateRms(drawVuMeterLeftSamples);
-            DrawVuMeterRightValue = VolumeHelper.CalculateRms(drawVuMeterRightSamples);
-        }
-    }
 
     protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
     {

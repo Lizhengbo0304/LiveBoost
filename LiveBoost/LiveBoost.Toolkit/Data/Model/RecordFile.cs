@@ -177,7 +177,7 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
 
     public bool IsPlaying { get; set; }
 
-    public MediaElement? MediaElement { get; set; }
+    public Unosquare.FFME. MediaElement? MediaElement { get; set; }
 
 #endregion
 

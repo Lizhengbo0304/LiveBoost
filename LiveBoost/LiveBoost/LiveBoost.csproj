@@ -41,6 +41,7 @@
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Drawing" />
         <Reference Include="System.Xml" />
         <Reference Include="System.Xaml">
             <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -52,6 +53,8 @@
     <ItemGroup>
         <Compile Include="Controls\CombinationList\CombinationItem.cs" />
         <Compile Include="Controls\CombinationList\CombinationListView.cs" />
+        <Compile Include="Tools\Extensions\RecordProgramExtension.cs" />
+        <Compile Include="Tools\UrlHelper\FilesUrlHelper.cs" />
         <Compile Include="Tools\UrlHelper\InitUrlHelper.cs" />
         <Compile Include="Tools\UrlHelper\LoginUrlHelper.cs" />
         <Compile Include="Tools\UrlHelper\PushUrlHelper.cs" />
@@ -60,6 +63,7 @@
         <Compile Include="ViewModels\CombinationModule\CombinationMainWindowVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationPlayerVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationPushVm.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationRecordFilesVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationRecordVm.cs" />
         <Compile Include="ViewModels\LoginModule\LoginWindowVm.cs" />
         <Compile Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml.cs">
@@ -77,9 +81,14 @@
         <Compile Include="Views\CombinationModule\CombinationRecordAccessPage.xaml.cs">
             <DependentUpon>CombinationRecordAccessPage.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\CombinationModule\CombinationRecordFilesPage.xaml.cs">
+          <DependentUpon>CombinationRecordFilesPage.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\CombinationModule\CombinationTitleBar.xaml.cs">
             <DependentUpon>CombinationTitleBar.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\CombinationModule\CombinationPlayListOut.xaml.cs" />
+        <Compile Include="Views\CombinationModule\CombinationPlayListOutXml.xaml.cs" />
         <Compile Include="Views\LoginModule\LoginWindow.xaml.cs">
             <DependentUpon>LoginWindow.xaml</DependentUpon>
         </Compile>
@@ -91,6 +100,7 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="Themes\Style\CombinationStyle\ComboBoxStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\ListViewStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\SearchBarStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\TabControlStyle.xaml" />
@@ -101,7 +111,10 @@
         <Page Include="Views\CombinationModule\CombinationMediaPlayerPage.xaml" />
         <Page Include="Views\CombinationModule\CombinationPushAccessPage.xaml" />
         <Page Include="Views\CombinationModule\CombinationRecordAccessPage.xaml" />
+        <Page Include="Views\CombinationModule\CombinationRecordFilesPage.xaml" />
         <Page Include="Views\CombinationModule\CombinationTitleBar.xaml" />
+        <Page Include="Views\CombinationModule\CombinationPlayListOut.xaml" />
+        <Page Include="Views\CombinationModule\CombinationPlayListOutXml.xaml" />
         <Page Include="Views\LoginModule\LoginWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
@@ -126,7 +139,6 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Themes\Basic\" />
-        <Folder Include="Tools\" />
         <Folder Include="ViewModels\NornalModule\" />
         <Folder Include="ViewModels\SingleModule\" />
         <Folder Include="Views\NornalModule\" />

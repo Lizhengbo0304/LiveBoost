@@ -43,7 +43,7 @@ public class AppConfig
     // ReSharper disable once UnusedMember.Local
     private void SetValue(string name, object newValue)
     {
-        _configPath.SetVaule(name, newValue.ToString());
+        _configPath.SetValue(name, newValue.ToString());
     }
 
 #endregion

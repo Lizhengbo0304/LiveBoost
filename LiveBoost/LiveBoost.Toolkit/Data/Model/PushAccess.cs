@@ -1,22 +1,56 @@
 ﻿// 创建时间：2023-09-07-10:22
 // 修改时间：2023-09-07-10:22
 
-using LiveBoost.Toolkit.Tools;
+using LiveBoost.ToolKit.Tools;
 
 namespace LiveBoost.Toolkit.Data;
 
-public class PushAccess : INotifyPropertyChanged
+public sealed class PushAccess : INotifyPropertyChanged
 {
+#region Command
+
+    /// <summary>
+    /// 删除选定的记录文件。
+    /// </summary>
+    public DelegateCommand<IList> DeleteCmd => new(DeleteItems);
+    /// <summary>
+    /// 删除选定的记录文件。
+    /// </summary>
+    /// <param name="items">要删除的记录文件的集合。</param>
+    private void DeleteItems(IList items)
+    {
+        var selectedItems = items.ToList<RecordFile>();
+        if ( selectedItems.Count != 1 )
+        {
+            return;
+        }
+        var selectedItem = selectedItems.First();
+        var selectedIndex = RecordFiles.IndexOf(selectedItem);
+        if (selectedIndex <= CurrentIndex + 1 && !Status)
+        {
+            // 如果选定的项已锁定，则显示警告消息框
+            MessageBox.Show("此项已锁定，无法删除", "播单项删除", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        else
+        {
+            if (RecordFiles.Contains(selectedItem))
+            {
+                RecordFiles.RemoveItem(selectedItem);
+            }
+        }
+    }
+
+#endregion
 #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if ( EqualityComparer<T>.Default.Equals(field, value) ) return false;
         field = value;

@@ -25,7 +25,7 @@ public static class HwndHelper
         };
         if ( hwndSource.CompositionTarget != null )
         {
-            hwndSource.CompositionTarget.BackgroundColor = Colors.White;
+            hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
         }
         return hwndSource.Handle.ToInt32();
     }

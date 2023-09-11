@@ -49,6 +49,58 @@
             </MultiTrigger>
         </Style.Triggers>
     </Style>
+       <Style x:Key = "RecordItemStyle" TargetType = "ListViewItem" >
+        <Setter Property = "Background" Value = "Transparent" />
+        <Setter Property = "BorderThickness" Value = "0" />
+        <Setter Property = "BorderBrush" Value = "Transparent" />
+        <Setter Property = "Foreground" Value = "#BEBDBD" />
+        <Setter Property = "SnapsToDevicePixels" Value = "true" />
+        <Setter Property = "Margin" Value = "30 20 0 0" />
+        <Setter Property = "Padding" Value = "0" />
+        <Setter Property = "Height" Value = "130" />
+        <Setter Property = "Width" Value = "191" />
+        <Setter Property = "Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType = "ListViewItem" >
+                    <Border Background = "Transparent" BorderBrush = "Transparent" BorderThickness = "2" x:Name = "bd" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height = "Auto" />
+
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row = "0" Background = "Black" >
+                                <Image Width = "191" Height = "109" Stretch = "Uniform"
+                                       Source = "{Binding IconPath.Value}" />
+                            </Border>
+                            <TextBlock Grid.Row = "0" Margin = "15 5"
+                                       Text = "{Binding Duration.Value
+                                           ,StringFormat={}{0:hh\\:mm\\:ss}}"
+                                       x:Name="timeBlock" Visibility="Collapsed"
+                                       TextTrimming = "CharacterEllipsis" TextWrapping = "NoWrap"
+                                       VerticalAlignment = "Top" Foreground = "{TemplateBinding Foreground}" />
+                            <TextBlock Grid.Row = "1" Margin = "15 0" Text = "{Binding Name}"
+                                       TextTrimming = "CharacterEllipsis" TextWrapping = "NoWrap"
+                                       hc:TextBlockAttach.AutoTooltip="True"
+                                       ToolTip="{Binding ToolTip}"
+                                       VerticalAlignment = "Center" Foreground = "{TemplateBinding Foreground}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Type}" Value="2">
+                            <Setter TargetName="timeBlock" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <Trigger Property = "IsMouseOver" Value = "True" >
+                            <Setter TargetName = "bd" Property = "BorderBrush" Value = "Red" />
+                        </Trigger>
+                        <Trigger Property = "IsSelected" Value = "True" >
+                            <Setter TargetName = "bd" Property = "BorderBrush" Value = "Red" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
        <Style x:Key = "PlayListChildItemStyle" TargetType = "ListViewItem" >
         <Setter Property = "Background" Value = "#47484A" />
         <Setter Property = "BorderThickness" Value = "1" />

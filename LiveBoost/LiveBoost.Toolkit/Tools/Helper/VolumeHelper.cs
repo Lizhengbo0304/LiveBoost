@@ -39,4 +39,5 @@ public static class VolumeHelper
         var db = 20 * Math.Log10(rms);
         return db;
     }
+
 }

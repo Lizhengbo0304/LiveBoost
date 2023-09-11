@@ -15,6 +15,7 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
         _value = default;
     }
 
+
 #endregion
 
     private async Task<TD?> LoadValueAsync() => await _retrievalFunc(_cancelTokenSource.Token);
