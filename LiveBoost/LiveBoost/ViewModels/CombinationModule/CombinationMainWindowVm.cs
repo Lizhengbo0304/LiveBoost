@@ -23,9 +23,13 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
         // 初始化收录
         Task.Run(async () =>
         {
+            //    初始化收录通道
             await InitializeRecordAccessesAsync();
+            // 初始化推流通道
             await InitializePlayAccessesAsync();
+            // 初始化我的收录列表
             await InitializeMyRecordFileAsync();
+            // 初始化公共收录列表
             await InitializePublicRecordFileAsync();
         });
         // 播放器初始化

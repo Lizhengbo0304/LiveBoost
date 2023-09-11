@@ -100,13 +100,13 @@ public DelegateCommand<MouseButtonEventArgs> RecordFileDoubleClickCmd => new(
                 PlayFile = file;
 
                 // 打开并播放文件
-                await MdElement!.Open(new Uri(file.FullPath));
-                await MdElement!.Play();
+                await MdElement.Open(new Uri(file.FullPath));
+                await MdElement.Play();
                 break;
             case RecordMark mark:
                 // 处理标记点类型的记录文件
                 RecordPlaybackFfPlayerCleanPointsCmd.Execute();
-                await MdElement!.Pause();
+                await MdElement.Pause();
 
                 // 解析标记点的时间
                 if (!TimeSpan.TryParse(mark.InPoint, out var inpoint))
@@ -128,7 +128,7 @@ public DelegateCommand<MouseButtonEventArgs> RecordFileDoubleClickCmd => new(
                 PlayMark = mark;
 
                 // 跳转到标记点的时间
-                await MdElement!.Seek(inpoint);
+                await MdElement.Seek(inpoint);
                 break;
         }
     });
