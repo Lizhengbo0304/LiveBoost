@@ -1,18 +1,26 @@
 ﻿// 创建时间：2023-09-04-17:07
-// 修改时间：2023-09-06-9:03
-
-using UrlHelper = LiveBoost.Tools.UrlHelper;
+// 修改时间：2023-09-11-17:41
 
 namespace LiveBoost.ViewModels;
 
 public class LoginWindowVm : INotifyPropertyChanged
 {
+    public LoginWindowVm() => LoginCommand = new DelegateCommand(LoginCommandExecute);
+
 #region Command
 
     /// <summary>
     ///     登录命令
     /// </summary>
-    public DelegateCommand LoginCommand => new(async () =>
+    public DelegateCommand LoginCommand { get; }
+
+#endregion
+#region Event
+
+    /// <summary>
+    ///     登录命令
+    /// </summary>
+    private async void LoginCommandExecute()
     {
         if ( !AppConfig.Instance.IsInit )
         {
@@ -51,7 +59,7 @@ public class LoginWindowVm : INotifyPropertyChanged
             Password = string.Empty;
             GlobalEvent.Instance.GetEvent<LoginWndInputBoxFocus>().Publish(false);
         }
-    });
+    }
 
 #endregion
 #region INotifyPropertyChangedEvent

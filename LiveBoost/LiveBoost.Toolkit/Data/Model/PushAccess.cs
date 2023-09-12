@@ -110,4 +110,15 @@ public sealed class PushAccess : INotifyPropertyChanged
     public bool IsEdit { get; set; }
 
 #endregion
+#region Event
+
+    /// <summary>
+    ///     当播单内容发生变化时触发的事件处理方法
+    /// </summary>
+    public void RecordFilesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        GlobalEvent.Instance.GetEvent<PushAccessRecordFilesChanged>().Publish(this);
+    }
+
+#endregion
 }

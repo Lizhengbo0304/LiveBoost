@@ -344,87 +344,12 @@ public async void Send2MainPlayer()
         {
             return;
         }
-
-        // 如果 CombinationMainWindowVm 处于播放列表模式且存在播放文件，则将所有文件的 IsPlaying 属性设置为 false
-        if (CombinationMainWindowVm.IsPlayListMode && (CombinationMainWindowVm.PlayFiles?.Any() ?? false))
-        {
-            CombinationMainWindowVm.PlayFiles.ForEach(it => it.IsPlaying = false);
-            CombinationMainWindowVm.IsPlayListMode = false;
-            CombinationMainWindowVm.MdPanel!.Visibility = Visibility.Collapsed;
-        }
-
-        // 清除播放器的标记点
-        CombinationMainWindowVm.RecordPlaybackFfPlayerCleanPointsCmd.Execute();
-
-        // 设置播放模式为 Access，并设置相关属性
-        CombinationMainWindowVm.PlayMode = PlayMode.Access;
-        CombinationMainWindowVm.PlayName = RecordAccess.AccessName;
-        CombinationMainWindowVm.CurrentMarks = await RecordAccess.Channel!.ChannelId!.GetMarks(RecordAccess.VideoPath!);
-        CombinationMainWindowVm.PlayChannel = RecordAccess.Channel;
-
-        // 打开视频文件
-        var openFile = await OpenVideoFile();
-        if (!openFile)
-        {
-            return;
-        }
-
-        // 调整视频播放位置
-        await AdjustVideoPlayback();
-
-        // 播放视频
-        await CombinationMainWindowVm.MdElement.Play();
-
-        // 获取更新后的标记
-        CombinationMainWindowVm.CurrentMarks = await GetUpdatedMarks();
+        await CombinationMainWindowVm.PlayRecordAccess(RecordAccess);
     }
     finally
     {
         _controlSemaphoreSlim.Release();
     }
 }
-
-// 打开视频文件
-private async Task<bool> OpenVideoFile()
-{
-    var openFile = false;
-    while (!openFile)
-    {
-        openFile = await CombinationMainWindowVm!.MdElement.Open(new Uri(RecordAccess!.VideoPath!));
-    }
-    return openFile;
-}
-
-// 调整视频播放位置
-private async Task AdjustVideoPlayback()
-{
-    if (CombinationMainWindowVm!.MdElement.RemainingDuration is not null)
-    {
-        var remainingDuration = CombinationMainWindowVm.MdElement.RemainingDuration.Value;
-
-        if (remainingDuration.TotalSeconds > 20)
-        {
-            // 如果剩余时长大于 20 秒，则从剩余时长的倒数第 20 秒开始播放
-            await CombinationMainWindowVm.MdElement.Seek(remainingDuration.Add(TimeSpan.FromSeconds(-20)));
-        }
-        else if (remainingDuration.TotalSeconds > 0)
-        {
-            // 如果剩余时长小于等于 20 秒，则延迟播放剩余时长的秒数
-            var delay = remainingDuration.TotalSeconds;
-            await Task.Delay(TimeSpan.FromSeconds(delay));
-        }
-    }
-}
-
-// 获取更新后的标记
-private async Task<ObservableList<RecordMark>> GetUpdatedMarks()
-{
-    var videoPath = CombinationMainWindowVm!.MdElement.Source.LocalPath.Replace(
-        AppConfig.Instance.ShouluPath!.ToLower().Replace('/', '\\'),
-        string.Empty).Replace('\\', '/');
-
-    return await RecordAccess!.Channel!.ChannelId!.GetMarks(videoPath);
-}
-
 #endregion
 }

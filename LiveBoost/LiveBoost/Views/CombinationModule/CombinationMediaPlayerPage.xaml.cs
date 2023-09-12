@@ -8,13 +8,25 @@ public partial class CombinationMediaPlayerPage
     public CombinationMediaPlayerPage()
     {
         InitializeComponent();
+        NormalSlider.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(Slider_OnMouseLeftButtonDown), true);
+        PlayListSlider.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(Slider_OnMouseLeftButtonDown), true);
     }
 
-    private async void Slider_OnMouseDown(object sender, MouseButtonEventArgs e)
+    private  void Slider_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if ( this.DataContext is CombinationMainWindowVm vm )
         {
-            await vm.MdElement.Pause();
+            vm.MdElement.SeekingEnded += MdElementOnSeekingEnded;
         }
+    }
+
+    private async void MdElementOnSeekingEnded(object sender, EventArgs e)
+    {
+        if ( this.DataContext is not CombinationMainWindowVm vm )
+        {
+            return;
+        }
+        vm.MdElement.SeekingEnded -= MdElementOnSeekingEnded;
+        await vm.MdElement.Pause();
     }
 }

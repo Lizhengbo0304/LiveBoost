@@ -14,7 +14,19 @@ public class LoginWndInputBoxFocus : PubSubEvent<bool>
 {
     public static readonly List<SubscriptionToken> SubscriptionTokens = new();
 }
+
+/// <summary>
+///     发送消息使主窗口处理播单变动事件
+/// </summary>
+public class PushAccessRecordFilesChanged : PubSubEvent<PushAccess>
+{
+    public static readonly List<SubscriptionToken> SubscriptionTokens = new();
+}
+
 /// <summary>
 ///     关闭播放器子进程
 /// </summary>
-public class CloseChildPlayerProcess : PubSubEvent { }
+public class CloseChildPlayerProcess : PubSubEvent
+{
+    public static readonly List<SubscriptionToken> SubscriptionTokens = new();
+}

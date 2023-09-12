@@ -29,12 +29,23 @@ public partial class CombinationMainWindowVm
 #region Commands
 
 /// <summary>
-/// 处理记录文件的双击操作
+/// 收录文件的双击操作
 /// </summary>
-public DelegateCommand<MouseButtonEventArgs> RecordFileDoubleClickCmd => new(
-    async args =>
+public DelegateCommand<MouseButtonEventArgs> RecordFileDoubleClickCmd { get; set; }
+
+public DelegateCommand<RecordFile> RefreshRecordCmd => new(async file =>
     {
-        // 检查是否有有效的FrameworkElement
+        file.Children = await file.GetRecordChildren(file.SearchType);
+    });
+
+#endregion
+#region Command-Event
+    /// <summary>
+    /// 收录文件的双击操作
+    /// </summary>
+    private async void RecordFileDoubleClickExecute(MouseButtonEventArgs args)
+    {
+         // 检查是否有有效的FrameworkElement
         if (args.OriginalSource is not FrameworkElement frameworkElement)
         {
             return;
@@ -50,95 +61,37 @@ public DelegateCommand<MouseButtonEventArgs> RecordFileDoubleClickCmd => new(
         switch (listViewItem.DataContext)
         {
             case RecordFile { Type: 1 } folder:
-                // 处理文件夹类型的记录文件
-                folder.Children = await folder.GetRecordChildren(folder.SearchType);
-                if (folder.SearchType == 1)
-                {
-                    MyRecordFile = folder;
-                }
-                else
-                {
-                    PublicRecordFile = folder;
-                }
+                // 处理文件夹的双击操作
+                await HandleFolderDoubleClick(folder);
                 break;
             case RecordFile file:
-                // 处理文件类型的记录文件
-                if (MdElement.IsOpen)
-                {
-                    await MdElement.Close();
-                }
-                MdElement.Visibility = Visibility.Collapsed;
-                MdActive.Visibility = Visibility.Visible;
-                MdElement = MdActive;
-                // 检查文件是否存在
-                if (!File.Exists(file.FullPath))
-                {
-                    MessageBox.Warning("文件丢失，无法预览", "播放");
-                    return;
-                }
-
-                // 关闭播放列表模式下的所有播放文件
-                if (IsPlayListMode && (PlayFiles?.Any() ?? false))
-                {
-                    PlayFiles.ForEach(async it =>
-                    {
-                        if (it.MediaElement is not null)
-                        {
-                            await it.MediaElement.Close();
-                        }
-                        it.MediaElement = null;
-                    });
-                }
-                IsPlayListMode = false;
-                // 清除播放器的标记点
-                RecordPlaybackFfPlayerCleanPointsCmd.Execute();
-
-                // 设置播放文件相关的属性
-                PlayName = file.Name;
-                PlayMode = PlayMode.RecordFile;
-                CurrentMarks = file.Markers ??= new ObservableList<RecordMark>();
-                PlayFile = file;
-
-                // 打开并播放文件
-                await MdElement.Open(new Uri(file.FullPath));
-                await MdElement.Play();
+                // 处理文件类型
+                await PlayRecordFileAsync(file);
                 break;
             case RecordMark mark:
                 // 处理标记点类型的记录文件
-                RecordPlaybackFfPlayerCleanPointsCmd.Execute();
-                await MdElement.Pause();
-
-                // 解析标记点的时间
-                if (!TimeSpan.TryParse(mark.InPoint, out var inpoint))
-                {
-                    inpoint = TimeSpan.Zero;
-                }
-                SliderIn = inpoint.TotalMilliseconds;
-                if (!TimeSpan.TryParse(mark.OutPoint, out var outpoint))
-                {
-                    outpoint = TimeSpan.Zero;
-                }
-                SliderOut = outpoint.TotalMilliseconds;
-                IsInSet = true;
-                IsOutSet = true;
-
-                // 设置播放文件相关的属性
-                PlayName = mark.Name;
-                PlayMode = PlayMode.SubRecordFile;
-                PlayMark = mark;
-
-                // 跳转到标记点的时间
-                await MdElement.Seek(inpoint);
+                await PlayMarkAsync(mark);
                 break;
         }
-    });
-
-
-    public DelegateCommand<RecordFile> RefreshRecordCmd => new(async file =>
+    }
+    /// <summary>
+    /// 处理文件夹的双击操作
+    /// </summary>
+    private async Task HandleFolderDoubleClick(RecordFile folder)
     {
-        file.Children = await file.GetRecordChildren(file.SearchType);
-    });
+        // 获取文件夹的子文件
+        folder.Children = await folder.GetRecordChildren(folder.SearchType);
 
+        // 根据SearchType设置不同的文件夹属性
+        if (folder.SearchType == 1)
+        {
+            MyRecordFile = folder;
+        }
+        else
+        {
+            PublicRecordFile = folder;
+        }
+    }
 #endregion
 #region Event
 

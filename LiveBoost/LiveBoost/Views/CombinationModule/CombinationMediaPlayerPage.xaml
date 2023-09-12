@@ -11,6 +11,8 @@
             <RowDefinition />
             <RowDefinition Height = "Auto" />
         </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="Black" HorizontalAlignment="Stretch"
+                Margin="12 12 12 0" VerticalAlignment="Stretch"/>
         <ffme:MediaElement Grid.Row = "0" x:Name = "Part_ffPlay_Active" HorizontalAlignment = "Stretch"
                            Margin = "12 12 12 0" VerticalAlignment = "Stretch" Background = "Black"
                            LoadedBehavior = "Manual" IsHitTestVisible = "False" />
@@ -93,7 +95,7 @@
                                 Visibility = "{Binding IsPlayListMode,Converter={StaticResource Boolean2VisibilityConverter}}"
                                 Maximum = "{Binding PlayerOutpoint, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
                                 Value = "{Binding MdElement.Position, Converter={StaticResource TimeSpanToMillSecondsConverter}, Mode=TwoWay}"
-                                MouseDown="Slider_OnMouseDown"
+                                x:Name="PlayListSlider"
                                 VerticalAlignment = "Bottom" Foreground = "#0071FF" Background = "#646668"
                                 IsMoveToPointEnabled = "True" SelectionStart = "{Binding SliderIn}"
                                 SelectionEnd = "{Binding SliderOut}" Template = "{StaticResource PlayerSlider}" >
@@ -107,9 +109,9 @@
         <Slider Grid.Row = "0" Cursor = "Hand" UseLayoutRounding = "True" Height = "20"
                 IsSelectionRangeEnabled = "True" IsEnabled = "{Binding MdElement.IsOpen}"
                 Minimum = "{Binding MdElement.PlaybackStartTime,Converter={StaticResource TimeSpanToMillSecondsConverter}}"
+                x:Name="NormalSlider"
                 Visibility = "{Binding IsPlayListMode,Converter={StaticResource Boolean2VisibilityReConverter}}"
                 Maximum = "{Binding MdElement.PlaybackEndTime,Converter={StaticResource TimeSpanToMillSecondsConverter}}"
-                MouseDown="Slider_OnMouseDown"
                 Value = "{Binding MdElement.Position,Converter={StaticResource TimeSpanToMillSecondsConverter}}"
                 VerticalAlignment = "Bottom" IsMoveToPointEnabled = "True"
                 SelectionStart = "{Binding SliderIn}" SelectionEnd = "{Binding SliderOut}"

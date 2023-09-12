@@ -51,7 +51,7 @@ public sealed partial class CombinationMainWindowVm
                     }
                 }
 
-                it.RecordFiles.CollectionChanged += RecordFilesOnCollectionChanged;
+                it.RecordFiles.CollectionChanged += it.RecordFilesOnCollectionChanged;
             });
 
         }
@@ -62,66 +62,66 @@ public sealed partial class CombinationMainWindowVm
     /// <summary>
     ///     当播单内容发生变化时触发的事件处理方法
     /// </summary>
-    private async void RecordFilesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    private async void RecordFilesOnCollectionChanged(PushAccess access)
     {
         // 如果当前播单为空或正在编辑中，则忽略变化
-        if ( CurrentPlayList is null || CurrentPlayList.IsEdit )
+        if ( access.IsEdit )
         {
             return;
         }
 
         // 根据当前播单的状态进行不同的处理
-        if ( !CurrentPlayList.Status )
+        if ( !access.Status )
         {
             // 推流时： 处理推流中的通道文件列表变动
-            await HandleStreamingPushAccessAsync();
+            await HandleStreamingPushAccessAsync(access);
         }
         else
         {
             // 空闲时：处理空闲的推流通道文件变动
-            await HandleIdlePushAccessAsync();
+            await HandleIdlePushAccessAsync(access);
         }
     }
 
     /// <summary>
     ///     处理推流中的通道文件列表变动
     /// </summary>
-    private async Task HandleStreamingPushAccessAsync()
+    private async Task HandleStreamingPushAccessAsync(PushAccess access)
     {
         // 设置当前播单为编辑状态
-        CurrentPlayList!.IsEdit = true;
+        access.IsEdit = true;
 
         // 向推流后台推送最新播单，如果编辑成功则初始化播放器并同步播单信息，否则恢复备份的记录文件
-        if ( await CurrentPlayList.EditPushPlayList() )
+        if ( await access.EditPushPlayList() )
         {
-            await InitializePlayerAsync();
-            await SyncPlayListAsync();
+            await InitializePlayerAsync(access);
+            await SyncPlayListAsync(access);
         }
         else
         {
-            CurrentPlayList.RecordFiles.BackupRecover();
+            access.RecordFiles.BackupRecover();
         }
 
         // 取消编辑状态
-        CurrentPlayList.IsEdit = false;
+        access.IsEdit = false;
     }
 
     /// <summary>
     ///     处理空闲的推流通道文件变动
     /// </summary>
-    private async Task HandleIdlePushAccessAsync()
+    private async Task HandleIdlePushAccessAsync(PushAccess access)
     {
-        await InitializePlayerAsync();
-        await SyncPlayListAsync();
+        await InitializePlayerAsync(access);
+        await SyncPlayListAsync(access);
     }
 
     /// <summary>
     ///     初始化播放器
     /// </summary>
-    private async Task InitializePlayerAsync()
+    private async Task InitializePlayerAsync(PushAccess access)
     {
         // 如果当前播放模式为播单且播放文件列表与当前播单的记录文件列表相同，则并行初始化每个 MediaElement
-        if ( PlayMode == PlayMode.PlayList && PlayFiles == CurrentPlayList!.RecordFiles )
+        if ( PlayMode == PlayMode.PlayList && PlayFiles == access.RecordFiles )
         {
             await Task.WhenAll(PlayFiles.Select(InitializeMediaElementAsync));
         }
@@ -166,16 +166,16 @@ public sealed partial class CombinationMainWindowVm
         };
 
 // 同步播单信息
-    private async Task SyncPlayListAsync()
+    private async Task SyncPlayListAsync(PushAccess access)
     {
         // 创建一个 RecordTemplate 对象，并使用对象初始化器设置其属性值
         var recordTemplate = new RecordTemplate
         {
-            Id = CurrentPlayList!.AccessId,
+            Id = access.AccessId,
             Type = "10",
-            Mode = CurrentPlayList.Mode,
-            RecordFiles = CurrentPlayList.RecordFiles,
-            Title = CurrentPlayList.Title
+            Mode = access.Mode,
+            RecordFiles = access.RecordFiles,
+            Title = access.Title
         };
 
         // 编辑播单信息
@@ -185,7 +185,7 @@ public sealed partial class CombinationMainWindowVm
 #endregion
 
 #endregion
-#region 播单
+#region Command-播单
 
     // 播单推流
     public DelegateCommand PushPlayList => new DelegateCommand(async () =>
@@ -285,69 +285,7 @@ public sealed partial class CombinationMainWindowVm
     // 播单推流预览
     public DelegateCommand PreviewPlayList => new DelegateCommand(async () =>
     {
-        if ( CurrentPlayList is null )
-        {
-            return;
-        }
-
-        await MdElement.Close();
-
-        // 清除入出点、重置Mark点、设置标题
-        RecordPlaybackFfPlayerCleanPointsCmd.Execute();
-        PlayName = CurrentPlayList.Title;
-        CurrentMarks = new ObservableList<RecordMark>();
-
-        // 如果之前为播单预览墨水，重置播放进度等
-        if ( IsPlayListMode && ( PlayFiles?.Any() ?? false ) )
-        {
-            MdElement = MdActive;
-            PlayFiles.ForEach(it =>
-            {
-                it.MediaElement?.Close();
-                it.MediaElement = null;
-            });
-            MdPanel!.Children.Clear();
-        }
-
-        PlayMode = PlayMode.PlayList;
-        IsPlayListMode = true;
-        PlayFiles = CurrentPlayList.RecordFiles;
-        if ( !CurrentPlayList.RecordFiles.Any() )
-        {
-            MessageBox.Warning("该播单条目为空，无法预览", "播单预览");
-            return;
-        }
-        MdPanel!.Visibility = Visibility.Visible;
-        foreach ( var recordFile in PlayFiles )
-        {
-            recordFile.MediaElement = new MediaElement
-            {
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                Background = Brushes.Black,
-                LoadedBehavior = MediaPlaybackState.Manual,
-                IsHitTestVisible = false,
-                Visibility = Visibility.Collapsed
-            };
-            recordFile.MediaElement.RenderingAudio += FfPlayOnRenderingAudio;
-            await recordFile.MediaElement.Open(new Uri(recordFile.FullPath));
-            if ( recordFile.RealInPoint is null || recordFile.RealOutPoint is null )
-            {
-                recordFile.RealInPoint = recordFile.MediaElement.PlaybackStartTime;
-                recordFile.RealOutPoint = recordFile.MediaElement.PlaybackEndTime;
-            }
-            await recordFile.MediaElement.Seek(recordFile.RealInPoint!.Value);
-            MdPanel.Children.Add(recordFile.MediaElement);
-        }
-
-        CurrentIndex = 0;
-        CurrentPlayFile = CurrentPlayList.RecordFiles[CurrentIndex];
-        CurrentPlayFile.MediaElement!.Visibility = Visibility.Visible;
-        MdElement = CurrentPlayFile.MediaElement!;
-        PlayerInpoint = CurrentPlayFile.RealInPoint!.Value;
-        PlayerOutpoint = CurrentPlayFile.RealOutPoint!.Value;
-        await MdElement.Play();
-        // CurrentPlayFile.IsPlaying = true;
+        await PlayPushAccessAsync();
     }, () => CurrentPlayList is not null).ObservesProperty(() => CurrentPlayList);
 
     // 播单推流预览

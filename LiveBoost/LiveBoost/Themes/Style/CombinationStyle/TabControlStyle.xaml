@@ -7,7 +7,7 @@
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key = "PlayListTabItemStyle" TargetType = "hc:TabItem" >
+    <Style x:Key = "PlayListTabItemStyle" TargetType = "TabItem" >
         <Setter Property = "FocusVisualStyle" Value = "{x:Null}" />
         <Setter Property = "Margin" Value = "13 0 0 0" />
         <Setter Property = "Padding" Value = "0" />
@@ -16,15 +16,14 @@
         <Setter Property = "IsSelected" Value = "{Binding IsSelected}" />
         <Setter Property = "HorizontalAlignment" Value = "Center" />
         <Setter Property = "VerticalAlignment" Value = "Bottom" />
-        <Setter Property = "HorizontalContentAlignment" Value = "Left" />
+        <Setter Property = "HorizontalContentAlignment" Value = "Center" />
         <Setter Property = "VerticalContentAlignment" Value = "Center" />
         <Setter Property = "ToolTip" Value = "{Binding Title}" />
         <Setter Property = "Template" >
             <Setter.Value>
-                <ControlTemplate TargetType = "hc:TabItem" >
-                    <hc:SimplePanel x:Name = "templateRoot" SnapsToDevicePixels = "true" >
-                        <Border BorderThickness = "0" x:Name = "mainBorder" BorderBrush = "Transparent"
-                                Background = "Transparent" Margin = "0" >
+                <ControlTemplate TargetType = "TabItem" >
+                    <Border BorderThickness = "0" x:Name = "mainBorder" BorderBrush = "Transparent"
+                            Background = "Transparent" Margin = "10 0" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -45,33 +44,10 @@
                                 </ContentPresenter>
                             </Grid>
                         </Border>
-                        <Border x:Name = "innerBorder" Background = "#585A5D" Visibility = "Collapsed" >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Margin="5 0" VerticalAlignment="Center" Stretch="Uniform" Width="20" Source="{Binding ModeImage}"/>
-                                <ContentPresenter Grid.Column="1" x:Name = "contentPresenter1" ContentSource = "Header" Focusable = "False"
-                                                  HorizontalAlignment = "Center" Margin = "0 0 5 0"
-                                                  RecognizesAccessKey = "True"
-                                                  SnapsToDevicePixels = "{TemplateBinding SnapsToDevicePixels}"
-                                                  VerticalAlignment = "Center" TextElement.Foreground = "#BBBBBB"
-                                                  TextElement.FontSize = "14">
-                                    <ContentPresenter.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                                        </Style>
-                                    </ContentPresenter.Resources>
-                                </ContentPresenter>
-                            </Grid>
-                        </Border>
-                    </hc:SimplePanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property = "IsSelected" Value = "true" >
                             <Setter Property = "Panel.ZIndex" Value = "1" />
-                            <Setter Property = "Visibility" TargetName = "innerBorder" Value = "Visible" />
-                            <Setter Property = "Visibility" TargetName = "mainBorder" Value = "Collapsed" />
+                            <Setter Property = "Background" TargetName = "mainBorder" Value = "#585A5D" />
                         </Trigger>
                         <Trigger Property = "IsEnabled" Value = "False" >
                             <Setter Property = "Opacity" Value = "0.4" TargetName = "contentPresenter" />
@@ -81,7 +57,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key = "PlayListTabControlStyle" TargetType = "hc:TabControl" >
+    <Style x:Key = "PlayListTabControlStyle" TargetType = "TabControl" >
         <Setter Property = "Padding" Value = "0" />
         <Setter Property = "Background" Value = "Transparent" />
         <Setter Property = "Foreground" Value = "#8B8B8B" />
@@ -92,7 +68,7 @@
         <Setter Property = "ItemContainerStyle" Value = "{StaticResource PlayListTabItemStyle}" />
         <Setter Property = "Template" >
             <Setter.Value>
-                <ControlTemplate TargetType = "hc:TabControl" >
+                <ControlTemplate TargetType = "TabControl" >
                     <Border BorderBrush = "{TemplateBinding BorderBrush}"
                             BorderThickness = "{TemplateBinding BorderThickness}"
                             Background = "{TemplateBinding Background}" >
@@ -125,8 +101,7 @@
                                                      x:Name = "PART_OverflowScrollviewer" >
                                         <Border Background = "Transparent" BorderThickness = "0"
                                                 BorderBrush = "Transparent" Name = "PART_HeaderBorder" >
-                                            <hc:TabPanel TabItemHeight = "37" TabItemWidth = "81"
-                                                         IsTabFillEnabled = "False" Margin = "0,0,-1,-1"
+                                            <TabPanel  Margin = "0,0,-1,-1"
                                                          x:Name = "PART_HeaderPanel" HorizontalAlignment = "Left"
                                                          VerticalAlignment = "Bottom" Background = "Transparent"
                                                          IsItemsHost = "true" KeyboardNavigation.TabIndex = "1"
@@ -139,7 +114,7 @@
                                                         </hc:FluidMoveBehavior.EaseX>
                                                     </hc:FluidMoveBehavior>
                                                 </hc:Interaction.Behaviors>
-                                            </hc:TabPanel>
+                                            </TabPanel>
                                         </Border>
                                     </hc:ScrollViewer>
                                     <Button Grid.Column = "1" Margin = "10 0 0 0" IconElement.Width = "39"

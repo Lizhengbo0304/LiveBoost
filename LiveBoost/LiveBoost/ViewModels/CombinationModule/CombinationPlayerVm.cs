@@ -1,11 +1,12 @@
 ﻿// 创建时间：2023-09-07-11:35
-// 修改时间：2023-09-07-16:24
+// 修改时间：2023-09-12-10:26
 
 #region
 
 using System.Drawing;
 using HandyControl.Controls;
 using LiveBoost.ToolKit.Tools;
+using Brushes = System.Windows.Media.Brushes;
 
 #endregion
 
@@ -31,7 +32,7 @@ public sealed partial class CombinationMainWindowVm
 
     // 播放标记点
     public RecordMark? PlayMark { get; set; }
-    public bool IsPlayListMode { get; set; }
+    public bool IsPlayListMode => PlayMode is PlayMode.PlayList;
 
     // 播放标播单
     public ObservableList<RecordFile>? PlayFiles { get; set; }
@@ -109,7 +110,8 @@ public sealed partial class CombinationMainWindowVm
     private async void RecordPlaybackFfPlayerAddInPoint()
     {
         await RecordPlaybackFfPlayerAddPoint(true);
-    } /// <summary>
+    }
+    /// <summary>
     ///     添加出点
     /// </summary>
     private async void RecordPlaybackFfPlayerAddOutPoint()
@@ -117,9 +119,9 @@ public sealed partial class CombinationMainWindowVm
         await RecordPlaybackFfPlayerAddPoint(false);
     }
     /// <summary>
-    /// 添加标记点
+    ///     添加标记点
     /// </summary>
-    /// <param name="isIn">是否为入点</param>
+    /// <param name = "isIn" > 是否为入点 </param>
     private async Task RecordPlaybackFfPlayerAddPoint(bool isIn)
     {
         switch ( PlayMode )
@@ -180,9 +182,9 @@ public sealed partial class CombinationMainWindowVm
     }
 
     /// <summary>
-    /// 添加新的标记点，入出点一致
+    ///     添加新的标记点，入出点一致
     /// </summary>
-    /// <param name="isIn">是否为入点</param>
+    /// <param name = "isIn" > 是否为入点 </param>
     private async Task RecordPlaybackFfPlayerSetNewPoint(bool isIn)
     {
         // 执行清除标记点的命令
@@ -196,7 +198,7 @@ public sealed partial class CombinationMainWindowVm
         MarkerThumb = await MdElement.CaptureBitmapAsync();
 
         // 根据参数设置相应的标记点状态
-        if (isIn)
+        if ( isIn )
         {
             IsInSet = true;
         }
@@ -206,17 +208,17 @@ public sealed partial class CombinationMainWindowVm
         }
     }
     /// <summary>
-    /// 存在入点的情况设置出点（或存在出点的情况设置入点）
+    ///     存在入点的情况设置出点（或存在出点的情况设置入点）
     /// </summary>
-    /// <param name="isIn">是否为入点</param>
+    /// <param name = "isIn" > 是否为入点 </param>
     private async Task RecordPlaybackFfPlayerSetNewPointWithExistPoint(bool isIn)
     {
         var position = MdElement.Position.TotalMilliseconds;
 
-        if (isIn)
+        if ( isIn )
         {
             // 如果当前位置小于出点位置，则将当前位置设置为入点，并获取标记点的缩略图
-            if (position < SliderOut)
+            if ( position < SliderOut )
             {
                 SliderIn = position;
                 MarkerThumb = await MdElement.CaptureBitmapAsync();
@@ -233,7 +235,7 @@ public sealed partial class CombinationMainWindowVm
         else
         {
             // 如果当前位置大于等于入点位置，则将当前位置设置为出点
-            if (position >= SliderIn)
+            if ( position >= SliderIn )
             {
                 SliderOut = position;
             }
@@ -249,237 +251,451 @@ public sealed partial class CombinationMainWindowVm
         }
     }
     /// <summary>
-    /// 获取帧名称
+    ///     获取帧名称
     /// </summary>
-    /// <param name="targetDir">目标目录</param>
-    /// <param name="fileName">文件名</param>
-    /// <returns>缩略图名称</returns>
-private async Task<string> GetFrameName(string targetDir, string fileName)
-{
-    // 使用目标目录和文件名生成新的缩略图名称
-    return await targetDir.GetNewNameInPathWithoutExtensionAsync(2, $"{fileName}_子片段", ".png");
-}
+    /// <param name = "targetDir" > 目标目录 </param>
+    /// <param name = "fileName" > 文件名 </param>
+    /// <returns> 缩略图名称 </returns>
+    private async Task<string> GetFrameName(string targetDir, string fileName) =>
+        // 使用目标目录和文件名生成新的缩略图名称
+        await targetDir.GetNewNameInPathWithoutExtensionAsync(2, $"{fileName}_子片段", ".png");
 
-/// <summary>
-/// 保存缩略图
-/// </summary>
-/// <param name="targetDir">目标目录</param>
-/// <param name="frameName">帧名称</param>
-private void SaveThumbnail(string targetDir, string frameName)
-{
-    try
+    /// <summary>
+    ///     保存缩略图
+    /// </summary>
+    /// <param name = "targetDir" > 目标目录 </param>
+    /// <param name = "frameName" > 帧名称 </param>
+    private void SaveThumbnail(string targetDir, string frameName)
     {
-        // 保存缩略图到目标目录
-        MarkerThumb?.Save(Path.Combine(targetDir, $"{frameName}.png"));
+        try
+        {
+            // 保存缩略图到目标目录
+            MarkerThumb?.Save(Path.Combine(targetDir, $"{frameName}.png"));
+        }
+        catch ( Exception e )
+        {
+            e.LogError("保存缩略图异常");
+        }
     }
-    catch (Exception e)
+    /// <summary>
+    ///     保存缩略图
+    /// </summary>
+    /// <param name = "thumbnailName" > 缩略图的完整路径 </param>
+    private void SaveThumbnail(string thumbnailName)
     {
-        e.LogError("保存缩略图异常");
+        try
+        {
+            MarkerThumb?.Save(thumbnailName);
+        }
+        catch ( Exception e )
+        {
+            e.LogError("保存缩略图异常");
+        }
     }
-}
-/// <summary>
-/// 保存缩略图
-/// </summary>
-/// <param name="thumbnailName">缩略图的完整路径</param>
-private void SaveThumbnail(string thumbnailName)
-{
-    try
-    {
-        MarkerThumb?.Save(thumbnailName);
-    }
-    catch (Exception e)
-    {
-        e.LogError("保存缩略图异常");
-    }
-}
 
-/// <summary>
-/// 创建标记点
-/// </summary>
-/// <param name="frameName">缩略图名称</param>
-/// <returns>标记点</returns>
-private RecordMark CreateRecordMark(string frameName)
-{
-    if (PlayMode == PlayMode.Access)
+    /// <summary>
+    ///     创建标记点
+    /// </summary>
+    /// <param name = "frameName" > 缩略图名称 </param>
+    /// <returns> 标记点 </returns>
+    private RecordMark CreateRecordMark(string frameName)
     {
-        // 如果收录通道预览模式
+        if ( PlayMode == PlayMode.Access )
+        {
+            // 如果收录通道预览模式
+            return new RecordMark
+            {
+                Name = frameName,
+                InPoint = TimeSpan.FromMilliseconds(SliderIn).ToString(@"hh\:mm\:ss\.ffff"),
+                OutPoint = TimeSpan.FromMilliseconds(SliderOut).ToString(@"hh\:mm\:ss\.ffff"),
+                Thumb = Path.Combine(Path.GetDirectoryName(MdElement.Source.LocalPath.Replace(AppConfig.Instance.ShouluPath!.ToLower().Replace('/', '\\'), string.Empty))!, $"{frameName}.png")
+                    .Replace('\\', '/'),
+                Url = MdElement.Source.LocalPath.Replace(AppConfig.Instance.ShouluPath!.ToLower().Replace('/', '\\'), string.Empty).Replace('\\', '/'),
+                ChannelId = PlayChannel!.ChannelId
+            };
+        }
         return new RecordMark
         {
             Name = frameName,
+            RecordId = PlayFile?.Id,
             InPoint = TimeSpan.FromMilliseconds(SliderIn).ToString(@"hh\:mm\:ss\.ffff"),
             OutPoint = TimeSpan.FromMilliseconds(SliderOut).ToString(@"hh\:mm\:ss\.ffff"),
-            Thumb = Path.Combine(Path.GetDirectoryName(MdElement.Source.LocalPath.Replace(AppConfig.Instance.ShouluPath!.ToLower().Replace('/', '\\'), string.Empty))!, $"{frameName}.png").Replace('\\', '/'),
-            Url = MdElement.Source.LocalPath.Replace(AppConfig.Instance.ShouluPath!.ToLower().Replace('/', '\\'), string.Empty).Replace('\\', '/'),
-            ChannelId = PlayChannel!.ChannelId
+            Thumb = Path.Combine(Path.GetDirectoryName(PlayFile?.Url)!, $"{frameName}.png").Replace('\\', '/')
         };
     }
-    return new RecordMark
-    {
-        Name = frameName,
-        RecordId = PlayFile?.Id,
-        InPoint = TimeSpan.FromMilliseconds(SliderIn).ToString(@"hh\:mm\:ss\.ffff"),
-        OutPoint = TimeSpan.FromMilliseconds(SliderOut).ToString(@"hh\:mm\:ss\.ffff"),
-        Thumb = Path.Combine(Path.GetDirectoryName(PlayFile?.Url)!, $"{frameName}.png").Replace('\\', '/')
-    };
-}
-
-/// <summary>
-/// 新增标记点
-/// </summary>
-/// <param name="mark">标记点</param>
-private async Task AddRecordMark(RecordMark mark)
-{
-    // 保存记录标记并获取结果
-    var result = await mark.SaveMark().ConfigureAwait(false);
-
-    if (!string.IsNullOrEmpty(result))
-    {
-        // 如果结果不为空，设置标记标识和父级，并将标记添加到当前标记列表
-        mark.Id = result;
-        mark.Parent = PlayFile;
-        CurrentMarks ??= new ObservableList<RecordMark>();
-        CurrentMarks.AddItem(mark);
-    }
-}
-
-/// <summary>
-/// 添加片段
-/// </summary>
-private async Task AddFragment()
-{
-    string? targetDir;
-    string? fileName;
-
-    if (PlayMode == PlayMode.Access)
-    {
-        if (string.IsNullOrEmpty(MdElement.Source.LocalPath))
-        {
-            return;
-        }
-
-        // 获取目标目录和文件名
-        targetDir = Path.GetDirectoryName(MdElement.Source.LocalPath);
-        fileName = Path.GetFileNameWithoutExtension(MdElement.Source.LocalPath);
-    }
-    else
-    {
-        if (string.IsNullOrEmpty(PlayFile?.FullPath))
-        {
-            return;
-        }
-
-        // 获取目标目录和文件名
-        targetDir = Path.GetDirectoryName(PlayFile?.FullPath);
-        fileName = Path.GetFileNameWithoutExtension(MdElement.Source.LocalPath);
-    }
-
-    if (string.IsNullOrEmpty(targetDir) || !Directory.Exists(targetDir) || string.IsNullOrEmpty(fileName))
-    {
-        return;
-    }
-
-    // 获取缩略图名称
-    var frameName = await GetFrameName(targetDir, fileName);
-
-    // 保存缩略图
-    SaveThumbnail(targetDir, frameName);
-
-    // 创建记录标记
-    var mark = CreateRecordMark(frameName);
-
-    // 添加记录标记
-    await AddRecordMark(mark);
-}
-
-/// <summary>
-/// 获取缩略图的名称
-/// </summary>
-/// <returns>缩略图的名称</returns>
-private string GetThumbnailName()
-{
-    if (string.IsNullOrEmpty(PlayFile?.FullPath))
-    {
-        return string.Empty;
-    }
-
-    // 获取目标目录
-    var targetDir = Path.GetDirectoryName(PlayFile?.FullPath);
-    if (string.IsNullOrEmpty(targetDir) || !Directory.Exists(targetDir))
-    {
-        return string.Empty;
-    }
-
-    if (PlayMark is null)
-    {
-        return string.Empty;
-    }
-
-    // 构建缩略图的完整路径
-    return AppConfig.Instance.ShouluPath!.Combine(PlayMark.Thumb);
-}
-/// <summary>
-/// 创建记录标记
-/// </summary>
-/// <returns>创建的记录标记</returns>
-private RecordMark CreateRecordMark()
-{
-    return new RecordMark
-    {
-        Name = PlayMark!.Name,
-        RecordId = PlayMark.RecordId,
-        InPoint = TimeSpan.FromMilliseconds(SliderIn).ToString(@"hh\:mm\:ss\.ffff"),
-        OutPoint = TimeSpan.FromMilliseconds(SliderOut).ToString(@"hh\:mm\:ss\.ffff"),
-        Thumb = PlayMark.Thumb,
-        Id = PlayMark.Id,
-        Url = PlayMark.Url,
-        ChannelId = PlayMark.ChannelId
-    };
-}
-/// <summary>
-/// 添加记录标记
-/// </summary>
-/// <param name="mark">要添加的记录标记</param>
-private async Task AddRecordMarkWithPlayMark(RecordMark mark)
-{
-    var result = await mark.SaveMark().ConfigureAwait(false);
-
-    if (string.IsNullOrEmpty(result))
-    {
-        // 如果保存失败，则将滑块的值重置为原始值
-        if (!TimeSpan.TryParse(mark.InPoint, out var inpoint))
-        {
-            inpoint = TimeSpan.Zero;
-        }
-        SliderIn = inpoint.TotalMilliseconds;
-        if (!TimeSpan.TryParse(mark.OutPoint, out var outpoint))
-        {
-            outpoint = TimeSpan.Zero;
-        }
-        SliderOut = outpoint.TotalMilliseconds;
-        return;
-    }
-
-    // 更新记录标记的入点和出点
-    PlayMark!.InPoint = TimeSpan.FromMilliseconds(SliderIn).ToString(@"hh\:mm\:ss\.ffff");
-    PlayMark.OutPoint = TimeSpan.FromMilliseconds(SliderOut).ToString(@"hh\:mm\:ss\.ffff");
-}
-
-#endregion
-#endregion
-
-#region 播放器
 
     /// <summary>
-    ///     前5秒
+    ///     新增标记点
     /// </summary>
-    public DelegateCommand RecordPlaybackFfPlayerBackwardCmd => new(() =>
+    /// <param name = "mark" > 标记点 </param>
+    private async Task AddRecordMark(RecordMark mark)
+    {
+        // 保存记录标记并获取结果
+        var result = await mark.SaveMark().ConfigureAwait(false);
+
+        if ( !string.IsNullOrEmpty(result) )
+        {
+            // 如果结果不为空，设置标记标识和父级，并将标记添加到当前标记列表
+            mark.Id = result;
+            mark.Parent = PlayFile;
+            CurrentMarks ??= new ObservableList<RecordMark>();
+            CurrentMarks.AddItem(mark);
+        }
+    }
+
+    /// <summary>
+    ///     添加片段
+    /// </summary>
+    private async Task AddFragment()
+    {
+        string? targetDir;
+        string? fileName;
+
+        if ( PlayMode == PlayMode.Access )
+        {
+            if ( string.IsNullOrEmpty(MdElement.Source.LocalPath) )
+            {
+                return;
+            }
+
+            // 获取目标目录和文件名
+            targetDir = Path.GetDirectoryName(MdElement.Source.LocalPath);
+            fileName = Path.GetFileNameWithoutExtension(MdElement.Source.LocalPath);
+        }
+        else
+        {
+            if ( string.IsNullOrEmpty(PlayFile?.FullPath) )
+            {
+                return;
+            }
+
+            // 获取目标目录和文件名
+            targetDir = Path.GetDirectoryName(PlayFile?.FullPath);
+            fileName = Path.GetFileNameWithoutExtension(MdElement.Source.LocalPath);
+        }
+
+        if ( string.IsNullOrEmpty(targetDir) || !Directory.Exists(targetDir) || string.IsNullOrEmpty(fileName) )
+        {
+            return;
+        }
+
+        // 获取缩略图名称
+        var frameName = await GetFrameName(targetDir, fileName);
+
+        // 保存缩略图
+        SaveThumbnail(targetDir, frameName);
+
+        // 创建记录标记
+        var mark = CreateRecordMark(frameName);
+
+        // 添加记录标记
+        await AddRecordMark(mark);
+    }
+
+    /// <summary>
+    ///     获取缩略图的名称
+    /// </summary>
+    /// <returns> 缩略图的名称 </returns>
+    private string GetThumbnailName()
+    {
+        if ( string.IsNullOrEmpty(PlayFile?.FullPath) )
+        {
+            return string.Empty;
+        }
+
+        // 获取目标目录
+        var targetDir = Path.GetDirectoryName(PlayFile?.FullPath);
+        if ( string.IsNullOrEmpty(targetDir) || !Directory.Exists(targetDir) )
+        {
+            return string.Empty;
+        }
+
+        if ( PlayMark is null )
+        {
+            return string.Empty;
+        }
+
+        // 构建缩略图的完整路径
+        return AppConfig.Instance.ShouluPath!.Combine(PlayMark.Thumb);
+    }
+    /// <summary>
+    ///     创建记录标记
+    /// </summary>
+    /// <returns> 创建的记录标记 </returns>
+    private RecordMark CreateRecordMark() =>
+        new()
+        {
+            Name = PlayMark!.Name,
+            RecordId = PlayMark.RecordId,
+            InPoint = TimeSpan.FromMilliseconds(SliderIn).ToString(@"hh\:mm\:ss\.ffff"),
+            OutPoint = TimeSpan.FromMilliseconds(SliderOut).ToString(@"hh\:mm\:ss\.ffff"),
+            Thumb = PlayMark.Thumb,
+            Id = PlayMark.Id,
+            Url = PlayMark.Url,
+            ChannelId = PlayMark.ChannelId
+        };
+    /// <summary>
+    ///     添加记录标记
+    /// </summary>
+    /// <param name = "mark" > 要添加的记录标记 </param>
+    private async Task AddRecordMarkWithPlayMark(RecordMark mark)
+    {
+        var result = await mark.SaveMark().ConfigureAwait(false);
+
+        if ( string.IsNullOrEmpty(result) )
+        {
+            // 如果保存失败，则将滑块的值重置为原始值
+            if ( !TimeSpan.TryParse(mark.InPoint, out var inpoint) )
+            {
+                inpoint = TimeSpan.Zero;
+            }
+            SliderIn = inpoint.TotalMilliseconds;
+            if ( !TimeSpan.TryParse(mark.OutPoint, out var outpoint) )
+            {
+                outpoint = TimeSpan.Zero;
+            }
+            SliderOut = outpoint.TotalMilliseconds;
+            return;
+        }
+
+        // 更新记录标记的入点和出点
+        PlayMark!.InPoint = TimeSpan.FromMilliseconds(SliderIn).ToString(@"hh\:mm\:ss\.ffff");
+        PlayMark.OutPoint = TimeSpan.FromMilliseconds(SliderOut).ToString(@"hh\:mm\:ss\.ffff");
+    }
+
+#endregion
+#region 播放设置
+
+    /// <summary>
+    ///     播单预览
+    /// </summary>
+    public async Task PlayPushAccessAsync()
+    {
+        try
+        {
+            await CleanupPlayer();
+            if ( CurrentPlayList is null )
+            {
+                return;
+            }
+
+            // 设置播放标题、重置Mark点列表、设置播放模式、播放列表
+            PlayName = CurrentPlayList.Title;
+            CurrentMarks = new ObservableList<RecordMark>();
+            PlayMode = PlayMode.PlayList;
+            PlayFiles = CurrentPlayList.RecordFiles;
+            if ( !CurrentPlayList.RecordFiles.Any() )
+            {
+                MessageBox.Warning("该播单条目为空，无法预览", "播单预览");
+                return;
+            }
+            MdPanel!.Visibility = Visibility.Visible;
+            MdActive.Visibility = Visibility.Collapsed;
+            foreach ( var recordFile in PlayFiles )
+            {
+                recordFile.MediaElement = new MediaElement
+                {
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Background = Brushes.Black,
+                    LoadedBehavior = MediaPlaybackState.Manual,
+                    IsHitTestVisible = false,
+                    Visibility = Visibility.Collapsed
+                };
+                recordFile.MediaElement.RenderingAudio += FfPlayOnRenderingAudio;
+                await recordFile.MediaElement.Open(new Uri(recordFile.FullPath));
+                if ( recordFile.RealInPoint is null || recordFile.RealOutPoint is null )
+                {
+                    recordFile.RealInPoint = recordFile.MediaElement.PlaybackStartTime;
+                    recordFile.RealOutPoint = recordFile.MediaElement.PlaybackEndTime;
+                }
+                await recordFile.MediaElement.Seek(recordFile.RealInPoint!.Value);
+                MdPanel.Children.Add(recordFile.MediaElement);
+            }
+
+            CurrentIndex = 0;
+            CurrentPlayFile = CurrentPlayList.RecordFiles[CurrentIndex];
+            CurrentPlayFile.MediaElement!.Visibility = Visibility.Visible;
+            PlayerInpoint = CurrentPlayFile.RealInPoint!.Value;
+            PlayerOutpoint = CurrentPlayFile.RealOutPoint!.Value;
+            MdElement = CurrentPlayFile.MediaElement!;
+            await MdElement.Play();
+        }
+        catch ( Exception e )
+        {
+            MessageBox.Warning($"播单播放器初始化异常：{e.Message}","播单预览");
+            await CleanupPlayer();
+        }
+    }
+    /// <summary>
+    ///     播放收录文件
+    /// </summary>
+    /// <param name = "file" > 要播放的收录文件 </param>
+    public async Task PlayRecordFileAsync(RecordFile file)
+    {
+        await CleanupPlayer();
+        // 切换显示的播放器元素
+        MdPanel!.Visibility = Visibility.Collapsed;
+        MdActive.Visibility = Visibility.Visible;
+        MdElement = MdActive;
+
+        // 设置播放文件相关的属性
+        PlayName = file.Name;
+        PlayMode = PlayMode.RecordFile;
+        CurrentMarks = file.Markers ??= new ObservableList<RecordMark>();
+        PlayFile = file;
+
+        // 检查文件是否存在
+        if ( !File.Exists(file.FullPath) )
+        {
+            MessageBox.Warning("文件丢失，无法预览", "播放");
+            return;
+        }
+        PlayerInpoint = null;
+        PlayerOutpoint = null;
+        // 打开并播放文件
+        await MdElement.Open(new Uri(file.FullPath));
+        await MdElement.Play();
+    }
+    public async Task PlayRecordAccess(RecordAccess access)
+    {
+        await CleanupPlayer();
+        // 切换显示的播放器元素
+        MdPanel!.Visibility = Visibility.Collapsed;
+        MdActive.Visibility = Visibility.Visible;
+        MdElement = MdActive;
+        // 设置播放模式为 Access，并设置相关属性
+        PlayMode = PlayMode.Access;
+        PlayName = access.AccessName;
+        CurrentMarks = await access.Channel!.ChannelId!.GetMarks(access.VideoPath!);
+        PlayChannel = access.Channel;
+        PlayerInpoint = null;
+        PlayerOutpoint = null;
+        // 打开视频文件
+        if ( !await MdElement.Open(new Uri(access.VideoPath!)))
+        {
+            MessageBox.Warning("收录预览失败", "预览");
+            return;
+        }
+
+        // 调整视频播放位置
+        await AdjustVideoPlayback();
+
+        // 播放视频
+        await MdElement.Play();
+
+        // 获取更新后的标记
+        CurrentMarks = await GetUpdatedMarks(access);
+    }
+
+// 调整视频播放位置
+    private async Task AdjustVideoPlayback()
+    {
+        if (MdElement.RemainingDuration is not null)
+        {
+            var remainingDuration = MdElement.RemainingDuration.Value;
+
+            if (remainingDuration.TotalSeconds > 20)
+            {
+                // 如果剩余时长大于 20 秒，则从剩余时长的倒数第 20 秒开始播放
+                await MdElement.Seek(remainingDuration.Add(TimeSpan.FromSeconds(-20)));
+            }
+            else if (remainingDuration.TotalSeconds > 0)
+            {
+                // 如果剩余时长小于等于 20 秒，则延迟播放剩余时长的秒数
+                var delay = remainingDuration.TotalSeconds;
+                await Task.Delay(TimeSpan.FromSeconds(delay));
+            }
+        }
+    }
+
+// 获取更新后的标记
+    private async Task<ObservableList<RecordMark>> GetUpdatedMarks(RecordAccess access)
+    {
+        var videoPath = MdElement.Source.LocalPath.Replace(
+            AppConfig.Instance.ShouluPath!.ToLower().Replace('/', '\\'),
+            string.Empty).Replace('\\', '/');
+
+        return await access!.Channel!.ChannelId!.GetMarks(videoPath);
+    }
+    /// <summary>
+    ///     播放Mark点
+    /// </summary>
+    /// <param name = "mark" > 要播放的Mark点 </param>
+    public async Task PlayMarkAsync(RecordMark mark)
+    {
+        // 清除播放器的标记点
+        RecordPlaybackFfPlayerCleanPointsCmd.Execute();
+
+        // 暂停播放
+        await MdElement.Pause();
+
+        // 解析标记点的时间
+        var inpoint = TimeSpan.TryParse(mark.InPoint, out var inPointTime) ? inPointTime : TimeSpan.Zero;
+        SliderIn = inpoint.TotalMilliseconds;
+        var outpoint = TimeSpan.TryParse(mark.OutPoint, out var outPointTime) ? outPointTime : TimeSpan.Zero;
+        SliderOut = outpoint.TotalMilliseconds;
+        IsInSet = true;
+        IsOutSet = true;
+
+        // 设置播放文件相关的属性
+        PlayName = mark.Name;
+        PlayMode = PlayMode.SubRecordFile;
+        PlayMark = mark;
+
+        // 跳转到标记点的时间
+        await MdElement.Seek(inpoint);
+    }
+    /// <summary>
+    /// 清理播放器状态和资源
+    /// </summary>
+    private async Task CleanupPlayer()
+    {
+        // 关闭当前打开的播放器
+        if (MdElement.IsOpen)
+        {
+            await MdElement.Close();
+        }
+        // 清空播放MdPanel所有播放器
+        MdPanel?.Children.Clear();
+        // 关闭播放列表模式下的所有播放文件
+        if (PlayFiles?.Any() ?? false)
+        {
+            foreach (var it in PlayFiles)
+            {
+                it.MediaElement?.Dispose();
+            }
+        }
+        // 清除播放器的标记点
+        RecordPlaybackFfPlayerCleanPointsCmd.Execute();
+    }
+#endregion
+
+#endregion
+#region 飞轮外设
+
+    private int intervalTime = 5;
+    /// <summary>
+    ///     设置intervalTime的值
+    /// </summary>
+    public DelegateCommand<string> IntervalTimeCmd => new(interval =>
+    {
+        if ( int.TryParse(interval, out var time) )
+        {
+            intervalTime = time;
+        }
+    });
+    /// <summary>
+    ///     向前调整位置的通用方法
+    /// </summary>
+    /// <param name = "interval" > 时间间隔 </param>
+    private void AdjustBackwardPosition(TimeSpan interval)
     {
         if ( PlayerInpoint is not null )
         {
-            if ( MdElement.Position - TimeSpan.FromSeconds(5) >
-                 PlayerOutpoint )
+            if ( MdElement.Position - interval > PlayerInpoint )
             {
-                MdElement.Position -= TimeSpan.FromSeconds(5);
+                MdElement.Position -= interval;
             }
             else
             {
@@ -488,21 +704,174 @@ private async Task AddRecordMarkWithPlayMark(RecordMark mark)
         }
         else if ( MdElement.PlaybackStartTime is not null )
         {
-            if ( MdElement.Position - TimeSpan.FromSeconds(5) >
-                 MdElement.PlaybackStartTime )
+            if ( MdElement.Position - interval > MdElement.PlaybackStartTime )
             {
-                MdElement.Position -= TimeSpan.FromSeconds(5);
+                MdElement.Position -= interval;
             }
             else
             {
-                MdElement.Position = MdElement.PlaybackStartTime!.Value;
+                MdElement.Position = MdElement.PlaybackStartTime.Value;
             }
         }
-        else
+    }
+    /// <summary>
+    ///     向后调整指定时间间隔
+    /// </summary>
+    /// <param name = "interval" > 时间间隔 </param>
+    private void AdjustForwardPosition(TimeSpan interval)
+    {
+        if ( PlayerOutpoint is not null )
         {
-            MdElement.Position = MdElement.PlaybackStartTime!.Value;
+            if ( MdElement.Position + interval <= PlayerOutpoint )
+            {
+                MdElement.Position += interval;
+            }
+            else
+            {
+                MdElement.Position = PlayerOutpoint!.Value;
+            }
         }
+        else if ( MdElement.PlaybackEndTime is not null )
+        {
+            if ( MdElement.Position + interval <= MdElement.PlaybackEndTime )
+            {
+                MdElement.Position += interval;
+            }
+            else
+            {
+                MdElement.Position = MdElement.PlaybackEndTime!.Value;
+            }
+        }
+    }
+    /// <summary>
+    ///     向前调整指定秒数
+    /// </summary>
+    public DelegateCommand BackwardCmd => new(() =>
+    {
+        AdjustBackwardPosition(TimeSpan.FromSeconds(intervalTime));
     });
+    /// <summary>
+    ///     向前整0.5秒
+    /// </summary>
+    public DelegateCommand Backward500msCmd => new(() =>
+    {
+        AdjustBackwardPosition(TimeSpan.FromSeconds(0.5));
+    });
+
+    /// <summary>
+    ///     向前调整1秒
+    /// </summary>
+    public DelegateCommand Backward1sCmd => new(() =>
+    {
+        AdjustBackwardPosition(TimeSpan.FromSeconds(1));
+    });
+
+    /// <summary>
+    ///     向前调整2秒
+    /// </summary>
+    public DelegateCommand Backward2sCmd => new(() =>
+    {
+        AdjustBackwardPosition(TimeSpan.FromSeconds(2));
+    });
+
+    /// <summary>
+    ///     向前调整5秒
+    /// </summary>
+    public DelegateCommand Backward5sCmd => new(() =>
+    {
+        AdjustBackwardPosition(TimeSpan.FromSeconds(5));
+    });
+
+    /// <summary>
+    ///     向前调整10秒
+    /// </summary>
+    public DelegateCommand Backward10sCmd => new(() =>
+    {
+        AdjustBackwardPosition(TimeSpan.FromSeconds(10));
+    });
+
+    /// <summary>
+    ///     向前调整15秒
+    /// </summary>
+    public DelegateCommand Backward15sCmd => new(() =>
+    {
+        AdjustBackwardPosition(TimeSpan.FromSeconds(15));
+    });
+
+    /// <summary>
+    ///     向前调整20秒
+    /// </summary>
+    public DelegateCommand Backward20sCmd => new(() =>
+    {
+        AdjustBackwardPosition(TimeSpan.FromSeconds(20));
+    });
+
+    /// <summary>
+    ///     向后调整指定秒数
+    /// </summary>
+    public DelegateCommand ForwardCmd => new(() =>
+    {
+        AdjustForwardPosition(TimeSpan.FromSeconds(intervalTime));
+    });
+    /// <summary>
+    ///     向后调整0.5秒
+    /// </summary>
+    public DelegateCommand Forward500msCmd => new(() =>
+    {
+        AdjustForwardPosition(TimeSpan.FromSeconds(0.5));
+    });
+
+    /// <summary>
+    ///     向后调整1秒
+    /// </summary>
+    public DelegateCommand Forward1sCmd => new(() =>
+    {
+        AdjustForwardPosition(TimeSpan.FromSeconds(1));
+    });
+
+    /// <summary>
+    ///     向后调整2秒
+    /// </summary>
+    public DelegateCommand Forward2sCmd => new(() =>
+    {
+        AdjustForwardPosition(TimeSpan.FromSeconds(2));
+    });
+
+    /// <summary>
+    ///     向后调整5秒
+    /// </summary>
+    public DelegateCommand Forward5sCmd => new(() =>
+    {
+        AdjustForwardPosition(TimeSpan.FromSeconds(5));
+    });
+
+    /// <summary>
+    ///     向后调整10秒
+    /// </summary>
+    public DelegateCommand Forward10sCmd => new(() =>
+    {
+        AdjustForwardPosition(TimeSpan.FromSeconds(10));
+    });
+
+    /// <summary>
+    ///     向后调整15秒
+    /// </summary>
+    public DelegateCommand Forward15sCmd => new(() =>
+    {
+        AdjustForwardPosition(TimeSpan.FromSeconds(15));
+    });
+
+    /// <summary>
+    ///     向后调整20秒
+    /// </summary>
+    public DelegateCommand Forward20sCmd => new(() =>
+    {
+        AdjustForwardPosition(TimeSpan.FromSeconds(20));
+    });
+
+#endregion
+#region Command-播放器
+
     /// <summary>
     ///     上一帧
     /// </summary>
@@ -570,40 +939,6 @@ private async Task AddRecordMarkWithPlayMark(RecordMark mark)
         }
     });
 
-    /// <summary>
-    ///     向后5秒
-    /// </summary>
-    public DelegateCommand RecordPlaybackFfPlayerForwardCmd => new(() =>
-    {
-        if ( PlayerOutpoint is not null )
-        {
-            if ( MdElement.Position + TimeSpan.FromSeconds(5) <=
-                 PlayerOutpoint )
-            {
-                MdElement.Position += TimeSpan.FromSeconds(5);
-            }
-            else
-            {
-                MdElement.Position = PlayerOutpoint!.Value;
-            }
-        }
-        else if ( MdElement.PlaybackEndTime is not null )
-        {
-            if ( MdElement.Position + TimeSpan.FromSeconds(5) <=
-                 MdElement.PlaybackEndTime )
-            {
-                MdElement.Position += TimeSpan.FromSeconds(5);
-            }
-            else
-            {
-                MdElement.Position = MdElement.PlaybackEndTime!.Value;
-            }
-        }
-        else
-        {
-            MdElement.Position = MdElement.PlaybackEndTime!.Value;
-        }
-    });
     /// <summary>
     ///     清除入出点
     /// </summary>

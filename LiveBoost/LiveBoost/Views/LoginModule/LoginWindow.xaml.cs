@@ -9,5 +9,6 @@ public partial class LoginWindow
     {
         InitializeComponent();
         ContentRendered += (_, _) => UserNameTextBox.Focus();
+
     }
 }

@@ -19,7 +19,9 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
     {
         // 初始化串口
         InitializeSerialPort();
-
+        // 初始化命令
+        PageUpdatedCmd = new DelegateCommand<FunctionEventArgs<int>>(PageUpdatedExecute);
+        RecordFileDoubleClickCmd = new DelegateCommand<MouseButtonEventArgs>(RecordFileDoubleClickExecute);
         // 初始化收录
         Task.Run(async () =>
         {
@@ -32,6 +34,8 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
             // 初始化公共收录列表
             await InitializePublicRecordFileAsync();
         });
+        PushAccessRecordFilesChanged.SubscriptionTokens.Add(GlobalEvent.Instance.GetEvent<PushAccessRecordFilesChanged>().Subscribe(RecordFilesOnCollectionChanged));
+
         // 播放器初始化
         MdActive = mediaElement;
         MdPanel = simple;
@@ -40,7 +44,6 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
 
         StartSocket().ConfigureAwait(false);
     }
-
 #endregion
 #region Properties
 
@@ -51,7 +54,6 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
 
 #endregion
 #region Event
-
     /// <summary>
     ///     初始化串口
     /// </summary>
