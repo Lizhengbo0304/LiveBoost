@@ -22,6 +22,7 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
         // 初始化命令
         PageUpdatedCmd = new DelegateCommand<FunctionEventArgs<int>>(PageUpdatedExecute);
         RecordFileDoubleClickCmd = new DelegateCommand<MouseButtonEventArgs>(RecordFileDoubleClickExecute);
+        ShowJggCmd = new DelegateCommand(ShowJggExecute);
         // 初始化收录
         Task.Run(async () =>
         {

@@ -65,6 +65,9 @@
         <Compile Include="ViewModels\CombinationModule\CombinationPushVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationRecordFilesVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationRecordVm.cs" />
+        <Compile Include="ViewModels\JggModule\JggMainWindowVm.cs" />
+        <Compile Include="ViewModels\JggModule\JggMonitoringSourceVm.cs" />
+        <Compile Include="ViewModels\JggModule\JggPreviewAccessPageVm.cs" />
         <Compile Include="ViewModels\LoginModule\LoginWindowVm.cs" />
         <Compile Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml.cs">
             <DependentUpon>CombinationChooseRecordChannelWindow.xaml</DependentUpon>
@@ -89,6 +92,18 @@
         </Compile>
         <Compile Include="Views\CombinationModule\CombinationPlayListOut.xaml.cs" />
         <Compile Include="Views\CombinationModule\CombinationPlayListOutXml.xaml.cs" />
+        <Compile Include="Views\JggModule\JggMainWindow.xaml.cs">
+          <DependentUpon>JggMainWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\JggModule\JggMonitoringSource.xaml.cs">
+          <DependentUpon>JggMonitoringSource.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\JggModule\JggPreviewAccessPage.xaml.cs">
+          <DependentUpon>JggPreviewAccessPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\JggModule\JggTitleBar.xaml.cs">
+          <DependentUpon>JggTitleBar.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\LoginModule\LoginWindow.xaml.cs">
             <DependentUpon>LoginWindow.xaml</DependentUpon>
         </Compile>
@@ -105,6 +120,7 @@
         <Page Include="Themes\Style\CombinationStyle\SearchBarStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\TabControlStyle.xaml" />
         <Page Include="Themes\Style\Controls\CombinationItemStyle.xaml" />
+        <Page Include="Themes\Style\JggModule\ListViewStyle.xaml" />
         <Page Include="Themes\Theme.xaml" />
         <Page Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml" />
         <Page Include="Views\CombinationModule\CombinationMainWindow.xaml" />
@@ -115,6 +131,10 @@
         <Page Include="Views\CombinationModule\CombinationTitleBar.xaml" />
         <Page Include="Views\CombinationModule\CombinationPlayListOut.xaml" />
         <Page Include="Views\CombinationModule\CombinationPlayListOutXml.xaml" />
+        <Page Include="Views\JggModule\JggMainWindow.xaml" />
+        <Page Include="Views\JggModule\JggMonitoringSource.xaml" />
+        <Page Include="Views\JggModule\JggPreviewAccessPage.xaml" />
+        <Page Include="Views\JggModule\JggTitleBar.xaml" />
         <Page Include="Views\LoginModule\LoginWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
@@ -141,8 +161,6 @@
         <Folder Include="Themes\Basic\" />
         <Folder Include="ViewModels\NornalModule\" />
         <Folder Include="ViewModels\SingleModule\" />
-        <Folder Include="Views\NornalModule\" />
-        <Folder Include="Views\SingleModule\" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AutoProperties.Fody" Version="1.25.0">

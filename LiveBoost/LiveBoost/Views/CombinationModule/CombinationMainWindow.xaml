@@ -12,7 +12,7 @@
            WindowStyle = "None" >
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0"
-                      UseAeroCaptionButtons="False" CaptionHeight="40"/>
+                      UseAeroCaptionButtons="True" CaptionHeight="40"/>
     </WindowChrome.WindowChrome>
       <Window.InputBindings>
         <KeyBinding Gesture="Control+Shift+1" Command="{Binding IntervalTimeCmd}" CommandParameter="5"/>
@@ -49,7 +49,10 @@
         <!-- 标题栏 -->
         <views:CombinationTitleBar Grid.Row = "0" />
         <!-- 主窗口内容 -->
-        <Border Grid.Row = "1" Background = "#484A4E" >
+        <hc:SimplePanel Grid.Row="1">
+            <Border Background = "#484A4E" />
+            <hc:Divider  Margin = "0,5,0,0" VerticalAlignment = "Top" LineStroke = "#3C3D3F"
+                        LineStrokeThickness = "2" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width = "Auto" />
@@ -74,6 +77,6 @@
                     <views:CombinationRecordFilesPage Grid.Row = "1" Margin = "0 0 20 20" />
                 </Grid>
             </Grid>
-        </Border>
+        </hc:SimplePanel>
     </Grid>
 </hc:Window>

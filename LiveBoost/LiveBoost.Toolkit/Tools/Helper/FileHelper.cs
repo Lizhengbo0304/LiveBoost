@@ -1,16 +1,5 @@
 ﻿// 创建时间：2023-06-06-14:22
 // 修改时间：2023-07-18-9:37
-
-#region
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-
-#endregion
-
 namespace LiveBoost.Toolkit.Tools;
 
 public static class FileHelper

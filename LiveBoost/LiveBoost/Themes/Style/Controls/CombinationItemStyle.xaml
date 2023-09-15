@@ -7,30 +7,34 @@
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType = "controls1:CombinationItem" >
-        <Setter Property = "Height" Value = "181" />
-        <Setter Property = "Width" Value = "314" />
         <Setter Property = "Margin" Value = "0" />
         <Setter Property = "BorderThickness" Value = "5" />
         <Setter Property = "BorderBrush" Value = "Transparent" />
         <Setter Property = "Background" Value = "Black" />
-        <Setter Property = "HorizontalAlignment" Value = "Left" />
-        <Setter Property = "VerticalAlignment" Value = "Top" />
+        <Setter Property = "HorizontalAlignment" Value = "Stretch" />
+        <Setter Property = "VerticalAlignment" Value = "Stretch" />
         <Setter Property = "Template" >
             <Setter.Value>
                 <ControlTemplate TargetType = "controls1:CombinationItem" >
-                    <hc:SimplePanel Height = "{TemplateBinding Height}" Width = "{TemplateBinding Width}" >
+                    <hc:SimplePanel >
                         <Border BorderBrush = "{TemplateBinding BorderBrush}"
                                 Background = "{TemplateBinding Background}"
                                 BorderThickness = "{TemplateBinding BorderThickness}"/>
-                        <Button Margin = "0 41 0 15" Width = "46" Height = "46"
-                                IconElement.Width = "46" IconElement.Height = "46"
-                                VerticalAlignment = "Top"
-                                Command = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=AddShouluChannelCommand}"
-                                IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/add.png"
-                                Style = "{StaticResource IconButtonStyle}" />
-                        <Image Margin = "0 101 0 0" VerticalAlignment = "Top" Width = "75" Stretch = "Uniform"
-                               HorizontalAlignment = "Center"
-                               Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/liveboost.png" />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0" Margin = "0 0 0 -5" Width = "46" Height = "46"
+                                    IconElement.Width = "46" IconElement.Height = "46"
+                                    VerticalAlignment = "Bottom"
+                                    Command = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=AddShouluChannelCommand}"
+                                    IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/add.png"
+                                    Style = "{StaticResource IconButtonStyle}" />
+                            <Image Grid.Row="1" Margin = "0 20 0 0" VerticalAlignment = "Top" Width = "75" Stretch = "Uniform"
+                                   HorizontalAlignment = "Center"
+                                   Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/liveboost.png" />
+                        </Grid>
                         <ContentPresenter Content = "{TemplateBinding Content}" Margin = "5" />
                     </hc:SimplePanel>
                 </ControlTemplate>

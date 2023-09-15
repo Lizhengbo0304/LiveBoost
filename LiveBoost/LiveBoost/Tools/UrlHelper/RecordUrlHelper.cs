@@ -52,6 +52,7 @@ public static partial class UrlHelper
             e.LogUrlError("获取收录频道");
             return new List<RecordChannel>();
         }
+
     }
     /// <summary>
     ///     开始收录

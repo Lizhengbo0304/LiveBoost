@@ -12,5 +12,7 @@
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/SearchBarStyle.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/TabControlStyle.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ComboBoxStyle.xaml" />
+        <!-- JggModule -->
+        <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/JggModule/ListViewStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

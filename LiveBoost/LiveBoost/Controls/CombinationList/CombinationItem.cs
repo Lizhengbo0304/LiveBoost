@@ -106,16 +106,59 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
         {
             return; // 如果无法找到CombinationListView的父级元素，则直接返回
         }
+        if ( combination.FindVisualChild<UniformGrid>() is not {} uniformGrid )
+        {
+            return; // 如果无法找到UniformGrid，直接返回
+        }
 
         var index = combination.ItemContainerGenerator.IndexFromContainer(this); // 获取当前元素在CombinationListView中的索引
-
-        // 根据索引设置Margin属性
-        Margin = index switch
+        Margin = uniformGrid.Rows switch
         {
-            1 => new Thickness(-5, 0, 0, 0),
-            2 => new Thickness(0, -5, 0, 0),
-            3 => new Thickness(-5, -5, 0, 0),
-            _ => new Thickness(0)
+            2 =>
+                // 根据索引设置Margin属性
+                index switch
+                {
+                    1 => new Thickness(-5, 0, 0, 0),
+                    2 => new Thickness(0, -5, 0, 0),
+                    3 => new Thickness(-5, -5, 0, 0),
+                    _ => new Thickness(0)
+                },
+            3 =>
+                // 根据索引设置Margin属性
+                index switch
+                {
+                    1 => new Thickness(-5, 0, 0, 0),
+                    2 => new Thickness(-5, 0, 0, 0),
+                    3 => new Thickness(0, -5, 0, 0),
+                    4 => new Thickness(-5, -5, 0, 0),
+                    5 => new Thickness(-5, -5, 0, 0),
+                    6 => new Thickness(0, -5, 0, 0),
+                    7 => new Thickness(-5, -5, 0, 0),
+                    8 => new Thickness(-5, -5, 0, 0),
+                    _ => new Thickness(0)
+                },
+            4 =>
+                // 根据索引设置Margin属性
+                index switch
+                {
+                    1 => new Thickness(-5, 0, 0, 0),
+                    2 => new Thickness(-5, 0, 0, 0),
+                    3 => new Thickness(-5, 0, 0, 0),
+                    4 => new Thickness(0, -5, 0, 0),
+                    5 => new Thickness(-5, -5, 0, 0),
+                    6 => new Thickness(-5, -5, 0, 0),
+                    7 => new Thickness(-5, -5, 0, 0),
+                    8 => new Thickness(0, -5, 0, 0),
+                    9 => new Thickness(-5, -5, 0, 0),
+                    10 => new Thickness(-5, -5, 0, 0),
+                    11 => new Thickness(-5, -5, 0, 0),
+                    12 => new Thickness(0, -5, 0, 0),
+                    13 => new Thickness(-5, -5, 0, 0),
+                    14 => new Thickness(-5, -5, 0, 0),
+                    15 => new Thickness(-5, -5, 0, 0),
+                    _ => new Thickness(0)
+                },
+            _ => Margin
         };
 
         IsEnabled = RecordAccess is not null; // 根据RecordAccess属性是否为null来设置IsEnabled属性

@@ -16,8 +16,11 @@ public sealed partial class CombinationMainWindowVm
     /// <summary>
     ///     收录通道翻页命令
     /// </summary>
-    public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCmd { get; set; }
-
+    public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCmd { get; }
+    /// <summary>
+    /// 展示九宫格界面
+    /// </summary>
+    public DelegateCommand ShowJggCmd { get; set; }
 #endregion
 #region Command-Event
 
@@ -32,6 +35,14 @@ public sealed partial class CombinationMainWindowVm
             var recordItem = RecordItems[i];
             recordItem.RecordAccess = TotalRecordAccesses?.Skip(( info.Info - 1 ) * 4 + i).ToList()[0];
         }
+    }
+    /// <summary>
+    /// 展示九宫格界面
+    /// </summary>
+    private void ShowJggExecute()
+    {
+        var jgg = new JggMainWindow();
+        jgg.Show();
     }
 #endregion
     #region 初始化收录通道

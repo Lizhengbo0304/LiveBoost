@@ -140,7 +140,7 @@ public static partial class UrlHelper
     /// <summary>
     ///     导出视频
     /// </summary>
-    public static async Task<bool> OutPlayList2Video(this string playListId, string exportName, string templateId)
+    public static async Task OutPlayList2Video(this string playListId, string exportName, string templateId)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/export";
         if ( url.StartsWith("https") || url.StartsWith("http") )
@@ -165,23 +165,18 @@ public static partial class UrlHelper
             {
                 MessageBox.Warning(jobj["msg"]?.Value<string>(), "导出视频");
             }
-
-            // Success = 0 : 请求失败
-            return jobj["code"]?.Value<int>() == 200;
-
         }
         catch ( Exception e )
         {
             MessageBox.Error(e.InnerException?.Message ?? e.Message, "导出视频");
             e.LogUrlError("导出视频");
-            return false;
         }
     }
 
     /// <summary>
     ///     导出Xml
     /// </summary>
-    public static async Task<bool> OutPlayList2Xml(this string playListId, string exportName)
+    public static async Task OutPlayList2Xml(this string playListId, string exportName)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/exportxml";
         if ( url.StartsWith("https") || url.StartsWith("http") )
@@ -206,16 +201,11 @@ public static partial class UrlHelper
             {
                 MessageBox.Warning(jobj["msg"]?.Value<string>(), "导出Xml");
             }
-
-            // Success = 0 : 请求失败
-            return jobj["code"]?.Value<int>() == 200;
-
         }
         catch ( Exception e )
         {
             MessageBox.Error(e.InnerException?.Message ?? e.Message, "导出Xml");
             e.LogUrlError("导出Xml");
-            return false;
         }
     }
 
