@@ -1,17 +1,17 @@
 ﻿// 创建时间：2023-09-04-14:40
-// 修改时间：2023-09-06-9:03
+// 修改时间：2023-09-15-15:41
 
 namespace LiveBoost.Toolkit.Tools;
 
 public static class FindControlTool
 {
     /// <summary>
-    /// 在可视树中查找具有指定名称的可视子元素。
+    ///     在可视树中查找具有指定名称的可视子元素。
     /// </summary>
-    /// <typeparam name="T">要查找的子元素的类型。</typeparam>
-    /// <param name="parent">要查找子元素的父元素。</param>
-    /// <param name="childName">要查找的子元素的名称。</param>
-    /// <returns>找到的子元素，如果未找到则为null。</returns>
+    /// <typeparam name = "T" > 要查找的子元素的类型。 </typeparam>
+    /// <param name = "parent" > 要查找子元素的父元素。 </param>
+    /// <param name = "childName" > 要查找的子元素的名称。 </param>
+    /// <returns> 找到的子元素，如果未找到则为null。 </returns>
     public static T? FindVisualChild<T>(this DependencyObject? parent, string? childName = null)
         where T : FrameworkElement
     {

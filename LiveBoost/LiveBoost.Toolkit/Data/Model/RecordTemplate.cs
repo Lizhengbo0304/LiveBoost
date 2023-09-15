@@ -1,7 +1,11 @@
-﻿// 创建时间：2023-06-06-14:15
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-07-11:58
+// 修改时间：2023-09-15-15:41
+
+#region
 
 using LiveBoost.ToolKit.Tools;
+
+#endregion
 
 namespace LiveBoost.ToolKit.Data;
 
@@ -10,7 +14,7 @@ public sealed class RecordTemplate : INotifyPropertyChanged
 {
     public RecordTemplate() => RecordFiles = new ObservableList<RecordFile>();
 
-    #region INotifyPropertyChangedEvent
+#region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -35,9 +39,9 @@ public sealed class RecordTemplate : INotifyPropertyChanged
         return true;
     }
 
-    #endregion
+#endregion
 
-    #region Property
+#region Property
 
     [JsonProperty("id")] public string? Id { get; set; }
 
@@ -56,9 +60,9 @@ public sealed class RecordTemplate : INotifyPropertyChanged
 
     [JsonProperty("createTime")] public DateTime? CreateTime { get; set; }
 
-    #endregion
+#endregion
 
-    #region UI - Property
+#region UI - Property
 
     /// <summary>
     ///     播单列表
@@ -77,5 +81,5 @@ public sealed class RecordTemplate : INotifyPropertyChanged
     public PlayListDragHandler PlayListDragHandler => new();
     public PlayListDropHandler PlayListDropHandler => new();
 
-    #endregion
+#endregion
 }

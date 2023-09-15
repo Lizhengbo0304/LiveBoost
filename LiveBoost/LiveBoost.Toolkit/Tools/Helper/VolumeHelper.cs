@@ -1,5 +1,5 @@
-﻿// 创建时间：2023-07-12-11:19
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-06-9:05
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -18,9 +18,9 @@ public static class VolumeHelper
     private static extern int waveOutSetVolume(IntPtr hwo, uint dwVolume);
 
     /// <summary>
-    /// 获取当前系统音量级别。
+    ///     获取当前系统音量级别。
     /// </summary>
-    /// <returns>音量级别，范围从0（最小）到10（最大）。</returns>
+    /// <returns> 音量级别，范围从0（最小）到10（最大）。 </returns>
     public static int GetVolume()
     {
         waveOutGetVolume(IntPtr.Zero, out var currentVolume);
@@ -30,9 +30,9 @@ public static class VolumeHelper
     }
 
     /// <summary>
-    /// 设置系统音量级别。
+    ///     设置系统音量级别。
     /// </summary>
-    /// <param name="volume">音量级别，范围从0（最小）到10（最大）。</param>
+    /// <param name = "volume" > 音量级别，范围从0（最小）到10（最大）。 </param>
     public static void SetVolume(int volume)
     {
         var newVolume = (ushort) ( ushort.MaxValue / 10 * volume );
@@ -41,16 +41,15 @@ public static class VolumeHelper
     }
 
     /// <summary>
-    /// 计算音频信号的均方根（RMS）分贝值。
+    ///     计算音频信号的均方根（RMS）分贝值。
     /// </summary>
-    /// <param name="samples">音频样本数据。</param>
-    /// <returns>RMS分贝值。</returns>
+    /// <param name = "samples" > 音频样本数据。 </param>
+    /// <returns> RMS分贝值。 </returns>
     public static double CalculateRms(short[] samples)
     {
         var sum = samples.Aggregate<short, double>(0, (current, t) => current + t * t);
-        var rms = Math.Sqrt(sum / (samples.Length / 2.0));
+        var rms = Math.Sqrt(sum / ( samples.Length / 2.0 ));
         var db = 20 * Math.Log10(rms);
         return db;
     }
-
 }

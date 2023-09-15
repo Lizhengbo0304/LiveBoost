@@ -6,40 +6,39 @@
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:views = "clr-namespace:LiveBoost.Views" mc:Ignorable = "d" Title = "LiveBoost" Width = "1653"
            Height = "960" prism:ViewModelLocator.AutoWireViewModel = "False" BorderBrush = "Transparent"
-           BorderThickness = "0" FontFamily = "Microsoft YaHei" Background="Transparent"
+           BorderThickness = "0" FontFamily = "Microsoft YaHei" Background = "Transparent"
            Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
            ShowNonClientArea = "False" ResizeMode = "CanMinimize" WindowStartupLocation = "CenterScreen"
            WindowStyle = "None" >
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0"
-                      UseAeroCaptionButtons="True" CaptionHeight="40"/>
+        <WindowChrome GlassFrameThickness = "0" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
     </WindowChrome.WindowChrome>
-      <Window.InputBindings>
-        <KeyBinding Gesture="Control+Shift+1" Command="{Binding IntervalTimeCmd}" CommandParameter="5"/>
-        <KeyBinding Gesture="Control+Shift+2" Command="{Binding IntervalTimeCmd}" CommandParameter="10"/>
-        <KeyBinding Gesture="Control+Shift+3" Command="{Binding IntervalTimeCmd}" CommandParameter="15"/>
-        <KeyBinding Gesture="Control+Shift+4" Command="{Binding IntervalTimeCmd}" CommandParameter="20"/>
-        <KeyBinding Gesture="Control+Alt+I" Command="{Binding RecordPlaybackFfPlayerAddInPointCmd}"/>
-        <KeyBinding Gesture="Control+Alt+B" Command="{Binding RecordPlaybackFfPlayerStepBackwardCmd}"/>
-        <KeyBinding Gesture="Control+Alt+F" Command="{Binding RecordPlaybackFfPlayerStepForwardCmd}"/>
-        <KeyBinding Gesture="Control+Alt+O" Command="{Binding RecordPlaybackFfPlayerAddOutPointCmd}"/>
-        <KeyBinding Gesture="Control+Alt+P" Command="{Binding RecordPlaybackFfPlayerPlayPauseCmd}"/>
-        <KeyBinding Gesture="Control+Alt+Left" Command="{Binding BackwardCmd}"/>
-        <KeyBinding Gesture="Control+Alt+1" Command="{Binding Backward500msCmd}"/>
-        <KeyBinding Gesture="Control+Alt+2" Command="{Binding Backward1sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+3" Command="{Binding Backward2sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+4" Command="{Binding Backward5sCmd}"/>
-        <KeyBinding Gesture="Control+Alt+5" Command="{Binding Backward10sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+6" Command="{Binding Backward15sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+7" Command="{Binding Backward20sCmd}"/>
-        <KeyBinding Gesture="Control+Alt+Shift+1" Command="{Binding Forward500msCmd }"/>
-        <KeyBinding Gesture="Control+Alt+Shift+2" Command="{Binding Forward1sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+Shift+3" Command="{Binding Forward2sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+Shift+4" Command="{Binding Forward5sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+Shift+5" Command="{Binding Forward10sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+Shift+6" Command="{Binding Forward15sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+Shift+7" Command="{Binding Forward20sCmd }"/>
-        <KeyBinding Gesture="Control+Alt+Right" Command="{Binding ForwardCmd}"/>
+    <Window.InputBindings>
+        <KeyBinding Gesture = "Control+Shift+1" Command = "{Binding IntervalTimeCmd}" CommandParameter = "5" />
+        <KeyBinding Gesture = "Control+Shift+2" Command = "{Binding IntervalTimeCmd}" CommandParameter = "10" />
+        <KeyBinding Gesture = "Control+Shift+3" Command = "{Binding IntervalTimeCmd}" CommandParameter = "15" />
+        <KeyBinding Gesture = "Control+Shift+4" Command = "{Binding IntervalTimeCmd}" CommandParameter = "20" />
+        <KeyBinding Gesture = "Control+Alt+I" Command = "{Binding RecordPlaybackFfPlayerAddInPointCmd}" />
+        <KeyBinding Gesture = "Control+Alt+B" Command = "{Binding RecordPlaybackFfPlayerStepBackwardCmd}" />
+        <KeyBinding Gesture = "Control+Alt+F" Command = "{Binding RecordPlaybackFfPlayerStepForwardCmd}" />
+        <KeyBinding Gesture = "Control+Alt+O" Command = "{Binding RecordPlaybackFfPlayerAddOutPointCmd}" />
+        <KeyBinding Gesture = "Control+Alt+P" Command = "{Binding RecordPlaybackFfPlayerPlayPauseCmd}" />
+        <KeyBinding Gesture = "Control+Alt+Left" Command = "{Binding BackwardCmd}" />
+        <KeyBinding Gesture = "Control+Alt+1" Command = "{Binding Backward500msCmd}" />
+        <KeyBinding Gesture = "Control+Alt+2" Command = "{Binding Backward1sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+3" Command = "{Binding Backward2sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+4" Command = "{Binding Backward5sCmd}" />
+        <KeyBinding Gesture = "Control+Alt+5" Command = "{Binding Backward10sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+6" Command = "{Binding Backward15sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+7" Command = "{Binding Backward20sCmd}" />
+        <KeyBinding Gesture = "Control+Alt+Shift+1" Command = "{Binding Forward500msCmd }" />
+        <KeyBinding Gesture = "Control+Alt+Shift+2" Command = "{Binding Forward1sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+Shift+3" Command = "{Binding Forward2sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+Shift+4" Command = "{Binding Forward5sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+Shift+5" Command = "{Binding Forward10sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+Shift+6" Command = "{Binding Forward15sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+Shift+7" Command = "{Binding Forward20sCmd }" />
+        <KeyBinding Gesture = "Control+Alt+Right" Command = "{Binding ForwardCmd}" />
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -49,10 +48,9 @@
         <!-- 标题栏 -->
         <views:CombinationTitleBar Grid.Row = "0" />
         <!-- 主窗口内容 -->
-        <hc:SimplePanel Grid.Row="1">
+        <hc:SimplePanel Grid.Row = "1" >
             <Border Background = "#484A4E" />
-            <hc:Divider  Margin = "0,5,0,0" VerticalAlignment = "Top" LineStroke = "#3C3D3F"
-                        LineStrokeThickness = "2" />
+            <hc:Divider Margin = "0,5,0,0" VerticalAlignment = "Top" LineStroke = "#3C3D3F" LineStrokeThickness = "2" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width = "Auto" />

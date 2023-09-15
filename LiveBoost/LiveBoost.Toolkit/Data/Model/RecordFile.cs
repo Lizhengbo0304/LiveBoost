@@ -1,7 +1,12 @@
 ﻿// 创建时间：2023-09-07-10:31
-// 修改时间：2023-09-07-12:02
+// 修改时间：2023-09-15-15:41
+
+#region
 
 using LiveBoost.ToolKit.Tools;
+using MediaElement = Unosquare.FFME.MediaElement;
+
+#endregion
 
 namespace LiveBoost.Toolkit.Data;
 
@@ -19,9 +24,9 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
                     case 1:
                         return AppConfig.Instance.FolderIcon;
                     default:
-                        return string.IsNullOrEmpty(AppConfig.Instance.ShouluPath?.Combine(Thumb)) ?
-                            AppConfig.Instance.DefaultIcon :
-                            AppConfig.Instance.ShouluPath!.Combine(Thumb).GetThumbnailByPath(AppConfig.Instance.DefaultIcon);
+                        return string.IsNullOrEmpty(AppConfig.Instance.ShouluPath?.Combine(Thumb))
+                            ? AppConfig.Instance.DefaultIcon
+                            : AppConfig.Instance.ShouluPath!.Combine(Thumb).GetThumbnailByPath(AppConfig.Instance.DefaultIcon);
                 }
             });
         }, AppConfig.Instance.DefaultIcon);
@@ -177,7 +182,7 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
 
     public bool IsPlaying { get; set; }
 
-    public Unosquare.FFME. MediaElement? MediaElement { get; set; }
+    public MediaElement? MediaElement { get; set; }
 
 #endregion
 

@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-11:17
-// 修改时间：2023-09-11-10:31
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -106,7 +106,7 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
         {
             return; // 如果无法找到CombinationListView的父级元素，则直接返回
         }
-        if ( combination.FindVisualChild<UniformGrid>() is not {} uniformGrid )
+        if ( combination.FindVisualChild<UniformGrid>() is not { } uniformGrid )
         {
             return; // 如果无法找到UniformGrid，直接返回
         }
@@ -353,46 +353,47 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
         _controlSemaphoreSlim.Release();
     }
 
-public async void Send2MainPlayer()
-{
-    // 检查控制信号量是否已被占用
-    if (_controlSemaphoreSlim.CurrentCount <= 0)
+    public async void Send2MainPlayer()
     {
-        return;
+        // 检查控制信号量是否已被占用
+        if ( _controlSemaphoreSlim.CurrentCount <= 0 )
+        {
+            return;
+        }
+        await _controlSemaphoreSlim.WaitAsync();
+
+        try
+        {
+            // 检查 CombinationMainWindowVm 是否为空
+            if ( CombinationMainWindowVm is null )
+            {
+                return;
+            }
+
+            // 检查 RecordAccess 的 ChannelId 是否为空
+            if ( string.IsNullOrEmpty(RecordAccess?.Channel?.ChannelId) )
+            {
+                return;
+            }
+
+            // 检查 RecordAccess 的 VideoPath 是否为空
+            if ( string.IsNullOrEmpty(RecordAccess?.VideoPath) )
+            {
+                return;
+            }
+
+            // 检查 VideoPath 对应的文件是否存在
+            if ( !File.Exists(RecordAccess!.VideoPath) )
+            {
+                return;
+            }
+            await CombinationMainWindowVm.PlayRecordAccess(RecordAccess);
+        }
+        finally
+        {
+            _controlSemaphoreSlim.Release();
+        }
     }
-    await _controlSemaphoreSlim.WaitAsync();
 
-    try
-    {
-        // 检查 CombinationMainWindowVm 是否为空
-        if (CombinationMainWindowVm is null)
-        {
-            return;
-        }
-
-        // 检查 RecordAccess 的 ChannelId 是否为空
-        if (string.IsNullOrEmpty(RecordAccess?.Channel?.ChannelId))
-        {
-            return;
-        }
-
-        // 检查 RecordAccess 的 VideoPath 是否为空
-        if (string.IsNullOrEmpty(RecordAccess?.VideoPath))
-        {
-            return;
-        }
-
-        // 检查 VideoPath 对应的文件是否存在
-        if (!File.Exists(RecordAccess!.VideoPath))
-        {
-            return;
-        }
-        await CombinationMainWindowVm.PlayRecordAccess(RecordAccess);
-    }
-    finally
-    {
-        _controlSemaphoreSlim.Release();
-    }
-}
 #endregion
 }

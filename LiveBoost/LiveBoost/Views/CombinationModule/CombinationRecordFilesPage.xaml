@@ -5,12 +5,10 @@
                xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
                xmlns:hc = "https://handyorg.github.io/handycontrol" xmlns:dd = "urn:gong-wpf-dragdrop"
-               xmlns:controls = "clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
-               mc:Ignorable = "d"
+               xmlns:controls = "clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel" mc:Ignorable = "d"
                d:DesignHeight = "300" d:DesignWidth = "300" >
     <hc:TabItem Header = "当前素材" >
-        <FlyListView Style = "{StaticResource BaseListViewStyle}"
-                     ItemsSource = "{Binding CurrentMarks}"
+        <FlyListView Style = "{StaticResource BaseListViewStyle}" ItemsSource = "{Binding CurrentMarks}"
                      dd:DragDrop.IsDragSource = "True" dd:DragDrop.ShowAlwaysDropTargetAdorner = "True"
                      dd:DragDrop.DropScrollingMode = "VerticalOnly"
                      dd:DragDrop.DragHandler = "{Binding PlayListDragHandler}"
@@ -87,7 +85,7 @@
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <controls:VirtualizingWrapPanel Orientation = "Vertical" SpacingMode = "None"
-                                                        StretchItems = "False"/>
+                                                        StretchItems = "False" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </FlyListView>

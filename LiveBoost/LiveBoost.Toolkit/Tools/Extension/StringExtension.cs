@@ -1,5 +1,5 @@
-﻿// 创建时间：2023-06-06-14:22
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-07-14:33
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -39,13 +39,13 @@ public static class StringExtension
     /// <summary>
     ///     组合基础路径和相对路径
     /// </summary>
-    /// <param name="basePath">基础路径</param>
-    /// <param name="relativePath">相对路径</param>
-    /// <returns>组合后的路径，使用正斜杠（/）</returns>
+    /// <param name = "basePath" > 基础路径 </param>
+    /// <param name = "relativePath" > 相对路径 </param>
+    /// <returns> 组合后的路径，使用正斜杠（/） </returns>
     public static string Combine(this string? basePath, string? relativePath)
     {
         // 如果基础路径为空，返回相对路径
-        if (string.IsNullOrEmpty(basePath) || string.IsNullOrEmpty(relativePath))
+        if ( string.IsNullOrEmpty(basePath) || string.IsNullOrEmpty(relativePath) )
         {
             return string.Empty;
         }
@@ -56,13 +56,13 @@ public static class StringExtension
     /// <summary>
     ///     组合基础路径和多个相对路径参数
     /// </summary>
-    /// <param name="basePath">基础路径</param>
-    /// <param name="relativePaths">一个或多个相对路径</param>
-    /// <returns>组合后的路径，使用正斜杠（/）</returns>
+    /// <param name = "basePath" > 基础路径 </param>
+    /// <param name = "relativePaths" > 一个或多个相对路径 </param>
+    /// <returns> 组合后的路径，使用正斜杠（/） </returns>
     public static string Combine(this string? basePath, params string?[] relativePaths)
     {
         // 如果基础路径为空，返回空字符串
-        if (string.IsNullOrEmpty(basePath) ||relativePaths.All(string.IsNullOrEmpty))
+        if ( string.IsNullOrEmpty(basePath) || relativePaths.All(string.IsNullOrEmpty) )
         {
             return string.Empty;
         }
@@ -71,9 +71,9 @@ public static class StringExtension
         basePath = basePath!.TrimEnd('\\', '/');
 
         // 遍历所有的相对路径，去除前后可能存在的 '/' 和 '\\'
-        for (var i = 0; i < relativePaths.Length; i++)
+        for ( var i = 0; i < relativePaths.Length; i++ )
         {
-            if (!string.IsNullOrEmpty(relativePaths[i]))
+            if ( !string.IsNullOrEmpty(relativePaths[i]) )
             {
                 relativePaths[i] = relativePaths[i]!.Trim('\\', '/');
             }

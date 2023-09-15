@@ -1,29 +1,30 @@
-﻿// 创建时间：2023-06-06-14:22
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-07-15:33
+// 修改时间：2023-09-15-15:41
+
 namespace LiveBoost.Toolkit.Tools;
 
 public static class FileHelper
 {
     /// <summary>
-    /// 检查文件名是否包含非法字符
+    ///     检查文件名是否包含非法字符
     /// </summary>
-    /// <param name="fileName">文件名</param>
-    /// <returns>如果文件名包含非法字符，则返回 true；否则返回 false</returns>
+    /// <param name = "fileName" > 文件名 </param>
+    /// <returns> 如果文件名包含非法字符，则返回 true；否则返回 false </returns>
     public static bool HasInvalidSymbol(this string fileName) =>
         fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 ||
         fileName.IndexOfAny(Path.GetInvalidPathChars()) >= 0;
 
     /// <summary>
-    /// 获取新增文件（夹）检测重名后的新名称
+    ///     获取新增文件（夹）检测重名后的新名称
     /// </summary>
-    /// <param name="path">目标路径</param>
-    /// <param name="itemType">1=文件夹, 2=文件</param>
-    /// <param name="name">默认名称</param>
-    /// <param name="extension">type==2 时使用，文件的扩展名</param>
-    /// <returns>最新名称</returns>
+    /// <param name = "path" > 目标路径 </param>
+    /// <param name = "itemType" > 1=文件夹, 2=文件 </param>
+    /// <param name = "name" > 默认名称 </param>
+    /// <param name = "extension" > type==2 时使用，文件的扩展名 </param>
+    /// <returns> 最新名称 </returns>
     public static string GetNewNameInPath(this string path, int itemType = 1, string name = "新建文件夹", string? extension = null)
     {
-        if (!Directory.Exists(path))
+        if ( !Directory.Exists(path) )
         {
             // 如果目标路径不存在，则直接返回默认名称和扩展名（如果有）
             return $"{name}{extension}";
@@ -39,7 +40,7 @@ public static class FileHelper
             : $"{name}{extension}";
 
         // 检查是否存在重名的文件或文件夹，如果存在，则在名称后添加索引直到找到一个可用的名称
-        while (names.Any(it => string.Equals(Path.GetFileName(it), newName, StringComparison.OrdinalIgnoreCase)))
+        while ( names.Any(it => string.Equals(Path.GetFileName(it), newName, StringComparison.OrdinalIgnoreCase)) )
         {
             index++;
             newName = itemType == 1
@@ -51,26 +52,26 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 异步获取新增文件（夹）检测重名后的新名称
+    ///     异步获取新增文件（夹）检测重名后的新名称
     /// </summary>
-    /// <param name="path">目标路径</param>
-    /// <param name="itemType">1=文件夹, 2=文件</param>
-    /// <param name="name">默认名称</param>
-    /// <param name="extension">type==2 时使用，文件的扩展名</param>
-    /// <returns>最新名称的异步任务</returns>
+    /// <param name = "path" > 目标路径 </param>
+    /// <param name = "itemType" > 1=文件夹, 2=文件 </param>
+    /// <param name = "name" > 默认名称 </param>
+    /// <param name = "extension" > type==2 时使用，文件的扩展名 </param>
+    /// <returns> 最新名称的异步任务 </returns>
     public static async Task<string> GetNewNameInPathAsync(this string path, int itemType = 1, string name = "新建文件夹", string? extension = null)
     {
         return await Task.Run(() => path.GetNewNameInPath(itemType, name, extension));
     }
 
     /// <summary>
-    /// 获取在给定路径中不带扩展名的新名称（异步版本）。
+    ///     获取在给定路径中不带扩展名的新名称（异步版本）。
     /// </summary>
-    /// <param name="path">给定的路径。</param>
-    /// <param name="type">类型（默认为1）。</param>
-    /// <param name="name">名称（默认为"新建文件夹"）。</param>
-    /// <param name="extension">扩展名。</param>
-    /// <returns>不带扩展名的新名称。</returns>
+    /// <param name = "path" > 给定的路径。 </param>
+    /// <param name = "type" > 类型（默认为1）。 </param>
+    /// <param name = "name" > 名称（默认为"新建文件夹"）。 </param>
+    /// <param name = "extension" > 扩展名。 </param>
+    /// <returns> 不带扩展名的新名称。 </returns>
     public static async Task<string> GetNewNameInPathWithoutExtensionAsync(this string path, int type = 1,
         string name = "新建文件夹", string? extension = null)
     {
@@ -78,13 +79,13 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 获取在给定路径中不带扩展名的新名称。
+    ///     获取在给定路径中不带扩展名的新名称。
     /// </summary>
-    /// <param name="path">给定的路径。</param>
-    /// <param name="type">类型（默认为1）。</param>
-    /// <param name="name">名称（默认为"新建文件夹"）。</param>
-    /// <param name="extension">扩展名。</param>
-    /// <returns>不带扩展名的新名称。</returns>
+    /// <param name = "path" > 给定的路径。 </param>
+    /// <param name = "type" > 类型（默认为1）。 </param>
+    /// <param name = "name" > 名称（默认为"新建文件夹"）。 </param>
+    /// <param name = "extension" > 扩展名。 </param>
+    /// <returns> 不带扩展名的新名称。 </returns>
     public static string GetNewNameInPathWithoutExtension(this string path, int type = 1, string name = "新建文件夹",
         string? extension = null)
     {
@@ -103,7 +104,7 @@ public static class FileHelper
             : $"{name}{extension}";
 
         // 检查是否存在重名的文件或文件夹，如果存在，则在名称后添加索引直到找到一个可用的名称
-        while (names.Any(it => string.Equals(Path.GetFileName(it), newName, StringComparison.OrdinalIgnoreCase)))
+        while ( names.Any(it => string.Equals(Path.GetFileName(it), newName, StringComparison.OrdinalIgnoreCase)) )
         {
             index++;
             newName = type == 1
@@ -115,20 +116,17 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 异步获取文件夹的大小（包括所有子文件夹和文件）
+    ///     异步获取文件夹的大小（包括所有子文件夹和文件）
     /// </summary>
-    /// <param name="folderPath">文件夹路径</param>
-    /// <returns>文件夹的大小（字节数）</returns>
-    public static async Task<double> GetFolderSizeAsync(this string folderPath)
-    {
-        return await Task.Run(folderPath.GetFolderSize);
-    }
+    /// <param name = "folderPath" > 文件夹路径 </param>
+    /// <returns> 文件夹的大小（字节数） </returns>
+    public static async Task<double> GetFolderSizeAsync(this string folderPath) => await Task.Run(folderPath.GetFolderSize);
 
     /// <summary>
-    /// 获取文件夹的大小（包括所有子文件夹和文件）
+    ///     获取文件夹的大小（包括所有子文件夹和文件）
     /// </summary>
-    /// <param name="folderPath">文件夹路径</param>
-    /// <returns>文件夹的大小（字节数）</returns>
+    /// <param name = "folderPath" > 文件夹路径 </param>
+    /// <returns> 文件夹的大小（字节数） </returns>
     public static long GetFolderSize(this string folderPath)
     {
         long size = 0;
@@ -154,9 +152,9 @@ public static class FileHelper
                 Interlocked.Add(ref size, GetFolderSize(subFolder));
             });
         }
-        catch (Exception )
+        catch ( Exception )
         {
-           return size;
+            return size;
         }
 
         return size;
@@ -164,10 +162,10 @@ public static class FileHelper
 
 
     /// <summary>
-    /// 获取传入路径的文件大小（同步方法）
+    ///     获取传入路径的文件大小（同步方法）
     /// </summary>
-    /// <param name="filePath">文件路径</param>
-    /// <returns>文件的大小（字节数）</returns>
+    /// <param name = "filePath" > 文件路径 </param>
+    /// <returns> 文件的大小（字节数） </returns>
     public static double GetFileSize(this string filePath)
     {
         try
@@ -175,7 +173,7 @@ public static class FileHelper
             var file = new FileInfo(filePath);
             return file.Length;
         }
-        catch (Exception ex)
+        catch ( Exception ex )
         {
             ex.LogFileError("获取传入路径空间异常");
             return 0;
@@ -183,20 +181,17 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 异步获取传入路径的文件大小
+    ///     异步获取传入路径的文件大小
     /// </summary>
-    /// <param name="filePath">文件路径</param>
-    /// <returns>文件的大小（字节数）</returns>
-    public static async Task<double> GetFileSizeAsync(this string filePath)
-    {
-        return await Task.Run(filePath.GetFileSize);
-    }
+    /// <param name = "filePath" > 文件路径 </param>
+    /// <returns> 文件的大小（字节数） </returns>
+    public static async Task<double> GetFileSizeAsync(this string filePath) => await Task.Run(filePath.GetFileSize);
 
     /// <summary>
-    /// 判断文件是否被占用
+    ///     判断文件是否被占用
     /// </summary>
-    /// <param name="fileName">文件地址</param>
-    /// <returns>是否被占用（true表示正在使用，false表示没有使用）</returns>
+    /// <param name = "fileName" > 文件地址 </param>
+    /// <returns> 是否被占用（true表示正在使用，false表示没有使用） </returns>
     public static bool IsFileInUse(this string fileName)
     {
         // 默认文件被占用

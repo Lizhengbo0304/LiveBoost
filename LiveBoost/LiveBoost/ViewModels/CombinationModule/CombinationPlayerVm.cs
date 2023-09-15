@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-07-11:35
-// 修改时间：2023-09-12-10:26
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -523,7 +523,7 @@ public sealed partial class CombinationMainWindowVm
         }
         catch ( Exception e )
         {
-            MessageBox.Warning($"播单播放器初始化异常：{e.Message}","播单预览");
+            MessageBox.Warning($"播单播放器初始化异常：{e.Message}", "播单预览");
             await CleanupPlayer();
         }
     }
@@ -572,7 +572,7 @@ public sealed partial class CombinationMainWindowVm
         PlayerInpoint = null;
         PlayerOutpoint = null;
         // 打开视频文件
-        if ( !await MdElement.Open(new Uri(access.VideoPath!)))
+        if ( !await MdElement.Open(new Uri(access.VideoPath!)) )
         {
             MessageBox.Warning("收录预览失败", "预览");
             return;
@@ -591,16 +591,16 @@ public sealed partial class CombinationMainWindowVm
 // 调整视频播放位置
     private async Task AdjustVideoPlayback()
     {
-        if (MdElement.RemainingDuration is not null)
+        if ( MdElement.RemainingDuration is not null )
         {
             var remainingDuration = MdElement.RemainingDuration.Value;
 
-            if (remainingDuration.TotalSeconds > 20)
+            if ( remainingDuration.TotalSeconds > 20 )
             {
                 // 如果剩余时长大于 20 秒，则从剩余时长的倒数第 20 秒开始播放
                 await MdElement.Seek(remainingDuration.Add(TimeSpan.FromSeconds(-20)));
             }
-            else if (remainingDuration.TotalSeconds > 0)
+            else if ( remainingDuration.TotalSeconds > 0 )
             {
                 // 如果剩余时长小于等于 20 秒，则延迟播放剩余时长的秒数
                 var delay = remainingDuration.TotalSeconds;
@@ -647,21 +647,21 @@ public sealed partial class CombinationMainWindowVm
         await MdElement.Seek(inpoint);
     }
     /// <summary>
-    /// 清理播放器状态和资源
+    ///     清理播放器状态和资源
     /// </summary>
     private async Task CleanupPlayer()
     {
         // 关闭当前打开的播放器
-        if (MdElement.IsOpen)
+        if ( MdElement.IsOpen )
         {
             await MdElement.Close();
         }
         // 清空播放MdPanel所有播放器
         MdPanel?.Children.Clear();
         // 关闭播放列表模式下的所有播放文件
-        if (PlayFiles?.Any() ?? false)
+        if ( PlayFiles?.Any() ?? false )
         {
-            foreach (var it in PlayFiles)
+            foreach ( var it in PlayFiles )
             {
                 it.MediaElement?.Dispose();
             }
@@ -669,6 +669,7 @@ public sealed partial class CombinationMainWindowVm
         // 清除播放器的标记点
         RecordPlaybackFfPlayerCleanPointsCmd.Execute();
     }
+
 #endregion
 
 #endregion

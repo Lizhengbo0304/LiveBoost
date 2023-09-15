@@ -1,14 +1,17 @@
-﻿// 创建时间：2023-06-27-17:05
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-07-15:58
+// 修改时间：2023-09-15-15:41
 
+#region
 
 using LiveBoost.ToolKit.Data;
+
+#endregion
 
 namespace LiveBoost.Views;
 
 public partial class CombinationPlayListOut
 {
-    #region Static-Event
+#region Static-Event
 
     public static (string, RecordTemplate) ShowOut()
     {
@@ -17,9 +20,9 @@ public partial class CombinationPlayListOut
         return outWindow._outResult;
     }
 
-    #endregion
+#endregion
 
-    #region Private Event
+#region Private Event
 
     private (string, RecordTemplate) _outResult;
 
@@ -60,9 +63,9 @@ public partial class CombinationPlayListOut
         Close();
     }
 
-    #endregion
+#endregion
 
-    #region depe
+#region depe
 
     /// <summary>
     ///     导出模板列表
@@ -111,5 +114,5 @@ public partial class CombinationPlayListOut
         set => SetValue(OutNameProperty, value);
     }
 
-    #endregion
+#endregion
 }

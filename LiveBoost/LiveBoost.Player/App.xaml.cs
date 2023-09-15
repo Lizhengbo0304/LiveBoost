@@ -1,14 +1,22 @@
-﻿using System;
+﻿// 创建时间：2023-09-06-14:04
+// 修改时间：2023-09-15-15:41
+
+#region
+
+using System;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
-using HandyControl.Controls;
-using Window = System.Windows.Window;
+using Prism.Ioc;
+using MessageBox = HandyControl.Controls.MessageBox;
+
+#endregion
 
 namespace LiveBoost.Player;
 
 /// <summary>
-/// Interaction logic for App.xaml
+///     Interaction logic for App.xaml
 /// </summary>
 public partial class App
 {
@@ -74,9 +82,7 @@ public partial class App
     }
 
     /// <inheritdoc />
-    protected override void RegisterTypes(Prism.Ioc.IContainerRegistry containerRegistry)
-    {
-    }
+    protected override void RegisterTypes(IContainerRegistry containerRegistry) { }
 
     /// <inheritdoc />
     protected override Window? CreateShell() => null;

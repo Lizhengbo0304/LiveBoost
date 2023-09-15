@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-04-9:06
-// 修改时间：2023-09-06-9:03
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -95,9 +95,7 @@ public partial class App
         }
     }
 
-    protected override void RegisterTypes(IContainerRegistry containerRegistry)
-    {
-    }
+    protected override void RegisterTypes(IContainerRegistry containerRegistry) { }
 
     protected override Window? CreateShell() => null;
 }

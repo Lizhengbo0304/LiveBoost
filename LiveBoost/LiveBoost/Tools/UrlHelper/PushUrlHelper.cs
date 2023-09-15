@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-07-11:57
-// 修改时间：2023-09-07-16:22
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -229,16 +229,16 @@ public static partial class UrlHelper
             var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
                 .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
 
-                var jobj = JObject.Parse(result);
+            var jobj = JObject.Parse(result);
 
-                // Success = 0 : 请求失败
-                if ( jobj["code"]?.Value<int>() == 200 )
-                {
-                    return true;
-                }
+            // Success = 0 : 请求失败
+            if ( jobj["code"]?.Value<int>() == 200 )
+            {
+                return true;
+            }
 
-                MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑推流播单");
-                return false;
+            MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑推流播单");
+            return false;
         }
         catch ( Exception e )
         {
@@ -264,16 +264,16 @@ public static partial class UrlHelper
             var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
                 .PutJsonAsync(recordTemplate).ReceiveString().ConfigureAwait(false);
 
-                var jobj = JObject.Parse(result);
+            var jobj = JObject.Parse(result);
 
-                // Success = 0 : 请求失败
-                if ( jobj["code"]?.Value<int>() == 200 )
-                {
-                    return true;
-                }
+            // Success = 0 : 请求失败
+            if ( jobj["code"]?.Value<int>() == 200 )
+            {
+                return true;
+            }
 
-                MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑播单");
-                return false;
+            MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑播单");
+            return false;
         }
         catch ( Exception e )
         {

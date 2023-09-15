@@ -1,5 +1,5 @@
-﻿// 创建时间：2023-06-07-16:05
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-06-14:16
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -54,7 +54,7 @@ public class AppProgram
             MessageBox.Show(e.Message);
         }
     }
-    #region Global
+#region Global
 
     private static readonly Lazy<AppProgram> ProgramLazy = new(() => new AppProgram());
 
@@ -68,9 +68,9 @@ public class AppProgram
     }
     public static AppProgram Instance => ProgramLazy.Value;
 
-    #endregion
+#endregion
 
-    #region Property
+#region Property
 
     /// <summary>
     ///     APP
@@ -81,5 +81,5 @@ public class AppProgram
     public string? GuidBack;
     public CombinationPlayer? ChannelPlayer { get; set; }
 
-    #endregion
+#endregion
 }

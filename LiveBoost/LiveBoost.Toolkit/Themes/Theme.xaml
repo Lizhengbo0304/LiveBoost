@@ -2,11 +2,16 @@
                     xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml" >
     <ResourceDictionary.MergedDictionaries>
         <!-- BaseStyle -->
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/Base/ButtonStyle.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/Base/ListViewStyle.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/Base/TreeStyle.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/Base/FileHierarchyStyle.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/ProgressBarStyle.xaml" />
+        <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/Base/ButtonStyle.xaml" />
+        <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/Base/ListViewStyle.xaml" />
+        <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/Base/TreeStyle.xaml" />
+        <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/Base/FileHierarchyStyle.xaml" />
+        <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/ProgressBarStyle.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/SliderStyle.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Basic/Basic.xaml" />
     </ResourceDictionary.MergedDictionaries>

@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-04-17:08
-// 修改时间：2023-09-06-9:03
+// 修改时间：2023-09-15-15:41
 
 namespace LiveBoost.Tools;
 
@@ -20,9 +20,9 @@ public static partial class UrlHelper
         {
             froms = "liveBoostWindows",
             loginName,
-            password = password!.AesEncrypt(UrlHelper.Aes),
+            password = password!.AesEncrypt(Aes),
             stamp,
-            sign = Hash.Content(UrlHelper.Md5Str + stamp)
+            sign = Hash.Content(Md5Str + stamp)
         };
         try
         {

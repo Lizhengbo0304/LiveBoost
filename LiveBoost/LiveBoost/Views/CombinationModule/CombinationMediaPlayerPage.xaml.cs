@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-07-10:38
-// 修改时间：2023-09-07-10:38
+// 修改时间：2023-09-15-15:41
 
 namespace LiveBoost.Views;
 
@@ -12,9 +12,9 @@ public partial class CombinationMediaPlayerPage
         PlayListSlider.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(Slider_OnMouseLeftButtonDown), true);
     }
 
-    private  void Slider_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void Slider_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if ( this.DataContext is CombinationMainWindowVm vm )
+        if ( DataContext is CombinationMainWindowVm vm )
         {
             vm.MdElement.SeekingEnded += MdElementOnSeekingEnded;
         }
@@ -22,7 +22,7 @@ public partial class CombinationMediaPlayerPage
 
     private async void MdElementOnSeekingEnded(object sender, EventArgs e)
     {
-        if ( this.DataContext is not CombinationMainWindowVm vm )
+        if ( DataContext is not CombinationMainWindowVm vm )
         {
             return;
         }

@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-04-16:09
-// 修改时间：2023-09-06-9:03
+// 修改时间：2023-09-15-15:41
 
 namespace LiveBoost.Toolkit.Data;
 
@@ -14,7 +14,6 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
 
         _value = default;
     }
-
 
 #endregion
 

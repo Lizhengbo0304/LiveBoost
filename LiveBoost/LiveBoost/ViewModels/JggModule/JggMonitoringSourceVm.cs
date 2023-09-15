@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-15-14:50
-// 修改时间：2023-09-15-14:50
+// 修改时间：2023-09-15-15:41
 
 namespace LiveBoost.ViewModels;
 
@@ -8,7 +8,7 @@ public partial class JggMainWindowVm
 #region Properties
 
     /// <summary>
-    /// 收录源列表
+    ///     收录源列表
     /// </summary>
     public List<RecordChannel>? RecordChannels { get; set; }
 

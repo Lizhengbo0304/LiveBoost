@@ -1,9 +1,7 @@
-﻿// 创建时间：2023-06-06-14:22
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-06-14:33
+// 修改时间：2023-09-15-15:41
 
 #region
-
-using System.Diagnostics;
 
 #endregion
 
@@ -12,11 +10,11 @@ namespace LiveBoost.Toolkit.Tools;
 public static class LoadPluginHelper
 {
     /// <summary>
-    /// 加载插件
+    ///     加载插件
     /// </summary>
-    /// <param name="pluginDll">插件的DLL文件路径</param>
-    /// <param name="guid">GUID</param>
-    /// <returns>启动的进程</returns>
+    /// <param name = "pluginDll" > 插件的DLL文件路径 </param>
+    /// <param name = "guid" > GUID </param>
+    /// <returns> 启动的进程 </returns>
     public static Process LoadPlugin(string pluginDll, string guid)
     {
         // if (string.IsNullOrWhiteSpace(pluginDll) || string.IsNullOrWhiteSpace(guid))

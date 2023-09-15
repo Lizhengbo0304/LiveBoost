@@ -1,5 +1,5 @@
-﻿// 创建时间：2023-06-07-16:15
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-06-14:18
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -30,7 +30,7 @@ namespace LiveBoost.Player.Controls;
 [TemplatePart(Name = "Part_ffPlay", Type = typeof(MediaElement))]
 public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyPropertyChanged
 {
-    #region Ctor
+#region Ctor
 
     static CombinationPlayer()
     {
@@ -56,9 +56,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         server.Start();
     }
 
-    #endregion
+#endregion
 
-    #region Field
+#region Field
 
     // 播放器
     private MediaElement? _ffPlay;
@@ -66,9 +66,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     // 收录闪烁
     private DispatcherTimer? _dispatcherTimerBlink;
 
-    #endregion
+#endregion
 
-    #region Property
+#region Property
 
     // 通道名称
     public string? AccessName { get; set; }
@@ -76,9 +76,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
 
     public string? VideoSize { get; set; }
 
-    #endregion
+#endregion
 
-    #region Command
+#region Command
 
     // 切换频道
     public DelegateCommand ChangedChannelCmd => new(async () =>
@@ -92,9 +92,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         await ActionHelper.RunWithTimeout(IpcClientHelper.ChildPlayer.ClearChannel, 5000);
     });
 
-    #endregion
+#endregion
 
-    #region Event
+#region Event
 
     public override void OnApplyTemplate()
     {
@@ -106,7 +106,7 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         }
     }
 
-    #region RenderingAudioField
+#region RenderingAudioField
 
     public double DrawVuMeterLeftValue { get; set; }
     public double DrawVuMeterRightValue { get; set; }
@@ -114,44 +114,44 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     private short[]? drawVuMeterRightSamples;
     private readonly object drawVuMeterRmsLock = new();
 
-    #endregion
-        private void FfPlayOnRenderingAudio(object sender, RenderingAudioEventArgs e)
+#endregion
+    private void FfPlayOnRenderingAudio(object sender, RenderingAudioEventArgs e)
+    {
+        // 分析即将渲染的音频数据
+        // 如果不存在音频，则不需要分析
+        if ( e.EngineState.HasAudio == false )
         {
-            // 分析即将渲染的音频数据
-            // 如果不存在音频，则不需要分析
-            if ( e.EngineState.HasAudio == false )
-            {
-                return;
-            }
-            // 把音频数据分为左右声道
-            if ( drawVuMeterLeftSamples == null || drawVuMeterLeftSamples.Length != e.SamplesPerChannel )
-            {
-                drawVuMeterLeftSamples = new short[e.SamplesPerChannel];
-            }
-
-            if ( drawVuMeterRightSamples == null || drawVuMeterRightSamples.Length != e.SamplesPerChannel )
-            {
-                drawVuMeterRightSamples = new short[e.SamplesPerChannel];
-            }
-
-            var bufferData = e.GetBufferData();
-
-            // 使用 Buffer.BlockCopy 替代循环和 BitConverter.ToInt16
-            Buffer.BlockCopy(bufferData, 0, drawVuMeterLeftSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制左声道数据
-            Buffer.BlockCopy(bufferData, e.SamplesPerChannel * sizeof(short), drawVuMeterRightSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制右声道数据
-
-            // 使用 Parallel.Invoke 同时计算左右声道的 RMS 值
-            double leftValue = 0.0, rightValue = 0.0;
-            lock ( drawVuMeterRmsLock )
-            {
-                Parallel.Invoke(
-                    () => { leftValue = VolumeHelper.CalculateRms(drawVuMeterLeftSamples); },
-                    () => { rightValue = VolumeHelper.CalculateRms(drawVuMeterRightSamples); }
-                );
-                DrawVuMeterLeftValue = leftValue;
-                DrawVuMeterRightValue = rightValue;
-            }
+            return;
         }
+        // 把音频数据分为左右声道
+        if ( drawVuMeterLeftSamples == null || drawVuMeterLeftSamples.Length != e.SamplesPerChannel )
+        {
+            drawVuMeterLeftSamples = new short[e.SamplesPerChannel];
+        }
+
+        if ( drawVuMeterRightSamples == null || drawVuMeterRightSamples.Length != e.SamplesPerChannel )
+        {
+            drawVuMeterRightSamples = new short[e.SamplesPerChannel];
+        }
+
+        var bufferData = e.GetBufferData();
+
+        // 使用 Buffer.BlockCopy 替代循环和 BitConverter.ToInt16
+        Buffer.BlockCopy(bufferData, 0, drawVuMeterLeftSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制左声道数据
+        Buffer.BlockCopy(bufferData, e.SamplesPerChannel * sizeof(short), drawVuMeterRightSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制右声道数据
+
+        // 使用 Parallel.Invoke 同时计算左右声道的 RMS 值
+        double leftValue = 0.0, rightValue = 0.0;
+        lock ( drawVuMeterRmsLock )
+        {
+            Parallel.Invoke(
+                () => { leftValue = VolumeHelper.CalculateRms(drawVuMeterLeftSamples); },
+                () => { rightValue = VolumeHelper.CalculateRms(drawVuMeterRightSamples); }
+            );
+            DrawVuMeterLeftValue = leftValue;
+            DrawVuMeterRightValue = rightValue;
+        }
+    }
 
 
     protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
@@ -170,9 +170,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         }, cts.Token);
     }
 
-    #endregion
+#endregion
 
-    #region ICombinationPlayer
+#region ICombinationPlayer
 
     public void SetName(string accessName)
     {
@@ -185,7 +185,7 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         _dispatcherTimerBlink?.Stop();
         StartBlinking();
 
-        if (_ffPlay is null)
+        if ( _ffPlay is null )
         {
             return;
         }
@@ -209,9 +209,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     private async Task OpenFileAsync(string playFilePath)
     {
         var openFile = false;
-        while (!openFile)
+        while ( !openFile )
         {
-            if (!File.Exists(playFilePath))
+            if ( !File.Exists(playFilePath) )
             {
                 $"{AccessName}收录文件：{playFilePath}不存在".LogFileInfo();
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -230,16 +230,16 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
 
     private async Task AdjustRemainingTimeAsync()
     {
-        if (_ffPlay!.RemainingDuration is not null)
+        if ( _ffPlay!.RemainingDuration is not null )
         {
-            if (_ffPlay.RemainingDuration.Value.TotalSeconds > 20)
+            if ( _ffPlay.RemainingDuration.Value.TotalSeconds > 20 )
             {
                 await _ffPlay.Seek(_ffPlay.RemainingDuration.Value.Add(TimeSpan.FromSeconds(-20)));
             }
             else
             {
                 var delay = 20 - _ffPlay.RemainingDuration.Value.TotalSeconds;
-                if (delay > 0)
+                if ( delay > 0 )
                 {
                     await Task.Delay(TimeSpan.FromSeconds(delay));
                 }
@@ -265,9 +265,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         _dispatcherTimerBlink?.Stop();
     }
 
-    #endregion
+#endregion
 
-    #region INotifyPropertyChanged
+#region INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -287,5 +287,5 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         return true;
     }
 
-    #endregion
+#endregion
 }

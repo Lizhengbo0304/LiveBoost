@@ -4,7 +4,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />
+        <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key = "PlayListTabItemStyle" TargetType = "TabItem" >
@@ -24,26 +25,27 @@
                 <ControlTemplate TargetType = "TabItem" >
                     <Border BorderThickness = "0" x:Name = "mainBorder" BorderBrush = "Transparent"
                             Background = "Transparent" Margin = "10 0" >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Margin="5 0" VerticalAlignment="Center" Stretch="Uniform" Width="20" Source="{Binding ModeImage}"/>
-                                <ContentPresenter Grid.Column="1" x:Name = "contentPresenter" ContentSource = "Header" Focusable = "False"
-                                                  HorizontalAlignment = "Center" Margin = "0 0 5 0"
-                                                  RecognizesAccessKey = "True"
-                                                  SnapsToDevicePixels = "{TemplateBinding SnapsToDevicePixels}"
-                                                  VerticalAlignment = "Center" TextElement.Foreground = "#898989"
-                                                  TextElement.FontSize = "14" >
-                                    <ContentPresenter.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                                        </Style>
-                                    </ContentPresenter.Resources>
-                                </ContentPresenter>
-                            </Grid>
-                        </Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width = "Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column = "0" Margin = "5 0" VerticalAlignment = "Center" Stretch = "Uniform"
+                                   Width = "20" Source = "{Binding ModeImage}" />
+                            <ContentPresenter Grid.Column = "1" x:Name = "contentPresenter" ContentSource = "Header"
+                                              Focusable = "False" HorizontalAlignment = "Center" Margin = "0 0 5 0"
+                                              RecognizesAccessKey = "True"
+                                              SnapsToDevicePixels = "{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment = "Center" TextElement.Foreground = "#898989"
+                                              TextElement.FontSize = "14" >
+                                <ContentPresenter.Resources>
+                                    <Style TargetType = "TextBlock" >
+                                        <Setter Property = "TextTrimming" Value = "CharacterEllipsis" />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property = "IsSelected" Value = "true" >
                             <Setter Property = "Panel.ZIndex" Value = "1" />
@@ -101,11 +103,10 @@
                                                      x:Name = "PART_OverflowScrollviewer" >
                                         <Border Background = "Transparent" BorderThickness = "0"
                                                 BorderBrush = "Transparent" Name = "PART_HeaderBorder" >
-                                            <TabPanel  Margin = "0,0,-1,-1"
-                                                         x:Name = "PART_HeaderPanel" HorizontalAlignment = "Left"
-                                                         VerticalAlignment = "Bottom" Background = "Transparent"
-                                                         IsItemsHost = "true" KeyboardNavigation.TabIndex = "1"
-                                                         Panel.ZIndex = "1" >
+                                            <TabPanel Margin = "0,0,-1,-1" x:Name = "PART_HeaderPanel"
+                                                      HorizontalAlignment = "Left" VerticalAlignment = "Bottom"
+                                                      Background = "Transparent" IsItemsHost = "true"
+                                                      KeyboardNavigation.TabIndex = "1" Panel.ZIndex = "1" >
                                                 <hc:Interaction.Behaviors>
                                                     <hc:FluidMoveBehavior AppliesTo = "Children"
                                                                           Duration = "{Binding FluidMoveDuration,ElementName=PART_HeaderPanel}" >
@@ -127,18 +128,17 @@
                                             IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/pause.png"
                                             Command = "{Binding PausePlayList}" ToolTip = "暂停推流"
                                             Style = "{StaticResource IconButtonStyle}" />
-                                    <Button Grid.Column = "3" IconElement.Width = "39"
-                                            IconElement.Height = "39"
+                                    <Button Grid.Column = "3" IconElement.Width = "39" IconElement.Height = "39"
                                             IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/end.png"
                                             Command = "{Binding StopPlayList}" ToolTip = "停止推流"
                                             Style = "{StaticResource IconButtonStyle}" />
-                                    <Button Grid.Column = "4" IconElement.Width = "39"
-                                            IconElement.Height = "39" Margin = "10 0"
+                                    <Button Grid.Column = "4" IconElement.Width = "39" IconElement.Height = "39"
+                                            Margin = "10 0"
                                             IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/preview.png"
                                             Command = "{Binding PreviewPlayList}" ToolTip = "播单预览"
                                             Style = "{StaticResource IconButtonStyle}" />
-                                    <ToggleButton Grid.Column = "5" IconElement.Width = "39"
-                                                  IconElement.Height = "39" Margin = "0 0 10 0"
+                                    <ToggleButton Grid.Column = "5" IconElement.Width = "39" IconElement.Height = "39"
+                                                  Margin = "0 0 10 0"
                                                   IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/OutTo.png"
                                                   IconSwitchElement.SourceSelected = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/OutTo.png"
                                                   ToolTip = "播单导出" Style = "{StaticResource IconToggleButtonStyle}"
@@ -204,16 +204,15 @@
                                        VerticalAlignment = "Top" HorizontalAlignment = "Left" />
                         </Grid>
                         <FlyListView IsScrollChild = "True" Grid.Row = "1" SelectionMode = "Single"
-                                         ItemContainerStyle = "{StaticResource PlayListChildItemStyle}"
-                                         Style = "{StaticResource BaseListViewStyle}" dd:DragDrop.IsDragSource = "True"
-                                         dd:DragDrop.IsDropTarget = "True"
-                                         dd:DragDrop.ShowAlwaysDropTargetAdorner = "True"
-                                         dd:DragDrop.DropScrollingMode = "VerticalOnly"
-                                         dd:DragDrop.DragHandler = "{Binding PlayListDragHandler}"
-                                         dd:DragDrop.DropHandler = "{Binding PlayListDropHandler}"
-                                         HorizontalAlignment = "Stretch" VerticalAlignment = "Stretch"
-                                         VerticalContentAlignment = "Stretch" HorizontalContentAlignment = "Stretch"
-                                         ItemsSource = "{Binding  RecordFiles}" Padding = "0 0 0 30" />
+                                     ItemContainerStyle = "{StaticResource PlayListChildItemStyle}"
+                                     Style = "{StaticResource BaseListViewStyle}" dd:DragDrop.IsDragSource = "True"
+                                     dd:DragDrop.IsDropTarget = "True" dd:DragDrop.ShowAlwaysDropTargetAdorner = "True"
+                                     dd:DragDrop.DropScrollingMode = "VerticalOnly"
+                                     dd:DragDrop.DragHandler = "{Binding PlayListDragHandler}"
+                                     dd:DragDrop.DropHandler = "{Binding PlayListDropHandler}"
+                                     HorizontalAlignment = "Stretch" VerticalAlignment = "Stretch"
+                                     VerticalContentAlignment = "Stretch" HorizontalContentAlignment = "Stretch"
+                                     ItemsSource = "{Binding  RecordFiles}" Padding = "0 0 0 30" />
                     </Grid>
                 </DataTemplate>
             </Setter.Value>

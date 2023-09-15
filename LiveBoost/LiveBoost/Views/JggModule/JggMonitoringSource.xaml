@@ -1,10 +1,10 @@
-﻿<Border x:Class = "LiveBoost.Views.JggMonitoringSource" xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Border x:Class = "LiveBoost.Views.JggMonitoringSource"
+        xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:local = "clr-namespace:LiveBoost.Views"
-        xmlns:dd = "urn:gong-wpf-dragdrop"
+        xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:dd = "urn:gong-wpf-dragdrop"
         mc:Ignorable = "d" d:DesignHeight = "300" d:DesignWidth = "300" >
-    <Grid Width = "313">
+    <Grid Width = "313" >
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
             <RowDefinition />
@@ -19,7 +19,7 @@
                      dd:DragDrop.DragHandler = "{Binding SourceMonitoringDragHandler}"
                      dd:DragDrop.IsDragSource = "True" dd:DragDrop.ShowAlwaysDropTargetAdorner = "True"
                      Background = "#585A5D" BorderBrush = "#A0A0A0" BorderThickness = "1"
-                     ItemContainerStyle = "{StaticResource ShouluChannelItemStyle}" ItemsSource = "{Binding RecordChannels}"
-                     Style = "{StaticResource BaseListViewStyle}" />
+                     ItemContainerStyle = "{StaticResource ShouluChannelItemStyle}"
+                     ItemsSource = "{Binding RecordChannels}" Style = "{StaticResource BaseListViewStyle}" />
     </Grid>
 </Border>

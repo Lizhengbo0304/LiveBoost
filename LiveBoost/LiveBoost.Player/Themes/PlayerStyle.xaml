@@ -43,28 +43,31 @@
                                     <Image Grid.Column = "1" Width = "13" Height = "13"
                                            Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/Recording.png"
                                            HorizontalAlignment = "Left" VerticalAlignment = "Center" />
-                                    <Button Grid.Column = "2" IconElement.Height = "16"
-                                            IconElement.Width = "18"
+                                    <Button Grid.Column = "2" IconElement.Height = "16" IconElement.Width = "18"
                                             IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/changed.png"
                                             HorizontalAlignment = "Right" Margin = "0 0 15 0"
                                             Command = "{Binding RelativeSource={RelativeSource TemplatedParent},Path= ChangedChannelCmd}"
                                             Style = "{StaticResource IconButtonStyle}" />
-                                    <Button Grid.Column = "3" IconElement.Height = "16"
-                                            IconElement.Width = "12"
+                                    <Button Grid.Column = "3" IconElement.Height = "16" IconElement.Width = "12"
                                             IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/delete.png"
                                             HorizontalAlignment = "Left" Margin = "0"
                                             Command = "{Binding RelativeSource={RelativeSource TemplatedParent},Path= DeleteChannelCmd}"
                                             Style = "{StaticResource IconButtonStyle}" />
                                 </Grid>
-                                <hc:SimplePanel Grid.Row = "1" Margin = "11 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <ProgressBar Width = "3" Minimum = "0" Maximum = "100" Orientation="Vertical" Foreground="DarkGreen"
+                                <hc:SimplePanel Grid.Row = "1" Margin = "11 0" HorizontalAlignment = "Stretch"
+                                                VerticalAlignment = "Stretch" >
+                                    <ProgressBar Width = "3" Minimum = "0" Maximum = "100" Orientation = "Vertical"
+                                                 Foreground = "DarkGreen"
                                                  Value = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=DrawVuMeterLeftValue}"
-                                                 Style="{StaticResource PlayListProgressStyle}"
-                                                 VerticalAlignment = "Stretch" HorizontalAlignment="Right" Margin="0 0 13 0"/>
-                                    <ProgressBar Width = "3" Minimum = "0" Maximum = "100" Orientation="Vertical" Foreground="DarkGreen"
+                                                 Style = "{StaticResource PlayListProgressStyle}"
+                                                 VerticalAlignment = "Stretch" HorizontalAlignment = "Right"
+                                                 Margin = "0 0 13 0" />
+                                    <ProgressBar Width = "3" Minimum = "0" Maximum = "100" Orientation = "Vertical"
+                                                 Foreground = "DarkGreen"
                                                  Value = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=DrawVuMeterRightValue}"
-                                                 Style="{StaticResource PlayListProgressStyle}"
-                                                 VerticalAlignment = "Stretch" HorizontalAlignment="Right" Margin="0 0 5 0"/>
+                                                 Style = "{StaticResource PlayListProgressStyle}"
+                                                 VerticalAlignment = "Stretch" HorizontalAlignment = "Right"
+                                                 Margin = "0 0 5 0" />
                                 </hc:SimplePanel>
                                 <Grid Grid.Row = "2" Margin = "11 7" >
                                     <Grid.ColumnDefinitions>

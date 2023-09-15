@@ -1,10 +1,23 @@
 ﻿// 创建时间：2023-09-15-14:49
-// 修改时间：2023-09-15-14:49
+// 修改时间：2023-09-15-15:41
 
 namespace LiveBoost.ViewModels;
 
 public partial class JggMainWindowVm : INotifyPropertyChanged
 {
+#region Ctor
+
+    public JggMainWindowVm()
+    {
+        // 初始化收录
+        Task.Run(async () =>
+        {
+            //    初始化收录通道
+            await InitializeRecordChannelsAsync();
+        });
+    }
+
+#endregion
 #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -23,19 +36,6 @@ public partial class JggMainWindowVm : INotifyPropertyChanged
         field = value;
         OnPropertyChanged(propertyName);
         return true;
-    }
-
-#endregion
-#region Ctor
-
-    public JggMainWindowVm()
-    {
-        // 初始化收录
-        Task.Run(async () =>
-        {
-            //    初始化收录通道
-            await InitializeRecordChannelsAsync();
-        });
     }
 
 #endregion

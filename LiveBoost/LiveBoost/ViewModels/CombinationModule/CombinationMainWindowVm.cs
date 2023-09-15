@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-14:38
-// 修改时间：2023-09-11-10:19
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -45,6 +45,7 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
 
         StartSocket().ConfigureAwait(false);
     }
+
 #endregion
 #region Properties
 
@@ -55,6 +56,7 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
 
 #endregion
 #region Event
+
     /// <summary>
     ///     初始化串口
     /// </summary>

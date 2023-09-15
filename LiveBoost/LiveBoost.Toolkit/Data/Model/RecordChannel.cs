@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-14:16
-// 修改时间：2023-09-06-9:03
+// 修改时间：2023-09-15-15:41
 
 namespace LiveBoost.Toolkit.Data;
 
@@ -22,6 +22,7 @@ public sealed class RecordChannel : INotifyPropertyChanged
     [JsonProperty("channelName")] public string? ChannelName { get; set; }
 //协议类型
     [JsonProperty("protocol")] public string? Protocol { get; set; }
+
 #endregion
 
 #region INotifyPropertyChangedEvent

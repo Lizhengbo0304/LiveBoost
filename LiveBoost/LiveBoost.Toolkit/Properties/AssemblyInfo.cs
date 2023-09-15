@@ -1,9 +1,12 @@
-﻿using System.Reflection;
-using System.Resources;
-using System.Runtime.CompilerServices;
+﻿// 创建时间：2023-09-06-11:56
+// 修改时间：2023-09-15-15:41
+
+#region
+
 using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Markup;
+
+#endregion
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information

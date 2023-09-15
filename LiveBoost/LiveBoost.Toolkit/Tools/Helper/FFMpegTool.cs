@@ -1,24 +1,24 @@
 ﻿// 创建时间：2023-09-07-15:35
-// 修改时间：2023-09-07-15:42
+// 修改时间：2023-09-15-15:41
 
 namespace LiveBoost.ToolKit.Tools;
 
 public static class FFMpegTool
 {
     /// <summary> 获取首帧图片作为缩略图 </summary>
-    /// <param name="videoPath">视频路径</param>
-    /// <param name="picName">图片路径</param>
-    /// <param name="timeSpan">指定时间</param>
+    /// <param name = "videoPath" > 视频路径 </param>
+    /// <param name = "picName" > 图片路径 </param>
+    /// <param name = "timeSpan" > 指定时间 </param>
     public static async Task GetFrameWithTimeSpan(this string videoPath, string picName, TimeSpan timeSpan)
     {
         try
         {
             var folder = Path.GetDirectoryName(picName);
-            if (string.IsNullOrEmpty(folder))
+            if ( string.IsNullOrEmpty(folder) )
             {
                 return;
             }
-            if (!Directory.Exists(folder))
+            if ( !Directory.Exists(folder) )
             {
                 Directory.CreateDirectory(folder);
             }
@@ -49,12 +49,12 @@ public static class FFMpegTool
             process.BeginErrorReadLine();
             await Task.Run(() => process.WaitForExit());
 
-            if (process.ExitCode != 0)
+            if ( process.ExitCode != 0 )
             {
                 throw new Exception($"ffmpeg failed with exit code {process.ExitCode}: {errorData}");
             }
         }
-        catch (Exception e)
+        catch ( Exception e )
         {
             e.LogError("缩略图截取失败");
         }

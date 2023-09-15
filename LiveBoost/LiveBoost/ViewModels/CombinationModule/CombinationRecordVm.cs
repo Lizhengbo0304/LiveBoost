@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-14:39
-// 修改时间：2023-09-11-17:55
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -18,9 +18,10 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCmd { get; }
     /// <summary>
-    /// 展示九宫格界面
+    ///     展示九宫格界面
     /// </summary>
     public DelegateCommand ShowJggCmd { get; set; }
+
 #endregion
 #region Command-Event
 
@@ -37,84 +38,85 @@ public sealed partial class CombinationMainWindowVm
         }
     }
     /// <summary>
-    /// 展示九宫格界面
+    ///     展示九宫格界面
     /// </summary>
     private void ShowJggExecute()
     {
         var jgg = new JggMainWindow();
         jgg.Show();
     }
+
 #endregion
-    #region 初始化收录通道
+#region 初始化收录通道
 
-        /// <summary>
-        ///     初始化收录通道
-        /// </summary>
-        private async Task InitializeRecordAccessesAsync()
+    /// <summary>
+    ///     初始化收录通道
+    /// </summary>
+    private async Task InitializeRecordAccessesAsync()
+    {
+        // 获取收录服务器配置
+        var RecordConfigs = await UrlHelper.GetShouluAccess().ConfigureAwait(false);
+
+        if ( RecordConfigs is null || !RecordConfigs.Any() )
         {
-            // 获取收录服务器配置
-            var RecordConfigs = await UrlHelper.GetShouluAccess().ConfigureAwait(false);
-
-            if ( RecordConfigs is null || !RecordConfigs.Any() )
-            {
-                // 处理收录服务器配置为空的情况
-                HandleEmptyRecordConfigs();
-            }
-            else
-            {
-                // 处理收录服务器配置不为空的情况
-                HandleNonEmptyRecordConfigs(RecordConfigs);
-            }
-            PageUpdatedCmd.Execute(new FunctionEventArgs<int>(1));
+            // 处理收录服务器配置为空的情况
+            HandleEmptyRecordConfigs();
         }
-
-        // 处理配置为空的情况
-        private void HandleEmptyRecordConfigs()
+        else
         {
-            TotalPage = 1;
-            // 初始化收录通道
-            InitializeRecordAccesses(0);
+            // 处理收录服务器配置不为空的情况
+            HandleNonEmptyRecordConfigs(RecordConfigs);
         }
+        PageUpdatedCmd.Execute(new FunctionEventArgs<int>(1));
+    }
 
-        /// <summary>
-        ///     处理非空的记录配置
-        /// </summary>
-        /// <param name = "configs" > 记录配置列表 </param>
-        private void HandleNonEmptyRecordConfigs(List<RecordServerConfig> configs)
-        {
-            // 计算所有收录通道数量（包含SDI、IP）
-            var total = CalculateTotalChannels(configs);
-            TotalPage = (int) Math.Ceiling(total / 4.0);
-            CurrentPage = 1;
-            InitializeRecordAccesses(total);
-        }
+    // 处理配置为空的情况
+    private void HandleEmptyRecordConfigs()
+    {
+        TotalPage = 1;
+        // 初始化收录通道
+        InitializeRecordAccesses(0);
+    }
 
-        /// <summary>
-        ///     计算总的通道数
-        /// </summary>
-        /// <param name = "configs" > 记录配置列表 </param>
-        /// <returns> 总的通道数 </returns>
-        private static int CalculateTotalChannels(IEnumerable<RecordServerConfig> configs)
-        {
-            return configs.Where(config => config.AccessConfig != null)
-                .Sum(config => config.AccessConfig!.Sdi + config.AccessConfig!.Ip);
-        }
+    /// <summary>
+    ///     处理非空的记录配置
+    /// </summary>
+    /// <param name = "configs" > 记录配置列表 </param>
+    private void HandleNonEmptyRecordConfigs(List<RecordServerConfig> configs)
+    {
+        // 计算所有收录通道数量（包含SDI、IP）
+        var total = CalculateTotalChannels(configs);
+        TotalPage = (int) Math.Ceiling(total / 4.0);
+        CurrentPage = 1;
+        InitializeRecordAccesses(total);
+    }
 
-        /// <summary>
-        ///     初始化记录访问
-        /// </summary>
-        /// <param name = "total" > 总的通道数 </param>
-        private void InitializeRecordAccesses(int total)
-        {
-            TotalRecordAccesses = Enumerable.Range(0, TotalPage * 4)
-                .Select(i => i >= total
-                    ? null
-                    : new RecordAccess
-                    {
-                        AccessId = Guid.NewGuid().ToString("N"),
-                        AccessName = $"R{i + 1}"
-                    }).ToList();
-        }
+    /// <summary>
+    ///     计算总的通道数
+    /// </summary>
+    /// <param name = "configs" > 记录配置列表 </param>
+    /// <returns> 总的通道数 </returns>
+    private static int CalculateTotalChannels(IEnumerable<RecordServerConfig> configs)
+    {
+        return configs.Where(config => config.AccessConfig != null)
+            .Sum(config => config.AccessConfig!.Sdi + config.AccessConfig!.Ip);
+    }
+
+    /// <summary>
+    ///     初始化记录访问
+    /// </summary>
+    /// <param name = "total" > 总的通道数 </param>
+    private void InitializeRecordAccesses(int total)
+    {
+        TotalRecordAccesses = Enumerable.Range(0, TotalPage * 4)
+            .Select(i => i >= total
+                ? null
+                : new RecordAccess
+                {
+                    AccessId = Guid.NewGuid().ToString("N"),
+                    AccessName = $"R{i + 1}"
+                }).ToList();
+    }
 
 #endregion
 #region Properties

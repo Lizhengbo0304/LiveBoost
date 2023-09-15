@@ -3,10 +3,10 @@
            xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:hc = "https://handyorg.github.io/handycontrol" SnapsToDevicePixels = "True"
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-           xmlns:views = "clr-namespace:LiveBoost.Views" mc:Ignorable = "d" Title = "选择频道" Height = "465" Width = "487"
-           BorderBrush = "Transparent" BorderThickness = "0" FontFamily = "Microsoft YaHei" Background = "Transparent"
-           AllowsTransparency = "True" Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
+           xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:views = "clr-namespace:LiveBoost.Views"
+           mc:Ignorable = "d" Title = "选择频道" Height = "465" Width = "487" BorderBrush = "Transparent"
+           BorderThickness = "0" FontFamily = "Microsoft YaHei" Background = "Transparent" AllowsTransparency = "True"
+           Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
            ShowNonClientArea = "False" ResizeMode = "CanMinimize" WindowStartupLocation = "CenterScreen"
            WindowStyle = "None" >
     <Grid>
@@ -20,8 +20,9 @@
             <Border hc:WindowAttach.IsDragElement = "True" BorderBrush = "#A0A0A0" ClipToBounds = "True"
                     BorderThickness = "0,0,0,1" CornerRadius = "5 5 0 0" >
                 <Border.Background>
-                    <ImageBrush ImageSource = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar.png"
-                                Stretch = "UniformToFill" />
+                    <ImageBrush
+                        ImageSource = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar.png"
+                        Stretch = "UniformToFill" />
                 </Border.Background>
             </Border>
             <TextBlock Margin = "19,0,0,0" HorizontalAlignment = "Left" VerticalAlignment = "Center" FontSize = "14"

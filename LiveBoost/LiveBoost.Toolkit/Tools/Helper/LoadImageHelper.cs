@@ -1,11 +1,8 @@
-﻿// 创建时间：2023-06-06-14:22
-// 修改时间：2023-07-18-9:37
+﻿// 创建时间：2023-09-07-14:02
+// 修改时间：2023-09-15-15:41
 
 #region
 
-using System;
-using System.IO;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.WindowsAPICodePack.Shell;
 
