@@ -3,9 +3,9 @@
            xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:local = "clr-namespace:LiveBoost.Views"
-           xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d" Title = "LiveBoost" Width = "1653"
-           WindowState = "Maximized" Height = "960" prism:ViewModelLocator.AutoWireViewModel = "True"
-           BorderBrush = "Transparent" BorderThickness = "0" FontFamily = "Microsoft YaHei" Background = "Transparent"
+           xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d" Title = "LiveBoost"
+           WindowState = "Maximized" prism:ViewModelLocator.AutoWireViewModel = "True" BorderBrush = "Transparent"
+           BorderThickness = "0" FontFamily = "Microsoft YaHei" Background = "Transparent"
            Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
            ShowNonClientArea = "False" WindowStartupLocation = "CenterScreen" WindowStyle = "None" >
     <WindowChrome.WindowChrome>

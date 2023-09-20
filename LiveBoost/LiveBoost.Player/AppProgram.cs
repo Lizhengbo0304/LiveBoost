@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-06-14:16
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-09-19-14:02
 
 #region
 
@@ -36,16 +36,36 @@ public class AppProgram
             Library.FFmpegDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dll");
             Library.EnableWpfMultiThreadedVideo = false;
 
-            if ( args.Length == 1 && args[0] is { } guid1 )
+            switch ( args.Length )
             {
-                Instance.Guid = guid1;
-                Instance.GuidBack = guid1 + "back";
-                Instance.ChannelPlayer = new CombinationPlayer();
-                IpcClientHelper.ChildPlayer.SendPlayer(Instance.ChannelPlayer.ViewToHwnd());
-            }
-            else
-            {
-                return;
+                case 1 when args[0] is { } guid1:
+                    Instance.Guid = guid1;
+                    Instance.GuidBack = guid1 + "back";
+                    var combinationPlayer = new CombinationPlayer();
+                    try
+                    {
+                        ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SendPlayer, combinationPlayer.ViewToHwnd()).Wait();
+                    }
+                    catch ( Exception e )
+                    {
+                        e.LogError("发送播放器句柄异常");
+                    }
+                    break;
+                case 2 when args[0] is { } guid2 && args[1] is not null:
+                    Instance.Guid = guid2;
+                    Instance.GuidBack = guid2 + "back";
+                    var jggPlayer = new JggPlayer();
+                    try
+                    {
+                        ActionHelper.RunWithTimeout(IpcClientHelper.JggPlayer.SendPlayer, jggPlayer.ViewToHwnd()).Wait();
+                    }
+                    catch ( Exception e )
+                    {
+                        e.LogError("发送播放器句柄异常");
+                    }
+                    break;
+                default:
+                    return;
             }
             Instance.App.Run();
         }
@@ -79,7 +99,6 @@ public class AppProgram
 
     public string? Guid;
     public string? GuidBack;
-    public CombinationPlayer? ChannelPlayer { get; set; }
 
 #endregion
 }

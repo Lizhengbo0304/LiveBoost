@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-07-10:33
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-09-19-14:02
 
 #region
 
@@ -25,7 +25,11 @@ public class PlayListDropHandler : IDropTarget
             dropInfo.Effects = DragDropEffects.None;
             return;
         }
-
+        if ( TypeUtilities.GetCommonBaseClass(dropInfo.DragInfo.SourceItems) == typeof(RecordChannel) )
+        {
+            dropInfo.Effects = DragDropEffects.None;
+            return;
+        }
         // 未推流状态下允许拖拽
         if ( pushAccess.Status )
         {

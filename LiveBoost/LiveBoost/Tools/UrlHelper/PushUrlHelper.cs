@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-07-11:57
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-09-19-14:01
 
 #region
 
@@ -64,222 +64,228 @@ public static partial class UrlHelper
         }
     }
     /// <summary>
-    ///     新建播单
+    ///     创建新的播单。
     /// </summary>
+    /// <param name = "id" > 播单ID。 </param>
+    /// <param name = "title" > 播单标题。 </param>
+    /// <param name = "mode" > 播单模式。 </param>
+    /// <returns> 创建播单是否成功。 </returns>
     public static async Task<bool> NewPlayList(string id, string title, int mode)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template";
-        if ( url.StartsWith("https") || url.StartsWith("http") )
-        {
-            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
-        }
         var para = new
         {
-            id, title, type = 10, mode, info = "[]"
+            id,
+            title,
+            type = 10,
+            mode,
+            info = "[]"
         };
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
-                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
-            var jobj = JObject.Parse(result);
 
-            // Success = 0 : 请求失败
-            if ( jobj["code"]?.Value<int>() == 200 )
+        // 调用通用的Post方法来执行创建播单操作
+        return await url.Post(para,
+            _ => true,
+            response =>
             {
-                return true;
-            }
-
-            MessageBox.Warning(jobj["msg"]?.Value<string>(), "新增播单");
-            return false;
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "新增播单");
-            e.LogUrlError("新增播单");
-            return false;
-        }
+                var jobj = JObject.Parse(response);
+                // 创建播单失败，显示错误消息
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "新增播单");
+                return false;
+            },
+            e =>
+            {
+                // 处理创建播单时的异常情况
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "新增播单");
+                e.LogUrlError("新增播单");
+                return false;
+            });
     }
+
     /// <summary>
-    ///     播单推流，start,stop,pause,restore
+    ///     播单推流，start, stop, pause, restore 操作。
     /// </summary>
+    /// <param name = "pushAccess" > 推流访问对象。 </param>
+    /// <param name = "operate" > 操作类型（start, stop, pause, restore）。 </param>
+    /// <returns> 操作是否成功。 </returns>
     public static async Task<bool> PlayListPush(this PushAccess pushAccess, string operate)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/access/push/{operate}";
-        if ( url.StartsWith("https") || url.StartsWith("http") )
-        {
-            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
-        }
+
         var para = new
         {
             accessId = pushAccess.AccessId,
             playList = pushAccess.RecordFiles.ToJson()
         };
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
-                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
 
-            var jobj = JObject.Parse(result);
-
-            // Success = 0 : 请求失败
-            if ( jobj["code"]?.Value<int>() == 200 )
+        // 发送POST请求并异步接收字符串响应，同时传入处理委托
+        return await url.Post(para,
+            _ => true,
+            response =>
             {
-                return true;
-            }
-
-            MessageBox.Warning(jobj["msg"]?.Value<string>(), "播单操作");
-            return false;
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "播单操作");
-            e.LogUrlError("播单操作");
-            return false;
-        }
+                // 处理字段错误响应，显示警告消息框
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "播单操作");
+                return false;
+            },
+            e =>
+            {
+                // 处理异常，显示错误消息框，并记录异常日志
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "播单操作");
+                e.LogUrlError("播单操作");
+                return false;
+            }).ConfigureAwait(false);
     }
+
     /// <summary>
-    ///     导出视频
+    ///     导出视频的方法。
     /// </summary>
+    /// <param name = "playListId" > 要导出的播单的ID。 </param>
+    /// <param name = "exportName" > 导出的视频文件名。 </param>
+    /// <param name = "templateId" > 播单模板的ID。 </param>
     public static async Task OutPlayList2Video(this string playListId, string exportName, string templateId)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/export";
+
+        // 如果URL以https或http开头，配置FlurlHttp以使用不受信任的证书
         if ( url.StartsWith("https") || url.StartsWith("http") )
         {
             FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
+
         var para = new
         {
-            exportName, playListId, templateId
+            exportName,
+            playListId,
+            templateId
         };
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
-                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
 
-            var jobj = JObject.Parse(result);
-            if ( jobj["code"]?.Value<int>() == 200 )
+        // 调用通用的Post方法来执行导出视频操作，传入对应的处理委托
+        await url.Post(para,
+            _ =>
             {
+                // 处理成功响应，显示成功消息框
                 MessageBox.Success("导出视频成功", "导出视频");
-            }
-            else
+            },
+            response =>
             {
+                // 处理字段错误响应，显示警告消息框
+                var jobj = JObject.Parse(response);
                 MessageBox.Warning(jobj["msg"]?.Value<string>(), "导出视频");
-            }
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "导出视频");
-            e.LogUrlError("导出视频");
-        }
+            },
+            e =>
+            {
+                // 处理异常，显示错误消息框，并记录异常日志
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "导出视频");
+                e.LogUrlError("导出视频");
+            });
     }
 
+
     /// <summary>
-    ///     导出Xml
+    ///     导出播单为Xml的方法。
     /// </summary>
+    /// <param name = "playListId" > 要导出的播单的ID。 </param>
+    /// <param name = "exportName" > 导出的Xml文件名。 </param>
     public static async Task OutPlayList2Xml(this string playListId, string exportName)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/exportxml";
+
+        // 如果URL以https或http开头，配置FlurlHttp以使用不受信任的证书
         if ( url.StartsWith("https") || url.StartsWith("http") )
         {
             FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
+
         var para = new
         {
-            exportName, playListId
+            exportName,
+            playListId
         };
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
-                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
 
-            var jobj = JObject.Parse(result);
-            if ( jobj["code"]?.Value<int>() == 200 )
+        // 调用通用的Post方法来执行导出Xml操作，成功时显示成功消息框，处理字段错误响应和异常情况
+        await url.Post(para,
+            _ =>
             {
                 MessageBox.Success("导出Xml成功", "导出Xml");
-            }
-            else
+            },
+            response =>
             {
+                var jobj = JObject.Parse(response);
                 MessageBox.Warning(jobj["msg"]?.Value<string>(), "导出Xml");
-            }
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "导出Xml");
-            e.LogUrlError("导出Xml");
-        }
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "导出Xml");
+                e.LogUrlError("导出Xml");
+            });
     }
 
+
     /// <summary>
-    ///     客户端播单推流播单修改
+    ///     客户端播单推流播单修改的方法。
     /// </summary>
+    /// <param name = "pushAccess" > 要编辑的推流播单访问对象。 </param>
+    /// <returns> 操作是否成功的布尔值。 </returns>
     public static async Task<bool> EditPushPlayList(this PushAccess pushAccess)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/access/push/modify";
+
+        // 如果URL以https或http开头，配置FlurlHttp以使用不受信任的证书
         if ( url.StartsWith("https") || url.StartsWith("http") )
         {
             FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
+
         var para = new
         {
             accessId = pushAccess.AccessId,
             playList = pushAccess.RecordFiles.ToJson()
         };
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
-                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
 
-            var jobj = JObject.Parse(result);
-
-            // Success = 0 : 请求失败
-            if ( jobj["code"]?.Value<int>() == 200 )
+        // 调用通用的Post方法来执行编辑推流播单操作，成功时返回true，处理字段错误响应和异常情况返回false
+        return await url.Post(para,
+            _ => true,
+            response =>
             {
-                return true;
-            }
-
-            MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑推流播单");
-            return false;
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "编辑推流播单");
-            e.LogUrlError("编辑推流播单");
-            return false;
-        }
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑推流播单");
+                return false;
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "编辑推流播单");
+                e.LogUrlError("编辑推流播单");
+                return false;
+            });
     }
 
+
     /// <summary>
-    ///     编辑播单
+    ///     编辑播单的方法。
     /// </summary>
-    public static async Task<bool> EditPlayList(this RecordTemplate recordTemplate)
+    /// <param name = "recordTemplate" > 要编辑的播单模板对象。 </param>
+    public static async Task EditPlayList(this RecordTemplate recordTemplate)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template";
+
+        // 如果URL以https或http开头，配置FlurlHttp以使用不受信任的证书
         if ( url.StartsWith("https") || url.StartsWith("http") )
         {
             FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
 
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
-                .PutJsonAsync(recordTemplate).ReceiveString().ConfigureAwait(false);
-
-            var jobj = JObject.Parse(result);
-
-            // Success = 0 : 请求失败
-            if ( jobj["code"]?.Value<int>() == 200 )
+        // 调用通用的Post方法来执行编辑播单操作，成功时不执行任何操作，处理字段错误响应和异常情况
+        await url.Post(recordTemplate,
+            _ => { },
+            response =>
             {
-                return true;
-            }
-
-            MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑播单");
-            return false;
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "编辑播单");
-            e.LogUrlError("编辑播单");
-            return false;
-        }
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "编辑播单");
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "编辑播单");
+                e.LogUrlError("编辑播单");
+            });
     }
 }

@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-14:53
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-09-19-14:01
 
 namespace LiveBoost.Tools;
 
@@ -67,28 +67,24 @@ public static partial class UrlHelper
             accessId = access.AccessId,
             channelId
         };
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser?.Token}")
-                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
-
-            var jobj = JObject.Parse(result);
-
-            if ( jobj["code"]?.Value<int>() == 200 )
+        return await url.Post(para,
+            response =>
             {
+                var jobj = JObject.Parse(response);
                 return ( jobj["data"]?.ToString(), para.taskId );
-            }
-
-            MessageBox.Warning(jobj["msg"]?.ToString(), "开始收录");
-            return ( string.Empty, string.Empty );
-
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "开始收录");
-            e.LogUrlError("开始收录");
-            return ( string.Empty, string.Empty );
-        }
+            },
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.ToString(), "开始收录");
+                return ( string.Empty, string.Empty );
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "开始收录");
+                e.LogUrlError("开始收录");
+                return ( string.Empty, string.Empty );
+            });
     }
     /// <summary>
     ///     停止收录
@@ -104,26 +100,19 @@ public static partial class UrlHelper
         {
             taskId
         };
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser?.Token}")
-                .PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
-
-            var jobj = JObject.Parse(result);
-
-            if ( jobj["code"]?.Value<int>() == 200 )
+        return await url.Post(para,
+            _ => true,
+            response =>
             {
-                return true;
-            }
-
-            MessageBox.Warning(jobj["msg"]?.ToString(), "停止收录");
-            return false;
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "停止收录");
-            e.LogUrlError("停止收录");
-            return false;
-        }
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.ToString(), "停止收录");
+                return false;
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "停止收录");
+                e.LogUrlError("停止收录");
+                return false;
+            });
     }
 }

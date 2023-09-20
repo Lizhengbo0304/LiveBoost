@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-11:17
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-09-19-14:01
 
 #region
 
@@ -58,14 +58,19 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
         RecordAccess.VideoPath = AppConfig.Instance.ShouluPath!.Combine(result.filePath!);
         RecordAccess.TaskId = result.taskId;
         Content = PlayerHost;
-
-        await ActionHelper.RunWithTimeout(() =>
+        try
         {
-            Combination.SetPlayFile(RecordAccess.VideoPath);
-            Combination.SetName(RecordAccess.AccessName!);
-            Combination.SetStreamProtocal(RecordAccess.Channel.Protocol!);
-        }, 5000);
-
+            await ActionHelper.RunWithTimeout(() =>
+            {
+                Combination.SetPlayFile(RecordAccess!.VideoPath!);
+                Combination.SetName(RecordAccess.AccessName!);
+                Combination.SetStreamProtocal(RecordAccess.Channel!.Protocol!);
+            });
+        }
+        catch ( Exception e )
+        {
+            e.LogError("向子进程设置播放路径、名称、收录协议时发生异常");
+        }
     });
 
 #endregion
@@ -83,15 +88,30 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             Content = IsEnabled ? string.IsNullOrEmpty(RecordAccess?.VideoPath) ? null : PlayerHost : null;
             if ( Content == null )
             {
-                await ActionHelper.RunWithTimeout(Combination.StopPlay, 5000);
+                try
+                {
+                    await ActionHelper.RunWithTimeout(Combination.StopPlay);
+                }
+                catch ( Exception e )
+                {
+                    e.LogError("向子进程发送停止播放命令异常");
+                }
                 return;
             }
-            await ActionHelper.RunWithTimeout(() =>
+            try
             {
-                Combination.SetPlayFile(RecordAccess!.VideoPath!);
-                Combination.SetName(RecordAccess.AccessName!);
-                Combination.SetStreamProtocal(RecordAccess.Channel!.Protocol!);
-            }, 5000);
+                await ActionHelper.RunWithTimeout(() =>
+                {
+                    Combination.SetPlayFile(RecordAccess!.VideoPath!);
+                    Combination.SetName(RecordAccess.AccessName!);
+                    Combination.SetStreamProtocal(RecordAccess.Channel!.Protocol!);
+                });
+            }
+            catch ( Exception e )
+            {
+                e.LogError("向子进程设置播放路径、名称、收录协议时发生异常");
+            }
+
         });
     }
 
@@ -296,9 +316,16 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             return;
         }
         await _controlSemaphoreSlim.WaitAsync();
-        var content = new ViewHost(new IntPtr(handle));
-        PlayerHost = content;
-        _controlSemaphoreSlim.Release();
+        try
+        {
+            // 创建一个 ViewHost 实例用于播放
+            var content = new ViewHost(new IntPtr(handle));
+            PlayerHost = content;
+        }
+        finally
+        {
+            _controlSemaphoreSlim.Release();
+        }
     }
 
     /// 关闭收录
@@ -309,31 +336,42 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             return;
         }
         await _controlSemaphoreSlim.WaitAsync();
-        if ( RecordAccess == null || string.IsNullOrEmpty(RecordAccess.TaskId) )
+        try
+        {
+            if ( RecordAccess == null || string.IsNullOrEmpty(RecordAccess.TaskId) )
+            {
+                return;
+            }
+
+            if ( MessageBox.Ask("是否确定停止收录", "收录") is not MessageBoxResult.OK )
+            {
+                return;
+            }
+
+            // 停止任务
+            if ( !await RecordAccess.TaskId!.StopRecord() )
+            {
+                return;
+            }
+
+            RecordAccess.Channel = null;
+            RecordAccess.TaskId = null;
+            RecordAccess.VideoPath = null;
+
+            try
+            {
+                await ActionHelper.RunWithTimeout(Combination.StopPlay);
+            }
+            catch ( Exception e )
+            {
+                e.LogError("向子进程发送停止播放命令异常");
+            }
+            Content = null;
+        }
+        finally
         {
             _controlSemaphoreSlim.Release();
-            return;
         }
-
-        if ( MessageBox.Ask("是否确定停止收录", "收录") is not MessageBoxResult.OK )
-        {
-            return;
-        }
-
-        // 停止任务
-        if ( !await RecordAccess.TaskId!.StopRecord() )
-        {
-            _controlSemaphoreSlim.Release();
-            return;
-        }
-
-        RecordAccess.Channel = null;
-        RecordAccess.TaskId = null;
-        RecordAccess.VideoPath = null;
-
-        await ActionHelper.RunWithTimeout(Combination.StopPlay, 5000);
-        Content = null;
-        _controlSemaphoreSlim.Release();
     }
 
     /// <inheritdoc />
@@ -344,13 +382,20 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             return;
         }
         await _controlSemaphoreSlim.WaitAsync();
-        // 修改频道
-        if ( MessageBox.Ask("是否确定修改收录频道", "收录") is not MessageBoxResult.OK )
+        try
         {
-            return;
+            // 修改频道
+            if ( MessageBox.Ask("是否确定修改收录频道", "收录") is not MessageBoxResult.OK )
+            {
+                return;
+            }
+
+            AddShouluChannelCommand.Execute();
         }
-        AddShouluChannelCommand.Execute();
-        _controlSemaphoreSlim.Release();
+        finally
+        {
+            _controlSemaphoreSlim.Release();
+        }
     }
 
     public async void Send2MainPlayer()
@@ -361,7 +406,6 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             return;
         }
         await _controlSemaphoreSlim.WaitAsync();
-
         try
         {
             // 检查 CombinationMainWindowVm 是否为空
@@ -387,6 +431,7 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             {
                 return;
             }
+
             await CombinationMainWindowVm.PlayRecordAccess(RecordAccess);
         }
         finally

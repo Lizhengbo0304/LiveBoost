@@ -8,6 +8,8 @@
         <!-- Controls -->
         <ResourceDictionary
             Source = "pack://application:,,,/LiveBoost;component/Themes/Style/Controls/CombinationItemStyle.xaml" />
+        <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/Controls/JggItemStyle.xaml" />
         <!-- CombinationStyle -->
         <ResourceDictionary
             Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />

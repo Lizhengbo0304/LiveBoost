@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -38,37 +38,41 @@
         <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Drawing"/>
-        <Reference Include="System.Xml"/>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Drawing" />
+        <Reference Include="System.Xml" />
         <Reference Include="System.Xaml">
             <RequiredTargetFramework>4.0</RequiredTargetFramework>
         </Reference>
-        <Reference Include="WindowsBase"/>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
+        <Reference Include="WindowsBase" />
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Controls\CombinationList\CombinationItem.cs"/>
-        <Compile Include="Controls\CombinationList\CombinationListView.cs"/>
-        <Compile Include="Tools\Extensions\RecordProgramExtension.cs"/>
-        <Compile Include="Tools\UrlHelper\FilesUrlHelper.cs"/>
-        <Compile Include="Tools\UrlHelper\InitUrlHelper.cs"/>
-        <Compile Include="Tools\UrlHelper\LoginUrlHelper.cs"/>
-        <Compile Include="Tools\UrlHelper\PushUrlHelper.cs"/>
-        <Compile Include="Tools\UrlHelper\RecordUrlHelper.cs"/>
-        <Compile Include="Tools\UrlHelper\UrlHelper.cs"/>
-        <Compile Include="ViewModels\CombinationModule\CombinationMainWindowVm.cs"/>
-        <Compile Include="ViewModels\CombinationModule\CombinationPlayerVm.cs"/>
-        <Compile Include="ViewModels\CombinationModule\CombinationPushVm.cs"/>
-        <Compile Include="ViewModels\CombinationModule\CombinationRecordFilesVm.cs"/>
-        <Compile Include="ViewModels\CombinationModule\CombinationRecordVm.cs"/>
-        <Compile Include="ViewModels\JggModule\JggMainWindowVm.cs"/>
-        <Compile Include="ViewModels\JggModule\JggMonitoringSourceVm.cs"/>
-        <Compile Include="ViewModels\JggModule\JggPreviewAccessPageVm.cs"/>
-        <Compile Include="ViewModels\LoginModule\LoginWindowVm.cs"/>
+        <Compile Include="Controls\CombinationList\CombinationItem.cs" />
+        <Compile Include="Controls\CombinationList\CombinationListView.cs" />
+        <Compile Include="Controls\JggList\JggItem.cs" />
+        <Compile Include="Controls\JggList\JggListView.cs" />
+        <Compile Include="Tools\DragDropHandler\JggDragHandler.cs" />
+        <Compile Include="Tools\DragDropHandler\JggDropHandler.cs" />
+        <Compile Include="Tools\Extensions\RecordProgramExtension.cs" />
+        <Compile Include="Tools\UrlHelper\FilesUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\InitUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\LoginUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\PushUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\RecordUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\UrlHelper.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationMainWindowVm.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationPlayerVm.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationPushVm.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationRecordFilesVm.cs" />
+        <Compile Include="ViewModels\CombinationModule\CombinationRecordVm.cs" />
+        <Compile Include="ViewModels\JggModule\JggMainWindowVm.cs" />
+        <Compile Include="ViewModels\JggModule\JggMonitoringSourceVm.cs" />
+        <Compile Include="ViewModels\JggModule\JggPreviewAccessPageVm.cs" />
+        <Compile Include="ViewModels\LoginModule\LoginWindowVm.cs" />
         <Compile Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml.cs">
             <DependentUpon>CombinationChooseRecordChannelWindow.xaml</DependentUpon>
         </Compile>
@@ -90,8 +94,8 @@
         <Compile Include="Views\CombinationModule\CombinationTitleBar.xaml.cs">
             <DependentUpon>CombinationTitleBar.xaml</DependentUpon>
         </Compile>
-        <Compile Include="Views\CombinationModule\CombinationPlayListOut.xaml.cs"/>
-        <Compile Include="Views\CombinationModule\CombinationPlayListOutXml.xaml.cs"/>
+        <Compile Include="Views\CombinationModule\CombinationPlayListOut.xaml.cs" />
+        <Compile Include="Views\CombinationModule\CombinationPlayListOutXml.xaml.cs" />
         <Compile Include="Views\JggModule\JggMainWindow.xaml.cs">
             <DependentUpon>JggMainWindow.xaml</DependentUpon>
         </Compile>
@@ -115,31 +119,32 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Page Include="Themes\Style\CombinationStyle\ComboBoxStyle.xaml"/>
-        <Page Include="Themes\Style\CombinationStyle\ListViewStyle.xaml"/>
-        <Page Include="Themes\Style\CombinationStyle\SearchBarStyle.xaml"/>
-        <Page Include="Themes\Style\CombinationStyle\TabControlStyle.xaml"/>
-        <Page Include="Themes\Style\Controls\CombinationItemStyle.xaml"/>
-        <Page Include="Themes\Style\JggModule\ListViewStyle.xaml"/>
-        <Page Include="Themes\Theme.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationMainWindow.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationMediaPlayerPage.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationPushAccessPage.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationRecordAccessPage.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationRecordFilesPage.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationTitleBar.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationPlayListOut.xaml"/>
-        <Page Include="Views\CombinationModule\CombinationPlayListOutXml.xaml"/>
-        <Page Include="Views\JggModule\JggMainWindow.xaml"/>
-        <Page Include="Views\JggModule\JggMonitoringSource.xaml"/>
-        <Page Include="Views\JggModule\JggPreviewAccessPage.xaml"/>
-        <Page Include="Views\JggModule\JggTitleBar.xaml"/>
-        <Page Include="Views\LoginModule\LoginWindow.xaml"/>
+        <Page Include="Themes\Style\CombinationStyle\ComboBoxStyle.xaml" />
+        <Page Include="Themes\Style\CombinationStyle\ListViewStyle.xaml" />
+        <Page Include="Themes\Style\CombinationStyle\SearchBarStyle.xaml" />
+        <Page Include="Themes\Style\CombinationStyle\TabControlStyle.xaml" />
+        <Page Include="Themes\Style\Controls\CombinationItemStyle.xaml" />
+        <Page Include="Themes\Style\Controls\JggItemStyle.xaml" />
+        <Page Include="Themes\Style\JggModule\ListViewStyle.xaml" />
+        <Page Include="Themes\Theme.xaml" />
+        <Page Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml" />
+        <Page Include="Views\CombinationModule\CombinationMainWindow.xaml" />
+        <Page Include="Views\CombinationModule\CombinationMediaPlayerPage.xaml" />
+        <Page Include="Views\CombinationModule\CombinationPushAccessPage.xaml" />
+        <Page Include="Views\CombinationModule\CombinationRecordAccessPage.xaml" />
+        <Page Include="Views\CombinationModule\CombinationRecordFilesPage.xaml" />
+        <Page Include="Views\CombinationModule\CombinationTitleBar.xaml" />
+        <Page Include="Views\CombinationModule\CombinationPlayListOut.xaml" />
+        <Page Include="Views\CombinationModule\CombinationPlayListOutXml.xaml" />
+        <Page Include="Views\JggModule\JggMainWindow.xaml" />
+        <Page Include="Views\JggModule\JggMonitoringSource.xaml" />
+        <Page Include="Views\JggModule\JggPreviewAccessPage.xaml" />
+        <Page Include="Views\JggModule\JggTitleBar.xaml" />
+        <Page Include="Views\LoginModule\LoginWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="AppProgram.cs"/>
-        <Compile Include="GlobalUsing.cs"/>
+        <Compile Include="AppProgram.cs" />
+        <Compile Include="GlobalUsing.cs" />
         <Compile Include="Properties\AssemblyInfo.cs">
             <SubType>Code</SubType>
         </Compile>
@@ -154,13 +159,13 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config"/>
-        <None Include="Icon.ico"/>
+        <None Include="App.config" />
+        <None Include="Icon.ico" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Themes\Basic\"/>
-        <Folder Include="ViewModels\NornalModule\"/>
-        <Folder Include="ViewModels\SingleModule\"/>
+        <Folder Include="Themes\Basic\" />
+        <Folder Include="ViewModels\NornalModule\" />
+        <Folder Include="ViewModels\SingleModule\" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AutoProperties.Fody" Version="1.25.0">
@@ -169,26 +174,26 @@
         <PackageReference Include="ConfigureAwait.Fody" Version="3.3.2">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Flurl.Http" Version="3.2.4"/>
+        <PackageReference Include="Flurl.Http" Version="3.2.4" />
         <PackageReference Include="Fody" Version="6.8.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1"/>
-        <PackageReference Include="HandyControl" Version="3.4.0"/>
-        <PackageReference Include="HandyIpc" Version="0.5.3"/>
-        <PackageReference Include="HandyIpc.NamedPipe" Version="0.5.0"/>
-        <PackageReference Include="HandyIpc.Serializer.Json" Version="0.5.0"/>
-        <PackageReference Include="log4net" Version="2.0.15"/>
-        <PackageReference Include="MD5" Version="2.0.4"/>
-        <PackageReference Include="Prism.Unity" Version="8.1.97"/>
+        <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
+        <PackageReference Include="HandyControl" Version="3.4.0" />
+        <PackageReference Include="HandyIpc" Version="0.5.3" />
+        <PackageReference Include="HandyIpc.NamedPipe" Version="0.5.0" />
+        <PackageReference Include="HandyIpc.Serializer.Json" Version="0.5.0" />
+        <PackageReference Include="log4net" Version="2.0.15" />
+        <PackageReference Include="MD5" Version="2.0.4" />
+        <PackageReference Include="Prism.Unity" Version="8.1.97" />
         <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7"/>
-        <PackageReference Include="Websocket.Client" Version="4.7.0"/>
-        <PackageReference Include="WindowsAPICodePackShell" Version="7.0.4"/>
-        <PackageReference Include="zgabi.FFME.Windows" Version="6.0.2"/>
+        <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
+        <PackageReference Include="Websocket.Client" Version="4.7.0" />
+        <PackageReference Include="WindowsAPICodePackShell" Version="7.0.4" />
+        <PackageReference Include="zgabi.FFME.Windows" Version="6.0.2" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\LiveBoost.Toolkit\LiveBoost.Toolkit.csproj">
@@ -196,5 +201,5 @@
             <Name>LiveBoost.Toolkit</Name>
         </ProjectReference>
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

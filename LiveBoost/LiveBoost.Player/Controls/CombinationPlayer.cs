@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-06-14:18
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-09-19-14:02
 
 #region
 
@@ -42,7 +42,7 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     public CombinationPlayer()
     {
         Resources.MergedDictionaries.Add(
-            Application.LoadComponent(new Uri("LiveBoost.Player;component/Themes/PlayerStyle.xaml",
+            Application.LoadComponent(new Uri("LiveBoost.Player;component/Themes/CombinationStyle.xaml",
                 UriKind.Relative)) as ResourceDictionary);
 
         // 创建一个容器服务器 Builder。
@@ -73,7 +73,6 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     // 通道名称
     public string? AccessName { get; set; }
     public string? Protocol { get; set; }
-
     public string? VideoSize { get; set; }
 
 #endregion
@@ -83,13 +82,13 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     // 切换频道
     public DelegateCommand ChangedChannelCmd => new(async () =>
     {
-        await ActionHelper.RunWithTimeout(IpcClientHelper.ChildPlayer.ChangedChannel, 5000);
+        await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.ChangedChannel);
     });
 
     // 删除频道
     public DelegateCommand DeleteChannelCmd => new(async () =>
     {
-        await ActionHelper.RunWithTimeout(IpcClientHelper.ChildPlayer.ClearChannel, 5000);
+        await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.ClearChannel);
     });
 
 #endregion
@@ -159,7 +158,7 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         base.OnMouseDoubleClick(e);
         var cts = new CancellationTokenSource();
 
-        var task = Task.Run(() => IpcClientHelper.ChildPlayer.Send2MainPlayer(), cts.Token);
+        var task = Task.Run(() => IpcClientHelper.CombinationPlayer.Send2MainPlayer(), cts.Token);
         const int timeout = 5000; // Timeout in milliseconds
         Task.Delay(timeout, cts.Token).ContinueWith(_ =>
         {

@@ -3,31 +3,46 @@
         xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:controls = "clr-namespace:LiveBoost.Controls" xmlns:hc = "https://handyorg.github.io/handycontrol"
-        Background = "#585A5D" BorderBrush = "#A0A0A0" BorderThickness = "1" mc:Ignorable = "d" d:DesignHeight = "300"
-        d:DesignWidth = "300" >
+        xmlns:controls = "clr-namespace:LiveBoost.Controls"
+        xmlns:dd = "urn:gong-wpf-dragdrop"
+        Background = "#585A5D" BorderBrush = "#A0A0A0"
+        BorderThickness = "1" mc:Ignorable = "d" d:DesignHeight = "300" d:DesignWidth = "300" >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
             <RowDefinition Height = "Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <controls:CombinationListView Grid.Row = "0" Margin = "15" ItemsSource = "{Binding RecordItems}"
-                                      SelectionMode = "Multiple" Style = "{StaticResource BaseListViewStyle}"
-                                      ItemContainerStyle = "{StaticResource {x:Type controls:CombinationItem}}" >
-            <controls:CombinationListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Rows = "3" Columns = "3" FirstColumn = "0" SnapsToDevicePixels = "True" />
-                </ItemsPanelTemplate>
-            </controls:CombinationListView.ItemsPanel>
-        </controls:CombinationListView>
-        <hc:Pagination Grid.Row = "1" MaxPageCount = "{Binding TotalPage}" MaxPageInterval = "5"
-                       PageIndex = "{Binding CurrentPage,Mode=TwoWay}" Margin = "15 0 15 15"
-                       HorizontalAlignment = "Center" >
-            <hc:Interaction.Triggers>
-                <hc:EventTrigger EventName = "PageUpdated" >
-                    <hc:EventToCommand Command = "{Binding PageUpdatedCmd}" PassEventArgsToCommand = "True" />
-                </hc:EventTrigger>
-            </hc:Interaction.Triggers>
-        </hc:Pagination>
+        <ToggleButton x:Name = "Layout" Content = "布局选择" Grid.Row = "0" HorizontalAlignment = "Right"
+                      Foreground = "White" Style = "{StaticResource IconToggleButtonStyle}" />
+        <Popup Grid.Row = "0" PlacementTarget = "{Binding ElementName=Layout}"
+               IsOpen = "{Binding ElementName=Layout,Path=IsChecked,Mode=TwoWay}" StaysOpen = "False"
+               VerticalOffset = "5" >
+            <ListView Style = "{StaticResource BaseListViewStyle}" Background = "White"
+                      SelectionChanged = "Selector_OnSelectionChanged" x:Name = "LayoutListView">
+                <ListViewItem IsSelected = "True" >
+                    <ListViewItem.Content>
+                        <Canvas Name = "drawingCanvas" Background = "White" Width = "100" Height = "100" />
+                    </ListViewItem.Content>
+                </ListViewItem>
+                <ListViewItem>
+                    <ListViewItem.Content>
+                        <Canvas Name = "drawingCanvas1" Background = "White" Width = "100" Height = "100" />
+                    </ListViewItem.Content>
+                </ListViewItem>
+                <ListViewItem>
+                    <ListViewItem.Content>
+                        <Canvas Name = "drawingCanvas2" Background = "White" Width = "100" Height = "100" />
+                    </ListViewItem.Content>
+                </ListViewItem>
+            </ListView>
+        </Popup>
+        <controls:JggListView Grid.Row = "1" Margin = "15" ItemsSource = "{Binding RecordItems}"
+                              dd:DragDrop.IsDropTarget="True"
+                              dd:DragDrop.ShowAlwaysDropTargetAdorner = "True"
+                              dd:DragDrop.DropScrollingMode = "None"
+                              dd:DragDrop.DropHandler = "{Binding JggDropHandler}"
+                              SelectionMode = "Multiple" Style = "{StaticResource BaseListViewStyle}"
+                              ItemsPanel = "{StaticResource twoItemsPanelStyle}" x:Name = "JggListView"
+                              ItemContainerStyle = "{StaticResource {x:Type controls:JggItem}}" />
     </Grid>
 </Border>

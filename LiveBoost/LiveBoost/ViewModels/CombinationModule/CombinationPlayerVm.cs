@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-07-11:35
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-09-19-14:01
 
 #region
 
@@ -616,7 +616,7 @@ public sealed partial class CombinationMainWindowVm
             AppConfig.Instance.ShouluPath!.ToLower().Replace('/', '\\'),
             string.Empty).Replace('\\', '/');
 
-        return await access!.Channel!.ChannelId!.GetMarks(videoPath);
+        return await access.Channel!.ChannelId!.GetMarks(videoPath);
     }
     /// <summary>
     ///     播放Mark点
@@ -687,76 +687,62 @@ public sealed partial class CombinationMainWindowVm
         }
     });
     /// <summary>
-    ///     向前调整位置的通用方法
+    ///     调整位置的通用方法。根据指定的时间间隔和方向来调整播放位置。
     /// </summary>
     /// <param name = "interval" > 时间间隔 </param>
-    private void AdjustBackwardPosition(TimeSpan interval)
+    /// <param name = "isForward" > 如果为 true，则向前调整位置；如果为 false，则向后调整位置。 </param>
+    private void AdjustPosition(TimeSpan interval, bool isForward)
     {
-        if ( PlayerInpoint is not null )
+        // 根据方向选择合适的限制点（向前调整选择 PlayerOutpoint 或 PlaybackEndTime，向后调整选择 PlayerInpoint 或 PlaybackStartTime）。
+        var limit = isForward ? PlayerOutpoint ?? MdElement.PlaybackEndTime : PlayerInpoint ?? MdElement.PlaybackStartTime;
+
+        // 检查是否存在限制点。
+        if ( limit is null )
         {
-            if ( MdElement.Position - interval > PlayerInpoint )
-            {
-                MdElement.Position -= interval;
-            }
-            else
-            {
-                MdElement.Position = PlayerInpoint!.Value;
-            }
+            return;
         }
-        else if ( MdElement.PlaybackStartTime is not null )
+        // 根据方向执行相应的位置调整。
+        if ( isForward )
         {
-            if ( MdElement.Position - interval > MdElement.PlaybackStartTime )
-            {
-                MdElement.Position -= interval;
-            }
-            else
-            {
-                MdElement.Position = MdElement.PlaybackStartTime.Value;
-            }
-        }
-    }
-    /// <summary>
-    ///     向后调整指定时间间隔
-    /// </summary>
-    /// <param name = "interval" > 时间间隔 </param>
-    private void AdjustForwardPosition(TimeSpan interval)
-    {
-        if ( PlayerOutpoint is not null )
-        {
-            if ( MdElement.Position + interval <= PlayerOutpoint )
+            // 向前调整位置。
+            if ( MdElement.Position + interval <= limit )
             {
                 MdElement.Position += interval;
             }
             else
             {
-                MdElement.Position = PlayerOutpoint!.Value;
+                // 如果超过了限制点，则将位置设置为限制点。
+                MdElement.Position = limit.Value;
             }
         }
-        else if ( MdElement.PlaybackEndTime is not null )
+        else
         {
-            if ( MdElement.Position + interval <= MdElement.PlaybackEndTime )
+            // 向后调整位置。
+            if ( MdElement.Position - interval >= limit )
             {
-                MdElement.Position += interval;
+                MdElement.Position -= interval;
             }
             else
             {
-                MdElement.Position = MdElement.PlaybackEndTime!.Value;
+                // 如果超过了限制点，则将位置设置为限制点。
+                MdElement.Position = limit.Value;
             }
         }
     }
+
     /// <summary>
     ///     向前调整指定秒数
     /// </summary>
     public DelegateCommand BackwardCmd => new(() =>
     {
-        AdjustBackwardPosition(TimeSpan.FromSeconds(intervalTime));
+        AdjustPosition(TimeSpan.FromSeconds(intervalTime), false);
     });
     /// <summary>
     ///     向前整0.5秒
     /// </summary>
     public DelegateCommand Backward500msCmd => new(() =>
     {
-        AdjustBackwardPosition(TimeSpan.FromSeconds(0.5));
+        AdjustPosition(TimeSpan.FromSeconds(0.5), false);
     });
 
     /// <summary>
@@ -764,7 +750,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Backward1sCmd => new(() =>
     {
-        AdjustBackwardPosition(TimeSpan.FromSeconds(1));
+        AdjustPosition(TimeSpan.FromSeconds(1), false);
     });
 
     /// <summary>
@@ -772,7 +758,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Backward2sCmd => new(() =>
     {
-        AdjustBackwardPosition(TimeSpan.FromSeconds(2));
+        AdjustPosition(TimeSpan.FromSeconds(2), false);
     });
 
     /// <summary>
@@ -780,7 +766,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Backward5sCmd => new(() =>
     {
-        AdjustBackwardPosition(TimeSpan.FromSeconds(5));
+        AdjustPosition(TimeSpan.FromSeconds(5), false);
     });
 
     /// <summary>
@@ -788,7 +774,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Backward10sCmd => new(() =>
     {
-        AdjustBackwardPosition(TimeSpan.FromSeconds(10));
+        AdjustPosition(TimeSpan.FromSeconds(10), false);
     });
 
     /// <summary>
@@ -796,7 +782,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Backward15sCmd => new(() =>
     {
-        AdjustBackwardPosition(TimeSpan.FromSeconds(15));
+        AdjustPosition(TimeSpan.FromSeconds(15), false);
     });
 
     /// <summary>
@@ -804,7 +790,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Backward20sCmd => new(() =>
     {
-        AdjustBackwardPosition(TimeSpan.FromSeconds(20));
+        AdjustPosition(TimeSpan.FromSeconds(20), false);
     });
 
     /// <summary>
@@ -812,14 +798,14 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand ForwardCmd => new(() =>
     {
-        AdjustForwardPosition(TimeSpan.FromSeconds(intervalTime));
+        AdjustPosition(TimeSpan.FromSeconds(intervalTime), true);
     });
     /// <summary>
     ///     向后调整0.5秒
     /// </summary>
     public DelegateCommand Forward500msCmd => new(() =>
     {
-        AdjustForwardPosition(TimeSpan.FromSeconds(0.5));
+        AdjustPosition(TimeSpan.FromSeconds(0.5), true);
     });
 
     /// <summary>
@@ -827,7 +813,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Forward1sCmd => new(() =>
     {
-        AdjustForwardPosition(TimeSpan.FromSeconds(1));
+        AdjustPosition(TimeSpan.FromSeconds(1), true);
     });
 
     /// <summary>
@@ -835,7 +821,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Forward2sCmd => new(() =>
     {
-        AdjustForwardPosition(TimeSpan.FromSeconds(2));
+        AdjustPosition(TimeSpan.FromSeconds(2), true);
     });
 
     /// <summary>
@@ -843,7 +829,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Forward5sCmd => new(() =>
     {
-        AdjustForwardPosition(TimeSpan.FromSeconds(5));
+        AdjustPosition(TimeSpan.FromSeconds(5), true);
     });
 
     /// <summary>
@@ -851,7 +837,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Forward10sCmd => new(() =>
     {
-        AdjustForwardPosition(TimeSpan.FromSeconds(10));
+        AdjustPosition(TimeSpan.FromSeconds(10), true);
     });
 
     /// <summary>
@@ -859,7 +845,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Forward15sCmd => new(() =>
     {
-        AdjustForwardPosition(TimeSpan.FromSeconds(15));
+        AdjustPosition(TimeSpan.FromSeconds(15), true);
     });
 
     /// <summary>
@@ -867,7 +853,7 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public DelegateCommand Forward20sCmd => new(() =>
     {
-        AdjustForwardPosition(TimeSpan.FromSeconds(20));
+        AdjustPosition(TimeSpan.FromSeconds(20), true);
     });
 
 #endregion
@@ -995,10 +981,10 @@ public sealed partial class CombinationMainWindowVm
             return;
         }
 
-        var playerOutpoint = PlayerOutpoint;
+        var playerOutpoint = PlayerOutpoint.Value;
 
         // 当前时间未超过出点不处理
-        if ( playerOutpoint is null || !( arg.NewValue >= playerOutpoint.Value.TotalMilliseconds ) )
+        if ( arg.NewValue < playerOutpoint.TotalMilliseconds )
         {
             return;
         }
@@ -1017,7 +1003,7 @@ public sealed partial class CombinationMainWindowVm
         if ( CurrentIndex >= PlayFiles.Count )
         {
             // 当前条目为最后一条时，停止在出点
-            await MdElement.Seek(playerOutpoint.Value);
+            await MdElement.Seek(playerOutpoint);
             return;
         }
 

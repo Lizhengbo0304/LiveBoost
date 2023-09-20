@@ -59,4 +59,13 @@
             </MultiTrigger>
         </Style.Triggers>
     </Style>
+    <ItemsPanelTemplate x:Key = "twoItemsPanelStyle" >
+        <UniformGrid Rows = "2" Columns = "2" FirstColumn = "0" SnapsToDevicePixels = "True" />
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key = "threeItemsPanelStyle" >
+        <UniformGrid Rows = "3" Columns = "3" FirstColumn = "0" SnapsToDevicePixels = "True" />
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key = "fourItemsPanelStyle" >
+        <UniformGrid Rows = "4" Columns = "4" FirstColumn = "0" SnapsToDevicePixels = "True" />
+    </ItemsPanelTemplate>
 </ResourceDictionary>

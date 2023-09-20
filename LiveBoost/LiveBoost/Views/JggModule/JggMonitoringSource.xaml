@@ -16,7 +16,7 @@
                 FontSize = "18" Foreground = "#BFBFBF" IsHitTestVisible = "False"
                 Style = "{StaticResource IconButtonWithoutOpacityStyle}" />
         <FlyListView Grid.Row = "1" Margin = "0,5,0,0" Padding = "0,10,0,0" HorizontalContentAlignment = "Stretch"
-                     dd:DragDrop.DragHandler = "{Binding SourceMonitoringDragHandler}"
+                     dd:DragDrop.DragHandler = "{Binding JggDragHandler}"
                      dd:DragDrop.IsDragSource = "True" dd:DragDrop.ShowAlwaysDropTargetAdorner = "True"
                      Background = "#585A5D" BorderBrush = "#A0A0A0" BorderThickness = "1"
                      ItemContainerStyle = "{StaticResource ShouluChannelItemStyle}"

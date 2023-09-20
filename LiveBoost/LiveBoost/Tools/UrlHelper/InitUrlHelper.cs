@@ -1,14 +1,14 @@
 ﻿// 创建时间：2023-09-04-12:03
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-09-19-14:01
 
 namespace LiveBoost.Tools;
 
 public static partial class UrlHelper
 {
     /// <summary>
-    ///     获取配置文件
+    ///     获取配置文件的方法。
     /// </summary>
-    /// <returns> 配置文件实例 </returns>
+    /// <returns> 包含成功标志和配置文件实例的元组。成功时标志为true，异常时标志为false。 </returns>
     public static async Task<(bool, string?)> GetConfig()
     {
         // 检查接口地址是否为空
@@ -16,6 +16,7 @@ public static partial class UrlHelper
         {
             return ( false, "接口地址为空,获取配置信息异常" );
         }
+        var url = $"{AppConfig.Instance.MamCommonIp}/a/rest/mam/config";
 
         var stamp = DateTimeHelper.GetTimeStamp();
         var para = new
@@ -25,29 +26,22 @@ public static partial class UrlHelper
             sign = Hash.Content(Md5Str + stamp)
         };
 
-        try
-        {
-            var url = $"{AppConfig.Instance.MamCommonIp}/a/rest/mam/config";
-
-            // 发送异步的 POST 请求并接收字符串响应
-            var result = await url.WithTimeout(5).PostJsonAsync(para).ReceiveString().ConfigureAwait(false);
-
-            // 解析响应字符串为 JObject
-            var jobj = JObject.Parse(result);
-            if ( jobj["success"]?.Value<int>() != 1 )
+        // 调用通用的Post方法来执行获取配置文件操作，如果为空则返回失败标志和异常消息
+        return await url.Post(para,
+            response =>
             {
+                var jobj = JObject.Parse(response);
+
+                // 将 jobj 中的数据反序列化到 AppConfig.Instance 对象中
+                JsonConvert.PopulateObject(jobj["data"]?.ToString() ?? "{}", AppConfig.Instance);
+                return ( true, string.Empty );
+            },
+            response =>
+            {
+                var jobj = JObject.Parse(response);
                 // 返回错误消息
                 return ( false, $"{jobj["msg"]?.Value<string>()},获取配置信息异常" );
-            }
-
-            // 将 jobj 中的数据反序列化到 AppConfig.Instance 对象中
-            JsonConvert.PopulateObject(jobj["data"]?.ToString() ?? "{}", AppConfig.Instance);
-            return ( true, null );
-        }
-        catch ( Exception e )
-        {
-            // 返回异常消息
-            return ( false, $"{e.InnerException?.Message ?? e.Message},获取配置信息异常" );
-        }
+            },
+            e => ( false, $"{e.InnerException?.Message ?? e.Message},获取配置信息异常" ));
     }
 }
