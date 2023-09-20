@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -167,9 +168,64 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
 #endregion
 #region IJggPlayerEvent
 
-    public void SetPlayFile(string playFilePath) { }
+    public void SetName(string accessName)
+    {
+        ChannelName = accessName;
+    }
 
-    public void StopPlay() { }
+    public async void SetPlayFile(string playFilePath)
+    {
+        if ( _ffPlay is null )
+        {
+            return;
+        }
+
+        await OpenFileAsync(playFilePath);
+        await AdjustRemainingTimeAsync();
+        await _ffPlay.Play();
+    }
+    private async Task OpenFileAsync(string playFilePath)
+    {
+        var openFile = false;
+        while ( !openFile )
+        {
+            if ( !File.Exists(playFilePath) )
+            {
+                $"{ChannelName}预览文件：{playFilePath}不存在".LogFileInfo();
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
+                continue;
+            }
+            $"{ChannelName}预览文件：{playFilePath}正在打开".LogFileInfo();
+            openFile = await _ffPlay!.Open(new Uri(playFilePath));
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+        }
+    }
+
+    private async Task AdjustRemainingTimeAsync()
+    {
+        if ( _ffPlay!.RemainingDuration is not null )
+        {
+            if ( _ffPlay.RemainingDuration.Value.TotalSeconds > 20 )
+            {
+                await _ffPlay.Seek(_ffPlay.RemainingDuration.Value.Add(TimeSpan.FromSeconds(-20)));
+            }
+            else
+            {
+                var delay = 20 - _ffPlay.RemainingDuration.Value.TotalSeconds;
+                if ( delay > 0 )
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(delay));
+                }
+            }
+        }
+    }
+    public async void StopPlay()
+    {
+        if ( _ffPlay is not null )
+        {
+            await _ffPlay.Close();
+        }
+    }
 
 #endregion
 }

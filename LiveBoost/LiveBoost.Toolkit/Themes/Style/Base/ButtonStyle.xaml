@@ -43,12 +43,7 @@
                                    hc:ImageAttach.SourceFailed = "{Binding Path=(hc:ImageAttach.SourceFailed), RelativeSource={RelativeSource TemplatedParent}}"
                                    RenderTransformOrigin = "0.5 0.5"
                                    Source = "{Binding Path=(controls:IconElement.Source), RelativeSource={RelativeSource TemplatedParent}, IsAsync=True}"
-                                   Stretch = "{Binding Path=(controls:IconElement.Stretch), RelativeSource={RelativeSource TemplatedParent}}" >
-                                <Image.RenderTransform>
-                                    <RotateTransform
-                                        Angle = "{Binding Path=(controls:IconElement.Angle), RelativeSource={RelativeSource TemplatedParent}}" />
-                                </Image.RenderTransform>
-                            </Image>
+                                   Stretch = "{Binding Path=(controls:IconElement.Stretch), RelativeSource={RelativeSource TemplatedParent}}" />
 
                             <TextBlock x:Name = "ContentPresenterMain" Grid.Row = "1" Grid.Column = "0"
                                        Margin = "{TemplateBinding Padding}"
@@ -160,12 +155,7 @@
                                    hc:ImageAttach.SourceFailed = "{Binding Path=(hc:ImageAttach.SourceFailed), RelativeSource={RelativeSource TemplatedParent}}"
                                    RenderTransformOrigin = "0.5 0.5"
                                    Source = "{Binding Path=(controls:IconElement.Source), RelativeSource={RelativeSource TemplatedParent}, IsAsync=True}"
-                                   Stretch = "{Binding Path=(controls:IconElement.Stretch), RelativeSource={RelativeSource TemplatedParent}}" >
-                                <Image.RenderTransform>
-                                    <RotateTransform
-                                        Angle = "{Binding Path=(controls:IconElement.Angle), RelativeSource={RelativeSource TemplatedParent}}" />
-                                </Image.RenderTransform>
-                            </Image>
+                                   Stretch = "{Binding Path=(controls:IconElement.Stretch), RelativeSource={RelativeSource TemplatedParent}}" />
 
                             <TextBlock x:Name = "ContentPresenterMain" Grid.Row = "1" Grid.Column = "0"
                                        Margin = "{TemplateBinding Padding}"
@@ -279,12 +269,7 @@
                                    hc:ImageAttach.SourceFailed = "{Binding Path=(hc:ImageAttach.SourceFailed), RelativeSource={RelativeSource TemplatedParent}}"
                                    RenderTransformOrigin = "0.5 0.5"
                                    Source = "{Binding Path=(controls:IconElement.Source), RelativeSource={RelativeSource TemplatedParent}, IsAsync=True}"
-                                   Stretch = "{Binding Path=(controls:IconElement.Stretch), RelativeSource={RelativeSource TemplatedParent}}" >
-                                <Image.RenderTransform>
-                                    <RotateTransform
-                                        Angle = "{Binding Path=(controls:IconElement.Angle), RelativeSource={RelativeSource TemplatedParent}}" />
-                                </Image.RenderTransform>
-                            </Image>
+                                   Stretch = "{Binding Path=(controls:IconElement.Stretch), RelativeSource={RelativeSource TemplatedParent}}" />
 
                             <TextBlock x:Name = "ContentPresenterMain" Grid.Row = "1" Grid.Column = "0"
                                        Margin = "{TemplateBinding Padding}"

@@ -63,6 +63,10 @@ public class AppConfig
     /// </summary>
     public bool IsPortSupported { get; set; }
     /// <summary>
+    /// 预览窗口样式
+    /// </summary>
+    public int PreviewIndex { get; set; }
+    /// <summary>
     ///     是否初始化完成
     /// </summary>
     [InterceptIgnore]

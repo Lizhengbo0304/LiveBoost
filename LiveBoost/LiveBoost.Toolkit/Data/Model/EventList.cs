@@ -32,9 +32,17 @@ public class PushAccessRecordFilesChanged : PubSubEvent<PushAccess>
 }
 
 /// <summary>
-///     关闭播放器子进程
+///     关闭主界面播放器子进程
 /// </summary>
-public class CloseChildPlayerProcess : PubSubEvent
+public class CloseCombinationPlayerProcess : PubSubEvent
+{
+    public static readonly List<SubscriptionToken> SubscriptionTokens = new();
+}
+
+/// <summary>
+///     关闭预览界面播放器子进程
+/// </summary>
+public class CloseJggPlayerProcess : PubSubEvent
 {
     public static readonly List<SubscriptionToken> SubscriptionTokens = new();
 }

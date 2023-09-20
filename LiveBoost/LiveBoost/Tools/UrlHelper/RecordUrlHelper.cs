@@ -87,6 +87,38 @@ public static partial class UrlHelper
             });
     }
     /// <summary>
+    ///     开始收录
+    /// </summary>
+    public static async Task<(string? filePath, string? taskId)> StartRecord(this string accessId, string channelId)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/template/start";
+
+        var para = new
+        {
+            taskId = Guid.NewGuid().ToString("N"),
+            accessId,
+            channelId
+        };
+        return await url.Post(para,
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                return ( jobj["data"]?.ToString(), para.taskId );
+            },
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.ToString(), "开始收录");
+                return ( string.Empty, string.Empty );
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "开始收录");
+                e.LogUrlError("开始收录");
+                return ( string.Empty, string.Empty );
+            });
+    }
+    /// <summary>
     ///     停止收录
     /// </summary>
     public static async Task<bool> StopRecord(this string taskId)

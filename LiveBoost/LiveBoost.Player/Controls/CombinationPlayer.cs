@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-06-14:18
-// 修改时间：2023-09-19-14:02
+// 修改时间：2023-09-15-15:41
 
 #region
 
@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -73,6 +72,7 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     // 通道名称
     public string? AccessName { get; set; }
     public string? Protocol { get; set; }
+
     public string? VideoSize { get; set; }
 
 #endregion
@@ -153,20 +153,10 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     }
 
 
-    protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
+    protected override async void OnMouseDoubleClick(MouseButtonEventArgs e)
     {
         base.OnMouseDoubleClick(e);
-        var cts = new CancellationTokenSource();
-
-        var task = Task.Run(() => IpcClientHelper.CombinationPlayer.Send2MainPlayer(), cts.Token);
-        const int timeout = 5000; // Timeout in milliseconds
-        Task.Delay(timeout, cts.Token).ContinueWith(_ =>
-        {
-            if ( !task.IsCompleted )
-            {
-                cts.Cancel();
-            }
-        }, cts.Token);
+        await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.Send2MainPlayer);
     }
 
 #endregion

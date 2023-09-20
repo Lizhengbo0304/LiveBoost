@@ -39,7 +39,6 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             return;
         }
         RecordAccess.Channel = channel;
-        // 设置通道协议
         // 开启收录任务
         var result = await RecordAccess.StartRecord(RecordAccess.Channel.ChannelId!);
         // 如果收录任务开启失败，则重置频道
@@ -229,7 +228,7 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             var same = client.Resolve<ICombinationPlayer>();
             return same;
         });
-        GlobalEvent.Instance.GetEvent<CloseChildPlayerProcess>().Subscribe(() =>
+        GlobalEvent.Instance.GetEvent<CloseCombinationPlayerProcess>().Subscribe(() =>
         {
             {
                 try

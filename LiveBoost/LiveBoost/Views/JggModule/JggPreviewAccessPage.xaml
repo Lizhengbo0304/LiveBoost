@@ -17,24 +17,29 @@
         <Popup Grid.Row = "0" PlacementTarget = "{Binding ElementName=Layout}"
                IsOpen = "{Binding ElementName=Layout,Path=IsChecked,Mode=TwoWay}" StaysOpen = "False"
                VerticalOffset = "5" >
-            <ListView Style = "{StaticResource BaseListViewStyle}" Background = "White"
-                      SelectionChanged = "Selector_OnSelectionChanged" x:Name = "LayoutListView">
-                <ListViewItem IsSelected = "True" >
-                    <ListViewItem.Content>
-                        <Canvas Name = "drawingCanvas" Background = "White" Width = "100" Height = "100" />
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <Canvas Name = "drawingCanvas1" Background = "White" Width = "100" Height = "100" />
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <Canvas Name = "drawingCanvas2" Background = "White" Width = "100" Height = "100" />
-                    </ListViewItem.Content>
-                </ListViewItem>
-            </ListView>
+           <Border Background = "#2A2D34" CornerRadius="4">
+               <ListView Style = "{StaticResource BaseListViewStyle}"
+                         ItemContainerStyle="{StaticResource ChooseJggSizeItemStyle}"
+                         Padding="0 5 0 0"
+                         SelectedIndex="{Binding Source={x:Static AppConfig.Instance},Path=PreviewIndex,Mode=TwoWay}"
+                         SelectionChanged = "Selector_OnSelectionChanged">
+                   <ListViewItem  Tag="4 (2+2)">
+                       <ListViewItem.Content>
+                           <Canvas Name = "drawingCanvas"  Width = "96" Height = "54" />
+                       </ListViewItem.Content>
+                   </ListViewItem>
+                   <ListViewItem Tag="9 (3+3+3)">
+                       <ListViewItem.Content>
+                           <Canvas Name = "drawingCanvas1"  Width = "96" Height = "54" />
+                       </ListViewItem.Content>
+                   </ListViewItem>
+                   <ListViewItem Tag="16 (4+4+4+4)">
+                       <ListViewItem.Content>
+                           <Canvas Name = "drawingCanvas2"  Width = "96" Height = "54" />
+                       </ListViewItem.Content>
+                   </ListViewItem>
+               </ListView>
+           </Border>
         </Popup>
         <controls:JggListView Grid.Row = "1" Margin = "15" ItemsSource = "{Binding RecordItems}"
                               dd:DragDrop.IsDropTarget="True"

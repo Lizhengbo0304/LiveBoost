@@ -42,8 +42,26 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     private void ShowJggExecute()
     {
-        var jgg = new JggMainWindow();
-        jgg.Show();
+        if ( JggMainWindow is null )
+        {
+            JggMainWindow = new JggMainWindow();
+            JggMainWindow.Closed += OnJggMainWindowClosed;
+            JggMainWindow.Show();
+        }
+        else
+        {
+            MessageBox.Warning("预览窗口已打开", "打开预览窗口");
+        }
+    }
+
+    /// <summary>
+    /// 预览窗口关闭事件
+    /// </summary>
+    private void OnJggMainWindowClosed(object sender, EventArgs e)
+    {
+        JggMainWindow!.Closed -= OnJggMainWindowClosed;
+        GlobalEvent.Instance.GetEvent<CloseJggPlayerProcess>().Publish();
+        JggMainWindow = null;
     }
 
 #endregion
@@ -145,5 +163,9 @@ public sealed partial class CombinationMainWindowVm
     /// </summary>
     public int CurrentPage { get; set; }
 
+    /// <summary>
+    /// 预览窗口
+    /// </summary>
+    private JggMainWindow? JggMainWindow{get; set; }
 #endregion
 }

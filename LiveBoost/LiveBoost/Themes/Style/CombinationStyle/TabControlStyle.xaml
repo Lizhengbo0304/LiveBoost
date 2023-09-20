@@ -106,16 +106,7 @@
                                             <TabPanel Margin = "0,0,-1,-1" x:Name = "PART_HeaderPanel"
                                                       HorizontalAlignment = "Left" VerticalAlignment = "Bottom"
                                                       Background = "Transparent" IsItemsHost = "true"
-                                                      KeyboardNavigation.TabIndex = "1" Panel.ZIndex = "1" >
-                                                <hc:Interaction.Behaviors>
-                                                    <hc:FluidMoveBehavior AppliesTo = "Children"
-                                                                          Duration = "{Binding FluidMoveDuration,ElementName=PART_HeaderPanel}" >
-                                                        <hc:FluidMoveBehavior.EaseX>
-                                                            <CubicEase EasingMode = "EaseOut" />
-                                                        </hc:FluidMoveBehavior.EaseX>
-                                                    </hc:FluidMoveBehavior>
-                                                </hc:Interaction.Behaviors>
-                                            </TabPanel>
+                                                      KeyboardNavigation.TabIndex = "1" Panel.ZIndex = "1" />
                                         </Border>
                                     </hc:ScrollViewer>
                                     <Button Grid.Column = "1" Margin = "10 0 0 0" IconElement.Width = "39"

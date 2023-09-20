@@ -11,7 +11,20 @@ public partial class JggPreviewAccessPage
         DrawGrid(2, 2, Colors.Blue, 2, drawingCanvas); // 创建2x2的蓝色格子
         DrawGrid(3, 3, Colors.Blue, 2, drawingCanvas1); // 创建2x2的蓝色格子
         DrawGrid(4, 4, Colors.Blue, 2, drawingCanvas2); // 创建2x2的蓝色格子
+        Loaded += OnLoaded;
     }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        JggListView.ItemsPanel = AppConfig.Instance.PreviewIndex switch
+        {
+            0 => FindResource("twoItemsPanelStyle") as ItemsPanelTemplate,
+            1 => FindResource("threeItemsPanelStyle") as ItemsPanelTemplate,
+            2 => FindResource("fourItemsPanelStyle") as ItemsPanelTemplate,
+            _ => JggListView.ItemsPanel
+        };
+    }
+
     private void DrawGrid(int rows, int columns, Color color, double lineWidth, Canvas canvas)
     {
         canvas.Children.Clear(); // 清除之前的绘制
@@ -49,7 +62,7 @@ public partial class JggPreviewAccessPage
     {
         if ( JggListView is not null )
         {
-            JggListView.ItemsPanel = LayoutListView.SelectedIndex switch
+            JggListView.ItemsPanel = AppConfig.Instance.PreviewIndex switch
             {
                 0 => FindResource("twoItemsPanelStyle") as ItemsPanelTemplate,
                 1 => FindResource("threeItemsPanelStyle") as ItemsPanelTemplate,

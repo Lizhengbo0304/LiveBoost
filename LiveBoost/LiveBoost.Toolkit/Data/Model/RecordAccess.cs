@@ -30,11 +30,6 @@ public sealed class RecordAccess : INotifyPropertyChanged
     ///     任务ID
     /// </summary>
     public string? TaskId { get; set; }
-    /// <summary>
-    ///     是否已添加PropertyChanged处理事件
-    /// </summary>
-    public bool IsWatch { get; set; }
-
 #endregion
 
 #region INotifyPropertyChangedEvent

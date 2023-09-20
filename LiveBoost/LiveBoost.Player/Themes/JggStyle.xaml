@@ -24,7 +24,7 @@
                             <ffme:MediaElement x:Name = "Part_ffPlay" HorizontalAlignment = "Stretch"
                                                VerticalAlignment = "Stretch" Background = "Black"
                                                LoadedBehavior = "Manual" IsHitTestVisible = "False" />
-                            <Grid x:Name = "Part_VideoView_Control" Background = "#35000000" Visibility = "Visible" >
+                            <Grid x:Name = "Part_VideoView_Control" Background = "#35000000" Visibility = "Collapsed" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height = "Auto" />
                                     <RowDefinition />
@@ -32,16 +32,16 @@
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row = "0" Margin = "11 7" >
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width = "Auto" />
-                                        <ColumnDefinition Width = "Auto" />
                                         <ColumnDefinition />
                                         <ColumnDefinition Width = "Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column = "0"
+                                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                                               hc:TextBlockAttach.AutoTooltip="True"
                                                Text = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=ChannelName}"
                                                FontSize = "23" Foreground = "#BBBBBB" Margin = "0 0 11 0" />
 
-                                    <Button Grid.Column = "3" IconElement.Height = "16" IconElement.Width = "12"
+                                    <Button Grid.Column = "1" IconElement.Height = "16" IconElement.Width = "12"
                                             IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/delete.png"
                                             HorizontalAlignment = "Left" Margin = "0"
                                             Command = "{Binding RelativeSource={RelativeSource TemplatedParent},Path= ClearChannelCmd}"
@@ -67,7 +67,6 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property = "IsMouseOver" Value = "True" >
-                            <Setter TargetName="Part_ffPlay" Property="Background" Value="Aqua"/>
                             <Setter TargetName = "Part_VideoView_Control" Property = "Visibility" Value = "Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>

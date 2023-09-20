@@ -44,7 +44,9 @@ public class AppProgram
                     var combinationPlayer = new CombinationPlayer();
                     try
                     {
-                        ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SendPlayer, combinationPlayer.ViewToHwnd()).Wait();
+                    #pragma warning disable CS4014
+                        ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SendPlayer, combinationPlayer.ViewToHwnd());
+                    #pragma warning restore CS4014
                     }
                     catch ( Exception e )
                     {
@@ -57,7 +59,9 @@ public class AppProgram
                     var jggPlayer = new JggPlayer();
                     try
                     {
-                        ActionHelper.RunWithTimeout(IpcClientHelper.JggPlayer.SendPlayer, jggPlayer.ViewToHwnd()).Wait();
+                    #pragma warning disable CS4014
+                        ActionHelper.RunWithTimeout(IpcClientHelper.JggPlayer.SendPlayer, jggPlayer.ViewToHwnd());
+                    #pragma warning restore CS4014
                     }
                     catch ( Exception e )
                     {

@@ -64,28 +64,9 @@ public class IconElement
         new PropertyMetadata(Stretch.Uniform));
 
     /// <summary>
-    ///     旋转角度
-    /// </summary>
-    public static readonly DependencyProperty AngleProperty = DependencyProperty.RegisterAttached(
-        "Angle", typeof(double), typeof(IconElement), new PropertyMetadata(default(double)));
-
-    /// <summary>
     ///     获取图标显示模式
     /// </summary>
     public static Stretch GetStretch(DependencyObject element) => (Stretch) element.GetValue(StretchProperty);
-
-    /// <summary>
-    ///     获取旋转角度
-    /// </summary>
-    public static double GetAngle(DependencyObject element) => (double) element.GetValue(AngleProperty);
-
-    /// <summary>
-    ///     设置旋转角度
-    /// </summary>
-    public static void SetAngle(DependencyObject element, double value)
-    {
-        element.SetValue(AngleProperty, value);
-    }
 
     /// <summary>
     ///     设置图标显示模式

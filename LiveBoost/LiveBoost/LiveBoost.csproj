@@ -193,6 +193,7 @@
         <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
         <PackageReference Include="Websocket.Client" Version="4.7.0" />
         <PackageReference Include="WindowsAPICodePackShell" Version="7.0.4" />
+        <PackageReference Include="WpfScreenHelper" Version="2.1.0" />
         <PackageReference Include="zgabi.FFME.Windows" Version="6.0.2" />
     </ItemGroup>
     <ItemGroup>

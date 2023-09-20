@@ -124,7 +124,7 @@ public class AppProgram
                 if ( App.MainWindow == null )
                 {
                     IsClosed = true;
-                    GlobalEvent.Instance.GetEvent<CloseChildPlayerProcess>().Publish();
+                    GlobalEvent.Instance.GetEvent<CloseCombinationPlayerProcess>().Publish();
                     App.Shutdown();
                 }
                 else

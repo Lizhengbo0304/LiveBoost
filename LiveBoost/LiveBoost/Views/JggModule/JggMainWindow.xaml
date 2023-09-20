@@ -1,4 +1,5 @@
-﻿<hc:Window x:Class = "LiveBoost.Views.JggMainWindow" xmlns:prism = "http://prismlibrary.com/"
+﻿<hc:Window
+    x:Class = "LiveBoost.Views.JggMainWindow" xmlns:prism = "http://prismlibrary.com/"
            SnapsToDevicePixels = "True" xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
            xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,7 +8,8 @@
            WindowState = "Maximized" prism:ViewModelLocator.AutoWireViewModel = "True" BorderBrush = "Transparent"
            BorderThickness = "0" FontFamily = "Microsoft YaHei" Background = "Transparent"
            Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
-           ShowNonClientArea = "False" WindowStartupLocation = "CenterScreen" WindowStyle = "None" >
+            StateChanged="JggMainWindow_OnStateChanged"
+           ShowNonClientArea = "False"  WindowStyle = "None" >
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness = "0" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
     </WindowChrome.WindowChrome>

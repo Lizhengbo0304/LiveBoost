@@ -25,7 +25,9 @@ public partial class JggMainWindowVm
     /// </summary>
     private async Task InitializeRecordChannelsAsync()
     {
+        Debug.WriteLine(DateTime.Now);
         RecordChannels = await UrlHelper.GetShouluChannels().ConfigureAwait(false);
+        Debug.WriteLine(DateTime.Now);
     }
 
 #endregion
