@@ -55,9 +55,12 @@
         <Compile Include="Controls\CombinationList\CombinationListView.cs" />
         <Compile Include="Controls\JggList\JggItem.cs" />
         <Compile Include="Controls\JggList\JggListView.cs" />
+        <Compile Include="Tools\Converters\LayoutIndex2ItemsPanelConverter.cs" />
         <Compile Include="Tools\DragDropHandler\JggDragHandler.cs" />
         <Compile Include="Tools\DragDropHandler\JggDropHandler.cs" />
         <Compile Include="Tools\Extensions\RecordProgramExtension.cs" />
+        <Compile Include="Tools\Jobs\JobTool.cs" />
+        <Compile Include="Tools\Jobs\TokenRenewalJob.cs" />
         <Compile Include="Tools\UrlHelper\FilesUrlHelper.cs" />
         <Compile Include="Tools\UrlHelper\InitUrlHelper.cs" />
         <Compile Include="Tools\UrlHelper\LoginUrlHelper.cs" />
@@ -96,6 +99,9 @@
         </Compile>
         <Compile Include="Views\CombinationModule\CombinationPlayListOut.xaml.cs" />
         <Compile Include="Views\CombinationModule\CombinationPlayListOutXml.xaml.cs" />
+        <Compile Include="Views\JggModule\JggLayoutPage.xaml.cs">
+          <DependentUpon>JggLayoutPage.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\JggModule\JggMainWindow.xaml.cs">
             <DependentUpon>JggMainWindow.xaml</DependentUpon>
         </Compile>
@@ -119,12 +125,14 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="Themes\Basic\Converter.xaml" />
         <Page Include="Themes\Style\CombinationStyle\ComboBoxStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\ListViewStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\SearchBarStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\TabControlStyle.xaml" />
         <Page Include="Themes\Style\Controls\CombinationItemStyle.xaml" />
         <Page Include="Themes\Style\Controls\JggItemStyle.xaml" />
+        <Page Include="Themes\Style\JggModule\ExpanderStyle.xaml" />
         <Page Include="Themes\Style\JggModule\ListViewStyle.xaml" />
         <Page Include="Themes\Theme.xaml" />
         <Page Include="Views\CombinationModule\CombinationChooseRecordChannelWindow.xaml" />
@@ -136,6 +144,7 @@
         <Page Include="Views\CombinationModule\CombinationTitleBar.xaml" />
         <Page Include="Views\CombinationModule\CombinationPlayListOut.xaml" />
         <Page Include="Views\CombinationModule\CombinationPlayListOutXml.xaml" />
+        <Page Include="Views\JggModule\JggLayoutPage.xaml" />
         <Page Include="Views\JggModule\JggMainWindow.xaml" />
         <Page Include="Views\JggModule\JggMonitoringSource.xaml" />
         <Page Include="Views\JggModule\JggPreviewAccessPage.xaml" />
@@ -163,7 +172,6 @@
         <None Include="Icon.ico" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Themes\Basic\" />
         <Folder Include="ViewModels\NornalModule\" />
         <Folder Include="ViewModels\SingleModule\" />
     </ItemGroup>
@@ -190,6 +198,7 @@
         <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="Quartz" Version="3.7.0" />
         <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
         <PackageReference Include="Websocket.Client" Version="4.7.0" />
         <PackageReference Include="WindowsAPICodePackShell" Version="7.0.4" />

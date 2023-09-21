@@ -43,10 +43,6 @@ public static partial class UrlHelper
     public static async Task<List<PushAccess>?> GetPushAccess()
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/access/liststatus";
-        if ( url.StartsWith("https") || url.StartsWith("http") )
-        {
-            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
-        }
 
         try
         {
@@ -146,12 +142,6 @@ public static partial class UrlHelper
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/export";
 
-        // 如果URL以https或http开头，配置FlurlHttp以使用不受信任的证书
-        if ( url.StartsWith("https") || url.StartsWith("http") )
-        {
-            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
-        }
-
         var para = new
         {
             exportName,
@@ -190,12 +180,6 @@ public static partial class UrlHelper
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/exportxml";
 
-        // 如果URL以https或http开头，配置FlurlHttp以使用不受信任的证书
-        if ( url.StartsWith("https") || url.StartsWith("http") )
-        {
-            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
-        }
-
         var para = new
         {
             exportName,
@@ -230,12 +214,6 @@ public static partial class UrlHelper
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/access/push/modify";
 
-        // 如果URL以https或http开头，配置FlurlHttp以使用不受信任的证书
-        if ( url.StartsWith("https") || url.StartsWith("http") )
-        {
-            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
-        }
-
         var para = new
         {
             accessId = pushAccess.AccessId,
@@ -268,14 +246,8 @@ public static partial class UrlHelper
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template";
 
-        // 如果URL以https或http开头，配置FlurlHttp以使用不受信任的证书
-        if ( url.StartsWith("https") || url.StartsWith("http") )
-        {
-            FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
-        }
-
         // 调用通用的Post方法来执行编辑播单操作，成功时不执行任何操作，处理字段错误响应和异常情况
-        await url.Post(recordTemplate,
+        await url.Put(recordTemplate,
             _ => { },
             response =>
             {
@@ -286,6 +258,6 @@ public static partial class UrlHelper
             {
                 MessageBox.Error(e.InnerException?.Message ?? e.Message, "编辑播单");
                 e.LogUrlError("编辑播单");
-            });
+            }).ConfigureAwait(false);
     }
 }

@@ -13,25 +13,7 @@ public partial class JggMainWindowVm
 {
 #region Properties
 
-    public List<JggItem> RecordItems { get; set; } = new()
-    {
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem(),
-        new JggItem()
-    };
+    public List<JggItem> RecordItems { get; set; }
 
 #endregion
 }

@@ -62,8 +62,8 @@
                         <RowDefinition Height = "Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <views:CombinationRecordAccessPage Grid.Row = "0" />
-                    <views:CombinationPushAccessPage Grid.Row = "1" Margin = "20 0 20 20" />
+                    <views:CombinationRecordAccessPage  Grid.Row = "0" />
+                    <views:CombinationPushAccessPage Grid.Row = "1"  />
                 </Grid>
                 <!-- 播放器-素材列表 -->
                 <Grid Grid.Column = "1" >

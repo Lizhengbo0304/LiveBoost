@@ -1,5 +1,11 @@
 ﻿// 创建时间：2023-09-15-14:49
-// 修改时间：2023-09-19-14:01
+// 修改时间：2023-09-20-17:18
+
+#region
+
+using LiveBoost.Controls;
+
+#endregion
 
 namespace LiveBoost.ViewModels;
 
@@ -7,14 +13,33 @@ public partial class JggMainWindowVm : INotifyPropertyChanged
 {
 #region Ctor
 
-    public JggMainWindowVm()
+    public JggMainWindowVm(List<RecordChannel>? channels)
     {
+        RecordChannels = channels;
         // 初始化收录
-        Task.Run(async () =>
+        JggDragHandler = new JggDragHandler();
+        JggDropHandler = new JggDropHandler();
+
+        RecordItems = new List<JggItem>
         {
-            //    初始化收录通道
-            await InitializeRecordChannelsAsync();
-        });
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new()
+        };
+
     }
 
 #endregion

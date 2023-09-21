@@ -13,14 +13,4 @@ public class JggListView : ListView
         var item = new JggItem();
         return item;
     }
-
-    /// <inheritdoc />
-    protected override void OnItemsPanelChanged(ItemsPanelTemplate oldItemsPanel, ItemsPanelTemplate newItemsPanel)
-    {
-        base.OnItemsPanelChanged(oldItemsPanel, newItemsPanel);
-        for ( var i = 0; i < Items.Count; i++ )
-        {
-
-        }
-    }
 }

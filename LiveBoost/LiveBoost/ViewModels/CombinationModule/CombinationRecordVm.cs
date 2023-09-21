@@ -44,7 +44,7 @@ public sealed partial class CombinationMainWindowVm
     {
         if ( JggMainWindow is null )
         {
-            JggMainWindow = new JggMainWindow();
+            JggMainWindow = new JggMainWindow(RecordChannels);
             JggMainWindow.Closed += OnJggMainWindowClosed;
             JggMainWindow.Show();
         }
@@ -62,11 +62,15 @@ public sealed partial class CombinationMainWindowVm
         JggMainWindow!.Closed -= OnJggMainWindowClosed;
         GlobalEvent.Instance.GetEvent<CloseJggPlayerProcess>().Publish();
         JggMainWindow = null;
+        GC.Collect();
     }
 
 #endregion
 #region 初始化收录通道
-
+    private async Task InitializeRecordChannelsAsync()
+    {
+        RecordChannels = await UrlHelper.GetShouluChannels().ConfigureAwait(false);
+    }
     /// <summary>
     ///     初始化收录通道
     /// </summary>
@@ -153,6 +157,7 @@ public sealed partial class CombinationMainWindowVm
         new CombinationItem(),
         new CombinationItem()
     };
+    public List<RecordChannel>? RecordChannels { get; set; }
     /// <summary>
     ///     通道总页数
     /// </summary>

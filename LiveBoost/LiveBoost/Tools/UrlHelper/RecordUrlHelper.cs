@@ -40,7 +40,7 @@ public static partial class UrlHelper
         try
         {
             var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser?.Token}")
-                .GetStringAsync().ConfigureAwait(false);
+               .WithTimeout(5).GetStringAsync().ConfigureAwait(false);
             // 反序列化为收录频道列表
             var projects = JsonConvert.DeserializeObject<List<RecordChannel>>(result ?? "[]");
             return projects ?? new List<RecordChannel>();

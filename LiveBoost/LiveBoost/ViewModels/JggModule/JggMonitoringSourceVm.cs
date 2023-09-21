@@ -15,19 +15,17 @@ public partial class JggMainWindowVm
     /// <summary>
     /// 拖拽事件
     /// </summary>
-    public JggDragHandler JggDragHandler { get; set; } = new();
-    public JggDropHandler JggDropHandler { get; set; } = new();
+    public JggDragHandler JggDragHandler { get; set; }
+    public JggDropHandler JggDropHandler { get; set; }
 #endregion
 #region Event
 
     /// <summary>
     ///     初始化收录通道
     /// </summary>
-    private async Task InitializeRecordChannelsAsync()
+    private async void InitializeRecordChannelsAsync()
     {
-        Debug.WriteLine(DateTime.Now);
         RecordChannels = await UrlHelper.GetShouluChannels().ConfigureAwait(false);
-        Debug.WriteLine(DateTime.Now);
     }
 
 #endregion

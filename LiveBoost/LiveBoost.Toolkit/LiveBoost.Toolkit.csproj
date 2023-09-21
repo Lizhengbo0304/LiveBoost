@@ -282,6 +282,7 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="FodyWeavers.xml" />
+        <Resource Include="Images\layout.png" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

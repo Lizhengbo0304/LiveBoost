@@ -199,7 +199,7 @@ public class AppProgram
 #endregion
 #region Public - Event
 
-    public void LoginInit()
+    public async Task LoginInit()
     {
         if ( LoginWnd == null )
         {
@@ -218,6 +218,8 @@ public class AppProgram
         {
             LoginWndInputBoxFocus.SubscriptionTokens.ForEach(it => GlobalEvent.Instance.GetEvent<LoginWndInputBoxFocus>().Unsubscribe(it));
         }
+        await JobTool.StartRenewalJob();
+
     }
 
     public void LogoutInit() { }

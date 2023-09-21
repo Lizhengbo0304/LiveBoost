@@ -3,51 +3,18 @@
         xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:controls = "clr-namespace:LiveBoost.Controls"
-        xmlns:dd = "urn:gong-wpf-dragdrop"
-        Background = "#585A5D" BorderBrush = "#A0A0A0"
+        xmlns:controls = "clr-namespace:LiveBoost.Controls" xmlns:dd = "urn:gong-wpf-dragdrop"
+        xmlns:hc = "https://handyorg.github.io/handycontrol" Background = "#585A5D" BorderBrush = "#A0A0A0"
         BorderThickness = "1" mc:Ignorable = "d" d:DesignHeight = "300" d:DesignWidth = "300" >
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height = "Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <ToggleButton x:Name = "Layout" Content = "布局选择" Grid.Row = "0" HorizontalAlignment = "Right"
-                      Foreground = "White" Style = "{StaticResource IconToggleButtonStyle}" />
-        <Popup Grid.Row = "0" PlacementTarget = "{Binding ElementName=Layout}"
-               IsOpen = "{Binding ElementName=Layout,Path=IsChecked,Mode=TwoWay}" StaysOpen = "False"
-               VerticalOffset = "5" >
-           <Border Background = "#2A2D34" CornerRadius="4">
-               <ListView Style = "{StaticResource BaseListViewStyle}"
-                         ItemContainerStyle="{StaticResource ChooseJggSizeItemStyle}"
-                         Padding="0 5 0 0"
-                         SelectedIndex="{Binding Source={x:Static AppConfig.Instance},Path=PreviewIndex,Mode=TwoWay}"
-                         SelectionChanged = "Selector_OnSelectionChanged">
-                   <ListViewItem  Tag="4 (2+2)">
-                       <ListViewItem.Content>
-                           <Canvas Name = "drawingCanvas"  Width = "96" Height = "54" />
-                       </ListViewItem.Content>
-                   </ListViewItem>
-                   <ListViewItem Tag="9 (3+3+3)">
-                       <ListViewItem.Content>
-                           <Canvas Name = "drawingCanvas1"  Width = "96" Height = "54" />
-                       </ListViewItem.Content>
-                   </ListViewItem>
-                   <ListViewItem Tag="16 (4+4+4+4)">
-                       <ListViewItem.Content>
-                           <Canvas Name = "drawingCanvas2"  Width = "96" Height = "54" />
-                       </ListViewItem.Content>
-                   </ListViewItem>
-               </ListView>
-           </Border>
-        </Popup>
-        <controls:JggListView Grid.Row = "1" Margin = "15" ItemsSource = "{Binding RecordItems}"
-                              dd:DragDrop.IsDropTarget="True"
-                              dd:DragDrop.ShowAlwaysDropTargetAdorner = "True"
-                              dd:DragDrop.DropScrollingMode = "None"
-                              dd:DragDrop.DropHandler = "{Binding JggDropHandler}"
-                              SelectionMode = "Multiple" Style = "{StaticResource BaseListViewStyle}"
-                              ItemsPanel = "{StaticResource twoItemsPanelStyle}" x:Name = "JggListView"
-                              ItemContainerStyle = "{StaticResource {x:Type controls:JggItem}}" />
-    </Grid>
+    <hc:SimplePanel>
+        <controls:JggListView Margin = "15" ItemsSource = "{Binding RecordItems}" dd:DragDrop.IsDropTarget = "True"
+                              dd:DragDrop.ShowAlwaysDropTargetAdorner = "True" dd:DragDrop.DropScrollingMode = "None"
+                              dd:DragDrop.DropHandler = "{Binding JggDropHandler}" SelectionMode = "Multiple"
+                              Style = "{StaticResource BaseListViewStyle}"
+                              ItemsPanel = "{Binding
+                              Source={x:Static AppConfig.Instance},
+                              Path=PreviewIndex,
+                              Converter={StaticResource LayoutIndex2ItemsPanelConverter}}"
+                              x:Name = "JggListView" ItemContainerStyle = "{StaticResource {x:Type controls:JggItem}}" />
+    </hc:SimplePanel>
 </Border>

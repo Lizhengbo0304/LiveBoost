@@ -55,7 +55,6 @@
         <Setter Property = "Foreground" Value = "#BFBFBF" />
         <Setter Property = "SnapsToDevicePixels" Value = "true" />
         <Setter Property = "Margin" Value = "15,0,15,5" />
-        <Setter Property="Width" Value="250"/>
         <Setter Property="Height" Value="80"/>
         <Setter Property = "Padding" Value = "0" />
         <Setter Property = "Template" >
@@ -68,17 +67,7 @@
                                 BorderThickness = "{TemplateBinding BorderThickness}"
                                 CornerRadius = "4"
                                 SnapsToDevicePixels = "true" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <ContentPresenter Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0"  Content = "{TemplateBinding Content}" />
-                            <TextBlock Grid.Column="1" HorizontalAlignment = "Left" VerticalAlignment = "Center"
-                                       hc:TextBlockAttach.AutoTooltip = "True" FontSize = "18" Margin="5 0"
-                                       Foreground = "{TemplateBinding Foreground}" Text = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=Tag}"
-                                       TextTrimming = "CharacterEllipsis" TextWrapping = "NoWrap" />
-                        </Grid>
+                        <ContentPresenter Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0"  Content = "{TemplateBinding Content}" />
                     </hc:SimplePanel>
                 </ControlTemplate>
             </Setter.Value>

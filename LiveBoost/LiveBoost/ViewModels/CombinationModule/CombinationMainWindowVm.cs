@@ -28,6 +28,7 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
         {
             //    初始化收录通道
             await InitializeRecordAccessesAsync();
+            await InitializeRecordChannelsAsync();
             // 初始化推流通道
             await InitializePlayAccessesAsync();
             // 初始化我的收录列表

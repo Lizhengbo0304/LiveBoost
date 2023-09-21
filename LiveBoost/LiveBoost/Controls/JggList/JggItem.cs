@@ -16,43 +16,64 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
 {
 #region Event
 
+    /// <summary>
+    /// 当元素加载完成时的事件处理程序。
+    /// </summary>
+    /// <param name="sender">触发事件的对象。</param>
+    /// <param name="e">事件参数。</param>
     public void OnLoaded(object? sender, RoutedEventArgs? e)
     {
-        if ( this.FindVisualParent<JggListView>() is not { } jggListView )
+        // 尝试查找父级元素 JggListView
+        if (this.FindVisualParent<JggListView>() is not { } jggListView)
         {
-            return; // 如果无法找到CombinationListView的父级元素，则直接返回
-        }
-        if ( jggListView.FindVisualChild<UniformGrid>() is not { } uniformGrid )
-        {
-            return; // 如果无法找到UniformGrid，直接返回
+            return; // 如果无法找到 CombinationListView 的父级元素，则直接返回
         }
 
-        var index = jggListView.ItemContainerGenerator.IndexFromContainer(this); // 获取当前元素在CombinationListView中的索引
+        // 尝试查找 UniformGrid
+        if (jggListView.FindVisualChild<UniformGrid>() is not { } uniformGrid)
+        {
+            return; // 如果无法找到 UniformGrid，直接返回
+        }
+
+        // 获取当前元素在 CombinationListView 中的索引
+        var index = jggListView.ItemContainerGenerator.IndexFromContainer(this);
+
+        // 根据 UniformGrid 的行数设置 Margin 属性
         Margin = uniformGrid.Rows switch
         {
             2 => new Thickness(5, 5, index % 2 == 1 ? 5 : 0, index >= 2 ? 5 : 0),
             3 => new Thickness(5, 5, index % 3 == 2 ? 5 : 0, index >= 6 ? 5 : 0),
             4 => new Thickness(5, 5, index % 4 == 3 ? 5 : 0, index >= 12 ? 5 : 0),
-            _ => Margin
+            _ => Margin // 默认情况下不修改 Margin
         };
-        if ( index >= uniformGrid.Rows * uniformGrid.Columns )
+
+        // 如果索引大于等于 UniformGrid 的总元素数，调用 ClearPreView 方法
+        if (index >= uniformGrid.Rows * uniformGrid.Columns)
         {
             this.ClearPreView();
         }
     }
 
-    // 初始化播放器
-    private async Task InitPlayer()
+
+    /// <summary>
+    /// 异步初始化播放器进程的方法。
+    /// </summary>
+    private async void InitPlayer()
     {
-        while ( !IsOwnerWindowClosed )
+        while (!IsOwnerWindowClosed) // 循环，直到拥有者窗口关闭
         {
             try
             {
-                PlayProcess = LoadPluginHelper.LoadPlugin("LiveBoost.Player.exe", Guid, "1"); // 加载播放器进程
-                PlayProcess.Start(); // 启动播放器进程
-                await Task.Run(() => PlayProcess?.WaitForExit()); // 等待播放器进程退出
+                // 加载播放器进程
+                PlayProcess = LoadPluginHelper.LoadPlugin("LiveBoost.Player.exe", Guid, "1");
+
+                // 启动播放器进程
+                PlayProcess.Start();
+
+                // 等待播放器进程退出
+                await Task.Run(() => PlayProcess?.WaitForExit()).ConfigureAwait(false);
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 // 处理异常，例如记录日志或者进行其他操作
                 MessageBox.Warning(ex.Message, "初始化播放器时发生异常"); // 显示异常信息
@@ -60,80 +81,100 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
         }
     }
 
+
+    /// <summary>
+    /// 启动预览或收录操作的方法。
+    /// </summary>
     private async void StartPreview()
     {
-        if ( PlayProcess is null )
+        if (PlayProcess is null)
         {
-        #pragma warning disable CS4014
-            Task.Run(async () =>
-        #pragma warning restore CS4014
-            {
-                await InitPlayer();
-            });
+            // 如果播放器进程尚未初始化，异步启动播放器初始化
+          await Task.Run( InitPlayer).ConfigureAwait(false);
         }
-        if ( string.IsNullOrEmpty(AppConfig.Instance.ShouluPath) )
+
+        if (string.IsNullOrEmpty(AppConfig.Instance.ShouluPath))
         {
+            // 如果收录路径为空，无法选择频道，显示警告消息并返回
             MessageBox.Warning("收录路径为空，无法选择频道", "添加收录频道");
             return;
         }
+
         // 屏蔽channel为空或channelID为空的情况
-        if ( Channel is null || string.IsNullOrEmpty(Channel.ChannelId) )
+        if (Channel is null || string.IsNullOrEmpty(Channel.ChannelId))
         {
             return;
         }
+
         // 开启收录任务
-        var result = await Guid.StartRecord(Channel.ChannelId!);
+        var result = await Guid.StartRecord(Channel.ChannelId!).ConfigureAwait(false);
+
         // 如果收录任务开启失败，则重置频道
-        if ( string.IsNullOrEmpty(result.taskId) )
+        if (string.IsNullOrEmpty(result.taskId))
         {
             Channel = null;
             return;
         }
 
-        if ( string.IsNullOrEmpty(result.filePath) )
+        if (string.IsNullOrEmpty(result.filePath))
         {
+            // 如果收录路径为空，显示警告消息并返回
             MessageBox.Warning("收录路径为空", "开始收录");
             return;
         }
 
+        // 构建视频路径
         VideoPath = AppConfig.Instance.ShouluPath.Combine(result.filePath!);
         TaskId = result.taskId;
-        Content = PlayerHost;
+        this.Dispatcher.Invoke(() => Content = PlayerHost);
+
         try
         {
+            // 设置播放文件和名称到子进程
             await ActionHelper.RunWithTimeout(() =>
             {
                 Jgg.SetPlayFile(VideoPath!);
                 Jgg.SetName(Channel.ChannelName!);
-            });
+            }).ConfigureAwait(false);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
+            // 处理设置播放路径、名称、收录协议时的异常，并记录日志
             e.LogError("向子进程设置播放路径、名称、收录协议时发生异常");
         }
     }
 
+
+    /// <summary>
+    /// 清理预览相关状态和资源的方法。
+    /// </summary>
     private async void ClearPreView()
     {
+        // 停止播放，超时处理
         await ActionHelper.RunWithTimeout(Jgg.StopPlay);
 
-        if ( !string.IsNullOrEmpty(TaskId) )
+        if (!string.IsNullOrEmpty(TaskId))
         {
             // 停止任务
-            if ( !await TaskId!.StopRecord() )
+            if (!await TaskId!.StopRecord())
             {
-                return;
+                return; // 如果停止任务失败，直接返回
             }
-            TaskId = null;
+            TaskId = null; // 任务停止后将 TaskId 置为 null
         }
+
+        // 重置视频路径、频道和内容
         VideoPath = null;
         Channel = null;
         Content = null;
-        if ( PlayProcess is {HasExited: false} && IsOwnerWindowClosed)
+
+        if (PlayProcess is { HasExited: false } && IsOwnerWindowClosed)
         {
+            // 如果播放器进程未退出且拥有者窗口已关闭，强制终止播放器进程
             PlayProcess.Kill();
         }
     }
+
 
 #endregion
 #region INotifyPropertyChangedEvent
@@ -179,38 +220,52 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
             new FrameworkPropertyMetadata(typeof(JggItem)));
     }
 
+    /// <summary>
+    /// JggItem 类的构造函数。
+    /// </summary>
     public JggItem()
     {
+        // 注册 Loaded 事件处理程序
         Loaded += OnLoaded;
-        // 初始化Ipc
+
+        // 初始化 Lazy<IJggPlayer>
         IpcLazy = new Lazy<IJggPlayer>(() =>
         {
+            // 创建一个容器客户端 Builder
             var clientBuilder = new ContainerClientBuilder();
             clientBuilder.UseNamedPipe(Guid + "back").UseJsonSerializer();
             var client = clientBuilder.Build();
+
             // 从以上构建好的 client 中取用合同实例。
             var same = client.Resolve<IJggPlayer>();
             return same;
         });
-        // 创建一个容器服务器 Builder。
+
+        // 创建一个容器服务器 Builder
         var serverBuilder = new ContainerServerBuilder();
         serverBuilder.UseNamedPipe(Guid).UseJsonSerializer();
 
+        // 注册 JggItem 实例到容器
         serverBuilder.Register<IJggItem>(() => this);
         var server = serverBuilder.Build();
 
-        // 别忘了启动服务器哦！
+        // 启动服务器
         server.Start();
+
+        // 订阅 SourceMonitorDragEvent 事件
         SourceMonitorDragEvent.SubscriptionTokens.Add(GlobalEvent.Instance.GetEvent<SourceMonitorDragEvent>().Subscribe(isDragging =>
         {
             IsDragging = isDragging;
         }));
-        CloseJggPlayerProcess.SubscriptionTokens.Add(GlobalEvent.Instance.GetEvent<CloseJggPlayerProcess>().Subscribe(( () =>
+
+        // 订阅 CloseJggPlayerProcess 事件
+        CloseJggPlayerProcess.SubscriptionTokens.Add(GlobalEvent.Instance.GetEvent<CloseJggPlayerProcess>().Subscribe(() =>
         {
             IsOwnerWindowClosed = true;
-            ClearPreView();
-        } )));
+            Channel = null;
+        }));
     }
+
 
 #endregion
 #region Property
@@ -311,7 +366,6 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
             TaskId = null;
             VideoPath = null;
             Channel = null;
-            ClearPreView();
         }
         finally
         {

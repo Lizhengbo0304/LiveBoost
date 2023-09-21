@@ -51,7 +51,7 @@ public class LoginWindowVm : INotifyPropertyChanged
         if ( await UrlHelper.Login(UserName!.Trim(), Password) )
         {
             Password = string.Empty;
-            AppProgram.Instance.LoginInit();
+            await AppProgram.Instance.LoginInit();
         }
         else
         {

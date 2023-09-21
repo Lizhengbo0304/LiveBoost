@@ -7,9 +7,10 @@ namespace LiveBoost.Views;
 
 public partial class JggMainWindow
 {
-    public JggMainWindow()
+    public JggMainWindow(List<RecordChannel>? channels)
     {
         InitializeComponent();
+        DataContext = new JggMainWindowVm(channels);
         Loaded += OnLoaded;
     }
 
