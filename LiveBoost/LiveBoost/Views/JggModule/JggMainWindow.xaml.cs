@@ -16,13 +16,6 @@ public partial class JggMainWindow
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        var screen = Screen.FromWindow(this);
-        this.MaxHeight = this.WindowState == WindowState.Maximized ? screen.WorkingArea.Height : double.PositiveInfinity;
-    }
-
-    private void JggMainWindow_OnStateChanged(object sender, EventArgs e)
-    {
-        var screen = Screen.FromWindow(this);
-        this.MaxHeight = this.WindowState == WindowState.Maximized ? screen.WorkingArea.Height : double.PositiveInfinity;
+        this.WindowState = WindowState.Maximized;
     }
 }

@@ -50,7 +50,7 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
         // 如果索引大于等于 UniformGrid 的总元素数，调用 ClearPreView 方法
         if (index >= uniformGrid.Rows * uniformGrid.Columns)
         {
-            this.ClearPreView();
+            Content = null;
         }
     }
 

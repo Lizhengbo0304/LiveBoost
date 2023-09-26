@@ -40,9 +40,16 @@
                                     <TextBlock Grid.Column = "0"
                                                Text = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=AccessName}"
                                                FontSize = "23" Foreground = "#BBBBBB" Margin = "0 0 11 0" />
-                                    <Image Grid.Column = "1" Width = "13" Height = "13"
-                                           Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/Recording.png"
-                                           HorizontalAlignment = "Left" VerticalAlignment = "Center" />
+                                    <Button Grid.Column="1"
+                                        IsEnabled="{Binding ElementName=Part_ffPlay,Path=IsPlaying}"
+                                        IconElement.Height = "13"
+                                        IconElement.Width = "13"
+                                        IconElement.Source = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=PlayPauseImage}"
+                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent},Path=SetTimeCmd}"
+                                        Style="{StaticResource IconButtonStyle}"/>
+                                    <!-- <Image Grid.Column = "1" Width = "13" Height = "13" -->
+                                    <!--        Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/Recording.png" -->
+                                    <!--        HorizontalAlignment = "Left" VerticalAlignment = "Center" /> -->
                                     <Button Grid.Column = "2" IconElement.Height = "16" IconElement.Width = "18"
                                             IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/changed.png"
                                             HorizontalAlignment = "Right" Margin = "0 0 15 0"

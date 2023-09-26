@@ -213,6 +213,7 @@
         <Resource Include="Images\PlayListModule\up.png" />
         <Resource Include="Images\PlayListModule\矩形.png" />
         <Resource Include="Images\Recording.png" />
+        <Resource Include="Images\Recording1.png" />
         <Resource Include="Images\RecordingTaskModule\GreenPoint.png" />
         <Resource Include="Images\RecordingTaskModule\Info.png" />
         <Resource Include="Images\RecordingTaskModule\RecordTaskTip.png" />

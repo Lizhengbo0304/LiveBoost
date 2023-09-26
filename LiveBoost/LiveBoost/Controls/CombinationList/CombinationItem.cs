@@ -274,7 +274,14 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     public Process? PlayProcess { get; set; }
 
     public ICombinationPlayer Combination => IpcLazy.Value;
-
+    /// <summary>
+    /// 开始时间
+    /// </summary>
+    public TimeSpan? StartTime { get; set; }
+    /// <summary>
+    /// 截止时间
+    /// </summary>
+    public TimeSpan? EndTime { get; set; }
 #endregion
 #region INotifyPropertyChangedEvent
 
@@ -439,5 +446,19 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
         }
     }
 
+    /// <inheritdoc />
+    public void SetStartTime(TimeSpan startTime)
+    {
+        StartTime = startTime;
+    }
+
+    /// <inheritdoc />
+    public void SetStopTime(TimeSpan stopTime)
+    {
+        EndTime = stopTime;
+    #warning 调用接口
+        StartTime = null;
+        EndTime = null;
+    }
 #endregion
 }

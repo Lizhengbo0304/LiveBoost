@@ -69,12 +69,12 @@ public class AppProgram
         // 获取配置文件
         var result = await UrlHelper.GetConfig();
         AppConfig.Instance.IsInit = result.Item1;
-
         // 如果获取配置文件失败，显示警告消息
         if ( result.Item1 )
         {
             FlurlHttp.ConfigureClient(AppConfig.Instance.MamApiIp, cli =>
                 cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
+            // AppConfig.Instance.MamApiIp = "http://10.30.76.60:81";
         }
         else
         {

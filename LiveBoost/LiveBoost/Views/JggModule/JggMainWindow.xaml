@@ -1,18 +1,14 @@
-﻿<Window
+﻿<hc:Window
     x:Class = "LiveBoost.Views.JggMainWindow" xmlns:prism = "http://prismlibrary.com/"
            SnapsToDevicePixels = "True" xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
            xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:local = "clr-namespace:LiveBoost.Views"
            xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d" Title = "LiveBoost"
-           WindowState = "Maximized" prism:ViewModelLocator.AutoWireViewModel = "False" BorderBrush = "Transparent"
+           prism:ViewModelLocator.AutoWireViewModel = "False" BorderBrush = "Transparent"
            BorderThickness = "0" FontFamily = "Microsoft YaHei" Background = "Transparent"
            Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
-            StateChanged="JggMainWindow_OnStateChanged"
             WindowStyle = "None" >
-    <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness = "0" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
-    </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
@@ -35,4 +31,4 @@
             </Grid>
         </hc:SimplePanel>
     </Grid>
-</Window>
+</hc:Window>
