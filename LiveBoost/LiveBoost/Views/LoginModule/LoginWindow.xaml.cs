@@ -24,4 +24,14 @@ public partial class LoginWindow
             });
         }));
     }
+
+    private void UserNameTextBox_OnGotFocus(object sender, RoutedEventArgs e)
+    {
+        this.UserNameTextBox.SelectAll();
+    }
+
+    private void UserPasswordBox_OnGotFocus(object sender, RoutedEventArgs e)
+    {
+        this.UserPasswordBox.Clear();
+    }
 }

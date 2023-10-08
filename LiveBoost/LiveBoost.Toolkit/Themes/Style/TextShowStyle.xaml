@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls1 = "clr-namespace:LiveBoost.Toolkit.Controls" >
+    <Style TargetType = "controls1:TextShow" >
+        <Setter Property = "Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType = "controls1:TextShow" >
+                    <Grid x:Name = "Part_MainGrid" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

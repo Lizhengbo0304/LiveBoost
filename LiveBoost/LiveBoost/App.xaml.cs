@@ -95,7 +95,11 @@ public partial class App
         }
     }
 
-    protected override void RegisterTypes(IContainerRegistry containerRegistry) { }
+    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        containerRegistry.RegisterForNavigation<CombinationSettingChannelManager>();
+        containerRegistry.RegisterForNavigation<CombinationSettingTaskManager>();
+    }
 
     protected override Window? CreateShell() => null;
 }

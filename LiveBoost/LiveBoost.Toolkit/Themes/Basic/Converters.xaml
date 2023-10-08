@@ -3,4 +3,5 @@
                     xmlns:tools1 = "clr-namespace:LiveBoost.Toolkit.Tools" >
     <tools1:TimeSpanToMillSecondsConverter x:Key = "TimeSpanToMillSecondsConverter" />
     <tools1:TimeSpanFormatter x:Key = "TimeSpanFormatter" />
+    <tools1:TitleWidth2MarginConverter x:Key = "TitleWidth2MarginConverter" />
 </ResourceDictionary>

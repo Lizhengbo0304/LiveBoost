@@ -54,6 +54,7 @@
         <Compile Include="Controls\Attach\ItemsAttach.cs" />
         <Compile Include="Controls\Attach\ParentElement.cs" />
         <Compile Include="Controls\Attach\PasswordAttach.cs" />
+        <Compile Include="Controls\Attach\TextShow.cs" />
         <Compile Include="Controls\FileHierarchy\FileHierarchy.cs" />
         <Compile Include="Controls\FileHierarchy\FileHierarchyItem.cs" />
         <Compile Include="Controls\FileHierarchy\FileHierarchyItemSelector.cs" />
@@ -68,6 +69,7 @@
         <Compile Include="Data\Interface\ICombinationItem.cs" />
         <Compile Include="Data\Interface\ICombinationPlayer.cs" />
         <Compile Include="Data\Interface\IFileHierarchy.cs" />
+        <Compile Include="Data\Interface\IIndex.cs" />
         <Compile Include="Data\Interface\IJggItem.cs" />
         <Compile Include="Data\Interface\IJggPlayer.cs" />
         <Compile Include="Data\Model\AppConfig.cs" />
@@ -83,6 +85,8 @@
         <Compile Include="Data\Model\RecordChannel.cs" />
         <Compile Include="Data\Model\RecordFile.cs" />
         <Compile Include="Data\Model\RecordMark.cs" />
+        <Compile Include="Data\Model\RecordMission.cs" />
+        <Compile Include="Data\Model\RecordServer.cs" />
         <Compile Include="Data\Model\RecordServerConfig.cs" />
         <Compile Include="Data\Model\RecordTemplate.cs" />
         <Compile Include="Data\Model\Ticker.cs" />
@@ -100,8 +104,10 @@
         <Compile Include="Tools\Converters\RecordTemplateConverter.cs" />
         <Compile Include="Tools\Converters\TimeSpanFormatter.cs" />
         <Compile Include="Tools\Converters\TimeSpanToMillSecondsConverter.cs" />
+        <Compile Include="Tools\Converters\TitleWidth2MarginConverter.cs" />
         <Compile Include="Tools\DragDropHandler\PlayListDragHandler.cs" />
         <Compile Include="Tools\DragDropHandler\PlayListDropHandler.cs" />
+        <Compile Include="Tools\Extension\ListExtension.cs" />
         <Compile Include="Tools\Extension\ObservableListExtension.cs" />
         <Compile Include="Tools\Extension\StringExtension.cs" />
         <Compile Include="Tools\Helper\ActionHelper.cs" />
@@ -246,12 +252,15 @@
     <ItemGroup>
         <Page Include="Themes\Basic\Basic.xaml" />
         <Page Include="Themes\Basic\Converters.xaml" />
+        <Page Include="Themes\Basic\Effects.xaml" />
         <Page Include="Themes\Style\Base\ButtonStyle.xaml" />
         <Page Include="Themes\Style\Base\FileHierarchyStyle.xaml" />
         <Page Include="Themes\Style\Base\ListViewStyle.xaml" />
         <Page Include="Themes\Style\Base\TreeStyle.xaml" />
+        <Page Include="Themes\Style\Base\ValidationTemplateStyle.xaml" />
         <Page Include="Themes\Style\ProgressBarStyle.xaml" />
         <Page Include="Themes\Style\SliderStyle.xaml" />
+        <Page Include="Themes\Style\TextShowStyle.xaml" />
         <Page Include="Themes\Theme.xaml" />
     </ItemGroup>
     <ItemGroup>
@@ -283,6 +292,12 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="FodyWeavers.xml" />
+        <Resource Include="Images\delete (1).png" />
+        <Resource Include="Images\edit (1).png" />
+        <Resource Include="Images\add (1).png" />
+        <Resource Include="Images\reset.png" />
+        <Resource Include="Images\find.png" />
+        <Resource Include="Images\setting (1).png" />
         <Resource Include="Images\layout.png" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

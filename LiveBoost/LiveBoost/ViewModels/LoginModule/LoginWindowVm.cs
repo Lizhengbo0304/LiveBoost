@@ -95,7 +95,8 @@ public class LoginWindowVm : INotifyPropertyChanged
     /// </summary>
     public string? UserName { get; set; }
 #if DEBUG
-        = "admin";
+        // = "admin";
+        = "lizhengbo";
 #endif
 
     /// <summary>
@@ -103,7 +104,8 @@ public class LoginWindowVm : INotifyPropertyChanged
     /// </summary>
     public string? Password { get; set; }
 #if DEBUG
-        = "admin123";
+        // = "admin123";
+        = "Mam@2022";
 #endif
 
 #endregion

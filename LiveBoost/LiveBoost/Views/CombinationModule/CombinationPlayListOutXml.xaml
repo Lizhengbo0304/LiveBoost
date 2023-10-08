@@ -4,11 +4,14 @@
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable = "d"
            xmlns:hc = "https://handyorg.github.io/handycontrol" xmlns:views = "clr-namespace:LiveBoost.Views"
-           AllowsTransparency = "True" Background = "Transparent" BorderThickness = "0" FontFamily = "Microsoft YaHei"
+           Background = "Transparent" BorderThickness = "0" FontFamily = "Microsoft YaHei"
            Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
            ResizeMode = "NoResize" ShowInTaskbar = "True" WindowStartupLocation = "CenterScreen" WindowStyle = "None"
-           Width = "395" Title = "导出Xml" Height = "166" >
-    <Grid>
+           Width = "415" Title = "导出Xml" Height = "186" >  <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness = "-1" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
+    </WindowChrome.WindowChrome>
+    <Grid Margin="0 0 20 20"
+          Effect="{StaticResource DefaultEffect}">
         <Grid.RowDefinitions>
             <RowDefinition Height = "44" />
             <RowDefinition Height = "*" />
@@ -21,7 +24,7 @@
                        Text = "{Binding RelativeSource={RelativeSource AncestorType=views:CombinationPlayListOutXml}, Path=Title}" />
             <Button Width = "44" Height = "44" HorizontalAlignment = "Right" IconElement.Height = "15"
                     IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login_Close.png"
-                    IconElement.Width = "15"
+                    IconElement.Width = "15" WindowChrome.IsHitTestVisibleInChrome = "True"
                     hc:BackgroundSwitchElement.MouseDownBackground = "{StaticResource DangerBrush}"
                     hc:BackgroundSwitchElement.MouseHoverBackground = "{StaticResource DangerBrush}"
                     hc:BorderElement.CornerRadius = "0 5 0 0" Command = "ControlCommands.CloseWindowCommand"

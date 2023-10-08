@@ -8,51 +8,67 @@ public static partial class UrlHelper
     /// <summary>
     ///     获取收录通道
     /// </summary>
-    public static async Task<List<RecordServerConfig>?> GetShouluAccess()
+    public static async Task<List<RecordServerConfig>> GetShouluAccess()
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/client/access/list";
+        return await url.Get(response => JsonConvert.DeserializeObject<List<RecordServerConfig>>(response ?? "[]") ?? new List<RecordServerConfig>(),
+            _ => new List<RecordServerConfig>(),
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "获取收录通道");
+                e.LogUrlError("获取收录通道");
+                return new List<RecordServerConfig>();
+            }) ?? new List<RecordServerConfig>();
+    }
 
-        try
-        {
-            var result = await url
-                .WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser?.Token}")
-                .GetJsonAsync<List<RecordServerConfig>>()
-                .ConfigureAwait(false);
+    /// <summary>
+    ///     获取收录服务器列表
+    /// </summary>
+    public static async Task<List<RecordServer>> GetShouluServers()
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/client/liststatus";
+        return await url.Get(response => JsonConvert.DeserializeObject<List<RecordServer>>(response ?? "[]") ?? new List<RecordServer>(),
+            _ => new List<RecordServer>(),
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "获取收录服务列表");
+                e.LogUrlError("获取收录服务列表");
+                return new List<RecordServer>();
+            }) ?? new List<RecordServer>();
+    }
 
-            return result ?? new List<RecordServerConfig>();
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "获取收录通道");
-            e.LogUrlError("获取收录通道");
-            return null;
-        }
+    /// <summary>
+    ///     获取收录服务器列表
+    /// </summary>
+    public static async Task<List<RecordServer>> GetShouluServersAll()
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/client/listall";
+        return await url.Get(response => JsonConvert.DeserializeObject<List<RecordServer>>(response ?? "[]") ?? new List<RecordServer>(),
+            _ => new List<RecordServer>(),
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "获取收录服务列表");
+                e.LogUrlError("获取收录服务列表");
+                return new List<RecordServer>();
+            }) ?? new List<RecordServer>();
     }
 
     /// <summary>
     ///     获取收录频道
     /// </summary>
     /// <returns> 收录频道列表 </returns>
-    public static async Task<List<RecordChannel>?> GetShouluChannels()
+    public static async Task<List<RecordChannel>> GetShouluChannels()
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/channel/liststatus";
-
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser?.Token}")
-               .WithTimeout(5).GetStringAsync().ConfigureAwait(false);
-            // 反序列化为收录频道列表
-            var projects = JsonConvert.DeserializeObject<List<RecordChannel>>(result ?? "[]");
-            return projects ?? new List<RecordChannel>();
-        }
-        catch ( Exception e )
-        {
-            // 异常处理
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "获取收录频道");
-            e.LogUrlError("获取收录频道");
-            return new List<RecordChannel>();
-        }
-
+        return await url.Get(response => JsonConvert.DeserializeObject<List<RecordChannel>>(response ?? "[]") ?? new List<RecordChannel>(),
+            _ => new List<RecordChannel>(),
+            e =>
+            {
+                // 异常处理
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "获取收录频道");
+                e.LogUrlError("获取收录频道");
+                return new List<RecordChannel>();
+            }) ?? new List<RecordChannel>();
     }
     /// <summary>
     ///     开始收录
@@ -84,6 +100,118 @@ public static partial class UrlHelper
                 MessageBox.Error(e.InnerException?.Message ?? e.Message, "开始收录");
                 e.LogUrlError("开始收录");
                 return ( string.Empty, string.Empty );
+            });
+    }
+    /// <summary>
+    ///     新增频道
+    /// </summary>
+    public static async Task<bool> AddChannel(this object para)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/channel";
+
+        return await url.Post(para,
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Success(jobj["msg"]?.ToString(), "新增频道");
+                return true;
+            },
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.ToString(), "新增频道");
+                return false;
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "新增频道");
+                e.LogUrlError("新增频道");
+                return false;
+            });
+    }
+    /// <summary>
+    ///     修改频道
+    /// </summary>
+    public static async Task<bool> EditChannel(this object para)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/channel";
+
+        return await url.Put(para,
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Success(jobj["msg"]?.ToString(), "修改频道");
+                return true;
+            },
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.ToString(), "修改频道");
+                return false;
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "修改频道");
+                e.LogUrlError("修改频道");
+                return false;
+            });
+    }
+    /// <summary>
+    ///     修改频道状态
+    /// </summary>
+    public static async Task<bool> EditChannelStatus(this RecordChannel channel)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/channel/status";
+        var para = new
+        {
+            channelId = channel.ChannelId,
+            status = channel.Status
+        };
+        return await url.Put(para,
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Success(jobj["msg"]?.ToString(), "修改频道状态");
+                return true;
+            },
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.ToString(), "修改频道状态");
+                return false;
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "修改频道状态");
+                e.LogUrlError("修改频道");
+                return false;
+            });
+    }
+    /// <summary>
+    ///     删除频道
+    /// </summary>
+    public static async Task<bool> DeleteChannel(this RecordChannel channel)
+    {
+        var url = $"{AppConfig.Instance.MamApiIp}/record/channel/{channel.ChannelId}";
+
+        return await url.Delete(
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Success(jobj["msg"]?.ToString(), "删除频道");
+                return true;
+            },
+            response =>
+            {
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.ToString(), "删除频道");
+                return false;
+            },
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "删除频道");
+                e.LogUrlError("删除频道");
+                return false;
             });
     }
     /// <summary>

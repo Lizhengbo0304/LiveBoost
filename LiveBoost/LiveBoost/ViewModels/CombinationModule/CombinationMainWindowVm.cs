@@ -1,5 +1,5 @@
-﻿// 创建时间：2023-09-05-14:38
-// 修改时间：2023-09-19-14:01
+﻿// 创建时间：2023-09-20-9:14
+// 修改时间：2023-09-26-14:19
 
 #region
 
@@ -54,6 +54,14 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
     ///     下位机
     /// </summary>
     public SerialPort? LiveBoostSerialPort { get; set; }
+
+#endregion
+#region Command
+
+    public DelegateCommand OpenSettingCmd { get; set; } = new(() =>
+    {
+        new CombinationSettingWindow().ShowDialog();
+    });
 
 #endregion
 #region Event

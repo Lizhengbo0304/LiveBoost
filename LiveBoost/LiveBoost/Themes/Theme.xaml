@@ -14,6 +14,8 @@
             Source = "pack://application:,,,/LiveBoost;component/Themes/Style/Controls/JggItemStyle.xaml" />
         <!-- CombinationStyle -->
         <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ButtonStyle.xaml" />
+        <ResourceDictionary
             Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />
         <ResourceDictionary
             Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/SearchBarStyle.xaml" />

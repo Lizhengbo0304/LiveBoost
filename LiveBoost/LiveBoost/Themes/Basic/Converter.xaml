@@ -2,5 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:tools = "clr-namespace:LiveBoost.Tools" >
     <tools:LayoutIndex2ItemsPanelConverter x:Key = "LayoutIndex2ItemsPanelConverter" />
+    <tools:AddChannelProtocol2Visibility x:Key = "AddChannelProtocol2Visibility" />
 
 </ResourceDictionary>

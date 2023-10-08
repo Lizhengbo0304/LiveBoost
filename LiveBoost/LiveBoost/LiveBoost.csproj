@@ -55,6 +55,7 @@
         <Compile Include="Controls\CombinationList\CombinationListView.cs" />
         <Compile Include="Controls\JggList\JggItem.cs" />
         <Compile Include="Controls\JggList\JggListView.cs" />
+        <Compile Include="Tools\Converters\AddChannelProtocol2Visibility.cs" />
         <Compile Include="Tools\Converters\LayoutIndex2ItemsPanelConverter.cs" />
         <Compile Include="Tools\DragDropHandler\JggDragHandler.cs" />
         <Compile Include="Tools\DragDropHandler\JggDropHandler.cs" />
@@ -66,12 +67,16 @@
         <Compile Include="Tools\UrlHelper\LoginUrlHelper.cs" />
         <Compile Include="Tools\UrlHelper\PushUrlHelper.cs" />
         <Compile Include="Tools\UrlHelper\RecordUrlHelper.cs" />
+        <Compile Include="Tools\UrlHelper\SettingUrlHelper.cs" />
         <Compile Include="Tools\UrlHelper\UrlHelper.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationMainWindowVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationPlayerVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationPushVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationRecordFilesVm.cs" />
         <Compile Include="ViewModels\CombinationModule\CombinationRecordVm.cs" />
+        <Compile Include="ViewModels\CombinationSettingModule\CombinationSettingChannelManagerVm.cs" />
+        <Compile Include="ViewModels\CombinationSettingModule\CombinationSettingTaskManagerVm.cs" />
+        <Compile Include="ViewModels\CombinationSettingModule\CombinationSettingWindowVm.cs" />
         <Compile Include="ViewModels\JggModule\JggMainWindowVm.cs" />
         <Compile Include="ViewModels\JggModule\JggMonitoringSourceVm.cs" />
         <Compile Include="ViewModels\JggModule\JggPreviewAccessPageVm.cs" />
@@ -99,6 +104,27 @@
         </Compile>
         <Compile Include="Views\CombinationModule\CombinationPlayListOut.xaml.cs" />
         <Compile Include="Views\CombinationModule\CombinationPlayListOutXml.xaml.cs" />
+        <Compile Include="Views\CombinationSettingModule\CombinationSettingAddChannel.xaml.cs">
+          <DependentUpon>CombinationSettingAddChannel.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\CombinationSettingModule\CombinationSettingAddMission.xaml.cs">
+          <DependentUpon>CombinationSettingAddMission.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\CombinationSettingModule\CombinationSettingChannelManager.xaml.cs">
+          <DependentUpon>CombinationSettingChannelManager.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\CombinationSettingModule\CombinationSettingManager.xaml.cs">
+          <DependentUpon>CombinationSettingManager.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\CombinationSettingModule\CombinationSettingTaskManager.xaml.cs">
+          <DependentUpon>CombinationSettingTaskManager.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\CombinationSettingModule\CombinationSettingTitleBar.xaml.cs">
+          <DependentUpon>CombinationSettingTitleBar.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\CombinationSettingModule\CombinationSettingWindow.xaml.cs">
+          <DependentUpon>CombinationSettingWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\JggModule\JggLayoutPage.xaml.cs">
           <DependentUpon>JggLayoutPage.xaml</DependentUpon>
         </Compile>
@@ -126,6 +152,7 @@
             <SubType>Code</SubType>
         </Compile>
         <Page Include="Themes\Basic\Converter.xaml" />
+        <Page Include="Themes\Style\CombinationStyle\ButtonStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\ComboBoxStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\ListViewStyle.xaml" />
         <Page Include="Themes\Style\CombinationStyle\SearchBarStyle.xaml" />
@@ -144,6 +171,13 @@
         <Page Include="Views\CombinationModule\CombinationTitleBar.xaml" />
         <Page Include="Views\CombinationModule\CombinationPlayListOut.xaml" />
         <Page Include="Views\CombinationModule\CombinationPlayListOutXml.xaml" />
+        <Page Include="Views\CombinationSettingModule\CombinationSettingAddChannel.xaml" />
+        <Page Include="Views\CombinationSettingModule\CombinationSettingAddMission.xaml" />
+        <Page Include="Views\CombinationSettingModule\CombinationSettingChannelManager.xaml" />
+        <Page Include="Views\CombinationSettingModule\CombinationSettingManager.xaml" />
+        <Page Include="Views\CombinationSettingModule\CombinationSettingTaskManager.xaml" />
+        <Page Include="Views\CombinationSettingModule\CombinationSettingTitleBar.xaml" />
+        <Page Include="Views\CombinationSettingModule\CombinationSettingWindow.xaml" />
         <Page Include="Views\JggModule\JggLayoutPage.xaml" />
         <Page Include="Views\JggModule\JggMainWindow.xaml" />
         <Page Include="Views\JggModule\JggMonitoringSource.xaml" />

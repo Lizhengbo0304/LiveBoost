@@ -1,11 +1,7 @@
 ﻿// 创建时间：2023-09-07-11:57
 // 修改时间：2023-09-19-14:01
 
-#region
-
 using LiveBoost.ToolKit.Data;
-
-#endregion
 
 namespace LiveBoost.Tools;
 
@@ -22,42 +18,29 @@ public static partial class UrlHelper
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/list/{templateType}";
 
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser!.Token}")
-                .GetStringAsync().ConfigureAwait(false);
-
-            var projects = JsonConvert.DeserializeObject<List<RecordTemplate>>(result ?? "[]");
-            return projects ?? new List<RecordTemplate>();
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "查询模板列表");
-            e.LogUrlError("查询模板列表");
-            return new List<RecordTemplate>();
-        }
+        return await url.Get(response => JsonConvert.DeserializeObject<List<RecordTemplate>>(response ?? "[]") ?? new List<RecordTemplate>(),
+            _ => new List<RecordTemplate>(),
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "查询模板列表");
+                e.LogUrlError("查询模板列表");
+                return new List<RecordTemplate>();
+            }) ?? new List<RecordTemplate>();
     }
     /// <summary>
     ///     获取推流通道
     /// </summary>
-    public static async Task<List<PushAccess>?> GetPushAccess()
+    public static async Task<List<PushAccess>> GetPushAccess()
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/access/liststatus";
-
-        try
-        {
-            var result = await url.WithHeader("Authorization", $"Bearer {AppProgram.Instance.LoginUser?.Token}")
-                .GetStringAsync().ConfigureAwait(false);
-
-            var projects = JsonConvert.DeserializeObject<List<PushAccess>>(result ?? "[]");
-            return projects ?? new List<PushAccess>();
-        }
-        catch ( Exception e )
-        {
-            MessageBox.Error(e.InnerException?.Message ?? e.Message, "获取推流通道");
-            e.LogUrlError("获取推流通道");
-            return new List<PushAccess>();
-        }
+        return await url.Get(response => JsonConvert.DeserializeObject<List<PushAccess>>(response ?? "[]") ?? new List<PushAccess>(),
+            _ => new List<PushAccess>(),
+            e =>
+            {
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "获取推流通道");
+                e.LogUrlError("获取推流通道");
+                return new List<PushAccess>();
+            }) ?? new List<PushAccess>();
     }
     /// <summary>
     ///     创建新的播单。

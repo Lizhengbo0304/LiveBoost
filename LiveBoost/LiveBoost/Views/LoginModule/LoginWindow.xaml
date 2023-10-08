@@ -3,27 +3,27 @@
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable = "d" Title = "LiveBoost"
            xmlns:hc = "https://handyorg.github.io/handycontrol" xmlns:prism = "http://prismlibrary.com/"
-           prism:ViewModelLocator.AutoWireViewModel = "True" BorderThickness = "0" FontFamily = "Microsoft YaHei"
-           Background = "Transparent"
+           prism:ViewModelLocator.AutoWireViewModel = "True" BorderThickness = "0" Background = "Transparent"
+           FontFamily = "Microsoft YaHei" SnapsToDevicePixels = "True"
            Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
            ResizeMode = "CanMinimize" ShowInTaskbar = "True" WindowStartupLocation = "CenterScreen"
            WindowStyle = "None" Width = "1653" Height = "960" >
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness = "0" UseAeroCaptionButtons = "False" CaptionHeight = "40" />
+        <WindowChrome GlassFrameThickness = "-1" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
     </WindowChrome.WindowChrome>
-    <Grid>
+    <Grid Margin = "0 0 20 20"
+          Effect="{StaticResource DefaultEffect}">
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <hc:SimplePanel Grid.Row = "0" Height = "42" >
-            <Border BorderBrush = "#72767A" BorderThickness = "0,0,0,1" IsHitTestVisible = "False"
-                    CornerRadius = "5 5 0 0" >
-                <Image HorizontalAlignment = "Stretch" VerticalAlignment = "Stretch"
-                       Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar.png"
-                       Stretch = "UniformToFill" />
-            </Border>
-            <Grid hc:WindowAttach.IsDragElement = "True" Background = "#01000000" >
+        <Border BorderBrush = "#72767A" BorderThickness = "0,0,0,1" CornerRadius = "5 5 0 0"
+                Grid.Row = "0" Height = "42" >
+            <Border.Background>
+                <ImageBrush
+                    ImageSource = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar.png" />
+            </Border.Background>
+            <Grid hc:WindowAttach.IsDragElement = "True" Background = "#01000000" ClipToBounds="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width = "Auto" />
@@ -54,51 +54,54 @@
                         CommandParameter = "{Binding RelativeSource={RelativeSource Self}}"
                         Style = "{StaticResource IconButtonStyle}" ToolTip = "关闭" />
             </Grid>
-        </hc:SimplePanel>
+        </Border>
+        <Border Grid.Row = "1" Background = "#484a4e" CornerRadius = "0 0 5 5" ClipToBounds = "True" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height = "Auto" />
+                    <RowDefinition Height = "Auto" />
+                </Grid.RowDefinitions>
+                <Image Grid.Row = "0" Width = "255" Height = "36" Margin = "0,267,0,0" HorizontalAlignment = "Center"
+                       Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/Logo.png"
+                       Stretch = "UniformToFill" />
+                <Border Grid.Row = "1" Width = "649" Height = "299" Margin = "0,30,0,0" VerticalAlignment = "Top"
+                        Background = "#3a3b3e" BorderBrush = "#747474" BorderThickness = "1" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height = "Auto" />
+                            <RowDefinition Height = "Auto" />
+                            <RowDefinition Height = "Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width = "Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Row = "0" Grid.Column = "0" Width = "53.5" Height = "53.5" Margin = "105,47.5,38,0"
+                               Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login_U.png" />
+                        <Image Grid.Row = "1" Grid.Column = "0" Width = "53.5" Height = "53.5" Margin = "105,25,38,0"
+                               Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login_P.png" />
+                        <TextBox Grid.Row = "0" x:Name = "UserNameTextBox" Grid.Column = "1" IsTabStop = "True"
+                                 GotFocus = "UserNameTextBox_OnGotFocus" Margin = "0,47.5,142,0"
+                                 IsEnabled = "{Binding IsLoginEnable}" hc:InfoElement.Placeholder = "请输入用户名"
+                                 Style = "{StaticResource TextBoxExtend}"
+                                 Text = "{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <PasswordBox Grid.Row = "1" Grid.Column = "1" IsTabStop = "True" Margin = "0,25,142,0"
+                                     hc:InfoElement.Placeholder = "请输入密码" PasswordAttach.Attach = "True"
+                                     GotFocus = "UserPasswordBox_OnGotFocus" x:Name = "UserPasswordBox"
+                                     Style = "{StaticResource PasswordBoxExtend}"
+                                     PasswordAttach.Password = "{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled = "{Binding IsLoginEnable}" />
 
-        <Grid Grid.Row = "1" Background = "#484a4e" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height = "Auto" />
-                <RowDefinition Height = "Auto" />
-            </Grid.RowDefinitions>
-            <Image Grid.Row = "0" Width = "255" Height = "36" Margin = "0,267,0,0" HorizontalAlignment = "Center"
-                   Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/Logo.png"
-                   Stretch = "UniformToFill" />
-            <Border Grid.Row = "1" Width = "649" Height = "299" Margin = "0,30,0,0" VerticalAlignment = "Top"
-                    Background = "#3a3b3e" BorderBrush = "#747474" BorderThickness = "1" >
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height = "Auto" />
-                        <RowDefinition Height = "Auto" />
-                        <RowDefinition Height = "Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width = "Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.Row = "0" Grid.Column = "0" Width = "53.5" Height = "53.5" Margin = "105,47.5,38,0"
-                           Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login_U.png" />
-                    <Image Grid.Row = "1" Grid.Column = "0" Width = "53.5" Height = "53.5" Margin = "105,25,38,0"
-                           Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login_P.png" />
-                    <TextBox Grid.Row = "0" x:Name = "UserNameTextBox" Grid.Column = "1" IsTabStop = "True"
-                             Margin = "0,47.5,142,0" IsEnabled = "{Binding IsLoginEnable}"
-                             hc:InfoElement.Placeholder = "请输入用户名" Style = "{StaticResource TextBoxExtend}"
-                             Text = "{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <PasswordBox Grid.Row = "1" Grid.Column = "1" IsTabStop = "True" Margin = "0,25,142,0"
-                                 hc:InfoElement.Placeholder = "请输入用密码" PasswordAttach.Attach = "True"
-                                 x:Name = "UserPasswordBox" Style = "{StaticResource PasswordBoxExtend}"
-                                 PasswordAttach.Password = "{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 IsEnabled = "{Binding IsLoginEnable}" />
-
-                    <Button Grid.Row = "2" Grid.Column = "1" Width = "140" Height = "40" Margin = "0,40,142,0"
-                            IconElement.Placement = "Center"
-                            IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login.png"
-                            Command = "{Binding LoginCommand}" Content = "登录" IsDefault = "True"
-                            IsEnabled = "{Binding IsLoginEnable}" IsTabStop = "False"
-                            Style = "{StaticResource IconButtonStyle}" />
-                </Grid>
-            </Border>
-        </Grid>
+                        <Button Grid.Row = "2" Grid.Column = "1" Width = "140" Height = "40" Margin = "0,40,142,0"
+                                IconElement.Placement = "Center"
+                                IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login.png"
+                                Command = "{Binding LoginCommand}" Content = "登录" IsDefault = "True"
+                                IsEnabled = "{Binding IsLoginEnable}" IsTabStop = "False"
+                                Style = "{StaticResource IconButtonStyle}" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
         <hc:Divider Grid.Row = "1" Margin = "0,5,0,0" VerticalAlignment = "Top" LineStroke = "#3C3D3F"
                     LineStrokeThickness = "2" />
 
