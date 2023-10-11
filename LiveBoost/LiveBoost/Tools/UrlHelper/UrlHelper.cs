@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-04-11:27
-// 修改时间：2023-09-26-16:05
+// 修改时间：2023-10-11-10:59
 
 namespace LiveBoost.Tools;
 
@@ -173,7 +173,7 @@ public static partial class UrlHelper
             return exceptionHandler(e);
         }
     }
-  /// <summary>
+    /// <summary>
     ///     发送Delete请求并处理响应数据的通用方法。
     /// </summary>
     /// <typeparam name = "T" > 返回结果的类型。 </typeparam>

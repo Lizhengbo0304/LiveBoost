@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-06-14:18
-// 修改时间：2023-09-15-15:41
+// 修改时间：2023-10-11-11:00
 
 #region
 
@@ -76,15 +76,16 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     // 视频尺寸
     public string? VideoSize { get; set; }
     /// <summary>
-    /// 开始时间
+    ///     开始时间
     /// </summary>
     public TimeSpan? StartTime { get; set; }
     /// <summary>
-    /// 截止时间
+    ///     截止时间
     /// </summary>
     public TimeSpan? EndTime { get; set; }
     // 打入出点图标
     public string PlayPauseImage { get; set; } = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording1.png";
+
 #endregion
 
 #region Command
@@ -106,17 +107,18 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         {
             StartTime = _ffPlay!.Position;
             PlayPauseImage = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording.png";
-            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SetStartTime,StartTime.Value);
+            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SetStartTime, StartTime.Value);
         }
         else
         {
             EndTime = _ffPlay!.Position;
             PlayPauseImage = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording1.png";
-            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SetStopTime,EndTime.Value);
+            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SetStopTime, EndTime.Value);
             StartTime = null;
             EndTime = null;
         }
     });
+
 #endregion
 
 #region Event

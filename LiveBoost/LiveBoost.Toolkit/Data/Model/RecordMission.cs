@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-10-08-10:44
-// 修改时间：2023-10-08-15:49
+// 修改时间：2023-10-11-11:00
 
 namespace LiveBoost.Toolkit.Data;
 
@@ -15,6 +15,11 @@ public sealed class RecordMission : INotifyPropertyChanged, IIndex
     /// </summary>
     [JsonProperty("missionName")]
     public string? MissionName { get; set; }
+    /// <summary>
+    ///     任务类型：real 即时任务 loop周期任务
+    /// </summary>
+    [JsonProperty("missionFlag")]
+    public string? MissionFlag { get; set; }
     /// <summary>
     ///     服务器ID
     /// </summary>
@@ -50,11 +55,16 @@ public sealed class RecordMission : INotifyPropertyChanged, IIndex
     /// </summary>
     [JsonProperty("resolution")]
     public string? Resolution { get; set; }
+
+    [JsonProperty("width")] public string? Width { get; set; }
+
+    [JsonProperty("height")] public string? Height { get; set; }
     /// <summary>
     ///     场扫描
     /// </summary>
     [JsonProperty("interlaced")]
     public string? Interlaced { get; set; }
+    [JsonProperty("videoFramerate")] public string? VideoFramerate { get; set; }
     /// <summary>
     ///     帧率
     /// </summary>
@@ -99,7 +109,7 @@ public sealed class RecordMission : INotifyPropertyChanged, IIndex
     ///     码率
     /// </summary>
     [JsonProperty("bitRate")]
-    public int BitRate { get; set; }
+    public string? BitRate { get; set; }
     /// <summary>
     ///     开始日期
     /// </summary>
@@ -143,13 +153,16 @@ public sealed class RecordMission : INotifyPropertyChanged, IIndex
     /// </summary>
     public string InterlacedString => string.IsNullOrEmpty(Interlaced) ? string.Empty : string.Equals(Interlaced, "i", StringComparison.OrdinalIgnoreCase) ? "隔行" : "逐行";
     /// <summary>
-    /// 起止日期
+    ///     起止日期
     /// </summary>
     public string DateRange => $"{StartDate?.ToString("yyyy-MM-dd") ?? "***"}至{EndDate?.ToString("yyyy-MM-dd") ?? "***"}";
     /// <summary>
-    /// 起止时间
+    ///     起止时间
     /// </summary>
     public string TimeRange => $"{StartTime?.ToString("HH:mm:ss") ?? "***"}至{EndTime?.ToString("HH:mm:ss") ?? "***"}";
+
+    public string Size => string.IsNullOrEmpty(Width) ? string.Empty : $"{Width} x {Height}";
+
 #endregion
 #region INotifyPropertyChangedEvent
 

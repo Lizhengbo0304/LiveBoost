@@ -7,11 +7,11 @@
            Background = "Transparent" BorderThickness = "0" FontFamily = "Microsoft YaHei"
            Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
            ResizeMode = "NoResize" ShowInTaskbar = "True" WindowStartupLocation = "CenterScreen" WindowStyle = "None"
-           Width = "415" Title = "导出Xml" Height = "186" >  <WindowChrome.WindowChrome>
+           Width = "415" Title = "导出Xml" Height = "186" >
+    <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness = "-1" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
     </WindowChrome.WindowChrome>
-    <Grid Margin="0 0 20 20"
-          Effect="{StaticResource DefaultEffect}">
+    <Grid Margin = "0 0 20 20" Effect = "{StaticResource DefaultEffect}" >
         <Grid.RowDefinitions>
             <RowDefinition Height = "44" />
             <RowDefinition Height = "*" />

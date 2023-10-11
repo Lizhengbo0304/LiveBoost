@@ -3,12 +3,9 @@
         xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:hc = "https://handyorg.github.io/handycontrol"
-        xmlns:views = "clr-namespace:LiveBoost.Views"
-        xmlns:prism = "http://prismlibrary.com/"
-        prism:ViewModelLocator.AutoWireViewModel="True"
-        mc:Ignorable = "d" d:DesignHeight = "300"
-        d:DesignWidth = "300" >
+        xmlns:hc = "https://handyorg.github.io/handycontrol" xmlns:views = "clr-namespace:LiveBoost.Views"
+        xmlns:prism = "http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel = "True" mc:Ignorable = "d"
+        d:DesignHeight = "300" d:DesignWidth = "300" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
@@ -25,21 +22,17 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <hc:ComboBox Grid.Column = "0" hc:InfoElement.Placeholder = "请选择服务器" hc:InfoElement.Title = "服务器名称"
-                      hc:InfoElement.TitlePlacement = "Left" Margin = "10"
-                      ShowClearButton="True" Width="250"
-                      Foreground = "White"
-                      ItemsSource = "{Binding Servers}"
-                      SelectedValue = "{Binding SelectedClientName,Mode=TwoWay}"
-                      SelectedValuePath="ClientName"
-                      DisplayMemberPath="ClientName"/>
+                         hc:InfoElement.TitlePlacement = "Left" Margin = "10" ShowClearButton = "True" Width = "250"
+                         Foreground = "White" ItemsSource = "{Binding Servers}"
+                         SelectedValue = "{Binding SelectedClientName,Mode=TwoWay}" SelectedValuePath = "ClientName"
+                         DisplayMemberPath = "ClientName" />
             <TextBox Grid.Column = "1" Width = "200" hc:InfoElement.TitlePlacement = "Left"
-                     hc:InfoElement.Title = "任务名称"
-                     Style = "{StaticResource TextBoxExtend}" Margin = "0 10"
+                     hc:InfoElement.Title = "任务名称" Style = "{StaticResource TextBoxExtend}" Margin = "0 10"
                      Text = "{Binding SearchName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
             <Button Grid.Column = "2" Background = "#20b2aa" BorderBrush = "#20b2aa" BorderThickness = "1"
                     Margin = "10" hc:BorderElement.CornerRadius = "4" Width = "80" Height = "35"
-                    x:Name="SearchButton"
-                    IconElement.Placement = "Left" IconElement.Height = "15" IconElement.Width = "15"
+                    x:Name = "SearchButton" IconElement.Placement = "Left" IconElement.Height = "15"
+                    IconElement.Width = "15"
                     IconElement.Source = "pack://application:,,,/LiveBoost.ToolKit;component/Images/find.png"
                     IsDefault = "true" Content = "搜索" Command = "{Binding SearchCommand}"
                     Style = "{StaticResource IconButtonStyle}" />
@@ -55,17 +48,15 @@
                     IconElement.Source = "pack://application:,,,/LiveBoost.ToolKit;component/Images/add (1).png"
                     Content = "新增" Click = "AddTask_OnClick" Style = "{StaticResource IconButtonStyle}" />
         </Grid>
-          <ListView Grid.Row = "1"
-                  ScrollViewer.HorizontalScrollBarVisibility = "Auto" ScrollViewer.VerticalScrollBarVisibility = "Auto"
-                  ItemsSource = "{Binding Missions}"
+        <ListView Grid.Row = "1" ScrollViewer.HorizontalScrollBarVisibility = "Auto"
+                  ScrollViewer.VerticalScrollBarVisibility = "Auto" ItemsSource = "{Binding Missions}"
                   ItemContainerStyle = "{StaticResource BaseListViewItemStyle}" >
             <ListView.View>
-                <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderCenterStyle}">
+                <GridView ColumnHeaderContainerStyle = "{StaticResource GridViewColumnHeaderCenterStyle}" >
                     <GridViewColumn Header = "" Width = "30" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Text = "{Binding Index}" />
+                                <TextBlock Text = "{Binding Index}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -73,12 +64,13 @@
                     <GridViewColumn Header = "频道名称" DisplayMemberBinding = "{Binding ChannelName}" />
                     <GridViewColumn Header = "频道地址" DisplayMemberBinding = "{Binding StreamUrl}" />
                     <GridViewColumn Header = "服务器名称" DisplayMemberBinding = "{Binding ClientName}" />
-                    <GridViewColumn Header = "收录路径" DisplayMemberBinding = "{Binding RecordPath}"/>
+                    <GridViewColumn Header = "收录路径" DisplayMemberBinding = "{Binding RecordPath}" />
                     <GridViewColumn Header = "封装格式" DisplayMemberBinding = "{Binding Format}" />
-                    <GridViewColumn Header = "分辨率" DisplayMemberBinding = "{Binding Resolution}" />
+                    <GridViewColumn Header = "分辨率" DisplayMemberBinding = "{Binding Size}" />
                     <GridViewColumn Header = "帧率" DisplayMemberBinding = "{Binding Framerate}" />
                     <GridViewColumn Header = "场扫描" DisplayMemberBinding = "{Binding InterlacedString}" />
-                    <GridViewColumn Header = "切片时长" DisplayMemberBinding = "{Binding SegmentTime}" />
+                    <GridViewColumn Header = "切片时长"
+                                    DisplayMemberBinding = "{Binding SegmentTime,StringFormat='{}{0:HH:mm:ss}'}" />
                     <GridViewColumn Header = "码率" DisplayMemberBinding = "{Binding BitRate}" />
                     <GridViewColumn Header = "日期" DisplayMemberBinding = "{Binding DateRange}" />
                     <GridViewColumn Header = "时间" DisplayMemberBinding = "{Binding TimeRange}" />
@@ -88,28 +80,29 @@
                             <DataTemplate>
                                 <ToggleButton IsChecked = "{Binding Status}" HorizontalAlignment = "Center"
                                               Command = "{Binding RelativeSource={RelativeSource AncestorType=views:CombinationSettingTaskManager},Path=DataContext.EditStatusCommand}"
-                                              CommandParameter="{Binding}"
-                                              Margin = "5,0" Style = "{StaticResource ToggleButtonSwitch}" />
+                                              CommandParameter = "{Binding}" Margin = "5,0"
+                                              Style = "{StaticResource ToggleButtonSwitch}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header = "操作" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <hc:SimpleStackPanel Orientation="Horizontal">
-                                    <Button  Margin = "10 0" Background = "{StaticResource PrimaryBrush}"
-                                            hc:BorderElement.CornerRadius = "4" Width="50" Height="30"
-                                             IconElement.Placement = "Left" IconElement.Height = "15" IconElement.Width = "15"
+                                <hc:SimpleStackPanel Orientation = "Horizontal" >
+                                    <Button Margin = "10 0" Background = "{StaticResource PrimaryBrush}"
+                                            hc:BorderElement.CornerRadius = "4" Width = "50" Height = "30"
+                                            IconElement.Placement = "Left" IconElement.Height = "15"
+                                            IconElement.Width = "15"
                                             IconElement.Source = "pack://application:,,,/LiveBoost.ToolKit;component/Images/edit (1).png"
                                             Command = "{Binding RelativeSource={RelativeSource AncestorType=views:CombinationSettingTaskManager},Path=DataContext.EditCommand}"
-                                            CommandParameter="{Binding}"
-                                            Style = "{StaticResource IconButtonStyle}" />
-                                    <Button  Margin = "10 0" Background = "{StaticResource DangerBrush}"
-                                            hc:BorderElement.CornerRadius = "4" Width="60" Height="30"
-                                             IconElement.Placement = "Left" IconElement.Height = "20" IconElement.Width = "20"
+                                            CommandParameter = "{Binding}" Style = "{StaticResource IconButtonStyle}" />
+                                    <Button Margin = "10 0" Background = "{StaticResource DangerBrush}"
+                                            hc:BorderElement.CornerRadius = "4" Width = "60" Height = "30"
+                                            IconElement.Placement = "Left" IconElement.Height = "20"
+                                            IconElement.Width = "20"
                                             IconElement.Source = "pack://application:,,,/LiveBoost.ToolKit;component/Images/delete (1).png"
                                             Command = "{Binding RelativeSource={RelativeSource AncestorType=views:CombinationSettingTaskManager},Path=DataContext.DeleteCommand}"
-                                            CommandParameter="{Binding}" Style = "{StaticResource IconButtonStyle}" />
+                                            CommandParameter = "{Binding}" Style = "{StaticResource IconButtonStyle}" />
                                 </hc:SimpleStackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

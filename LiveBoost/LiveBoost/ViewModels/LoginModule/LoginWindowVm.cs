@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-04-17:07
-// 修改时间：2023-09-19-14:01
+// 修改时间：2023-10-11-10:59
 
 namespace LiveBoost.ViewModels;
 
@@ -95,7 +95,7 @@ public class LoginWindowVm : INotifyPropertyChanged
     /// </summary>
     public string? UserName { get; set; }
 #if DEBUG
-        // = "admin";
+    // = "admin";
         = "lizhengbo";
 #endif
 
@@ -104,7 +104,7 @@ public class LoginWindowVm : INotifyPropertyChanged
     /// </summary>
     public string? Password { get; set; }
 #if DEBUG
-        // = "admin123";
+    // = "admin123";
         = "Mam@2022";
 #endif
 

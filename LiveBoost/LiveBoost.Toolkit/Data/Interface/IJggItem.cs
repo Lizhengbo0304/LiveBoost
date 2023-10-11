@@ -1,7 +1,11 @@
 ﻿// 创建时间：2023-09-18-15:55
-// 修改时间：2023-09-19-14:01
+// 修改时间：2023-10-11-11:00
+
+#region
 
 using HandyIpc;
+
+#endregion
 
 namespace LiveBoost.Toolkit.Data;
 

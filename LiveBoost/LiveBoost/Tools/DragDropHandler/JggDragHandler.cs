@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-19-14:22
-// 修改时间：2023-09-19-15:19
+// 修改时间：2023-10-11-10:59
 
 #region
 
@@ -14,7 +14,7 @@ public class JggDragHandler : IDragSource
 {
     public void StartDrag(IDragInfo dragInfo)
     {
-        if ( dragInfo.SourceItems.ToList<RecordChannel>() is not { Count:1} channels )
+        if ( dragInfo.SourceItems.ToList<RecordChannel>() is not {Count: 1} channels )
         {
             return;
         }

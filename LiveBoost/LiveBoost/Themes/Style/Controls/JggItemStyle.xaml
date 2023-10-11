@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls = "clr-namespace:LiveBoost.Controls"
-                    xmlns:hc = "https://handyorg.github.io/handycontrol"
-                    xmlns:dd = "urn:gong-wpf-dragdrop" >
+                    xmlns:hc = "https://handyorg.github.io/handycontrol" >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />

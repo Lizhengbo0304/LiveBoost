@@ -1,5 +1,5 @@
-﻿// 创建时间：2023-09-05-14:39
-// 修改时间：2023-09-19-14:01
+﻿// 创建时间：2023-09-20-9:14
+// 修改时间：2023-10-11-10:59
 
 #region
 
@@ -55,7 +55,7 @@ public sealed partial class CombinationMainWindowVm
     }
 
     /// <summary>
-    /// 预览窗口关闭事件
+    ///     预览窗口关闭事件
     /// </summary>
     private void OnJggMainWindowClosed(object sender, EventArgs e)
     {
@@ -67,6 +67,7 @@ public sealed partial class CombinationMainWindowVm
 
 #endregion
 #region 初始化收录通道
+
     private async Task InitializeRecordChannelsAsync()
     {
         RecordChannels = await UrlHelper.GetShouluChannels().ConfigureAwait(false);
@@ -169,8 +170,9 @@ public sealed partial class CombinationMainWindowVm
     public int CurrentPage { get; set; }
 
     /// <summary>
-    /// 预览窗口
+    ///     预览窗口
     /// </summary>
-    private JggMainWindow? JggMainWindow{get; set; }
+    private JggMainWindow? JggMainWindow { get; set; }
+
 #endregion
 }

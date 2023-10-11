@@ -1,10 +1,9 @@
 ﻿<Border x:Class = "LiveBoost.Views.JggLayoutPage" xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-        HorizontalAlignment="Center" VerticalAlignment="Top"
-        xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d" d:DesignHeight = "300"
-        d:DesignWidth = "300" >
+        xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" HorizontalAlignment = "Center"
+        VerticalAlignment = "Top" xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d"
+        d:DesignHeight = "300" d:DesignWidth = "300" >
     <hc:SimplePanel>
         <ToggleButton x:Name = "Layout" HorizontalAlignment = "Right"
                       IconElement.Source = "pack://application:,,,/LiveBoost.ToolKit;component/Images/layout.png"
@@ -17,7 +16,7 @@
             <Border Background = "#2A2D34" CornerRadius = "4" >
                 <ListView Style = "{StaticResource BaseListViewStyle}"
                           ItemContainerStyle = "{StaticResource ChooseJggSizeItemStyle}" Padding = "0 5 0 0"
-                          SelectedIndex = "{Binding Source={x:Static AppConfig.Instance},Path=PreviewIndex,Mode=TwoWay}">
+                          SelectedIndex = "{Binding Source={x:Static AppConfig.Instance},Path=PreviewIndex,Mode=TwoWay}" >
                     <ListViewItem Tag = "4 (2+2)" >
                         <ListViewItem.Content>
                             <Canvas Name = "drawingCanvas" Width = "96" Height = "54" />

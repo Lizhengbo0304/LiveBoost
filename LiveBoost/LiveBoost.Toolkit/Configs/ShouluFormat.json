@@ -1,0 +1,93 @@
+[
+  {
+    "Format": "MP4",
+    "videoRecordCodec": [
+      "libx264",
+      "libx265",
+      "mpeg4",
+      "libvpx"
+    ],
+    "audioRecordCodec": [
+      "aac",
+      "libmp3lame",
+      "libvorbis",
+      "libopus"
+    ]
+  },
+  {
+    "Format": "MOV",
+    "videoRecordCodec": [
+      "libx264",
+      "libx265",
+      "mpeg4",
+      "prores",
+      "prores_ks",
+      "prores_422",
+      "prores_422_lt"
+    ],
+    "audioRecordCodec": [
+      "pcm_s16le",
+      "pcm_s24le",
+      "pcm_s32le",
+      "aac",
+      "libmp3lame",
+      "ac3"
+    ]
+  },
+  {
+    "Format": "FLV",
+    "videoRecordCodec": [
+      "libx264",
+      "libx265",
+      "libvpx"
+    ],
+    "audioRecordCodec": [
+      "aac",
+      "libmp3lame",
+      "libopus"
+    ]
+  },
+  {
+    "Format": "MXF",
+    "videoRecordCodec": [
+      "mpeg2video",
+      "libx264"
+    ],
+    "audioRecordCodec": [
+      "pcm_s16le",
+      "pcm_s24le",
+      "pcm_s32le",
+      "aac"
+    ]
+  },
+  {
+    "Format": "AVI",
+    "videoRecordCodec": [
+      "libx264",
+      "mpeg2video",
+      "mpeg4"
+    ],
+    "audioRecordCodec": [
+      "pcm_s16le",
+      "pcm_s24le",
+      "pcm_s32le",
+      "aac",
+      "libmp3lame",
+      "ac3"
+    ]
+  },
+  {
+    "Format": "TS",
+    "videoRecordCodec": [
+      "libx264",
+      "mpeg2video",
+      "mpeg4"
+    ],
+    "audioRecordCodec": [
+      "aac",
+      "libmp3lame",
+      "ac3",
+      "mp2"
+    ]
+  }
+]

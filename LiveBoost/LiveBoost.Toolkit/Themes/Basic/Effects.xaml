@@ -1,11 +1,11 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:o = "http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" >
     <ResourceDictionary.MergedDictionaries>
         <!-- BaseStyle -->
-        <ResourceDictionary
-            Source = "pack://application:,,,/HandyControl;component/themes/theme.xaml" />
+        <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/themes/theme.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <DropShadowEffect x:Key="DefaultEffect" BlurRadius = "15" ShadowDepth = "13" Direction = "315"
-                      Color = "{StaticResource EffectShadowColor}" Opacity = ".5" RenderingBias = "Performance"   o:Freeze="True"/>
+    <DropShadowEffect x:Key = "DefaultEffect" BlurRadius = "15" ShadowDepth = "13" Direction = "315"
+                      Color = "{StaticResource EffectShadowColor}" Opacity = ".5" RenderingBias = "Performance"
+                      o:Freeze = "True" />
 </ResourceDictionary>

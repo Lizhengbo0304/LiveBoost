@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-04-11:58
-// 修改时间：2023-09-19-14:01
+// 修改时间：2023-10-11-10:59
 
 namespace LiveBoost.Views;
 
@@ -27,11 +27,11 @@ public partial class LoginWindow
 
     private void UserNameTextBox_OnGotFocus(object sender, RoutedEventArgs e)
     {
-        this.UserNameTextBox.SelectAll();
+        UserNameTextBox.SelectAll();
     }
 
     private void UserPasswordBox_OnGotFocus(object sender, RoutedEventArgs e)
     {
-        this.UserPasswordBox.Clear();
+        UserPasswordBox.Clear();
     }
 }

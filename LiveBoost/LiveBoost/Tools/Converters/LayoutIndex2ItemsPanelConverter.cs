@@ -1,8 +1,12 @@
 ﻿// 创建时间：2023-09-21-14:24
-// 修改时间：2023-09-21-14:24
+// 修改时间：2023-10-11-10:59
+
+#region
 
 using System.Globalization;
 using System.Windows.Data;
+
+#endregion
 
 namespace LiveBoost.Tools;
 
@@ -26,8 +30,5 @@ public class LayoutIndex2ItemsPanelConverter : IValueConverter
         };
     }
 
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return null;
-    }
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
 }

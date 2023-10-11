@@ -12,8 +12,7 @@
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness = "-1" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
     </WindowChrome.WindowChrome>
-    <Grid Margin="0 0 20 20"
-          Effect="{StaticResource DefaultEffect}">
+    <Grid Margin = "0 0 20 20" Effect = "{StaticResource DefaultEffect}" >
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
             <RowDefinition Height = "Auto" />

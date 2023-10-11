@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-18-14:36
-// 修改时间：2023-09-19-15:42
+// 修改时间：2023-10-11-11:00
 
 #region
 
@@ -90,7 +90,7 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
     }
 
     /// <summary>
-    /// 清除频道信息
+    ///     清除频道信息
     /// </summary>
     public async void ClearChannelExecute()
     {

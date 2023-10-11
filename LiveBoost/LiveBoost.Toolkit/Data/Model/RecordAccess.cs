@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-14:21
-// 修改时间：2023-09-19-14:01
+// 修改时间：2023-10-11-11:00
 
 namespace LiveBoost.Toolkit.Data;
 
@@ -30,6 +30,7 @@ public sealed class RecordAccess : INotifyPropertyChanged
     ///     任务ID
     /// </summary>
     public string? TaskId { get; set; }
+
 #endregion
 
 #region INotifyPropertyChangedEvent

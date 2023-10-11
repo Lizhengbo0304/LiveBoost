@@ -5,8 +5,8 @@
            xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:local = "clr-namespace:LiveBoost.Views"
-           xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d"
-           Title = "添加频道" ResizeMode = "NoResize" >
+           xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d" Title = "添加频道"
+           ResizeMode = "NoResize" >
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness = "-1" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
     </WindowChrome.WindowChrome>
@@ -44,33 +44,34 @@
                 <RowDefinition Height = "86" />
             </Grid.RowDefinitions>
             <TextBox Grid.Row = "0" hc:InfoElement.Placeholder = "请输入频道名称" hc:InfoElement.Title = "频道名称"
-                     hc:TitleElement.TitleWidth="80" x:Name="ChannelNameTextBox"
-                     Validation.ErrorTemplate="{StaticResource ExtendInputElementErrorTemplate}"
+                     hc:TitleElement.TitleWidth = "80" x:Name = "ChannelNameTextBox"
+                     Validation.ErrorTemplate = "{StaticResource ExtendInputElementErrorTemplate}"
                      hc:InfoElement.Necessary = "True" hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0"
                      Background = "Transparent" Foreground = "Black" CaretBrush = "Black"
                      Style = "{StaticResource TextBoxExtend}" >
                 <TextBox.Text>
                     <Binding RelativeSource = "{RelativeSource AncestorType=local:CombinationSettingAddChannel}"
-                             Path = "ChannelName" UpdateSourceTrigger = "PropertyChanged"
-                             Mode="TwoWay" />
+                             Path = "ChannelName" UpdateSourceTrigger = "PropertyChanged" Mode = "TwoWay" />
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Row="1" Text="{Binding ElementName=ChannelNameTextBox,Path=Text.Length,StringFormat={}{0}/64}"
-                       Foreground="#909399" HorizontalAlignment="Right" Margin="0 2 16 0"/>
+            <TextBlock Grid.Row = "1"
+                       Text = "{Binding ElementName=ChannelNameTextBox,Path=Text.Length,StringFormat={}{0}/64}"
+                       Foreground = "#909399" HorizontalAlignment = "Right" Margin = "0 2 16 0" />
             <ComboBox Grid.Row = "1" hc:InfoElement.Placeholder = "请选择视频流协议类型" hc:InfoElement.Title = "协议类型"
-                      hc:TitleElement.TitleWidth="80"
-                      hc:InfoElement.Necessary = "True" hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0"
-                      Background = "Transparent" Foreground = "Black"
+                      hc:TitleElement.TitleWidth = "80" hc:InfoElement.Necessary = "True"
+                      hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0" Background = "Transparent"
+                      Foreground = "Black"
                       ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},Path=Protocols,IsAsync=True}"
                       SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},Path=SelectedProtocol,Mode=TwoWay}"
                       ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
                       Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
             <TextBox Grid.Row = "2" hc:InfoElement.Placeholder = "请输入频道地址" hc:InfoElement.Title = "频道地址"
-                     hc:TitleElement.TitleWidth="80"
+                     hc:TitleElement.TitleWidth = "80"
                      hc:InfoElement.Necessary = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
-                     Path=IsChannelUrlNecessary}" hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0"
-                     TextWrapping = "Wrap" HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top"
-                     Height = "80" Background = "Transparent" Foreground = "Black" CaretBrush = "Black"
+                     Path=IsChannelUrlNecessary}"
+                     hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0" TextWrapping = "Wrap"
+                     HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Height = "80"
+                     Background = "Transparent" Foreground = "Black" CaretBrush = "Black"
                      Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
                       Path=ChannelUrl,
                       UpdateSourceTrigger=PropertyChanged}"
@@ -81,19 +82,20 @@
                      Style = "{StaticResource TextBoxExtend}" />
 
             <ComboBox Grid.Row = "3" hc:InfoElement.Placeholder = "请选择服务器" hc:InfoElement.Title = "服务器名称"
-                      hc:TitleElement.TitleWidth="80"
-                      hc:InfoElement.Necessary = "True" hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0"
-                      Background = "Transparent" Foreground = "Black"
+                      hc:TitleElement.TitleWidth = "80" hc:InfoElement.Necessary = "True"
+                      hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0" Background = "Transparent"
+                      Foreground = "Black"
                       ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},Path=ServerList}"
                       SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},Path=SelectedServer}"
                       ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
                       Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}"
-                      DisplayMemberPath="ClientName"
+                      DisplayMemberPath = "ClientName"
                       Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
                      Path=SelectedProtocol,
                      Converter={StaticResource AddChannelProtocol2Visibility},
                      ConverterParameter=SDI}" />
-            <DockPanel Grid.Row = "4" LastChildFill = "True" Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
+            <DockPanel Grid.Row = "4" LastChildFill = "True"
+                       Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
                      Path=SelectedProtocol,
                      Converter={StaticResource AddChannelProtocol2Visibility},
                      ConverterParameter=SDI}" >
@@ -103,19 +105,17 @@
                         Margin = "5 20 16 0" />
                 <ComboBox hc:InfoElement.Placeholder = "请选择服务器SDI端口" hc:InfoElement.Title = "SDI端口"
                           hc:InfoElement.Necessary = "True" hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,0,0"
-                          hc:TitleElement.TitleWidth="80"
-                          Background = "Transparent" Foreground = "Black"
+                          hc:TitleElement.TitleWidth = "80" Background = "Transparent" Foreground = "Black"
                           ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},Path=Protocols}"
                           SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},Path=SelectedProtocol}"
                           ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
                           Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}"
-                          DockPanel.Dock = "Left"/>
+                          DockPanel.Dock = "Left" />
             </DockPanel>
             <TextBox Grid.Row = "5" hc:InfoElement.Placeholder = "请输入NDI组名" hc:InfoElement.Title = "组名"
                      hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0" TextWrapping = "Wrap"
                      HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Background = "Transparent"
-                     hc:TitleElement.TitleWidth="80"
-                     Foreground = "Black" CaretBrush = "Black"
+                     hc:TitleElement.TitleWidth = "80" Foreground = "Black" CaretBrush = "Black"
                      Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
                       Path=NdiGroup,
                       UpdateSourceTrigger=PropertyChanged}"
@@ -125,10 +125,10 @@
                      Converter={StaticResource AddChannelProtocol2Visibility},
                      ConverterParameter=NDI}" />
             <TextBox Grid.Row = "6" hc:InfoElement.Placeholder = "请输入NDI流名称" hc:InfoElement.Title = "流名称"
-                     hc:TitleElement.TitleWidth="80"
-                     hc:InfoElement.Necessary = "True" hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0"
-                     TextWrapping = "Wrap" HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top"
-                     Background = "Transparent" Foreground = "Black" CaretBrush = "Black"
+                     hc:TitleElement.TitleWidth = "80" hc:InfoElement.Necessary = "True"
+                     hc:InfoElement.TitlePlacement = "Left" Margin = "16,20,16,0" TextWrapping = "Wrap"
+                     HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Background = "Transparent"
+                     Foreground = "Black" CaretBrush = "Black"
                      Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
                       Path=NdiName,
                       UpdateSourceTrigger=PropertyChanged}"
@@ -138,7 +138,7 @@
                      Converter={StaticResource AddChannelProtocol2Visibility},
                      ConverterParameter=NDI}" />
             <Button Grid.Row = "7" Width = "89" Height = "33" HorizontalAlignment = "Right"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
+                    Command = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
                     Path=SubmitCommand}"
                     VerticalAlignment = "Bottom" Background = "#FF0081FF" FontSize = "12" FontWeight = "Regular"
                     Content = "提交" hc:BorderElement.CornerRadius = "3" Style = "{StaticResource IconButtonStyle}"
@@ -146,7 +146,7 @@
             <Button Grid.Row = "7" Width = "89" Height = "33" HorizontalAlignment = "Right"
                     VerticalAlignment = "Bottom" Foreground = "Black" FontSize = "12" BorderBrush = "Black"
                     BorderThickness = "1" FontWeight = "Regular" Content = "重置"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
+                    Command = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddChannel},
                     Path=ResetCommand}"
                     CommandParameter = "{Binding RelativeSource={RelativeSource Self}}"
                     hc:BorderElement.CornerRadius = "3" Style = "{StaticResource IconButtonStyle}"

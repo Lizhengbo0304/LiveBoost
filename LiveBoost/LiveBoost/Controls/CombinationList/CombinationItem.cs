@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-11:17
-// 修改时间：2023-09-19-14:01
+// 修改时间：2023-10-11-10:59
 
 #region
 
@@ -275,13 +275,14 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
 
     public ICombinationPlayer Combination => IpcLazy.Value;
     /// <summary>
-    /// 开始时间
+    ///     开始时间
     /// </summary>
     public TimeSpan? StartTime { get; set; }
     /// <summary>
-    /// 截止时间
+    ///     截止时间
     /// </summary>
     public TimeSpan? EndTime { get; set; }
+
 #endregion
 #region INotifyPropertyChangedEvent
 
@@ -460,5 +461,6 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
         StartTime = null;
         EndTime = null;
     }
+
 #endregion
 }

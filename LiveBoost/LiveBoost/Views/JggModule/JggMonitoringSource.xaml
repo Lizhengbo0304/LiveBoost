@@ -4,7 +4,7 @@
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:dd = "urn:gong-wpf-dragdrop"
         mc:Ignorable = "d" d:DesignHeight = "300" d:DesignWidth = "300" >
-    <Expander Style="{StaticResource JggExpanderStyle}" ExpandDirection="Right">
+    <Expander Style = "{StaticResource JggExpanderStyle}" ExpandDirection = "Right" >
         <Grid Width = "313" >
             <Grid.RowDefinitions>
                 <RowDefinition Height = "Auto" />
@@ -13,13 +13,13 @@
             <Button Grid.Row = "0" Height = "40" Padding = "22,0,0,0" HorizontalAlignment = "Stretch"
                     HorizontalContentAlignment = "Left" IconElement.Placement = "Center"
                     IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/TitleBarModule/TitleBar.png"
-                    IconElement.Stretch = "UniformToFill" BorderBrush = "#A0A0A0" BorderThickness = "1" Content = "信号源列表"
-                    FontSize = "18" Foreground = "#BFBFBF" IsHitTestVisible = "False"
+                    IconElement.Stretch = "UniformToFill" BorderBrush = "#A0A0A0" BorderThickness = "1"
+                    Content = "信号源列表" FontSize = "18" Foreground = "#BFBFBF" IsHitTestVisible = "False"
                     Style = "{StaticResource IconButtonWithoutOpacityStyle}" />
             <FlyListView Grid.Row = "1" Margin = "0,5,0,0" Padding = "0,10,0,0" HorizontalContentAlignment = "Stretch"
-                         dd:DragDrop.DragHandler = "{Binding JggDragHandler}"
-                         dd:DragDrop.IsDragSource = "True" dd:DragDrop.ShowAlwaysDropTargetAdorner = "True"
-                         Background = "#585A5D" BorderBrush = "#A0A0A0" BorderThickness = "1"
+                         dd:DragDrop.DragHandler = "{Binding JggDragHandler}" dd:DragDrop.IsDragSource = "True"
+                         dd:DragDrop.ShowAlwaysDropTargetAdorner = "True" Background = "#585A5D"
+                         BorderBrush = "#A0A0A0" BorderThickness = "1"
                          ItemContainerStyle = "{StaticResource ShouluChannelItemStyle}"
                          ItemsSource = "{Binding RecordChannels}" Style = "{StaticResource BaseListViewStyle}" />
         </Grid>

@@ -1,9 +1,9 @@
 ﻿// 创建时间：2023-09-05-14:16
-// 修改时间：2023-09-19-14:01
+// 修改时间：2023-10-11-11:00
 
 namespace LiveBoost.Toolkit.Data;
 
-public sealed class RecordChannel : INotifyPropertyChanged,IIndex
+public sealed class RecordChannel : INotifyPropertyChanged, IIndex
 {
 #region UI-Property
 
@@ -13,6 +13,8 @@ public sealed class RecordChannel : INotifyPropertyChanged,IIndex
     public bool IsShow { get; set; } = true;
 
 #endregion
+    /// <inheritdoc />
+    public int Index { get; set; }
 #region Property
 
     //频道ID
@@ -22,19 +24,16 @@ public sealed class RecordChannel : INotifyPropertyChanged,IIndex
     [JsonProperty("channelName")] public string? ChannelName { get; set; }
 //协议类型
     [JsonProperty("protocol")] public string? Protocol { get; set; }
-    [JsonProperty("streamURL")]
-    public string? StreamURL { get; set; }
+    [JsonProperty("streamURL")] public string? StreamURL { get; set; }
 
     // 属性表示了JSON数据中的ndiGroup字段
-    [JsonProperty("ndiGroup")]
-    public string? NdiGroup { get; set; }
+    [JsonProperty("ndiGroup")] public string? NdiGroup { get; set; }
 
     // 属性表示了JSON数据中的ndiName字段
-    [JsonProperty("ndiName")]
-    public string? NdiName { get; set; }
+    [JsonProperty("ndiName")] public string? NdiName { get; set; }
 // 属性表示了JSON数据中的status字段
-    [JsonProperty("status")]
-    public bool Status { get; set; }
+    [JsonProperty("status")] public bool Status { get; set; }
+
 #endregion
 
 #region INotifyPropertyChangedEvent
@@ -58,6 +57,4 @@ public sealed class RecordChannel : INotifyPropertyChanged,IIndex
     }
 
 #endregion
-    /// <inheritdoc />
-    public int Index { get; set; }
 }

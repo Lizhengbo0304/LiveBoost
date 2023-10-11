@@ -1,12 +1,12 @@
 ﻿<hc:Window x:Class = "LiveBoost.Views.CombinationSettingAddMission"
            xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation" Background = "Transparent"
            WindowState = "Normal" BorderBrush = "Transparent" BorderThickness = "0" WindowStyle = "None"
-           WindowStartupLocation = "CenterOwner" Height = "340" Width = "470"
+           WindowStartupLocation = "CenterOwner" Height = "915" Width = "520"
            xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:local = "clr-namespace:LiveBoost.Views"
-           xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d"
-           Title = "新增收录任务配置" ResizeMode = "NoResize" >
+           xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d" Title = "新增收录任务配置"
+           ResizeMode = "NoResize" >
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness = "-1" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
     </WindowChrome.WindowChrome>
@@ -32,8 +32,12 @@
                     Style = "{StaticResource IconButtonStyle}" />
         </hc:SimplePanel>
         <Border Grid.Row = "1" Background = "#FFFFFF" CornerRadius = "0 0 5 5" />
-        <Grid Grid.Row = "1"  Margin="0 20 0 0">
+        <Grid Grid.Row = "1" Margin = "0 20 0 0" >
             <Grid.RowDefinitions>
+                <RowDefinition Height = "Auto" />
+                <RowDefinition Height = "Auto" />
+                <RowDefinition Height = "Auto" />
+                <RowDefinition Height = "Auto" />
                 <RowDefinition Height = "Auto" />
                 <RowDefinition Height = "Auto" />
                 <RowDefinition Height = "Auto" />
@@ -54,79 +58,277 @@
                 <RowDefinition Height = "86" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15"/>
-                <ColumnDefinition Width="70"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width = "25" />
+                <ColumnDefinition Width = "95" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextShow Foreground="Black" Grid.Row="0"
-                      Grid.Column="1"
-                      VerticalAlignment="Center"
-                      Text="任务类型"/>
-            <ComboBox Grid.Row="0"
-                      Grid.Column="2" Margin="10 0 0 0"
+            <!-- 任务类型 -->
+            <TextShow Foreground = "Black" Grid.Row = "0" Grid.Column = "1" VerticalAlignment = "Center" Text = "任务类型" />
+            <ComboBox Grid.Row = "0" x:Name = "MissionTypeComboBox" Grid.Column = "2" Margin = "10 5 20 5"
                       Background = "Transparent" Foreground = "Black"
+                      ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=MissionTypes}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedMissionType}"
                       ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
-                      Template = "{StaticResource FlyComboBoxTemplate}"
-                      Style="{StaticResource ComboBoxExtend}"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="1"
-                      Grid.Column="1"
-                      Text="任务名称"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="2"
-                      Grid.Column="1"
-                      Text="频道名称"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="3"
-                      Grid.Column="1"
-                      Text="频道地址"/>
-            <TextBlock Grid.Row="4" Grid.Column="0"  HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="4"
-                      Grid.Column="1"
-                      Text="收录路径"/>
-            <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow  Grid.Row="5"
-                      Foreground="Black"
-                      Grid.Column="1"
-                      Text="封装格式"/>
-            <TextShow Foreground="Black" Grid.Row="6"
-                      Grid.Column="1"
-                      Text="视频编码格式"/>
-            <TextShow Foreground="Black" Grid.Row="7"
-                      Grid.Column="1"
-                      Text="音频编码格式"/>
-            <TextShow Foreground="Black" Grid.Row="8"
-                      Grid.Column="1"
-                      Text="分辨率"/>
-            <TextShow Foreground="Black" Grid.Row="9"
-                      Grid.Column="1"
-                      Text="场扫描方式"/>
-            <TextShow Foreground="Black" Grid.Row="10"
-                      Grid.Column="1"
-                      Text="帧率"/>
-            <TextBlock Grid.Row="11" Grid.Column="0"  HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="11"
-                      Grid.Column="1"
-                      Text="切片时长"/>
-            <TextBlock Grid.Row="12" Grid.Column="0"  HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="12"
-                      Grid.Column="1"
-                      Text="收录码率"/>
-            <TextBlock Grid.Row="13" Grid.Column="0"  HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="13"
-                      Grid.Column="1"
-                      Text="任务执行日期"/>
-            <TextBlock Grid.Row="14" Grid.Column="0"  HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="14"
-                      Grid.Column="1"
-                      Text="收录开始时间"/>
-            <TextBlock Grid.Row="15" Grid.Column="0"  HorizontalAlignment="Right" Margin="0 0 2 0" Text="*" Foreground="{StaticResource DangerBrush}"/>
-            <TextShow Foreground="Black" Grid.Row="15"
-                      Grid.Column="1"
-                      Text="收录结束时间"/>
-            <TextShow Foreground="Black" Grid.Row="16"
-                      Grid.Column="1"
-                      Text="指定周期"/>
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <!-- 任务名称 -->
+            <TextBlock Grid.Row = "1" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "1" VerticalAlignment = "Center" Grid.Column = "1" Text = "任务名称" />
+            <TextBox Grid.Row = "1" Grid.Column = "2" Margin = "10 5 20 5" TextWrapping = "NoWrap"
+                     HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Background = "Transparent"
+                     Foreground = "Black" CaretBrush = "Black"
+                     Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},
+                      Path=MissionName,
+                      UpdateSourceTrigger=PropertyChanged}"
+                     Style = "{StaticResource TextBoxExtend}" />
+            <!-- 频道名称 -->
+            <TextBlock Grid.Row = "2" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "2" VerticalAlignment = "Center" Grid.Column = "1" Text = "频道名称" />
+            <ComboBox Grid.Row = "2" Grid.Column = "2" Margin = "10 5 20 5" Background = "Transparent"
+                      Foreground = "Black"
+                      ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=Channels}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedChannel}"
+                      DisplayMemberPath = "ChannelName" ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <!-- 频道地址 -->
+            <TextBlock Grid.Row = "3" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       Foreground = "{StaticResource DangerBrush}" VerticalAlignment = "Center"
+                       Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedChannel,Converter={StaticResource ChannelProtocol2Visibility}}" />
+            <TextShow Foreground = "Black" Grid.Row = "3" VerticalAlignment = "Center" Grid.Column = "1" Text = "频道地址" />
+            <TextBox Grid.Row = "3" Grid.Column = "2" Margin = "10 5 20 5" IsReadOnly = "True" TextWrapping = "NoWrap"
+                     HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Background = "Transparent"
+                     Foreground = "Black" CaretBrush = "Black"
+                     Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},
+                      Path=SelectedChannel.StreamURL,
+                      UpdateSourceTrigger=PropertyChanged}"
+                     Style = "{StaticResource TextBoxExtend}" />
+            <!-- 收录路径 -->
+            <TextBlock Grid.Row = "4" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "4" VerticalAlignment = "Center" Grid.Column = "1" Text = "收录路径" />
+            <ComboBox Grid.Row = "4" Grid.Column = "2" Margin = "10 5 20 5" Background = "Transparent"
+                      Foreground = "Black"
+                      ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=Servers}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedServer}"
+                      DisplayMemberPath = "ServerInfo" ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <!-- 封装格式 -->
+            <TextBlock Grid.Row = "5" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Grid.Row = "5" VerticalAlignment = "Center" Foreground = "Black" Grid.Column = "1" Text = "封装格式" />
+            <ComboBox Grid.Row = "5" Grid.Column = "2" Margin = "10 5 20 5" Background = "Transparent"
+                      Foreground = "Black" ItemsSource = "{Binding Source={x:Static ShouluFormat.ShouluFormats}}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedFormat}"
+                      DisplayMemberPath = "Format" ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <!-- 视频编码格式 -->
+            <TextShow Foreground = "Black" Grid.Row = "6" VerticalAlignment = "Center" Grid.Column = "1"
+                      Text = "视频编码格式" />
+            <ComboBox Grid.Row = "6" Grid.Column = "2" Margin = "10 5 20 5" Background = "Transparent"
+                      Foreground = "Black"
+                      ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedFormat.VideoRecordCodec}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedVideoRecordCodec}"
+                      ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <!-- 音频编码格式 -->
+            <TextShow Foreground = "Black" Grid.Row = "7" VerticalAlignment = "Center" Grid.Column = "1"
+                      Text = "音频编码格式" />
+            <ComboBox Grid.Row = "7" Grid.Column = "2" Margin = "10 5 20 5" Background = "Transparent"
+                      Foreground = "Black"
+                      ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedFormat.AudioRecordCodec}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedAudioRecordCodec}"
+                      ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <!-- 分辨率 -->
+            <TextShow Foreground = "Black" Grid.Row = "8" VerticalAlignment = "Center" Grid.Column = "1" Text = "分辨率" />
+            <ComboBox Grid.Row = "8" Grid.Column = "2" Margin = "10 5 20 5" Background = "Transparent"
+                      Foreground = "Black" ItemsSource = "{Binding Source={x:Static Resolution.Resolutions}}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedResolution}"
+                      DisplayMemberPath = "DisplayName" ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <!-- 分辨率(X) -->
+            <TextBlock Grid.Row = "9" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       Foreground = "{StaticResource DangerBrush}" VerticalAlignment = "Center"
+                       Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedResolution,Converter={StaticResource Resolution2Visibility}}" />
+            <TextShow Foreground = "Black" Grid.Row = "9" VerticalAlignment = "Center" Grid.Column = "1"
+                      IsVisibleChanged = "ResolutionX_OnIsVisibleChanged"
+                      Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedResolution,Converter={StaticResource Resolution2Visibility}}"
+                      Text = "分辨率(X)" />
+            <TextBox Grid.Row = "9" Grid.Column = "2" Margin = "10 5 20 5" TextWrapping = "NoWrap"
+                     HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Background = "Transparent"
+                     Foreground = "Black" CaretBrush = "Black"
+                     Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},
+                      Path=SelectedResolutionX,
+                      UpdateSourceTrigger=PropertyChanged}"
+                     Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedResolution,Converter={StaticResource Resolution2Visibility}}"
+                     Style = "{StaticResource TextBoxExtend}" />
+            <!-- 分辨率(Y) -->
+            <TextBlock Grid.Row = "10" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       Foreground = "{StaticResource DangerBrush}" VerticalAlignment = "Center"
+                       Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedResolution,Converter={StaticResource Resolution2Visibility}}" />
+            <TextShow Foreground = "Black" Grid.Row = "10" VerticalAlignment = "Center" Grid.Column = "1"
+                      Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedResolution,Converter={StaticResource Resolution2Visibility}}"
+                      Text = "分辨率(Y)" />
+            <TextBox Grid.Row = "10" Grid.Column = "2" Margin = "10 5 20 5" TextWrapping = "NoWrap"
+                     HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Background = "Transparent"
+                     Foreground = "Black" CaretBrush = "Black"
+                     Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},
+                      Path=SelectedResolutionY,
+                      UpdateSourceTrigger=PropertyChanged}"
+                     Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedResolution,Converter={StaticResource Resolution2Visibility}}"
+                     Style = "{StaticResource TextBoxExtend}" />
+            <!-- 场扫描方式 -->
+            <TextShow Foreground = "Black" Grid.Row = "11" VerticalAlignment = "Center" Grid.Column = "1"
+                      Text = "场扫描方式" />
+            <ComboBox Grid.Row = "11" Grid.Column = "2" Margin = "10 5 20 5" Background = "Transparent"
+                      Foreground = "Black"
+                      ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=Interlaces}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedInterlaces}"
+                      ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <!-- 帧率 -->
+            <TextShow Foreground = "Black" Grid.Row = "12" VerticalAlignment = "Center" Grid.Column = "1" Text = "帧率" />
+            <ComboBox Grid.Row = "12" Grid.Column = "2" Margin = "10 5 20 5" Background = "Transparent"
+                      Foreground = "Black"
+                      ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=VideoFrames}"
+                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedVideoFrame}"
+                      ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
+                      Template = "{StaticResource FlyComboBoxTemplate}" Style = "{StaticResource ComboBoxExtend}" />
+            <TextBlock Grid.Row = "13" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       VerticalAlignment = "Center"
+                       Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedVideoFrame,Converter={StaticResource VideoFram2Visibility}}"
+                       Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "13" VerticalAlignment = "Center" Grid.Column = "1"
+                      IsVisibleChanged = "Frame_OnIsVisibleChanged"
+                      Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedVideoFrame,Converter={StaticResource VideoFram2Visibility}}"
+                      Text = "手动帧率" />
+            <TextBox Grid.Row = "13" Grid.Column = "2" Margin = "10 5 20 5" TextWrapping = "NoWrap"
+                     HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Background = "Transparent"
+                     Foreground = "Black" CaretBrush = "Black"
+                     Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},
+                      Path=Frame,
+                      UpdateSourceTrigger=PropertyChanged}"
+                     Visibility = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=SelectedVideoFrame,Converter={StaticResource VideoFram2Visibility}}"
+                     Style = "{StaticResource TextBoxExtend}" />
+            <!-- 切片时长 -->
+            <TextBlock Grid.Row = "14" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "14" VerticalAlignment = "Center" Grid.Column = "1" Text = "切片时长" />
+            <hc:TimePicker Grid.Row = "14" x:Name = "SegmentTimePicker" CaretBrush = "Black" Margin = "10 5 20 5"
+                           Background = "White" Foreground = "Black" Grid.Column = "2"
+                           Style = "{StaticResource TimePickerPlus}" >
+                <hc:TimePicker.Clock>
+                    <hc:ListClock />
+                </hc:TimePicker.Clock>
+            </hc:TimePicker>
+            <!-- 收录码率 -->
+            <TextBlock Grid.Row = "15" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "15" VerticalAlignment = "Center" Grid.Column = "1" Text = "收录码率" />
+            <TextBox Grid.Row = "15" Grid.Column = "2" Margin = "10 5 20 5" TextWrapping = "NoWrap"
+                     HorizontalContentAlignment = "Left" VerticalContentAlignment = "Top" Background = "Transparent"
+                     Foreground = "Black" CaretBrush = "Black"
+                     Text = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},
+                      Path=BitRate,
+                      UpdateSourceTrigger=PropertyChanged}"
+                     Style = "{StaticResource TextBoxExtend}" />
+            <!-- 任务执行日期 -->
+            <TextBlock Grid.Row = "16" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "16"
+                      Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                      VerticalAlignment = "Center" Grid.Column = "1" Text = "任务执行开始日期" />
+            <hc:DatePicker Grid.Row = "16" Grid.Column = "2" CaretBrush = "Black"
+                           Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                           SelectedDate = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=TaskStartDate}"
+                           Background = "White" Foreground = "Black" Margin = "10 5 20 5" />
+            <TextBlock Grid.Row = "17" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "17"
+                      Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                      VerticalAlignment = "Center" Grid.Column = "1" Text = "任务执行结束日期" />
+            <hc:DatePicker Grid.Row = "17" Grid.Column = "2" CaretBrush = "Black"
+                           Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                           SelectedDate = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},Path=TaskEndDate}"
+                           Background = "White" Foreground = "Black" Margin = "10 5 20 5" />
+
+            <TextBlock Grid.Row = "18" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                       VerticalAlignment = "Center" Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "18"
+                      Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                      VerticalAlignment = "Center" Grid.Column = "1" Text = "收录开始时间" />
+            <hc:TimePicker Grid.Row = "18" x:Name = "TaskStartTimePicker"
+                           Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                           CaretBrush = "Black" Margin = "10 5 20 5" Background = "White" Foreground = "Black"
+                           Grid.Column = "2" Style = "{StaticResource TimePickerPlus}" >
+                <hc:TimePicker.Clock>
+                    <hc:ListClock />
+                </hc:TimePicker.Clock>
+            </hc:TimePicker>
+            <TextBlock Grid.Row = "19" Grid.Column = "0" HorizontalAlignment = "Right" Margin = "0 0 2 0" Text = "*"
+                       VerticalAlignment = "Center"
+                       Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                       Foreground = "{StaticResource DangerBrush}" />
+            <TextShow Foreground = "Black" Grid.Row = "19" VerticalAlignment = "Center"
+                      Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                      Grid.Column = "1" Text = "收录结束时间" />
+            <hc:TimePicker Grid.Row = "19" x:Name = "TaskEndTimePicker"
+                           Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                           CaretBrush = "Black" Margin = "10 5 20 5" Background = "White" Foreground = "Black"
+                           Grid.Column = "2" Style = "{StaticResource TimePickerPlus}" >
+                <hc:TimePicker.Clock>
+                    <hc:ListClock />
+                </hc:TimePicker.Clock>
+            </hc:TimePicker>
+            <!-- 指定周期 -->
+            <TextShow Foreground = "Black" Grid.Row = "20" Grid.Column = "1" VerticalAlignment = "Center"
+                      Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                      Text = "指定周期" />
+            <hc:ButtonGroup Grid.Row = "20" x:Name = "ButtonGroup" Grid.Column = "2" Margin = "10 5 20 5"
+                            IsVisibleChanged = "ButtonGroup_OnIsVisibleChanged"
+                            Visibility = "{Binding ElementName=MissionTypeComboBox,Path=SelectedIndex,
+                             Converter={StaticResource Int2VisibilityReConverter}}"
+                            Style = "{StaticResource ButtonGroupSolid}" >
+                <ToggleButton Content = "周一" Foreground = "Black" Background = "White" />
+                <ToggleButton Content = "周二" Foreground = "Black" Background = "White" />
+                <ToggleButton Content = "周三" Foreground = "Black" Background = "White" />
+                <ToggleButton Content = "周四" Foreground = "Black" Background = "White" />
+                <ToggleButton Content = "周五" Foreground = "Black" Background = "White" />
+                <ToggleButton Content = "周六" Foreground = "Black" Background = "White" />
+                <ToggleButton Content = "周日" Foreground = "Black" Background = "White" />
+            </hc:ButtonGroup>
+
+            <Button Grid.Column = "2" Grid.Row = "21" Width = "89" Height = "33" HorizontalAlignment = "Right"
+                    Command = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},
+                    Path=SubmitCommand}"
+                    VerticalAlignment = "Bottom" Background = "#FF0081FF" FontSize = "12" FontWeight = "Regular"
+                    Content = "提交" hc:BorderElement.CornerRadius = "3" Style = "{StaticResource IconButtonStyle}"
+                    Margin = "10 22 151 31" />
+            <Button Grid.Column = "2" Grid.Row = "21" Width = "89" Height = "33" HorizontalAlignment = "Right"
+                    VerticalAlignment = "Bottom" Foreground = "Black" FontSize = "12" BorderBrush = "Black"
+                    BorderThickness = "1" FontWeight = "Regular" Content = "重置"
+                    Command = "{Binding RelativeSource={RelativeSource AncestorType=local:CombinationSettingAddMission},
+                    Path=ResetCommand}"
+                    CommandParameter = "{Binding RelativeSource={RelativeSource Self}}"
+                    hc:BorderElement.CornerRadius = "3" Style = "{StaticResource IconButtonStyle}"
+                    Margin = "10 22 46 31" />
         </Grid>
     </Grid>
 </hc:Window>

@@ -16,6 +16,7 @@
             Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/ProgressBarStyle.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/SliderStyle.xaml" />
         <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Basic/Basic.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/TextShowStyle.xaml" />
+        <ResourceDictionary
+            Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/TextShowStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

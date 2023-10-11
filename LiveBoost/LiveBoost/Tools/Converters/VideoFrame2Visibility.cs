@@ -1,0 +1,20 @@
+﻿// 创建时间：2023-10-10-14:43
+// 修改时间：2023-10-11-11:00
+
+#region
+
+using System.Globalization;
+using System.Windows.Data;
+
+#endregion
+
+namespace LiveBoost.Tools;
+
+public class VideoFram2Visibility : IValueConverter
+{
+    /// <inheritdoc />
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is "其他" ? Visibility.Visible : Visibility.Collapsed;
+
+    /// <inheritdoc />
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+}

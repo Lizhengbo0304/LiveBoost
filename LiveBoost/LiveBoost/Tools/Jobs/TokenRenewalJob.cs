@@ -1,7 +1,11 @@
-﻿// 创建时间：2023-09-05-9:18
-// 修改时间：2023-09-05-9:18
+﻿// 创建时间：2023-09-20-16:59
+// 修改时间：2023-10-11-10:59
+
+#region
 
 using Quartz;
+
+#endregion
 
 namespace LiveBoost.Tools;
 
@@ -15,7 +19,10 @@ public class TokenRenewalJob : IJob
         return Task.Run(async () =>
         {
             // 检查登录用户的令牌是否为空
-            if (string.IsNullOrEmpty(AppProgram.Instance.LoginUser?.Token)) return;
+            if ( string.IsNullOrEmpty(AppProgram.Instance.LoginUser?.Token) )
+            {
+                return;
+            }
 
             // 异步调用获取收录频道的方法
             await UrlHelper.GetShouluChannels().ConfigureAwait(false);

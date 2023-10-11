@@ -1,7 +1,11 @@
 ﻿// 创建时间：2023-10-08-9:49
-// 修改时间：2023-10-08-9:49
+// 修改时间：2023-10-11-10:59
+
+#region
 
 using LiveBoost.ToolKit.Tools;
+
+#endregion
 
 namespace LiveBoost.ViewModels;
 
@@ -10,14 +14,14 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
     public CombinationSettingTaskManagerVm()
     {
         GetServers();
-                // 初始化搜索命令
+        // 初始化搜索命令
         SearchCommand = new DelegateCommand(async () =>
         {
             // 异步执行搜索操作
             CurrentPage = 1;
-            var result = await SearchName.SearchRecordMissionsAsync(SelectedClientName,CurrentPage);
+            var result = await SearchName.SearchRecordMissionsAsync(SelectedClientName, CurrentPage);
             result.missions.SetIndexes();
-            Missions  = result.missions; // 更新Mission集合
+            Missions = result.missions; // 更新Mission集合
             TotalPage = result.totalPage; // 更新TotalPage
         });
 
@@ -34,9 +38,9 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
         PageUpdatedCmd = new DelegateCommand<FunctionEventArgs<int>>(async pageInfo =>
         {
             // 异步执行分页更新操作
-            var result = await SearchName.SearchRecordMissionsAsync(SelectedClientName,pageInfo.Info);
+            var result = await SearchName.SearchRecordMissionsAsync(SelectedClientName, pageInfo.Info);
             result.missions.SetIndexes();
-            Missions  = result.missions; // 更新Mission集合
+            Missions = result.missions; // 更新Mission集合
             TotalPage = result.totalPage; // 更新TotalPage
         });
 
@@ -57,7 +61,7 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
         });
 
 // 编辑命令
-        EditCommand = new DelegateCommand<RecordMission>(channel =>
+        EditCommand = new DelegateCommand<RecordMission>(mission =>
         {
             // 检查主窗口是否存在子窗口，如果没有子窗口，则不执行编辑操作
             if ( !( AppProgram.Instance.App.MainWindow?.OwnedWindows.Count > 0 ) )
@@ -66,7 +70,8 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
             }
 
             // 弹出编辑窗口并传递当前频道信息，编辑完成后执行搜索命令以刷新列表
-            new CombinationSettingAddMission().ShowDialog();
+            CombinationSettingAddMission.Show(AppProgram.Instance.App.MainWindow?.OwnedWindows[0]!, mission);
+            SearchCommand.Execute();
             SearchCommand.Execute();
         });
 
@@ -90,7 +95,6 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
         Servers = await UrlHelper.GetShouluServersAll().ConfigureAwait(false);
     }
 
-
 #endregion
 #region INotifyPropertyChangedEvent
 
@@ -109,7 +113,10 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
 
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) ) return false;
+        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        {
+            return false;
+        }
         field = value;
         OnPropertyChanged(propertyName);
         return true;
@@ -129,14 +136,14 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
     /// </summary>
     public List<RecordServer> Servers { get; set; } = new();
     /// <summary>
-    /// 选中的服务器名称
+    ///     选中的服务器名称
     /// </summary>
     public string? SelectedClientName { get; set; }
 
     /// <summary>
-    /// 任务列表
+    ///     任务列表
     /// </summary>
-    public List<RecordMission> Missions { get; set; } = new List<RecordMission>();
+    public List<RecordMission> Missions { get; set; } = new();
     /// <summary>
     ///     频道总页数
     /// </summary>

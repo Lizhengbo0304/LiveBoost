@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-10-07-11:38
-// 修改时间：2023-10-07-11:38
+// 修改时间：2023-10-11-10:59
 
 namespace LiveBoost.Views;
 
@@ -16,7 +16,7 @@ public partial class CombinationSettingTaskManager
         {
             return;
         }
-        if ( CombinationSettingAddChannel.Show(window) )
+        if ( CombinationSettingAddMission.Show(window) )
         {
             SearchButton.Command?.Execute(null);
         }

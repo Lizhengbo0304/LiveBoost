@@ -1,54 +1,52 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:hc = "https://handyorg.github.io/handycontrol" >
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary
-            Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
+        <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
     </ResourceDictionary.MergedDictionaries>
-     <Style TargetType = "RadioButton" x:Key = "SettingRadioStyle" BasedOn = "{StaticResource BaseStyle}" >
-                <Setter Property = "Background" Value = "Transparent" />
-                <Setter Property = "Height" Value = "44" />
-                <Setter Property = "Width" Value = "160" />
-                <Setter Property = "FocusVisualStyle" Value = "{StaticResource FocusVisualRadius0}" />
-                <Setter Property = "BorderBrush" Value = "Transparent" />
-                <Setter Property = "BorderThickness" Value = "0" />
-                <Setter Property = "VerticalAlignment" Value = "Center" />
-                <Setter Property = "VerticalContentAlignment" Value = "Center" />
-                <Setter Property = "HorizontalContentAlignment" Value = "Left" />
-                <Setter Property = "hc:BorderElement.CornerRadius" Value = "5" />
-                <Setter Property = "Padding" Value = "0" />
-                <Setter Property = "Foreground" Value = "White" />
-                <Setter Property = "Template" >
-                    <Setter.Value>
-                        <ControlTemplate TargetType = "RadioButton" >
-                            <hc:SimplePanel>
-                                <Border Background = "{TemplateBinding Background}"
-                                        BorderThickness = "{TemplateBinding BorderThickness}"
-                                        BorderBrush = "{TemplateBinding BorderBrush}" x:Name = "bd" />
-                                <Border Name = "BorderHighlight" BorderThickness = "0" BorderBrush = "Transparent"
-                                        Width = "2" HorizontalAlignment = "Left" Background = "#4782D6"
-                                        Visibility = "Hidden" />
-                                <StackPanel Background = "Transparent" Orientation = "Horizontal"
-                                            HorizontalAlignment = "{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment = "{TemplateBinding VerticalContentAlignment}"
-                                            Margin = "{TemplateBinding Padding}" >
-                                    <!-- <hc:Gravatar x:Name = "PathMain" Height = "14" Width = "14" -->
-                                    <!--              SnapsToDevicePixels = "True" Margin = "16 0 12 0" -->
-                                    <!--              Source = "{TemplateBinding IconElement.Source}" /> -->
-                                    <ContentPresenter x:Name = "ContentPresenterMain" RecognizesAccessKey = "True"
-                                                      VerticalAlignment = "Center" HorizontalAlignment = "Center"
-                                                      Margin = "16 0"
-                                                      SnapsToDevicePixels = "{TemplateBinding SnapsToDevicePixels}" />
-                                </StackPanel>
-                            </hc:SimplePanel>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property = "IsChecked" Value = "True" >
-                                    <Setter Property = "Background" TargetName = "bd" Value = "#545456" />
-                                    <Setter Property = "Visibility" Value = "Visible" TargetName = "BorderHighlight" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+    <Style TargetType = "RadioButton" x:Key = "SettingRadioStyle" BasedOn = "{StaticResource BaseStyle}" >
+        <Setter Property = "Background" Value = "Transparent" />
+        <Setter Property = "Height" Value = "44" />
+        <Setter Property = "Width" Value = "160" />
+        <Setter Property = "FocusVisualStyle" Value = "{StaticResource FocusVisualRadius0}" />
+        <Setter Property = "BorderBrush" Value = "Transparent" />
+        <Setter Property = "BorderThickness" Value = "0" />
+        <Setter Property = "VerticalAlignment" Value = "Center" />
+        <Setter Property = "VerticalContentAlignment" Value = "Center" />
+        <Setter Property = "HorizontalContentAlignment" Value = "Left" />
+        <Setter Property = "hc:BorderElement.CornerRadius" Value = "5" />
+        <Setter Property = "Padding" Value = "0" />
+        <Setter Property = "Foreground" Value = "White" />
+        <Setter Property = "Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType = "RadioButton" >
+                    <hc:SimplePanel>
+                        <Border Background = "{TemplateBinding Background}"
+                                BorderThickness = "{TemplateBinding BorderThickness}"
+                                BorderBrush = "{TemplateBinding BorderBrush}" x:Name = "bd" />
+                        <Border Name = "BorderHighlight" BorderThickness = "0" BorderBrush = "Transparent" Width = "2"
+                                HorizontalAlignment = "Left" Background = "#4782D6" Visibility = "Hidden" />
+                        <StackPanel Background = "Transparent" Orientation = "Horizontal"
+                                    HorizontalAlignment = "{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment = "{TemplateBinding VerticalContentAlignment}"
+                                    Margin = "{TemplateBinding Padding}" >
+                            <!-- <hc:Gravatar x:Name = "PathMain" Height = "14" Width = "14" -->
+                            <!--              SnapsToDevicePixels = "True" Margin = "16 0 12 0" -->
+                            <!--              Source = "{TemplateBinding IconElement.Source}" /> -->
+                            <ContentPresenter x:Name = "ContentPresenterMain" RecognizesAccessKey = "True"
+                                              VerticalAlignment = "Center" HorizontalAlignment = "Center"
+                                              Margin = "16 0"
+                                              SnapsToDevicePixels = "{TemplateBinding SnapsToDevicePixels}" />
+                        </StackPanel>
+                    </hc:SimplePanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property = "IsChecked" Value = "True" >
+                            <Setter Property = "Background" TargetName = "bd" Value = "#545456" />
+                            <Setter Property = "Visibility" Value = "Visible" TargetName = "BorderHighlight" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

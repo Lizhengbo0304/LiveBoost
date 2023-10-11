@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-26-17:22
-// 修改时间：2023-09-28-14:17
+// 修改时间：2023-10-11-10:59
 
 namespace LiveBoost.Views;
 
@@ -28,7 +28,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
         return addChannel.AddResult;
     }
 
-    public static bool Show(Window owner,RecordChannel channel)
+    public static bool Show(Window owner, RecordChannel channel)
     {
         var addChannel = new CombinationSettingAddChannel
         {
@@ -40,7 +40,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
             Channel = channel,
             Title = "修改频道"
         };
-        addChannel.SelectedProtocol = addChannel.Protocols.SingleOrDefault(it =>string.Equals(it,channel.Protocol,StringComparison.OrdinalIgnoreCase));
+        addChannel.SelectedProtocol = addChannel.Protocols.SingleOrDefault(it => string.Equals(it, channel.Protocol, StringComparison.OrdinalIgnoreCase));
 
         addChannel.ShowDialog();
         return addChannel.AddResult;

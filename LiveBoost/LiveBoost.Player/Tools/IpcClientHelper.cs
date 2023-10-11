@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-06-14:18
-// 修改时间：2023-09-19-14:02
+// 修改时间：2023-10-11-11:00
 
 #region
 
@@ -25,8 +25,6 @@ public static class IpcClientHelper
         return same;
     });
 
-    public static ICombinationItem CombinationPlayer => IpcCombinationLazy.Value;
-
     private static readonly Lazy<IJggItem> IpcJggLazy = new(() =>
     {
         var clientBuilder = new ContainerClientBuilder();
@@ -36,6 +34,8 @@ public static class IpcClientHelper
         var same = client.Resolve<IJggItem>();
         return same;
     });
+
+    public static ICombinationItem CombinationPlayer => IpcCombinationLazy.Value;
 
     public static IJggItem JggPlayer => IpcJggLazy.Value;
 }

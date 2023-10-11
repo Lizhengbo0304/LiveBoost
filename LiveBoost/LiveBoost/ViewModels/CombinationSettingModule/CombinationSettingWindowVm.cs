@@ -1,7 +1,11 @@
 ﻿// 创建时间：2023-09-26-14:20
-// 修改时间：2023-09-28-16:12
+// 修改时间：2023-10-11-10:59
+
+#region
 
 using Prism.Regions;
+
+#endregion
 
 namespace LiveBoost.ViewModels;
 
@@ -17,13 +21,21 @@ public class CombinationSettingWindowVm : INotifyPropertyChanged
             {
                 return;
             }
-            if ( RegionManager.GetRegionManager(settingWindow) is not {} regionManager )
+            if ( RegionManager.GetRegionManager(settingWindow) is not { } regionManager )
             {
                 return;
             }
             regionManager.RequestNavigate("SettingShow", button.Tag as string);
         });
     }
+
+#endregion
+#region Command
+
+    /// <summary>
+    ///     更改管理界面
+    /// </summary>
+    public DelegateCommand<RadioButton> ChangeViewCommand { get; set; }
 
 #endregion
 #region INotifyPropertyChangedEvent
@@ -45,14 +57,6 @@ public class CombinationSettingWindowVm : INotifyPropertyChanged
         OnPropertyChanged(propertyName);
         return true;
     }
-
-#endregion
-#region Command
-
-    /// <summary>
-    /// 更改管理界面
-    /// </summary>
-    public DelegateCommand<RadioButton> ChangeViewCommand { get; set; }
 
 #endregion
 }

@@ -1,8 +1,12 @@
-﻿// 创建时间：2023-02-07-16:37
-// 修改时间：2023-02-07-16:41
+﻿// 创建时间：2023-09-20-16:59
+// 修改时间：2023-10-11-10:59
+
+#region
 
 using Quartz;
 using Quartz.Impl;
+
+#endregion
 
 namespace LiveBoost.Tools;
 
@@ -19,10 +23,16 @@ public static class JobTool
     public static async Task StartRenewalJob()
     {
         var scheduler = StdSchedulerFactory.GetDefaultScheduler().Result;
-        if (!scheduler.IsStarted) await scheduler.Start();
+        if ( !scheduler.IsStarted )
+        {
+            await scheduler.Start();
+        }
 
         // 如果 RenewalJob 存在，删除它
-        if (RenewalJob is { }) await scheduler.DeleteJob(RenewalJobKey);
+        if ( RenewalJob is not null )
+        {
+            await scheduler.DeleteJob(RenewalJobKey);
+        }
 
         // 创建 TokenRenewalJob 任务
         RenewalJob = JobBuilder.Create<TokenRenewalJob>()
@@ -42,7 +52,9 @@ public static class JobTool
     // 停止定时任务
     public static async Task StopRenewalJob()
     {
-        if (RenewalJob != null)
-            await (await StdSchedulerFactory.GetDefaultScheduler()).DeleteJob(RenewalJobKey);
+        if ( RenewalJob != null )
+        {
+            await ( await StdSchedulerFactory.GetDefaultScheduler() ).DeleteJob(RenewalJobKey);
+        }
     }
 }

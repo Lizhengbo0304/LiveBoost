@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-06-14:33
-// 修改时间：2023-09-19-14:01
+// 修改时间：2023-10-11-11:00
 
 #region
 
@@ -44,7 +44,7 @@ public static class LoadPluginHelper
     /// <param name = "pluginDll" > 插件的DLL文件路径 </param>
     /// <param name = "arguments" > 要传递的参数数组 </param>
     /// <returns> 启动的进程 </returns>
-    public static Process LoadPlugin(string pluginDll,params  string[]? arguments)
+    public static Process LoadPlugin(string pluginDll, params string[]? arguments)
     {
         if ( string.IsNullOrEmpty(pluginDll) || string.IsNullOrWhiteSpace(pluginDll) )
         {

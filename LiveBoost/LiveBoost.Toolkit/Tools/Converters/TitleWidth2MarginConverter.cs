@@ -1,9 +1,13 @@
 ﻿// 创建时间：2023-09-27-16:42
-// 修改时间：2023-09-27-16:42
+// 修改时间：2023-10-11-11:00
+
+#region
 
 using System.Globalization;
 using System.Windows.Data;
 using HandyControl.Controls;
+
+#endregion
 
 namespace LiveBoost.Toolkit.Tools;
 
@@ -21,8 +25,5 @@ public class TitleWidth2MarginConverter : IValueConverter
     }
 
     /// <inheritdoc />
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return null;
-    }
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
 }
