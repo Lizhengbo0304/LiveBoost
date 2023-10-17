@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-20-9:14
-// 修改时间：2023-10-11-10:59
+// 修改时间：2023-10-13-16:16
 
 #region
 
@@ -151,8 +151,14 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
     private async void ClearPreView()
     {
         // 停止播放，超时处理
-        await ActionHelper.RunWithTimeout(Jgg.StopPlay);
-
+        try
+        {
+            await ActionHelper.RunWithTimeout(Jgg.StopPlay);
+        }
+        catch ( Exception e )
+        {
+            e.LogError("停止播放，超时处理异常");
+        }
         if ( !string.IsNullOrEmpty(TaskId) )
         {
             // 停止任务

@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-18-14:36
-// 修改时间：2023-10-11-11:00
+// 修改时间：2023-10-13-16:17
 
 #region
 
@@ -94,7 +94,14 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
     /// </summary>
     public async void ClearChannelExecute()
     {
-        await ActionHelper.RunWithTimeout(IpcClientHelper.JggPlayer.ClearChannel);
+        try
+        {
+            await ActionHelper.RunWithTimeout(IpcClientHelper.JggPlayer.ClearChannel);
+        }
+        catch ( Exception e )
+        {
+            e.LogError("清除频道信息异常");
+        }
     }
 
 #region RenderingAudioField

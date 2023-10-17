@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-05-14:53
-// 修改时间：2023-10-11-10:59
+// 修改时间：2023-10-13-16:17
 
 namespace LiveBoost.Tools;
 
@@ -73,7 +73,7 @@ public static partial class UrlHelper
     /// <summary>
     ///     开始收录
     /// </summary>
-    public static async Task<(string? filePath, string? taskId)> StartRecord(this RecordAccess access, string channelId)
+    public static async Task<(string? filePath, string? taskId)> StartRecord(this RecordAccess access, string channelId, string preview_type = "long")
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/start";
 
@@ -81,7 +81,8 @@ public static partial class UrlHelper
         {
             taskId = Guid.NewGuid().ToString("N"),
             accessId = access.AccessId,
-            channelId
+            channelId,
+            preview_type
         };
         return await url.Post(para,
             response =>
@@ -217,7 +218,7 @@ public static partial class UrlHelper
     /// <summary>
     ///     开始收录
     /// </summary>
-    public static async Task<(string? filePath, string? taskId)> StartRecord(this string accessId, string channelId)
+    public static async Task<(string? filePath, string? taskId)> StartRecord(this string accessId, string channelId, string preview_type = "short")
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/start";
 
@@ -225,7 +226,8 @@ public static partial class UrlHelper
         {
             taskId = Guid.NewGuid().ToString("N"),
             accessId,
-            channelId
+            channelId,
+            preview_type
         };
         return await url.Post(para,
             response =>

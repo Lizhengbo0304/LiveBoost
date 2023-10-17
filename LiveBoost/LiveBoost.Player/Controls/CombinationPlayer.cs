@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-06-14:18
-// 修改时间：2023-10-11-11:00
+// 修改时间：2023-10-13-16:17
 
 #region
 
@@ -93,29 +93,50 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     // 切换频道
     public DelegateCommand ChangedChannelCmd => new(async () =>
     {
-        await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.ChangedChannel);
+        try
+        {
+            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.ChangedChannel);
+        }
+        catch ( Exception e )
+        {
+            e.LogError("切换频道异常");
+        }
     });
 
     // 删除频道
     public DelegateCommand DeleteChannelCmd => new(async () =>
     {
-        await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.ClearChannel);
+        try
+        {
+            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.ClearChannel);
+        }
+        catch ( Exception e )
+        {
+            e.LogError("清除频道异常");
+        }
     });
     public DelegateCommand SetTimeCmd => new(async () =>
     {
-        if ( StartTime is null )
+        try
         {
-            StartTime = _ffPlay!.Position;
-            PlayPauseImage = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording.png";
-            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SetStartTime, StartTime.Value);
+            if ( StartTime is null )
+            {
+                StartTime = _ffPlay!.Position;
+                PlayPauseImage = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording.png";
+                await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SetStartTime, StartTime.Value);
+            }
+            else
+            {
+                EndTime = _ffPlay!.Position;
+                PlayPauseImage = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording1.png";
+                await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SetStopTime, EndTime.Value);
+                StartTime = null;
+                EndTime = null;
+            }
         }
-        else
+        catch ( Exception e )
         {
-            EndTime = _ffPlay!.Position;
-            PlayPauseImage = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording1.png";
-            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SetStopTime, EndTime.Value);
-            StartTime = null;
-            EndTime = null;
+            e.LogError("设置开始、结束时间异常");
         }
     });
 
@@ -184,7 +205,14 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     protected override async void OnMouseDoubleClick(MouseButtonEventArgs e)
     {
         base.OnMouseDoubleClick(e);
-        await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.Send2MainPlayer);
+        try
+        {
+            await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.Send2MainPlayer);
+        }
+        catch ( Exception exception )
+        {
+            exception.LogError("双击播放窗口异常");
+        }
     }
 
 #endregion

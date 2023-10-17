@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-07-9:46
-// 修改时间：2023-10-11-11:00
+// 修改时间：2023-10-13-16:17
 
 namespace LiveBoost.Toolkit.Tools;
 
@@ -30,13 +30,11 @@ public static class ActionHelper
             {
                 // 如果是超时引发的完成，取消任务
                 cts.Cancel();
-                throw new TimeoutException($"The operation exceeded the timeout of {timeout} milliseconds.");
             }
         }
         catch ( OperationCanceledException )
         {
             // 处理由取消引发的异常
-            throw new TimeoutException($"The operation exceeded the timeout of {timeout} milliseconds.");
         }
     }
     /// <summary>
@@ -66,13 +64,11 @@ public static class ActionHelper
             {
                 // 如果是超时引发的完成，取消任务
                 cts.Cancel();
-                throw new TimeoutException($"The operation exceeded the timeout of {timeout} milliseconds.");
             }
         }
         catch ( OperationCanceledException )
         {
             // 处理由取消引发的异常
-            throw new TimeoutException($"The operation exceeded the timeout of {timeout} milliseconds.");
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// 创建时间：2023-09-04-9:06
-// 修改时间：2023-10-11-10:59
+// 修改时间：2023-10-13-16:16
 
 #region
 
@@ -53,5 +53,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.8")]
-[assembly: AssemblyFileVersion("1.1.8")]
+[assembly: AssemblyVersion("1.2.0")]
+[assembly: AssemblyFileVersion("1.2.0")]
