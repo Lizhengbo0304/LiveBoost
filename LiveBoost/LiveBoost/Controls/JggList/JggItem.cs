@@ -69,7 +69,7 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
 
                 // 启动播放器进程
                 PlayProcess.Start();
-
+                await Task.Yield();
                 // 等待播放器进程退出
                 await Task.Run(() => PlayProcess?.WaitForExit()).ConfigureAwait(false);
             }
@@ -90,7 +90,7 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
         if ( PlayProcess is null )
         {
             // 如果播放器进程尚未初始化，异步启动播放器初始化
-            await Task.Run(InitPlayer).ConfigureAwait(false);
+            InitPlayer();
         }
 
         if ( string.IsNullOrEmpty(AppConfig.Instance.ShouluPath) )
@@ -172,7 +172,7 @@ public sealed class JggItem : ListViewItem, INotifyPropertyChanged, IJggItem
         // 重置视频路径、频道和内容
         VideoPath = null;
         Channel = null;
-        Content = null;
+        this.Dispatcher.Invoke(() => Content = null);
 
         if ( PlayProcess is {HasExited: false} && IsOwnerWindowClosed )
         {

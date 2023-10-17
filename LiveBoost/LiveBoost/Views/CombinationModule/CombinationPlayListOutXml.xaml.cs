@@ -18,6 +18,13 @@ public partial class CombinationPlayListOutXml
         return outWindow._outResult;
     }
 
+    public static string? ShowOut(string title)
+    {
+        var outWindow = new CombinationPlayListOutXml(){Title = title};
+        outWindow.ShowDialog();
+        return outWindow._outResult;
+    }
+
 #endregion
 
 #region Private Event

@@ -40,8 +40,8 @@
 
             <TextBox Grid.Row = "0" Height = "30" Margin = "33,14,46,0" HorizontalAlignment = "Stretch"
                      VerticalAlignment = "Stretch" VerticalContentAlignment = "Center"
-                     hc:InfoElement.Necessary = "True" hc:InfoElement.Placeholder = "请输入文件名称"
-                     hc:InfoElement.Symbol = "*" hc:InfoElement.Title = "视频名称" hc:InfoElement.TitlePlacement = "Left"
+                     hc:InfoElement.Necessary = "True" hc:InfoElement.Placeholder = "请输入导出文件名称"
+                     hc:InfoElement.Symbol = "*" hc:InfoElement.Title = "导出文件名称" hc:InfoElement.TitlePlacement = "Left"
                      Background = "Transparent" CaretBrush = "Black" IsTabStop = "True" Foreground = "Black"
                      Style = "{StaticResource TextBoxExtend}"
                      Text = "{Binding RelativeSource={RelativeSource AncestorType=views:CombinationPlayListOutXml}, Path=OutName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
