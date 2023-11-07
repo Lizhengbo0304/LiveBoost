@@ -154,7 +154,7 @@ public sealed partial class CombinationMainWindowVm : INotifyPropertyChanged
             {
                 return;
             }
-
+            info.Text.LogInfo();
             var response = JObject.Parse(info.Text);
             if ( response is null )
             {

@@ -14,7 +14,7 @@ namespace LiveBoost.Toolkit.Tools;
 public class TitleWidth2MarginConverter : IValueConverter
 {
     /// <inheritdoc />
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if ( value is not DependencyObject dependencyObject )
         {
@@ -25,5 +25,5 @@ public class TitleWidth2MarginConverter : IValueConverter
     }
 
     /// <inheritdoc />
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => null;
 }

@@ -17,7 +17,7 @@ public static class JobTool
     private static readonly JobKey RenewalJobKey = JobKey.Create("RenewalJob", "RenewalJobGroup");
 
     // 检查QR状态的Job
-    private static IJobDetail? RenewalJob;
+    private static IJobDetail? _renewalJob;
 
     // 启动定时任务
     public static async Task StartRenewalJob()
@@ -29,13 +29,13 @@ public static class JobTool
         }
 
         // 如果 RenewalJob 存在，删除它
-        if ( RenewalJob is not null )
+        if ( _renewalJob is not null )
         {
             await scheduler.DeleteJob(RenewalJobKey);
         }
 
         // 创建 TokenRenewalJob 任务
-        RenewalJob = JobBuilder.Create<TokenRenewalJob>()
+        _renewalJob = JobBuilder.Create<TokenRenewalJob>()
             .WithIdentity("RenewalJob", "RenewalJobGroup").Build();
 
         // 创建触发器，每10分钟触发一次
@@ -46,13 +46,13 @@ public static class JobTool
                     .WithMisfireHandlingInstructionNextWithRemainingCount()).Build();
 
         // 将任务和触发器添加到调度器
-        await scheduler.ScheduleJob(RenewalJob, trigger);
+        await scheduler.ScheduleJob(_renewalJob, trigger);
     }
 
     // 停止定时任务
     public static async Task StopRenewalJob()
     {
-        if ( RenewalJob != null )
+        if ( _renewalJob != null )
         {
             await ( await StdSchedulerFactory.GetDefaultScheduler() ).DeleteJob(RenewalJobKey);
         }

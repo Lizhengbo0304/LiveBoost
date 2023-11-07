@@ -37,22 +37,35 @@ public static class StringExtension
     }
 
     /// <summary>
-    ///     组合基础路径和相对路径
+    /// 组合基础路径和相对路径。
     /// </summary>
-    /// <param name = "basePath" > 基础路径 </param>
-    /// <param name = "relativePath" > 相对路径 </param>
-    /// <returns> 组合后的路径，使用正斜杠（/） </returns>
+    /// <param name="basePath">基础路径。如果为空，返回相对路径。如果基础路径是一个驱动器盘符，会在末尾添加反斜杠。</param>
+    /// <param name="relativePath">相对路径。如果为空，返回基础路径。</param>
+    /// <returns>组合后的路径，使用正斜杠（/）。</returns>
     public static string Combine(this string? basePath, string? relativePath)
     {
         // 如果基础路径为空，返回相对路径
-        if ( string.IsNullOrEmpty(basePath) || string.IsNullOrEmpty(relativePath) )
+        if (string.IsNullOrEmpty(basePath))
         {
-            return string.Empty;
+            return relativePath ?? string.Empty;
+        }
+
+        // 如果相对路径为空，返回基础路径
+        if (string.IsNullOrEmpty(relativePath))
+        {
+            return basePath ?? string.Empty;
+        }
+
+        // 如果基础路径以冒号（":"）结束，在基础路径的末尾添加一个反斜杠（"\\"）
+        if (basePath!.EndsWith(":"))
+        {
+            basePath += "\\";
         }
 
         // 组合路径，并将所有反斜杠替换为正斜杠
         return Path.Combine(basePath, relativePath!.Trim('\\', '/')).Replace('\\', '/');
     }
+
     /// <summary>
     ///     组合基础路径和多个相对路径参数
     /// </summary>
@@ -70,6 +83,11 @@ public static class StringExtension
         // 先保证basePath的尾部没有 '/' 或者 '\\'
         basePath = basePath!.TrimEnd('\\', '/');
 
+        // 如果基础路径以冒号（":"）结束，在基础路径的末尾添加一个反斜杠（"\\"）
+        if (basePath.EndsWith(":"))
+        {
+            basePath += "\\";
+        }
         // 遍历所有的相对路径，去除前后可能存在的 '/' 和 '\\'
         for ( var i = 0; i < relativePaths.Length; i++ )
         {
@@ -80,6 +98,7 @@ public static class StringExtension
         }
 
         // 组合路径，并将所有反斜杠替换为正斜杠
-        return Path.Combine(basePath, Path.Combine(relativePaths)).Replace('\\', '/');
+        // 组合路径，使用Enumerable.Aggregate方法，并将所有反斜杠替换为正斜杠
+        return relativePaths.Aggregate(basePath, Path.Combine).Replace('\\', '/');
     }
 }

@@ -277,4 +277,41 @@ public static partial class UrlHelper
                 return false;
             });
     }
+
+
+    /// <summary>
+    ///     导出视频的方法。
+    /// </summary>
+    public static async Task Export2Video(this string videoId,TimeSpan startTime,TimeSpan stopTime,string outputPath)
+    {
+        var url =  $"{AppConfig.Instance.MamApiIp}/record/task/dotVideo";
+
+        var para = new
+        {
+            videoId,
+            start = startTime.ToString(@"hh\:mm\:ss\.fff"),
+            end = stopTime.ToString(@"hh\:mm\:ss\.fff"),
+            outputPath
+        };
+
+        // 调用通用的Post方法来执行导出视频操作，传入对应的处理委托
+        await url.Post(para,
+            _ =>
+            {
+                // 处理成功响应，显示成功消息框
+                MessageBox.Success("打点导出视频成功", "打点导出视频");
+            },
+            response =>
+            {
+                // 处理字段错误响应，显示警告消息框
+                var jobj = JObject.Parse(response);
+                MessageBox.Warning(jobj["msg"]?.Value<string>(), "打点导出视频");
+            },
+            e =>
+            {
+                // 处理异常，显示错误消息框，并记录异常日志
+                MessageBox.Error(e.InnerException?.Message ?? e.Message, "打点导出视频");
+                e.LogUrlError("打点导出视频");
+            });
+    }
 }

@@ -67,7 +67,7 @@ public class PlayListDropHandler : IDropTarget
     public void Drop(IDropInfo dropInfo)
     {
         // 检查目标区域和目标集合是否有效
-        if ( dropInfo.VisualTarget is not ListView listView || dropInfo.TargetCollection is not ObservableList<RecordFile> targetCollection )
+        if ( dropInfo.VisualTarget is not ListView || dropInfo.TargetCollection is not ObservableList<RecordFile> targetCollection )
         {
             return;
         }

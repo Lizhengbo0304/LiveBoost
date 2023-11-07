@@ -13,7 +13,7 @@ namespace LiveBoost.Toolkit.Tools;
 public class TimeSpanToMillSecondsConverter : IValueConverter
 {
     // 将值转换为目标类型
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return value switch
         {
@@ -24,9 +24,9 @@ public class TimeSpanToMillSecondsConverter : IValueConverter
     }
 
     // 将转换后的值反向转换回原始类型
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if ( !double.TryParse(value.ToString(), out var doubleValue) )
+        if ( !double.TryParse(value?.ToString(), out var doubleValue) )
         {
             return 0d; // 如果值无法转换为 double 类型，则返回 0
         }

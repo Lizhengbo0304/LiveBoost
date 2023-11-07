@@ -454,10 +454,19 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     }
 
     /// <inheritdoc />
-    public void SetStopTime(TimeSpan stopTime)
+    public async void SetStopTime(TimeSpan stopTime)
     {
         EndTime = stopTime;
-    #warning 调用接口
+        if ( RecordAccess is null )
+        {
+            return;
+        }
+        if ( string.IsNullOrEmpty(RecordAccess.TaskId) || string.IsNullOrEmpty(RecordAccess.VideoPath))
+        {
+            return;
+        }
+
+        await    RecordAccess.TaskId!.Export2Video(StartTime!.Value, EndTime!.Value, $"{Path.GetFileNameWithoutExtension(RecordAccess.VideoPath)}_{StartTime.Value.ToString("hhmmss")}_{EndTime.Value.ToString("hhmmss")}");
         StartTime = null;
         EndTime = null;
     }

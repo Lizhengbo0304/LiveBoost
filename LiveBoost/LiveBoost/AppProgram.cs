@@ -74,7 +74,7 @@ public class AppProgram
         {
             FlurlHttp.ConfigureClient(AppConfig.Instance.MamApiIp, cli =>
                 cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
-            // AppConfig.Instance.MamApiIp = "http://10.30.76.60:81";
+            // AppConfig.Instance.MamApiIp = "http://10.30.76.60:81/dev-api";
         }
         else
         {

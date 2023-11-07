@@ -270,16 +270,14 @@ public sealed partial class CombinationMainWindowVm
             return;
         }
 
-        if ( await CurrentPlayList.PlayListPush("stop") )
+        if ( !await CurrentPlayList.PlayListPush( "stop" ) ) return;
+        CurrentPlayList.Status = true;
+        CurrentPlayList.IsPause = false;
+        CurrentPlayList.RecordFiles.ForEach(it =>
         {
-            CurrentPlayList.Status = true;
-            CurrentPlayList.IsPause = false;
-            CurrentPlayList.RecordFiles.ForEach(it =>
-            {
-                it.IsPlaying = false;
-                it.Progress = 0;
-            });
-        }
+            it.IsPlaying = false;
+            it.Progress = 0;
+        });
     }, () => CurrentPlayList is {Status: false}).ObservesProperty(() => CurrentPlayList!.Status);
 
     // 播单推流预览

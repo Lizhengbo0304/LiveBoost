@@ -8,14 +8,14 @@ public static class ProcessHelper
     /// <summary>
     ///     判断该进程是否唯一
     /// </summary>
-    /// <param name = "Mutex" > 互斥体 </param>
+    /// <param name = "mutex" > 互斥体 </param>
     /// <returns> 如果该进程是唯一的，则返回true，否则返回false </returns>
-    public static bool IsOnlyProcess(this Mutex Mutex)
+    public static bool IsOnlyProcess(this Mutex mutex)
     {
         try
         {
             // 尝试获取互斥体的所有权，如果成功，则说明该进程是唯一的
-            return Mutex.WaitOne(TimeSpan.Zero, true);
+            return mutex.WaitOne(TimeSpan.Zero, true);
         }
         catch ( AbandonedMutexException )
         {

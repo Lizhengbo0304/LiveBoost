@@ -22,7 +22,7 @@ public static class LogHelper
     static LogHelper()
     {
         var path = Assembly.GetExecutingAssembly()
-            .GetManifestResourceStream("LiveBoost.Configs.log4net.config");
+            .GetManifestResourceStream("LiveBoost.Toolkit.Configs.log4net.config");
 
         XmlConfigurator.Configure(path);
     }

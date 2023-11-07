@@ -20,7 +20,7 @@ public class AddChannelProtocol2Visibility : IValueConverter
     /// <param name = "parameter" > 参数（字符串），用于指定期望的协议和参数组合。 </param>
     /// <param name = "culture" > 区域信息。 </param>
     /// <returns> 根据协议名称和参数计算的 Visibility 属性。 </returns>
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         // 验证输入是否为字符串
         if ( value is not string protocol )
@@ -46,5 +46,5 @@ public class AddChannelProtocol2Visibility : IValueConverter
     /// <param name = "parameter" > 参数。 </param>
     /// <param name = "culture" > 区域信息。 </param>
     /// <returns> null。 </returns>
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => null;
 }

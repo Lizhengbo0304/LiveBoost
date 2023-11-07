@@ -30,11 +30,13 @@ public static class ActionHelper
             {
                 // 如果是超时引发的完成，取消任务
                 cts.Cancel();
+                "任务超时取消".LogInfo();
             }
         }
         catch ( OperationCanceledException )
         {
             // 处理由取消引发的异常
+            "任务超时取消".LogInfo();
         }
     }
     /// <summary>
@@ -64,11 +66,13 @@ public static class ActionHelper
             {
                 // 如果是超时引发的完成，取消任务
                 cts.Cancel();
+                "任务超时取消".LogInfo();
             }
         }
         catch ( OperationCanceledException )
         {
             // 处理由取消引发的异常
+            "任务超时取消".LogInfo();
         }
     }
 }

@@ -21,6 +21,7 @@ using LiveBoost.Toolkit.Data;
 using LiveBoost.Toolkit.Tools;
 using Prism.Commands;
 using Unosquare.FFME.Common;
+// ReSharper disable AsyncVoidLambda
 
 #endregion
 
@@ -158,9 +159,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
 
     public double DrawVuMeterLeftValue { get; set; }
     public double DrawVuMeterRightValue { get; set; }
-    private short[]? drawVuMeterLeftSamples;
-    private short[]? drawVuMeterRightSamples;
-    private readonly object drawVuMeterRmsLock = new();
+    private short[]? _drawVuMeterLeftSamples;
+    private short[]? _drawVuMeterRightSamples;
+    private readonly object _drawVuMeterRmsLock = new();
 
 #endregion
     private void FfPlayOnRenderingAudio(object sender, RenderingAudioEventArgs e)
@@ -172,29 +173,29 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
             return;
         }
         // 把音频数据分为左右声道
-        if ( drawVuMeterLeftSamples == null || drawVuMeterLeftSamples.Length != e.SamplesPerChannel )
+        if ( _drawVuMeterLeftSamples == null || _drawVuMeterLeftSamples.Length != e.SamplesPerChannel )
         {
-            drawVuMeterLeftSamples = new short[e.SamplesPerChannel];
+            _drawVuMeterLeftSamples = new short[e.SamplesPerChannel];
         }
 
-        if ( drawVuMeterRightSamples == null || drawVuMeterRightSamples.Length != e.SamplesPerChannel )
+        if ( _drawVuMeterRightSamples == null || _drawVuMeterRightSamples.Length != e.SamplesPerChannel )
         {
-            drawVuMeterRightSamples = new short[e.SamplesPerChannel];
+            _drawVuMeterRightSamples = new short[e.SamplesPerChannel];
         }
 
         var bufferData = e.GetBufferData();
 
         // 使用 Buffer.BlockCopy 替代循环和 BitConverter.ToInt16
-        Buffer.BlockCopy(bufferData, 0, drawVuMeterLeftSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制左声道数据
-        Buffer.BlockCopy(bufferData, e.SamplesPerChannel * sizeof(short), drawVuMeterRightSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制右声道数据
+        Buffer.BlockCopy(bufferData, 0, _drawVuMeterLeftSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制左声道数据
+        Buffer.BlockCopy(bufferData, e.SamplesPerChannel * sizeof(short), _drawVuMeterRightSamples, 0, e.SamplesPerChannel * sizeof(short)); // 复制右声道数据
 
         // 使用 Parallel.Invoke 同时计算左右声道的 RMS 值
         double leftValue = 0.0, rightValue = 0.0;
-        lock ( drawVuMeterRmsLock )
+        lock ( _drawVuMeterRmsLock )
         {
             Parallel.Invoke(
-                () => { leftValue = VolumeHelper.CalculateRms(drawVuMeterLeftSamples); },
-                () => { rightValue = VolumeHelper.CalculateRms(drawVuMeterRightSamples); }
+                () => { leftValue = VolumeHelper.CalculateRms(_drawVuMeterLeftSamples); },
+                () => { rightValue = VolumeHelper.CalculateRms(_drawVuMeterRightSamples); }
             );
             DrawVuMeterLeftValue = leftValue;
             DrawVuMeterRightValue = rightValue;

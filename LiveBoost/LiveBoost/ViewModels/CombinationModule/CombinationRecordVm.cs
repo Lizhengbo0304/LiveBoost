@@ -78,9 +78,9 @@ public sealed partial class CombinationMainWindowVm
     private async Task InitializeRecordAccessesAsync()
     {
         // 获取收录服务器配置
-        var RecordConfigs = await UrlHelper.GetShouluAccess().ConfigureAwait(false);
+        var recordConfigs = await UrlHelper.GetShouluAccess().ConfigureAwait(false);
 
-        if ( RecordConfigs is null || !RecordConfigs.Any() )
+        if ( recordConfigs is null || !recordConfigs.Any() )
         {
             // 处理收录服务器配置为空的情况
             HandleEmptyRecordConfigs();
@@ -88,7 +88,7 @@ public sealed partial class CombinationMainWindowVm
         else
         {
             // 处理收录服务器配置不为空的情况
-            HandleNonEmptyRecordConfigs(RecordConfigs);
+            HandleNonEmptyRecordConfigs(recordConfigs);
         }
         PageUpdatedCmd.Execute(new FunctionEventArgs<int>(1));
     }

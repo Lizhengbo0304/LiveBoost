@@ -1,10 +1,5 @@
 ﻿// 创建时间：2023-09-07-14:02
 // 修改时间：2023-10-13-16:17
-
-#region
-
-#endregion
-
 namespace LiveBoost.ToolKit.Tools;
 
 public static class MediaHelper

@@ -3,7 +3,7 @@
 
 namespace LiveBoost.ToolKit.Tools;
 
-public static class FFMpegTool
+public static class FfMpegTool
 {
     /// <summary> 获取首帧图片作为缩略图 </summary>
     /// <param name = "videoPath" > 视频路径 </param>
@@ -24,21 +24,21 @@ public static class FFMpegTool
             }
 
             var ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dll", "ffmpeg.exe");
-            var arguments = $@" -i ""{videoPath}"" -f image2 -vframes 1 -ss {timeSpan} -y ""{picName}""";
+            var arguments = $"""
+                              -i "{videoPath}" -f image2 -vframes 1 -ss {timeSpan} -y "{picName}"
+                             """;
 
-            using var process = new Process
+            using var process = new Process( );
+            process.StartInfo = new ProcessStartInfo
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = ffmpegPath,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    Arguments = arguments,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    StandardOutputEncoding = Encoding.UTF8
-                }
+                FileName = ffmpegPath,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                Arguments = arguments,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                StandardOutputEncoding = Encoding.UTF8
             };
 
             var errorData = new StringBuilder();
