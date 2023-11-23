@@ -19,13 +19,13 @@ public partial class LoginWindow
             Dispatcher.Invoke(() =>
             {
                 if (isName)
-                {
                     // 如果是用户名事件，设置焦点到用户名输入框
+                {
                     UserNameTextBox.Focus();
                 }
                 else
-                {
                     // 如果是密码事件，设置焦点到密码输入框
+                {
                     UserPasswordBox.Focus();
                 }
             });
@@ -44,4 +44,12 @@ public partial class LoginWindow
         UserPasswordBox.Clear();
     }
 
+    private void LoginWindow_OnClosed(object sender, EventArgs e)
+    {
+        Closed -= LoginWindow_OnClosed;
+        if (AppProgram.Instance.App.MainWindow == null)
+        {
+            AppProgram.Instance.App.Shutdown();
+        }
+    }
 }

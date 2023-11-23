@@ -11,7 +11,7 @@ public class CloseWindowCommand : ICommand
 
     public void Execute(object? parameter)
     {
-        if ( parameter is DependencyObject dependencyObject && Window.GetWindow(dependencyObject) is { } window )
+        if (parameter is DependencyObject dependencyObject && Window.GetWindow(dependencyObject) is { } window)
         {
             window.Close();
         }

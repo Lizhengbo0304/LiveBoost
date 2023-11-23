@@ -18,7 +18,7 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
         {
             return Task.Run(() =>
             {
-                switch ( Type )
+                switch (Type)
                 {
                     case 0:
                     case 1:
@@ -32,19 +32,22 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
         }, AppConfig.Instance.DefaultIcon);
         Duration = new LazyProperty<TimeSpan>(async _ =>
         {
-            if ( RealInPoint is not null && RealOutPoint is not null )
+            if (RealInPoint is not null && RealOutPoint is not null)
             {
                 return RealOutPoint.Value - RealInPoint.Value;
             }
+
             var duration = await FullPath.GetMediaInfoAsync("General;%Duration%");
-            if ( !int.TryParse(duration, out var result) )
+            if (!int.TryParse(duration, out var result))
             {
                 result = 0;
             }
+
             return TimeSpan.FromMilliseconds(result);
         }, TimeSpan.Zero);
     }
-#region Event
+
+    #region Event
 
     public RecordFile Clone()
     {
@@ -63,8 +66,9 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
         return newFile;
     }
 
-#endregion
-#region INotifyPropertyChangedEvent
+    #endregion
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -75,18 +79,19 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 
-#region IFileHierarchyEvent
+    #region IFileHierarchyEvent
 
     /// <inheritdoc />
     public IFileHierarchy? ParentFile { get; set; }
@@ -96,9 +101,9 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
     {
         get
         {
-            var list = new List<IFileHierarchy> {this};
+            var list = new List<IFileHierarchy> { this };
             var item = ParentFile;
-            while ( item != null )
+            while (item != null)
             {
                 list.Add(item);
                 item = item.ParentFile;
@@ -109,14 +114,17 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
         }
     }
 
-#endregion
-#region UI - Property
+    #endregion
+
+    #region UI - Property
 
     public string? ToolTip => Name;
+
     //完整路径
     public string FullPath => AppConfig.Instance.ShouluPath!.Combine(Url);
 
     public int SearchType { get; set; }
+
     //播放进度
     public double Progress { get; set; }
 
@@ -143,7 +151,7 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
     /// <summary>
     ///     是否处于收录中
     /// </summary>
-    public bool IsRecording => Type != 1 && Status != 0;
+    public bool IsRecording => (Type != 1) && (Status != 0);
 
     /// <summary>
     ///     父节点
@@ -184,9 +192,9 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
 
     public MediaElement? MediaElement { get; set; }
 
-#endregion
+    #endregion
 
-#region Property
+    #region Property
 
     [JsonProperty("id")] public string? Id { get; set; }
 
@@ -217,5 +225,5 @@ public sealed class RecordFile : INotifyPropertyChanged, IFileHierarchy
     [JsonProperty("markers", NullValueHandling = NullValueHandling.Ignore)]
     public ObservableList<RecordMark>? Markers { get; set; }
 
-#endregion
+    #endregion
 }

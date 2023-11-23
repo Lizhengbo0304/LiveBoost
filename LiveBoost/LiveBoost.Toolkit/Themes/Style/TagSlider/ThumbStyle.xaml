@@ -1,0 +1,51 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:controls="clr-namespace:LiveBoost.Toolkit.Controls"
+    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  定义一个向下的箭头  -->
+    <Geometry o:Freeze="True" x:Key="DownTagGeometry">M0,0 L10,0 L10,15 L5,20 L0,15 z</Geometry>
+    <!--  定义一个向上的箭头  -->
+    <Geometry o:Freeze="True" x:Key="UpTagGeometry">M5,0 L10,5 L10,20 L0,20 L0,5 z</Geometry>
+
+    <!--  定义一个TagRangeThumb控件的样式  -->
+    <Style TargetType="controls:TagRangeThumb">
+        <!--  设置是否裁剪到边界  -->
+        <Setter Property="ClipToBounds" Value="False" />
+        <!--  设置是否可以获取焦点  -->
+        <Setter Property="Focusable" Value="False" />
+        <!--  设置高度  -->
+        <Setter Property="Height" Value="20" />
+        <!--  设置宽度  -->
+        <Setter Property="Width" Value="10" />
+        <!--  设置边距  -->
+        <Setter Property="Margin" Value="-5,-11,-5,11" />
+        <!--  设置垂直对齐方式  -->
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <!--  定义控件模板  -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TagRangeThumb">
+                    <!--  定义一个Path，数据源为DownTagGeometry，填充色与模板绑定的背景色  -->
+                    <Path
+                        Data="{StaticResource DownTagGeometry}"
+                        Fill="{TemplateBinding Background}"
+                        Height="20"
+                        SnapsToDevicePixels="True"
+                        Stretch="Uniform"
+                        StrokeThickness="0"
+                        Width="10"
+                        x:Name="Thumb" />
+                    <!--  定义一个DataTrigger，当TagRangeThumb的IsStart属性为True时，改变Path的数据源为UpTagGeometry，并改变边距  -->
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsStart}" Value="True">
+                            <Setter Property="Data" TargetName="Thumb" Value="{StaticResource UpTagGeometry}" />
+                            <Setter Property="Margin" Value="-5,11,-5,-11" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

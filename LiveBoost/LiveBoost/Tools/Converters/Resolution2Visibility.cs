@@ -13,8 +13,8 @@ namespace LiveBoost.Tools;
 public class Resolution2Visibility : IValueConverter
 {
     /// <inheritdoc />
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is Resolution {DisplayName: "其他"} ? Visibility.Visible : Visibility.Collapsed;
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is Resolution { DisplayName: "其他" } ? Visibility.Visible : Visibility.Collapsed;
 
     /// <inheritdoc />
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
 }

@@ -1,73 +1,103 @@
-﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls = "clr-namespace:LiveBoost.Player.Controls"
-                    xmlns:hc = "https://handyorg.github.io/handycontrol"
-                    xmlns:ffme = "clr-namespace:Unosquare.FFME;assembly=ffme.win" >
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:controls="clr-namespace:LiveBoost.Player.Controls"
+    xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <Style TargetType = "controls:JggPlayer" >
-        <Setter Property = "Background" Value = "#3A3A3A" />
-        <Setter Property = "Foreground" Value = "#BFBFBF" />
-        <Setter Property = "SnapsToDevicePixels" Value = "true" />
-        <Setter Property = "Padding" Value = "0" />
-        <Setter Property = "HorizontalContentAlignment" Value = "Stretch" />
-        <Setter Property = "VerticalContentAlignment" Value = "Stretch" />
-        <Setter Property = "Template" >
+    <Style TargetType="controls:JggPlayer">
+        <Setter Property="Background" Value="#3A3A3A" />
+        <Setter Property="Foreground" Value="#BFBFBF" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType = "controls:JggPlayer" >
-                    <Border Background = "{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
-                            BorderBrush = "{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
-                            BorderThickness = "{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}" >
+                <ControlTemplate TargetType="controls:JggPlayer">
+                    <Border
+                        Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                        BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
+                        BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}">
                         <hc:SimplePanel>
-                            <ffme:MediaElement x:Name = "Part_ffPlay" HorizontalAlignment = "Stretch"
-                                               VerticalAlignment = "Stretch" Background = "Black"
-                                               LoadedBehavior = "Manual" IsHitTestVisible = "False" />
-                            <Grid x:Name = "Part_VideoView_Control" Background = "#35000000" Visibility = "Collapsed" >
+                            <ffme:MediaElement
+                                Background="Black"
+                                HorizontalAlignment="Stretch"
+                                IsHitTestVisible="False"
+                                LoadedBehavior="Manual"
+                                VerticalAlignment="Stretch"
+                                x:Name="Part_ffPlay" />
+                            <Grid
+                                Background="#35000000"
+                                Visibility="Collapsed"
+                                x:Name="Part_VideoView_Control">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height = "Auto" />
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition />
-                                    <RowDefinition Height = "Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid Grid.Row = "0" Margin = "11 7" >
+                                <Grid Grid.Row="0" Margin="11,7">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
-                                        <ColumnDefinition Width = "Auto" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column = "0" TextWrapping = "NoWrap"
-                                               TextTrimming = "CharacterEllipsis"
-                                               hc:TextBlockAttach.AutoTooltip = "True"
-                                               Text = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=ChannelName}"
-                                               FontSize = "23" Foreground = "#BBBBBB" Margin = "0 0 11 0" />
+                                    <TextBlock
+                                        FontSize="23"
+                                        Foreground="#BBBBBB"
+                                        Grid.Column="0"
+                                        Margin="0,0,11,0"
+                                        Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ChannelName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap"
+                                        hc:TextBlockAttach.AutoTooltip="True" />
 
-                                    <Button Grid.Column = "1" IconElement.Height = "16" IconElement.Width = "12"
-                                            IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/delete.png"
-                                            HorizontalAlignment = "Left" Margin = "0"
-                                            Command = "{Binding RelativeSource={RelativeSource TemplatedParent},Path= ClearChannelCmd}"
-                                            Style = "{StaticResource IconButtonStyle}" />
+                                    <Button
+                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ClearChannelCmd}"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left"
+                                        IconElement.Height="16"
+                                        IconElement.Source="pack://application:,,,/LiveBoost.Toolkit;component/Images/delete.png"
+                                        IconElement.Width="12"
+                                        Margin="0"
+                                        Style="{StaticResource IconButtonStyle}" />
                                 </Grid>
-                                <hc:SimplePanel Grid.Row = "1" Margin = "11 0" HorizontalAlignment = "Stretch"
-                                                VerticalAlignment = "Stretch" >
-                                    <ProgressBar Width = "3" Minimum = "0" Maximum = "100" Orientation = "Vertical"
-                                                 Foreground = "DarkGreen"
-                                                 Value = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=DrawVuMeterLeftValue}"
-                                                 Style = "{StaticResource PlayListProgressStyle}"
-                                                 VerticalAlignment = "Stretch" HorizontalAlignment = "Right"
-                                                 Margin = "0 0 13 0" />
-                                    <ProgressBar Width = "3" Minimum = "0" Maximum = "100" Orientation = "Vertical"
-                                                 Foreground = "DarkGreen"
-                                                 Value = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=DrawVuMeterRightValue}"
-                                                 Style = "{StaticResource PlayListProgressStyle}"
-                                                 VerticalAlignment = "Stretch" HorizontalAlignment = "Right"
-                                                 Margin = "0 0 5 0" />
+                                <hc:SimplePanel
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Stretch"
+                                    Margin="11,0"
+                                    VerticalAlignment="Stretch">
+                                    <ProgressBar
+                                        Foreground="DarkGreen"
+                                        HorizontalAlignment="Right"
+                                        Margin="0,0,13,0"
+                                        Maximum="100"
+                                        Minimum="0"
+                                        Orientation="Vertical"
+                                        Style="{StaticResource PlayListProgressStyle}"
+                                        Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DrawVuMeterLeftValue}"
+                                        VerticalAlignment="Stretch"
+                                        Width="3" />
+                                    <ProgressBar
+                                        Foreground="DarkGreen"
+                                        HorizontalAlignment="Right"
+                                        Margin="0,0,5,0"
+                                        Maximum="100"
+                                        Minimum="0"
+                                        Orientation="Vertical"
+                                        Style="{StaticResource PlayListProgressStyle}"
+                                        Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DrawVuMeterRightValue}"
+                                        VerticalAlignment="Stretch"
+                                        Width="3" />
                                 </hc:SimplePanel>
                             </Grid>
                         </hc:SimplePanel>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property = "IsMouseOver" Value = "True" >
-                            <Setter TargetName = "Part_VideoView_Control" Property = "Visibility" Value = "Visible" />
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="Part_VideoView_Control" Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

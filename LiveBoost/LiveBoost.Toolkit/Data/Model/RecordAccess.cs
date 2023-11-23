@@ -5,12 +5,13 @@ namespace LiveBoost.Toolkit.Data;
 
 public sealed class RecordAccess : INotifyPropertyChanged
 {
-#region Property
+    #region Property
 
     /// <summary>
     ///     通道ID
     /// </summary>
     public string? AccessId { get; set; }
+
     /// <summary>
     ///     通道名称
     /// </summary>
@@ -31,9 +32,9 @@ public sealed class RecordAccess : INotifyPropertyChanged
     /// </summary>
     public string? TaskId { get; set; }
 
-#endregion
+    #endregion
 
-#region INotifyPropertyChangedEvent
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -44,14 +45,15 @@ public sealed class RecordAccess : INotifyPropertyChanged
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 }

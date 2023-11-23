@@ -13,15 +13,16 @@ namespace LiveBoost.Tools;
 public class Int2VisibilityReConverter : IValueConverter
 {
     /// <inheritdoc />
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if ( value is int index )
+        if (value is int index)
         {
             return index == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
+
         return Visibility.Visible;
     }
 
     /// <inheritdoc />
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
 }

@@ -16,6 +16,7 @@ public interface IJggItem
     ///     发送播放器
     /// </summary>
     void SendPlayer(int handle);
+
     /// <summary>
     ///     删除频道
     /// </summary>

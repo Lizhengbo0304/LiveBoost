@@ -5,7 +5,7 @@ namespace LiveBoost.ViewModels;
 
 public partial class JggMainWindowVm
 {
-#region Event
+    #region Event
 
     /// <summary>
     ///     初始化收录通道
@@ -15,8 +15,9 @@ public partial class JggMainWindowVm
         RecordChannels = await UrlHelper.GetShouluChannels().ConfigureAwait(false);
     }
 
-#endregion
-#region Properties
+    #endregion
+
+    #region Properties
 
     /// <summary>
     ///     收录源列表
@@ -27,7 +28,8 @@ public partial class JggMainWindowVm
     ///     拖拽事件
     /// </summary>
     public JggDragHandler JggDragHandler { get; set; }
+
     public JggDropHandler JggDropHandler { get; set; }
 
-#endregion
+    #endregion
 }

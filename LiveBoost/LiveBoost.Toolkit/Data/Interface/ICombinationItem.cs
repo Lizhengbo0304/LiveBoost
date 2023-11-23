@@ -21,6 +21,7 @@ public interface ICombinationItem
     ///     删除频道
     /// </summary>
     void ClearChannel();
+
     /// <summary>
     ///     修改频道
     /// </summary>
@@ -30,14 +31,16 @@ public interface ICombinationItem
     ///     发送到主播放器
     /// </summary>
     void Send2MainPlayer();
+
     /// <summary>
     ///     设置开始录制时间
     /// </summary>
-    /// <param name = "startTime" > 开始时间 </param>
+    /// <param name="startTime"> 开始时间 </param>
     void SetStartTime(TimeSpan startTime);
+
     /// <summary>
     ///     设置截止录制时间
     /// </summary>
-    /// <param name = "stopTime" > 开始时间 </param>
+    /// <param name="stopTime"> 开始时间 </param>
     void SetStopTime(TimeSpan stopTime);
 }

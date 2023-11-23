@@ -12,11 +12,12 @@ public partial class CombinationSettingTaskManager
 
     private void AddTask_OnClick(object sender, RoutedEventArgs e)
     {
-        if ( Window.GetWindow(this) is not { } window )
+        if (Window.GetWindow(this) is not { } window)
         {
             return;
         }
-        if ( CombinationSettingAddMission.Show(window) )
+
+        if (CombinationSettingAddMission.Show(window))
         {
             SearchButton.Command?.Execute(null);
         }

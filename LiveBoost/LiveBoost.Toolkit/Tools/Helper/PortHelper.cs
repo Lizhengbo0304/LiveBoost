@@ -11,7 +11,7 @@ public static class PortHelper
     /// <summary>
     ///     检查指定的端口名是否存在
     /// </summary>
-    /// <param name = "portName" > 要检查的端口名 </param>
+    /// <param name="portName"> 要检查的端口名 </param>
     /// <returns> 如果端口名存在，则返回true，否则返回false </returns>
     public static bool IsPortNameExists(this string portName)
     {
@@ -22,7 +22,7 @@ public static class PortHelper
             // 检查指定的端口名是否在所有的端口名中
             return portNames.Any(port => string.Equals(port, portName, StringComparison.OrdinalIgnoreCase));
         }
-        catch ( Exception exception )
+        catch (Exception exception)
         {
             // 如果在查询端口时发生异常，记录异常并返回false
             exception.LogError("端口查询异常");

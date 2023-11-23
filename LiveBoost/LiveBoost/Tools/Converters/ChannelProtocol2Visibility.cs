@@ -15,10 +15,11 @@ public class ChannelProtocol2Visibility : IValueConverter
     /// <inheritdoc />
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if ( value is RecordChannel { } recordChannel )
+        if (value is RecordChannel { } recordChannel)
         {
             return string.Equals(recordChannel.Protocol, "ndi", StringComparison.OrdinalIgnoreCase) ? Visibility.Collapsed : Visibility.Visible;
         }
+
         return Visibility.Visible;
     }
 

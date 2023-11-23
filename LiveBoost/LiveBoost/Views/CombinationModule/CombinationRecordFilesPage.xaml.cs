@@ -12,15 +12,16 @@ public partial class CombinationRecordFilesPage
 
     private void FlyListView_OnItemsSourceChangedEventHandler(object sender, RoutedEventArgs e)
     {
-        if ( sender is not ListView listView )
+        if (sender is not ListView listView)
         {
             return;
         }
 
-        if ( listView.FindVisualChild<ScrollViewer>() is not { } scrollViewer )
+        if (listView.FindVisualChild<ScrollViewer>() is not { } scrollViewer)
         {
             return;
         }
+
         scrollViewer.ScrollToVerticalOffset(0);
         scrollViewer.ScrollToHorizontalOffset(0);
     }

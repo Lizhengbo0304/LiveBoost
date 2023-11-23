@@ -9,7 +9,7 @@ namespace LiveBoost.Views;
 
 public partial class CombinationPlayListOutXml
 {
-#region Static-Event
+    #region Static-Event
 
     public static string? ShowOut()
     {
@@ -20,14 +20,14 @@ public partial class CombinationPlayListOutXml
 
     public static string? ShowOut(string title)
     {
-        var outWindow = new CombinationPlayListOutXml(){Title = title};
+        var outWindow = new CombinationPlayListOutXml { Title = title };
         outWindow.ShowDialog();
         return outWindow._outResult;
     }
 
-#endregion
+    #endregion
 
-#region Private Event
+    #region Private Event
 
     private string? _outResult;
 
@@ -39,12 +39,13 @@ public partial class CombinationPlayListOutXml
 
     private void Done_OnClick(object sender, RoutedEventArgs e)
     {
-        if ( string.IsNullOrEmpty(OutName) )
+        if (string.IsNullOrEmpty(OutName))
         {
             MessageBox.Warning("文件名称不得为空", Title);
             return;
         }
-        if ( OutName.HasInvalidSymbol() )
+
+        if (OutName.HasInvalidSymbol())
         {
             MessageBox.Warning("文件名称包含非法字符，请重新输入", Title);
             return;
@@ -54,8 +55,9 @@ public partial class CombinationPlayListOutXml
         Close();
     }
 
-#endregion
-#region depe
+    #endregion
+
+    #region depe
 
     /// <summary>
     ///     文件名称
@@ -68,9 +70,9 @@ public partial class CombinationPlayListOutXml
     /// </summary>
     public string OutName
     {
-        get => (string) GetValue(OutNameProperty);
+        get => (string)GetValue(OutNameProperty);
         set => SetValue(OutNameProperty, value);
     }
 
-#endregion
+    #endregion
 }

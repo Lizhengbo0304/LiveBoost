@@ -12,11 +12,12 @@ public partial class CombinationSettingChannelManager
 
     private void AddChannel_OnClick(object sender, RoutedEventArgs e)
     {
-        if ( Window.GetWindow(this) is not { } window )
+        if (Window.GetWindow(this) is not { } window)
         {
             return;
         }
-        if ( CombinationSettingAddChannel.Show(window) )
+
+        if (CombinationSettingAddChannel.Show(window))
         {
             SearchButton.Command?.Execute(null);
         }

@@ -26,7 +26,7 @@ public class TimeSpanToMillSecondsConverter : IValueConverter
     // 将转换后的值反向转换回原始类型
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if ( !double.TryParse(value?.ToString(), out var doubleValue) )
+        if (!double.TryParse(value?.ToString(), out var doubleValue))
         {
             return 0d; // 如果值无法转换为 double 类型，则返回 0
         }
@@ -35,15 +35,16 @@ public class TimeSpanToMillSecondsConverter : IValueConverter
         {
             var result = TimeSpan.FromTicks(System.Convert.ToInt64(TimeSpan.TicksPerMillisecond * doubleValue)); // 根据输入的值计算对应的 TimeSpan
 
-            if ( targetType == typeof(TimeSpan) )
+            if (targetType == typeof(TimeSpan))
             {
                 return result; // 如果目标类型是 TimeSpan，则返回计算得到的 TimeSpan
             }
+
             return targetType == typeof(Duration)
                 ? new Duration(result)
                 : Activator.CreateInstance(targetType); // 如果目标类型是 Duration，则创建一个新的 Duration 对象，并使用计算得到的 TimeSpan 作为参数；否则，使用 Activator.CreateInstance 创建目标类型的实例并返回
         }
-        catch ( OverflowException )
+        catch (OverflowException)
         {
             // 处理超出 TimeSpan 类型范围的异常情况
             return targetType == typeof(TimeSpan) ? TimeSpan.MaxValue : Duration.Automatic;

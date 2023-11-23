@@ -13,14 +13,14 @@ public static class RecordProgramExtension
     public static async Task<ObservableList<RecordFile>> GetRecordChildren(this string id, int type)
     {
         var children = await id.GetRecordPrograms(type).ConfigureAwait(false);
-        if ( children.Any() )
+        if (children.Any())
         {
             children.ForEach(it =>
             {
                 it.SearchType = type;
-                if ( it.Type == 1 )
+                if (it.Type == 1)
                 {
-                    it.Children = new ObservableList<RecordFile> {new()};
+                    it.Children = new ObservableList<RecordFile> { new() };
                 }
             });
         }
@@ -30,32 +30,34 @@ public static class RecordProgramExtension
 
     public static async Task<ObservableList<RecordFile>> GetRecordChildren(this RecordFile? program, int type)
     {
-        if ( string.IsNullOrEmpty(program?.Id) )
+        if (string.IsNullOrEmpty(program?.Id))
         {
             return new ObservableList<RecordFile>();
         }
+
         var children = await program!.Id!.GetRecordPrograms(type);
-        if ( children.Any() )
+        if (children.Any())
         {
             children.ForEach(it =>
             {
                 it.SearchType = type;
                 it.Parent = program;
                 it.ParentFile = program;
-                if ( it.Type == 1 )
+                if (it.Type == 1)
                 {
-                    it.Children = new ObservableList<RecordFile> {new()};
+                    it.Children = new ObservableList<RecordFile> { new() };
                 }
             });
         }
 
         return children;
     }
+
     public static string ToJson(this IEnumerable<RecordFile> recordFiles)
     {
         var files = recordFiles.Aggregate("[",
             (current, t) => current + "{\"id\":\"" + t.Id
-                            + "\",\"isSub\":" + ( t.IsSub ? "true" : "false" )
+                            + "\",\"isSub\":" + (t.IsSub ? "true" : "false")
                             + ",\"url\":\"" + t.Url
                             + "\",\"thumb\":\"" + t.Thumb
                             + "\",\"createDate\":\"" + t.CreateDate?.ToString("yyyy-MM-dd HH:mm:ss")
@@ -69,10 +71,10 @@ public static class RecordProgramExtension
                             + "\",\"outPoint\":\"" + t.OutPoint?.ToString(@"hh\:mm\:ss")
                             + "\",\"realOutPoint\":\"" + t.OutPoint?.ToString(@"hh\:mm\:ss\.ffff")
                             + "\",\"outPoint1\":\"" +
-                            ( t.OutPoint is null ? 0 : (int) t.OutPoint.Value.TotalMilliseconds )
+                            (t.OutPoint is null ? 0 : (int)t.OutPoint.Value.TotalMilliseconds)
                             + "\",\"inPoint\":\"" + t.InPoint?.ToString(@"hh\:mm\:ss")
                             + "\",\"realInPoint\":\"" + t.RealInPoint?.ToString(@"hh\:mm\:ss\.ffff")
-                            + "\",\"inPoint1\":\"" + ( t.InPoint is null ? 0 : (int) t.InPoint.Value.TotalMilliseconds )
+                            + "\",\"inPoint1\":\"" + (t.InPoint is null ? 0 : (int)t.InPoint.Value.TotalMilliseconds)
                             + "\"},");
 
         files = files.TrimEnd(',');

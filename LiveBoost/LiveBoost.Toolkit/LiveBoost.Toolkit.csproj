@@ -59,6 +59,14 @@
         <Compile Include="Controls\FileHierarchy\FileHierarchyItem.cs"/>
         <Compile Include="Controls\FileHierarchy\FileHierarchyItemSelector.cs"/>
         <Compile Include="Controls\FlyListView.cs"/>
+        <Compile Include="Controls\TagSlider\TagList\TagItem.cs"/>
+        <Compile Include="Controls\TagSlider\TagList\TagListView.cs"/>
+        <Compile Include="Controls\TagSlider\TagRangeBase.cs"/>
+        <Compile Include="Controls\TagSlider\TagRangeThumb.cs"/>
+        <Compile Include="Controls\TagSlider\TagRangeTrack.cs"/>
+        <Compile Include="Controls\TagSlider\TagSlider.cs"/>
+        <Compile Include="Controls\TagSlider\TagThumb.cs"/>
+        <Compile Include="Controls\TagSlider\TagTrack.cs"/>
         <Compile Include="Data\Enum\ExecutionState.cs"/>
         <Compile Include="Data\Enum\PlacementType.cs"/>
         <Compile Include="Data\Enum\PlayMode.cs"/>
@@ -72,7 +80,10 @@
         <Compile Include="Data\Interface\IIndex.cs"/>
         <Compile Include="Data\Interface\IJggItem.cs"/>
         <Compile Include="Data\Interface\IJggPlayer.cs"/>
+        <Compile Include="Data\Interface\ITag.cs"/>
+        <Compile Include="Data\Interface\ITagThumb.cs"/>
         <Compile Include="Data\Model\AppConfig.cs"/>
+        <Compile Include="Data\Model\DoubleNullableRange.cs"/>
         <Compile Include="Data\Model\EventList.cs"/>
         <Compile Include="Data\Model\FlyItemsSourceChangedArgs.cs"/>
         <Compile Include="Data\Model\GlobalEvent.cs"/>
@@ -114,6 +125,7 @@
         <Compile Include="Tools\Extension\StringExtension.cs"/>
         <Compile Include="Tools\Helper\ActionHelper.cs"/>
         <Compile Include="Tools\Helper\AesHelper.cs"/>
+        <Compile Include="Tools\Helper\CommandHelper.cs"/>
         <Compile Include="Tools\Helper\ConfigHelper.cs"/>
         <Compile Include="Tools\Helper\DateTimeHelper.cs"/>
         <Compile Include="Tools\Helper\FFMpegTool.cs"/>
@@ -123,6 +135,7 @@
         <Compile Include="Tools\Helper\LoadImageHelper.cs"/>
         <Compile Include="Tools\Helper\LoadPluginHelper.cs"/>
         <Compile Include="Tools\Helper\LogHelper.cs"/>
+        <Compile Include="Tools\Helper\MathHelper.cs"/>
         <Compile Include="Tools\Helper\MediaHelper.cs"/>
         <Compile Include="Tools\Helper\PortHelper.cs"/>
         <Compile Include="Tools\Helper\ProcessHelper.cs"/>
@@ -262,6 +275,9 @@
         <Page Include="Themes\Style\Base\ValidationTemplateStyle.xaml"/>
         <Page Include="Themes\Style\ProgressBarStyle.xaml"/>
         <Page Include="Themes\Style\SliderStyle.xaml"/>
+        <Page Include="Themes\Style\TagSlider\TagListViewStyle.xaml"/>
+        <Page Include="Themes\Style\TagSlider\TagSliderStyle.xaml"/>
+        <Page Include="Themes\Style\TagSlider\ThumbStyle.xaml"/>
         <Page Include="Themes\Style\TextShowStyle.xaml"/>
         <Page Include="Themes\Theme.xaml"/>
     </ItemGroup>

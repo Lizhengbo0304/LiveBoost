@@ -36,7 +36,7 @@ public class AppProgram
             Library.FFmpegDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dll");
             Library.EnableWpfMultiThreadedVideo = false;
 
-            switch ( args.Length )
+            switch (args.Length)
             {
                 case 1 when args[0] is { } guid1:
                     Instance.Guid = guid1;
@@ -44,14 +44,15 @@ public class AppProgram
                     var combinationPlayer = new CombinationPlayer();
                     try
                     {
-                    #pragma warning disable CS4014
+#pragma warning disable CS4014
                         ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.SendPlayer, combinationPlayer.ViewToHwnd());
-                    #pragma warning restore CS4014
+#pragma warning restore CS4014
                     }
-                    catch ( Exception e )
+                    catch (Exception e)
                     {
                         e.LogError("发送播放器句柄异常");
                     }
+
                     break;
                 case 2 when args[0] is { } guid2 && args[1] is not null:
                     Instance.Guid = guid2;
@@ -59,26 +60,29 @@ public class AppProgram
                     var jggPlayer = new JggPlayer();
                     try
                     {
-                    #pragma warning disable CS4014
+#pragma warning disable CS4014
                         ActionHelper.RunWithTimeout(IpcClientHelper.JggPlayer.SendPlayer, jggPlayer.ViewToHwnd());
-                    #pragma warning restore CS4014
+#pragma warning restore CS4014
                     }
-                    catch ( Exception e )
+                    catch (Exception e)
                     {
                         e.LogError("发送播放器句柄异常");
                     }
+
                     break;
                 default:
                     return;
             }
+
             Instance.App.Run();
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             MessageBox.Show(e.Message);
         }
     }
-#region Global
+
+    #region Global
 
     private static readonly Lazy<AppProgram> ProgramLazy = new(() => new AppProgram());
 
@@ -90,11 +94,12 @@ public class AppProgram
         };
         App.InitializeComponent();
     }
+
     public static AppProgram Instance => ProgramLazy.Value;
 
-#endregion
+    #endregion
 
-#region Property
+    #region Property
 
     /// <summary>
     ///     APP
@@ -104,5 +109,5 @@ public class AppProgram
     public string? Guid;
     public string? GuidBack;
 
-#endregion
+    #endregion
 }

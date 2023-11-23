@@ -9,6 +9,7 @@ public static class LogHelper
     ///     错误Log
     /// </summary>
     private static readonly ILog UrlError = LogManager.GetLogger("UrlError");
+
     private static readonly ILog FileError = LogManager.GetLogger("FileError");
     private static readonly ILog LogErrors = LogManager.GetLogger("LogError");
 
@@ -16,6 +17,7 @@ public static class LogHelper
     ///     信息Log
     /// </summary>
     private static readonly ILog UrlInfo = LogManager.GetLogger("UrlInfo");
+
     private static readonly ILog FileInfo = LogManager.GetLogger("FileInfo");
     private static readonly ILog LogInfos = LogManager.GetLogger("LogInfo");
 
@@ -31,7 +33,7 @@ public static class LogHelper
     ///     写日志
     /// </summary>
     /// <param
-    ///     name = "info" >
+    ///     name="info">
     ///     日志信息
     /// </param>
     public static void LogUrlInfo(this string info)
@@ -40,7 +42,7 @@ public static class LogHelper
 
         var callingMethods = stackTrace.GetFrames();
 
-        if ( callingMethods is not {Length: > 0} )
+        if (callingMethods is not { Length: > 0 })
         {
             UrlInfo.Info(info);
             return;
@@ -54,7 +56,7 @@ public static class LogHelper
     ///     写日志
     /// </summary>
     /// <param
-    ///     name = "info" >
+    ///     name="info">
     ///     日志信息
     /// </param>
     public static void LogFileInfo(this string info)
@@ -63,7 +65,7 @@ public static class LogHelper
 
         var callingMethods = stackTrace.GetFrames();
 
-        if ( callingMethods is not {Length: > 0} )
+        if (callingMethods is not { Length: > 0 })
         {
             FileInfo.Info(info);
             return;
@@ -77,7 +79,7 @@ public static class LogHelper
     ///     写日志
     /// </summary>
     /// <param
-    ///     name = "info" >
+    ///     name="info">
     ///     日志信息
     /// </param>
     public static void LogInfo(this string info)
@@ -85,7 +87,7 @@ public static class LogHelper
         var stackTrace = new StackTrace();
         var callingMethods = stackTrace.GetFrames();
 
-        if ( callingMethods is not {Length: > 0} )
+        if (callingMethods is not { Length: > 0 })
         {
             LogInfos.Info(info);
             return;
@@ -99,11 +101,11 @@ public static class LogHelper
     ///     写日志
     /// </summary>
     /// <param
-    ///     name = "se" >
+    ///     name="se">
     ///     异常信息
     /// </param>
     /// <param
-    ///     name = "info" >
+    ///     name="info">
     ///     日志信息
     /// </param>
     public static void LogError(this Exception se, string info)
@@ -111,7 +113,7 @@ public static class LogHelper
         var stackTrace = new StackTrace();
         var callingMethods = stackTrace.GetFrames();
 
-        if ( callingMethods is not {Length: > 0} )
+        if (callingMethods is not { Length: > 0 })
         {
             LogErrors.Error(info);
             return;
@@ -125,11 +127,11 @@ public static class LogHelper
     ///     写日志
     /// </summary>
     /// <param
-    ///     name = "se" >
+    ///     name="se">
     ///     异常信息
     /// </param>
     /// <param
-    ///     name = "info" >
+    ///     name="info">
     ///     日志信息
     /// </param>
     public static void LogUrlError(this Exception se, string info)
@@ -137,7 +139,7 @@ public static class LogHelper
         var stackTrace = new StackTrace();
         var callingMethods = stackTrace.GetFrames();
 
-        if ( callingMethods is not {Length: > 0} )
+        if (callingMethods is not { Length: > 0 })
         {
             UrlError.Error(info);
             return;
@@ -151,11 +153,11 @@ public static class LogHelper
     ///     写日志
     /// </summary>
     /// <param
-    ///     name = "se" >
+    ///     name="se">
     ///     异常信息
     /// </param>
     /// <param
-    ///     name = "info" >
+    ///     name="info">
     ///     日志信息
     /// </param>
     public static void LogFileError(this Exception se, string info)
@@ -163,7 +165,7 @@ public static class LogHelper
         var stackTrace = new StackTrace();
         var callingMethods = stackTrace.GetFrames();
 
-        if ( callingMethods is not {Length: > 0} )
+        if (callingMethods is not { Length: > 0 })
         {
             FileError.Error(info);
             return;
@@ -178,11 +180,11 @@ public static class LogHelper
     {
         var callingMethodNames = string.Empty;
 
-        for ( var i = callingMethods.Length - 1; i >= 0; i-- )
+        for (var i = callingMethods.Length - 1; i >= 0; i--)
         {
             var method = callingMethods[i].GetMethod();
 
-            if ( method?.DeclaringType != null && !IsSystemOrFrameworkType(method.DeclaringType) )
+            if ((method?.DeclaringType != null) && !IsSystemOrFrameworkType(method.DeclaringType))
             {
                 callingMethodNames += $"{method.DeclaringType}.{method.Name}\n";
             }

@@ -1,41 +1,48 @@
-﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:hc = "https://handyorg.github.io/handycontrol"
-                    xmlns:system = "clr-namespace:System;assembly=mscorlib" >
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <Style x:Key = "PlayListProgressStyle" TargetType = "ProgressBar" >
-        <Setter Property = "Background" Value = "Transparent" />
-        <Setter Property = "BorderBrush" Value = "Transparent" />
-        <Setter Property = "BorderThickness" Value = "0" />
-        <Setter Property = "Template" >
+    <Style TargetType="ProgressBar" x:Key="PlayListProgressStyle">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType = "ProgressBar" >
-                    <Border x:Name = "TemplateRoot"
-                            CornerRadius = "{Binding Path=(hc:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}"
-                            BorderBrush = "{TemplateBinding BorderBrush}"
-                            BorderThickness = "{TemplateBinding BorderThickness}"
-                            Background = "{TemplateBinding Background}" >
+                <ControlTemplate TargetType="ProgressBar">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                        x:Name="TemplateRoot">
                         <hc:SimplePanel>
-                            <Rectangle x:Name = "PART_Track" />
-                            <Border Style = "{StaticResource BorderClip}"
-                                    CornerRadius = "{Binding Path=(hc:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}"
-                                    x:Name = "PART_Indicator" HorizontalAlignment = "Left" >
+                            <Rectangle x:Name="PART_Track" />
+                            <Border
+                                CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource BorderClip}"
+                                x:Name="PART_Indicator">
                                 <hc:SimplePanel>
-                                    <Border x:Name = "Indicator" Background = "{TemplateBinding Foreground}" />
-                                    <Rectangle x:Name = "PART_GlowRect" HorizontalAlignment = "Left"
-                                               Margin = "-100,0,0,0" Width = "100" />
+                                    <Border Background="{TemplateBinding Foreground}" x:Name="Indicator" />
+                                    <Rectangle
+                                        HorizontalAlignment="Left"
+                                        Margin="-100,0,0,0"
+                                        Width="100"
+                                        x:Name="PART_GlowRect" />
                                 </hc:SimplePanel>
                             </Border>
                         </hc:SimplePanel>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property = "Orientation" Value = "Vertical" >
-                            <Setter Property = "Height" Value = "{x:Static system:Double.NaN}" />
-                            <Setter Property = "LayoutTransform" TargetName = "TemplateRoot" >
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="Height" Value="{x:Static system:Double.NaN}" />
+                            <Setter Property="LayoutTransform" TargetName="TemplateRoot">
                                 <Setter.Value>
-                                    <RotateTransform Angle = "-90" />
+                                    <RotateTransform Angle="-90" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>

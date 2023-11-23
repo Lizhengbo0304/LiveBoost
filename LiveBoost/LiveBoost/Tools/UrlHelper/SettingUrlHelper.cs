@@ -14,9 +14,9 @@ public static partial class UrlHelper
     /// <summary>
     ///     异步搜索记录通道。
     /// </summary>
-    /// <param name = "searchWords" > 搜索关键词。 </param>
-    /// <param name = "pageNum" > 页数。 </param>
-    /// <param name = "pageSize" > 每页大小（默认为20.0）。 </param>
+    /// <param name="searchWords"> 搜索关键词。 </param>
+    /// <param name="pageNum"> 页数。 </param>
+    /// <param name="pageSize"> 每页大小（默认为20.0）。 </param>
     /// <returns> 包含记录通道列表和总页数的元组。 </returns>
     public static async Task<(List<RecordChannel> channels, int totalPage)> SearchRecordChannelsAsync(this string searchWords, int pageNum, int pageSize = 20)
     {
@@ -34,13 +34,14 @@ public static partial class UrlHelper
                 // 解析JSON响应
                 var jobj = JObject.Parse(response);
 
-                if ( jobj["total"]?.Value<int>() is not { } total || jobj["rows"] is not JArray rows )
+                if (jobj["total"]?.Value<int>() is not { } total || jobj["rows"] is not JArray rows)
                 {
-                    return ( new List<RecordChannel>(), 0 );
+                    return (new List<RecordChannel>(), 0);
                 }
+
                 // 将 JArray 转换为 List<RecordChannel>
                 var channels = rows.ToObject<List<RecordChannel>>();
-                return ( channels.ToList(), (int) Math.Ceiling(total * 1.0 / pageSize) );
+                return (channels.ToList(), (int)Math.Ceiling(total * 1.0 / pageSize));
                 // 返回默认值，表示未找到匹配的记录通道
             },
             response =>
@@ -49,23 +50,24 @@ public static partial class UrlHelper
                 var jobj = JObject.Parse(response);
                 // 显示错误消息
                 MessageBox.Warning(jobj["msg"]?.Value<string>(), "查询频道异常");
-                return ( new List<RecordChannel>(), 0 );
+                return (new List<RecordChannel>(), 0);
             },
             e =>
             {
                 // 处理异常情况
                 MessageBox.Error(e.InnerException?.Message ?? e.Message, "查询频道异常");
                 e.LogUrlError("查询频道异常");
-                return ( new List<RecordChannel>(), 0 );
+                return (new List<RecordChannel>(), 0);
             });
     }
+
     /// <summary>
     ///     异步搜索任务列表。
     /// </summary>
-    /// <param name = "missionName" > 搜索关键词。 </param>
-    /// <param name = "clientName" > 服务器名称 </param>
-    /// <param name = "pageNum" > 页数。 </param>
-    /// <param name = "pageSize" > 每页大小（默认为20.0）。 </param>
+    /// <param name="missionName"> 搜索关键词。 </param>
+    /// <param name="clientName"> 服务器名称 </param>
+    /// <param name="pageNum"> 页数。 </param>
+    /// <param name="pageSize"> 每页大小（默认为20.0）。 </param>
     /// <returns> 包含记录通道列表和总页数的元组。 </returns>
     public static async Task<(List<RecordMission> missions, int totalPage)> SearchRecordMissionsAsync(this string missionName, string? clientName, int pageNum, int pageSize = 20)
     {
@@ -84,13 +86,14 @@ public static partial class UrlHelper
                 // 解析JSON响应
                 var jobj = JObject.Parse(response);
 
-                if ( jobj["total"]?.Value<int>() is not { } total || jobj["rows"] is not JArray rows )
+                if (jobj["total"]?.Value<int>() is not { } total || jobj["rows"] is not JArray rows)
                 {
-                    return ( new List<RecordMission>(), 0 );
+                    return (new List<RecordMission>(), 0);
                 }
+
                 // 将 JArray 转换为 List<RecordChannel>
                 var channels = rows.ToObject<List<RecordMission>>();
-                return ( channels.ToList(), (int) Math.Ceiling(total * 1.0 / pageSize) );
+                return (channels.ToList(), (int)Math.Ceiling(total * 1.0 / pageSize));
                 // 返回默认值，表示未找到匹配的记录通道
             },
             response =>
@@ -99,16 +102,17 @@ public static partial class UrlHelper
                 var jobj = JObject.Parse(response);
                 // 显示错误消息
                 MessageBox.Warning(jobj["msg"]?.Value<string>(), "查询频道异常");
-                return ( new List<RecordMission>(), 0 );
+                return (new List<RecordMission>(), 0);
             },
             e =>
             {
                 // 处理异常情况
                 MessageBox.Error(e.InnerException?.Message ?? e.Message, "查询频道异常");
                 e.LogUrlError("查询频道异常");
-                return ( new List<RecordMission>(), 0 );
+                return (new List<RecordMission>(), 0);
             });
     }
+
     /// <summary>
     ///     修改任务状态
     /// </summary>
@@ -140,6 +144,7 @@ public static partial class UrlHelper
                 return false;
             });
     }
+
     /// <summary>
     ///     新增任务
     /// </summary>
@@ -167,6 +172,7 @@ public static partial class UrlHelper
                 return false;
             });
     }
+
     /// <summary>
     ///     编辑任务
     /// </summary>
@@ -194,6 +200,7 @@ public static partial class UrlHelper
                 return false;
             });
     }
+
     /// <summary>
     ///     删除任务
     /// </summary>

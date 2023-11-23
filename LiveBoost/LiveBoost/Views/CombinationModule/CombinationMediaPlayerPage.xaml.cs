@@ -14,7 +14,7 @@ public partial class CombinationMediaPlayerPage
 
     private void Slider_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if ( DataContext is CombinationMainWindowVm vm )
+        if (DataContext is CombinationMainWindowVm vm)
         {
             vm.MdElement.SeekingEnded += MdElementOnSeekingEnded;
         }
@@ -22,10 +22,11 @@ public partial class CombinationMediaPlayerPage
 
     private async void MdElementOnSeekingEnded(object sender, EventArgs e)
     {
-        if ( DataContext is not CombinationMainWindowVm vm )
+        if (DataContext is not CombinationMainWindowVm vm)
         {
             return;
         }
+
         vm.MdElement.SeekingEnded -= MdElementOnSeekingEnded;
         await vm.MdElement.Pause();
     }

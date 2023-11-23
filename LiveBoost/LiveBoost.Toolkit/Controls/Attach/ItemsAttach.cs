@@ -25,15 +25,16 @@ public class ItemsAttach
 
     private static void IsAttachIndexPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        switch ( d )
+        switch (d)
         {
             case ListViewItem { } listViewItem:
             {
-                if ( listViewItem.FindVisualParent<ListView>() is not { } listView )
+                if (listViewItem.FindVisualParent<ListView>() is not { } listView)
                 {
                     return;
                 }
-                if ( listView is FlyListView flyListView )
+
+                if (listView is FlyListView flyListView)
                 {
                     flyListView.ItemsChangedEventHandler += (_, _) =>
                         SetIndex(listViewItem, listView.ItemContainerGenerator.IndexFromContainer(listViewItem) + 1);
@@ -49,7 +50,7 @@ public class ItemsAttach
     /// <summary>
     ///     获取是否绑定行号
     /// </summary>
-    public static bool GetIsAttachListViewIndex(DependencyObject element) => (bool) element.GetValue(IsAttachListViewIndexProperty);
+    public static bool GetIsAttachListViewIndex(DependencyObject element) => (bool)element.GetValue(IsAttachListViewIndexProperty);
 
     /// <summary>
     ///     设置是否绑定行号
@@ -62,7 +63,7 @@ public class ItemsAttach
     /// <summary>
     ///     获取行号
     /// </summary>
-    public static int GetIndex(DependencyObject element) => (int) element.GetValue(IndexProperty);
+    public static int GetIndex(DependencyObject element) => (int)element.GetValue(IndexProperty);
 
     /// <summary>
     ///     设置行号

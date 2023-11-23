@@ -19,7 +19,7 @@ public class TokenRenewalJob : IJob
         return Task.Run(async () =>
         {
             // 检查登录用户的令牌是否为空
-            if ( string.IsNullOrEmpty(AppProgram.Instance.LoginUser?.Token) )
+            if (string.IsNullOrEmpty(AppProgram.Instance.LoginUser?.Token))
             {
                 return;
             }

@@ -7,7 +7,7 @@ namespace LiveBoost.Toolkit.Controls;
 [TemplatePart(Name = "FileHierarchyPopupListView", Type = typeof(Popup))]
 public class FileHierarchy : Control
 {
-#region CTOR
+    #region CTOR
 
     public FileHierarchy()
     {
@@ -15,22 +15,23 @@ public class FileHierarchy : Control
         {
             var charWidth = Math.Round(SeparatorChar.ToString().GetTextWidth(FontWeight, FontFamily, FontSize), MidpointRounding.AwayFromZero) + 10;
             var width = Math.Round("· · ·".GetTextWidth(FontWeight, FontFamily, FontSize), MidpointRounding.AwayFromZero);
-            ItemMaxWidth = ( ActualWidth - charWidth * MaxShow - width ) / MaxShow;
+            ItemMaxWidth = (ActualWidth - charWidth * MaxShow - width) / MaxShow;
             PopupWidth = ItemMaxWidth + 10;
         };
         PreviewMouseLeftButtonUpCmd = new DelegateCommand<MouseButtonEventArgs>(args =>
         {
             args.Handled = true;
-            if ( args.OriginalSource is not TextBlock {Name: "NameBlock", DataContext: IFileHierarchy hierarchy} textBlock ||
-                 textBlock.FindVisualParent<FileHierarchy>() is not { } fileHierarchy )
+            if (args.OriginalSource is not TextBlock { Name: "NameBlock", DataContext: IFileHierarchy hierarchy } textBlock ||
+                textBlock.FindVisualParent<FileHierarchy>() is not { } fileHierarchy)
             {
                 return;
             }
-            if ( fileHierarchy.PopupItemsSource.Count > 0 && fileHierarchy.ItemsSource[1] == hierarchy )
+
+            if ((fileHierarchy.PopupItemsSource.Count > 0) && (fileHierarchy.ItemsSource[1] == hierarchy))
             {
                 var listviewitem = textBlock.FindVisualParent<ListViewItem>();
                 fileHierarchy.FileHierarchyPopup!.PlacementTarget = listviewitem;
-                fileHierarchy.SetValue(PopupOffsetProperty, -( ( fileHierarchy.ItemMaxWidth - 26 ) / 2 ));
+                fileHierarchy.SetValue(PopupOffsetProperty, -((fileHierarchy.ItemMaxWidth - 26) / 2));
                 fileHierarchy.FileHierarchyPopup.IsOpen = true;
             }
             else
@@ -40,29 +41,30 @@ public class FileHierarchy : Control
         });
     }
 
-#endregion
+    #endregion
 
-#region Property
+    #region Property
 
     public Popup? FileHierarchyPopup;
     public ListView? FileHierarchyPopupListView;
 
-#endregion
+    #endregion
 
-#region Event
+    #region Event
 
     private static void SourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if ( d is not FileHierarchy fileHierarchy || e.NewValue is not IFileHierarchy hierarchy )
+        if (d is not FileHierarchy fileHierarchy || e.NewValue is not IFileHierarchy hierarchy)
         {
             return;
         }
+
         var parents = hierarchy.Parents;
-        if ( parents.Count > fileHierarchy.MaxShow )
+        if (parents.Count > fileHierarchy.MaxShow)
         {
             var popupList = parents.GetRange(1, parents.Count - 3);
             parents.RemoveRange(1, parents.Count - 3);
-            parents.Insert(1, new FileHierarchyItem {Name = "· · ·"});
+            parents.Insert(1, new FileHierarchyItem { Name = "· · ·" });
             d.SetValue(ItemsSourceProperty, parents);
             d.SetValue(PopupItemsSourceProperty, popupList);
         }
@@ -75,13 +77,14 @@ public class FileHierarchy : Control
 
     private static void CalculateMaxItemWidth(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if ( d is not FileHierarchy fileHierarchy )
+        if (d is not FileHierarchy fileHierarchy)
         {
             return;
         }
+
         var charWidth = Math.Round(fileHierarchy.SeparatorChar.ToString().GetTextWidth(fileHierarchy.FontWeight, fileHierarchy.FontFamily, fileHierarchy.FontSize), MidpointRounding.AwayFromZero) + 10;
         var width = Math.Round("· · ·".GetTextWidth(fileHierarchy.FontWeight, fileHierarchy.FontFamily, fileHierarchy.FontSize), MidpointRounding.AwayFromZero);
-        fileHierarchy.ItemMaxWidth = ( fileHierarchy.ActualWidth - charWidth * fileHierarchy.MaxShow - width ) / fileHierarchy.MaxShow;
+        fileHierarchy.ItemMaxWidth = (fileHierarchy.ActualWidth - charWidth * fileHierarchy.MaxShow - width) / fileHierarchy.MaxShow;
         fileHierarchy.PopupWidth = fileHierarchy.ItemMaxWidth + 10;
     }
 
@@ -90,16 +93,17 @@ public class FileHierarchy : Control
         base.OnApplyTemplate();
         FileHierarchyPopup = GetTemplateChild("PART_FileHierarchyPopup") as Popup;
         FileHierarchyPopupListView = GetTemplateChild("PART_FileHierarchyPopupListView") as ListView;
-        if ( FileHierarchyPopupListView is not null )
+        if (FileHierarchyPopupListView is not null)
         {
             FileHierarchyPopupListView.PreviewMouseLeftButtonDown += (_, args) =>
             {
-                if ( args.OriginalSource is not TextBlock {Name: "NameBlock", DataContext: IFileHierarchy hierarchy} )
+                if (args.OriginalSource is not TextBlock { Name: "NameBlock", DataContext: IFileHierarchy hierarchy })
                 {
                     return;
                 }
+
                 Source = hierarchy;
-                if ( FileHierarchyPopup != null )
+                if (FileHierarchyPopup != null)
                 {
                     FileHierarchyPopup.IsOpen = false;
                 }
@@ -107,9 +111,9 @@ public class FileHierarchy : Control
         }
     }
 
-#endregion
+    #endregion
 
-#region DependencyProperty
+    #region DependencyProperty
 
     /// <summary>
     ///     分隔符
@@ -128,7 +132,7 @@ public class FileHierarchy : Control
     /// </summary>
     public double PopupWidth
     {
-        get => (double) GetValue(PopupWidthProperty);
+        get => (double)GetValue(PopupWidthProperty);
         set => SetValue(PopupWidthProperty, value);
     }
 
@@ -137,7 +141,7 @@ public class FileHierarchy : Control
     /// </summary>
     public char SeparatorChar
     {
-        get => (char) GetValue(SeparatorCharProperty);
+        get => (char)GetValue(SeparatorCharProperty);
         set => SetValue(SeparatorCharProperty, value);
     }
 
@@ -152,7 +156,7 @@ public class FileHierarchy : Control
     /// </summary>
     public double PopupOffset
     {
-        get => (double) GetValue(PopupOffsetProperty);
+        get => (double)GetValue(PopupOffsetProperty);
         set => SetValue(PopupOffsetProperty, value);
     }
 
@@ -167,7 +171,7 @@ public class FileHierarchy : Control
     /// </summary>
     public List<IFileHierarchy> ItemsSource
     {
-        get => (List<IFileHierarchy>) GetValue(ItemsSourceProperty);
+        get => (List<IFileHierarchy>)GetValue(ItemsSourceProperty);
         set => SetValue(ItemsSourceProperty, value);
     }
 
@@ -182,7 +186,7 @@ public class FileHierarchy : Control
     /// </summary>
     public List<IFileHierarchy> PopupItemsSource
     {
-        get => (List<IFileHierarchy>) GetValue(PopupItemsSourceProperty);
+        get => (List<IFileHierarchy>)GetValue(PopupItemsSourceProperty);
         set => SetValue(PopupItemsSourceProperty, value);
     }
 
@@ -209,7 +213,7 @@ public class FileHierarchy : Control
     /// </summary>
     public IFileHierarchy Source
     {
-        get => (IFileHierarchy) GetValue(SourceProperty);
+        get => (IFileHierarchy)GetValue(SourceProperty);
         set => SetValue(SourceProperty, value);
     }
 
@@ -218,7 +222,7 @@ public class FileHierarchy : Control
     /// </summary>
     public double ItemMaxWidth
     {
-        get => (double) GetValue(ItemMaxWidthProperty);
+        get => (double)GetValue(ItemMaxWidthProperty);
         set => SetValue(ItemMaxWidthProperty, value);
     }
 
@@ -227,7 +231,7 @@ public class FileHierarchy : Control
     /// </summary>
     public int MaxShow
     {
-        get => (int) GetValue(MaxShowProperty);
+        get => (int)GetValue(MaxShowProperty);
         set => SetValue(MaxShowProperty, value);
     }
 
@@ -242,9 +246,9 @@ public class FileHierarchy : Control
     /// </summary>
     public DelegateCommand<MouseButtonEventArgs> PreviewMouseLeftButtonUpCmd
     {
-        get => (DelegateCommand<MouseButtonEventArgs>) GetValue(PreviewMouseLeftButtonUpCmdProperty);
+        get => (DelegateCommand<MouseButtonEventArgs>)GetValue(PreviewMouseLeftButtonUpCmdProperty);
         set => SetValue(PreviewMouseLeftButtonUpCmdProperty, value);
     }
 
-#endregion
+    #endregion
 }

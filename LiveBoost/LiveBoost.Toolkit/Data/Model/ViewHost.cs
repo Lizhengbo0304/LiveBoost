@@ -30,5 +30,7 @@ public class ViewHost : HwndHost
     }
 
     // 重写DestroyWindowCore方法，用于销毁窗口
-    protected override void DestroyWindowCore(HandleRef hwnd) { }
+    protected override void DestroyWindowCore(HandleRef hwnd)
+    {
+    }
 }

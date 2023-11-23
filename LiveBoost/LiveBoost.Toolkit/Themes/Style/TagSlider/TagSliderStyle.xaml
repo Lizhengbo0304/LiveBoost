@@ -1,0 +1,52 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:controls="clr-namespace:LiveBoost.Toolkit.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/TagSlider/ThumbStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost.Toolkit;component/Themes/Style/TagSlider/TagListViewStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="controls:TagSlider">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TagSlider">
+                    <controls:TagTrack
+                        Maximum="{TemplateBinding Maximum}"
+                        Minimum="{TemplateBinding Minimum}"
+                        Orientation="{TemplateBinding Orientation}"
+                        Value="{TemplateBinding Value}"
+                        x:Name="PART_Track">
+                        <controls:TagTrack.DecreaseRepeatButton>
+                            <RepeatButton
+                                Background="{TemplateBinding Foreground}"
+                                Command="{x:Static controls:TagSlider.DecreaseLarge}"
+                                Style="{StaticResource SliderRepeatButtonHorizontalStyle}" />
+                        </controls:TagTrack.DecreaseRepeatButton>
+                        <controls:TagTrack.IncreaseRepeatButton>
+                            <RepeatButton
+                                Background="{TemplateBinding Background}"
+                                Command="{x:Static controls:TagSlider.IncreaseLarge}"
+                                Style="{StaticResource SliderRepeatButtonHorizontalStyle}" />
+                        </controls:TagTrack.IncreaseRepeatButton>
+                        <controls:TagTrack.SuperTagPanel>
+                            <controls:TagListView ItemsSource="{TemplateBinding TagsSource}" />
+                        </controls:TagTrack.SuperTagPanel>
+                        <controls:TagTrack.Thumb>
+                            <controls:TagThumb
+                                ClipToBounds="False"
+                                Focusable="False"
+                                Height="18"
+                                Margin="-9,0"
+                                OverridesDefaultStyle="True"
+                                Template="{StaticResource SliderThumb}"
+                                VerticalAlignment="Center"
+                                Width="18"
+                                x:Name="Thumb" />
+                        </controls:TagTrack.Thumb>
+                    </controls:TagTrack>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,11 +1,12 @@
-﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:tools = "clr-namespace:LiveBoost.Tools" >
-    <tools:LayoutIndex2ItemsPanelConverter x:Key = "LayoutIndex2ItemsPanelConverter" />
-    <tools:AddChannelProtocol2Visibility x:Key = "AddChannelProtocol2Visibility" />
-    <tools:ChannelProtocol2Visibility x:Key = "ChannelProtocol2Visibility" />
-    <tools:Resolution2Visibility x:Key = "Resolution2Visibility" />
-    <tools:VideoFram2Visibility x:Key = "VideoFram2Visibility" />
-    <tools:Int2VisibilityReConverter x:Key = "Int2VisibilityReConverter" />
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:tools="clr-namespace:LiveBoost.Tools"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <tools:LayoutIndex2ItemsPanelConverter x:Key="LayoutIndex2ItemsPanelConverter" />
+    <tools:AddChannelProtocol2Visibility x:Key="AddChannelProtocol2Visibility" />
+    <tools:ChannelProtocol2Visibility x:Key="ChannelProtocol2Visibility" />
+    <tools:Resolution2Visibility x:Key="Resolution2Visibility" />
+    <tools:VideoFram2Visibility x:Key="VideoFram2Visibility" />
+    <tools:Int2VisibilityReConverter x:Key="Int2VisibilityReConverter" />
 
 </ResourceDictionary>

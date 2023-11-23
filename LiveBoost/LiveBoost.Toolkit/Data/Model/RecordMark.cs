@@ -11,12 +11,12 @@ namespace LiveBoost.Toolkit.Data;
 
 public sealed class RecordMark : INotifyPropertyChanged
 {
-#region Event
+    #region Event
 
     /// <summary>
     ///     隐式转换操作符，将RecordMark对象转换为RecordFile对象
     /// </summary>
-    /// <param name = "mark" > 要转换的RecordMark对象 </param>
+    /// <param name="mark"> 要转换的RecordMark对象 </param>
     public static implicit operator RecordFile(RecordMark mark)
     {
         // 如果mark.Parent为null，则使用mark的一部分属性初始化RecordFile对象
@@ -38,10 +38,11 @@ public sealed class RecordMark : INotifyPropertyChanged
         };
 
         // 如果mark.Parent不为null，则将mark.Parent的一部分属性赋值到RecordFile对象
-        if ( mark.Parent is null )
+        if (mark.Parent is null)
         {
             return recordFile;
         }
+
         recordFile.CreateDate = mark.Parent.CreateDate;
         recordFile.CreateUser = mark.Parent.CreateUser;
         recordFile.Stream = mark.Parent.Stream;
@@ -54,11 +55,11 @@ public sealed class RecordMark : INotifyPropertyChanged
     /// <summary>
     ///     尝试解析输入字符串为TimeSpan对象
     /// </summary>
-    /// <param name = "input" > 输入字符串 </param>
+    /// <param name="input"> 输入字符串 </param>
     /// <returns> 如果解析成功，则返回TimeSpan对象，否则返回null </returns>
     private static TimeSpan? ParseTimeSpan(string? input)
     {
-        if ( TimeSpan.TryParse(input, out var result) )
+        if (TimeSpan.TryParse(input, out var result))
         {
             return result;
         }
@@ -66,8 +67,9 @@ public sealed class RecordMark : INotifyPropertyChanged
         return null;
     }
 
-#endregion
-#region INotifyPropertyChangedEvent
+    #endregion
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -78,17 +80,19 @@ public sealed class RecordMark : INotifyPropertyChanged
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
-#region Ctor
+    #endregion
+
+    #region Ctor
 
     public RecordMark()
     {
@@ -99,22 +103,25 @@ public sealed class RecordMark : INotifyPropertyChanged
         }, AppConfig.Instance.DefaultIcon);
         Duration = new LazyProperty<TimeSpan>(_ =>
         {
-            if ( !TimeSpan.TryParse(InPoint, out var realinpotDateTime) )
+            if (!TimeSpan.TryParse(InPoint, out var realinpotDateTime))
             {
                 realinpotDateTime = TimeSpan.Zero;
             }
-            if ( !TimeSpan.TryParse(OutPoint, out var realoutpotDateTime) )
+
+            if (!TimeSpan.TryParse(OutPoint, out var realoutpotDateTime))
             {
                 realoutpotDateTime = TimeSpan.Zero;
             }
+
             return Task.FromResult(realoutpotDateTime - realinpotDateTime);
         }, TimeSpan.Zero);
     }
 
     public RecordFile? Parent { get; set; }
 
-#endregion
-#region Property
+    #endregion
+
+    #region Property
 
     [JsonProperty("id")] public string? Id { get; set; }
 
@@ -139,27 +146,30 @@ public sealed class RecordMark : INotifyPropertyChanged
     {
         get
         {
-            if ( !TimeSpan.TryParse(InPoint, out var inpoint) )
+            if (!TimeSpan.TryParse(InPoint, out var inpoint))
             {
                 inpoint = TimeSpan.Zero;
             }
-            if ( !TimeSpan.TryParse(OutPoint, out var outpoint) )
+
+            if (!TimeSpan.TryParse(OutPoint, out var outpoint))
             {
                 outpoint = TimeSpan.Zero;
             }
+
             var length = outpoint - inpoint;
             var inFrame =
-                $"{(int) inpoint.TotalHours:00}:{inpoint.Minutes:00}:{inpoint.Seconds:00}:{inpoint.Milliseconds / 40:00}";
+                $"{(int)inpoint.TotalHours:00}:{inpoint.Minutes:00}:{inpoint.Seconds:00}:{inpoint.Milliseconds / 40:00}";
             var outFrame =
-                $"{(int) outpoint.TotalHours:00}:{outpoint.Minutes:00}:{outpoint.Seconds:00}:{outpoint.Milliseconds / 40:00}";
+                $"{(int)outpoint.TotalHours:00}:{outpoint.Minutes:00}:{outpoint.Seconds:00}:{outpoint.Milliseconds / 40:00}";
             var lengTip =
-                $"{(int) length.TotalHours:00}:{length.Minutes:00}:{length.Seconds:00}:{length.Milliseconds / 40:00}";
+                $"{(int)length.TotalHours:00}:{length.Minutes:00}:{length.Seconds:00}:{length.Milliseconds / 40:00}";
             return $"名称:{Name}\n\r入点:{inFrame}\n\r出点:{outFrame}\n\r时长:{lengTip}";
         }
     }
 
-#endregion
-#region UI - Property
+    #endregion
+
+    #region UI - Property
 
     public LazyProperty<ImageSource> IconPath { get; set; }
 
@@ -168,5 +178,5 @@ public sealed class RecordMark : INotifyPropertyChanged
     /// </summary>
     public LazyProperty<TimeSpan> Duration { get; }
 
-#endregion
+    #endregion
 }

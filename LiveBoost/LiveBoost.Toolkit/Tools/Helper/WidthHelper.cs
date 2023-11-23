@@ -8,10 +8,10 @@ public static class WidthHelper
     /// <summary>
     ///     获取文本的宽度
     /// </summary>
-    /// <param name = "text" > 文本内容 </param>
-    /// <param name = "weight" > 字体粗细 </param>
-    /// <param name = "fontFamily" > 字体族 </param>
-    /// <param name = "size" > 字体大小，默认为14 </param>
+    /// <param name="text"> 文本内容 </param>
+    /// <param name="weight"> 字体粗细 </param>
+    /// <param name="fontFamily"> 字体族 </param>
+    /// <param name="size"> 字体大小，默认为14 </param>
     /// <returns> 文本的宽度 </returns>
     public static double GetTextWidth(this string text, FontWeight weight, FontFamily fontFamily, double size = 14)
     {
@@ -38,8 +38,8 @@ public static class WidthHelper
     /// <summary>
     ///     获取TabItem的宽度
     /// </summary>
-    /// <param name = "style" > TabItem的样式 </param>
-    /// <param name = "dataContext" > TabItem的数据上下文 </param>
+    /// <param name="style"> TabItem的样式 </param>
+    /// <param name="dataContext"> TabItem的数据上下文 </param>
     /// <returns> TabItem的宽度 </returns>
     public static double GetTabItemWidth(Style style, object dataContext)
     {

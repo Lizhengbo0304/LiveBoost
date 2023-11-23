@@ -15,7 +15,7 @@ public static class StringExtension
     ///     base64编码的字符串转为图片
     /// </summary>
     /// <param
-    ///     name = "imageBase64Str" >
+    ///     name="imageBase64Str">
     ///     图片的Base64编码
     /// </param>
     /// <returns> 图片 </returns>
@@ -30,14 +30,14 @@ public static class StringExtension
             bi.EndInit();
             return bi;
         }
-        catch ( Exception )
+        catch (Exception)
         {
             return null;
         }
     }
 
     /// <summary>
-    /// 组合基础路径和相对路径。
+    ///     组合基础路径和相对路径。
     /// </summary>
     /// <param name="basePath">基础路径。如果为空，返回相对路径。如果基础路径是一个驱动器盘符，会在末尾添加反斜杠。</param>
     /// <param name="relativePath">相对路径。如果为空，返回基础路径。</param>
@@ -69,13 +69,13 @@ public static class StringExtension
     /// <summary>
     ///     组合基础路径和多个相对路径参数
     /// </summary>
-    /// <param name = "basePath" > 基础路径 </param>
-    /// <param name = "relativePaths" > 一个或多个相对路径 </param>
+    /// <param name="basePath"> 基础路径 </param>
+    /// <param name="relativePaths"> 一个或多个相对路径 </param>
     /// <returns> 组合后的路径，使用正斜杠（/） </returns>
     public static string Combine(this string? basePath, params string?[] relativePaths)
     {
         // 如果基础路径为空，返回空字符串
-        if ( string.IsNullOrEmpty(basePath) || relativePaths.All(string.IsNullOrEmpty) )
+        if (string.IsNullOrEmpty(basePath) || relativePaths.All(string.IsNullOrEmpty))
         {
             return string.Empty;
         }
@@ -88,10 +88,11 @@ public static class StringExtension
         {
             basePath += "\\";
         }
+
         // 遍历所有的相对路径，去除前后可能存在的 '/' 和 '\\'
-        for ( var i = 0; i < relativePaths.Length; i++ )
+        for (var i = 0; i < relativePaths.Length; i++)
         {
-            if ( !string.IsNullOrEmpty(relativePaths[i]) )
+            if (!string.IsNullOrEmpty(relativePaths[i]))
             {
                 relativePaths[i] = relativePaths[i]!.Trim('\\', '/');
             }

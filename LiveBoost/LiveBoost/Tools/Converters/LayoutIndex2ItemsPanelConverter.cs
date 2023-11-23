@@ -12,13 +12,14 @@ namespace LiveBoost.Tools;
 
 public class LayoutIndex2ItemsPanelConverter : IValueConverter
 {
-    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         // 确保输入值是整数类型
-        if ( value is not int index )
+        if (value is not int index)
         {
             return null;
         }
+
         return index switch
         {
             0 =>
@@ -30,5 +31,5 @@ public class LayoutIndex2ItemsPanelConverter : IValueConverter
         };
     }
 
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => null;
 }

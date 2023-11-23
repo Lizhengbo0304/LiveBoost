@@ -20,7 +20,7 @@ public class ForegroundSwitchElement
     /// <summary>
     ///     获取选中字体颜色
     /// </summary>
-    public static Brush GetSelectedForeground(DependencyObject element) => (Brush) element.GetValue(SelectedForegroundProperty);
+    public static Brush GetSelectedForeground(DependencyObject element) => (Brush)element.GetValue(SelectedForegroundProperty);
 
     /// <summary>
     ///     设置选中字体颜色
@@ -33,7 +33,7 @@ public class ForegroundSwitchElement
     /// <summary>
     ///     获取鼠标悬浮字体颜色
     /// </summary>
-    public static Brush GetMouseOverForeground(DependencyObject element) => (Brush) element.GetValue(MouseOverForegroundProperty);
+    public static Brush GetMouseOverForeground(DependencyObject element) => (Brush)element.GetValue(MouseOverForegroundProperty);
 
     /// <summary>
     ///     设置鼠标悬浮字体颜色

@@ -11,7 +11,7 @@ namespace LiveBoost.ViewModels;
 
 public partial class JggMainWindowVm : INotifyPropertyChanged
 {
-#region Ctor
+    #region Ctor
 
     public JggMainWindowVm(List<RecordChannel>? channels)
     {
@@ -39,11 +39,11 @@ public partial class JggMainWindowVm : INotifyPropertyChanged
             new(),
             new()
         };
-
     }
 
-#endregion
-#region INotifyPropertyChangedEvent
+    #endregion
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -54,14 +54,15 @@ public partial class JggMainWindowVm : INotifyPropertyChanged
 
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 }

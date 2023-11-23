@@ -11,9 +11,9 @@ namespace LiveBoost.ViewModels;
 
 public partial class JggMainWindowVm
 {
-#region Properties
+    #region Properties
 
     public List<JggItem> RecordItems { get; set; }
 
-#endregion
+    #endregion
 }

@@ -5,7 +5,7 @@ namespace LiveBoost.Toolkit.Data;
 
 public sealed class LazyProperty<TD> : INotifyPropertyChanged
 {
-#region Ctor
+    #region Ctor
 
     public LazyProperty(Func<CancellationToken, Task<TD>> retrievalFunc, TD? defaultValue)
     {
@@ -15,7 +15,7 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
         _value = default;
     }
 
-#endregion
+    #endregion
 
     private async Task<TD?> LoadValueAsync() => await _retrievalFunc(_cancelTokenSource.Token);
 
@@ -27,7 +27,7 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
     /// <summary> This allows you to assign the value of this lazy property directly to a variable of type T </summary>
     public static implicit operator TD?(LazyProperty<TD?> p) => p.Value;
 
-#region Field
+    #region Field
 
     private TD? _value;
     private readonly CancellationTokenSource _cancelTokenSource = new();
@@ -36,9 +36,9 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
 
     private readonly Func<CancellationToken, Task<TD>> _retrievalFunc;
 
-#endregion
+    #endregion
 
-#region Property
+    #region Property
 
     private bool IsLoaded { get; set; }
 
@@ -50,24 +50,26 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
     {
         get
         {
-            if ( IsLoaded )
+            if (IsLoaded)
             {
                 return _value;
             }
 
-            if ( IsLoading )
+            if (IsLoading)
             {
                 return _defaultValue;
             }
+
             IsLoading = true;
             LoadValueAsync()
                 .ContinueWith(t =>
                 {
-                    if ( t.IsCanceled )
+                    if (t.IsCanceled)
                     {
                         return;
                     }
-                    if ( t.IsFaulted )
+
+                    if (t.IsFaulted)
                     {
                         _value = _defaultValue;
                         ErrorOnLoading = true;
@@ -86,17 +88,18 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
         // if you want a ReadOnly-property just set this setter to private
         set
         {
-            if ( IsLoading )
+            if (IsLoading)
                 // since we set the value now, there is no need
                 // to retrieve the "old" value asynchronously
             {
                 CancelLoading();
             }
 
-            if ( value != null && _value != null && EqualityComparer<TD>.Default.Equals(_value, value) )
+            if ((value != null) && (_value != null) && EqualityComparer<TD>.Default.Equals(_value, value))
             {
                 return;
             }
+
             _value = value;
             IsLoaded = true;
             IsLoading = false;
@@ -106,9 +109,9 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
         }
     }
 
-#endregion
+    #endregion
 
-#region INotifyPropertyChangedEvent
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -119,14 +122,15 @@ public sealed class LazyProperty<TD> : INotifyPropertyChanged
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 }

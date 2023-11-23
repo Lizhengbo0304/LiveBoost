@@ -23,10 +23,11 @@ public static class HwndHelper
             RootVisual = element,
             SizeToContent = SizeToContent.Manual
         };
-        if ( hwndSource.CompositionTarget != null )
+        if (hwndSource.CompositionTarget != null)
         {
             hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
         }
+
         return hwndSource.Handle.ToInt32();
     }
 }

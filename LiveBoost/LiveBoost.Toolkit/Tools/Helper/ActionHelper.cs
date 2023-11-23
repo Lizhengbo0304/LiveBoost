@@ -8,8 +8,8 @@ public static class ActionHelper
     /// <summary>
     ///     带有超时的任务执行函数
     /// </summary>
-    /// <param name = "action" > 要执行的任务 </param>
-    /// <param name = "timeout" > 超时时间（毫秒） </param>
+    /// <param name="action"> 要执行的任务 </param>
+    /// <param name="timeout"> 超时时间（毫秒） </param>
     public static async Task RunWithTimeout(this Action action, int timeout = 5000)
     {
         // 创建取消标记源和任务
@@ -22,7 +22,7 @@ public static class ActionHelper
             var completedTask = await Task.WhenAny(task, Task.Delay(timeout));
 
             // 如果任务完成，检查是否有异常，如果有，将其传播出去
-            if ( completedTask == task )
+            if (completedTask == task)
             {
                 await task; // 等待任务完成，以便传播异常
             }
@@ -33,19 +33,20 @@ public static class ActionHelper
                 "任务超时取消".LogInfo();
             }
         }
-        catch ( OperationCanceledException )
+        catch (OperationCanceledException)
         {
             // 处理由取消引发的异常
             "任务超时取消".LogInfo();
         }
     }
+
     /// <summary>
     ///     带有超时的任务执行函数，接受带参数的 Action
     /// </summary>
-    /// <typeparam name = "T" > Action 的参数类型 </typeparam>
-    /// <param name = "action" > 要执行的任务 </param>
-    /// <param name = "parameter" > 传递给 Action 的参数 </param>
-    /// <param name = "timeout" > 超时时间（毫秒） </param>
+    /// <typeparam name="T"> Action 的参数类型 </typeparam>
+    /// <param name="action"> 要执行的任务 </param>
+    /// <param name="parameter"> 传递给 Action 的参数 </param>
+    /// <param name="timeout"> 超时时间（毫秒） </param>
     public static async Task RunWithTimeout<T>(this Action<T> action, T parameter, int timeout = 5000)
     {
         // 创建取消标记源和任务
@@ -58,7 +59,7 @@ public static class ActionHelper
             var completedTask = await Task.WhenAny(task, Task.Delay(timeout));
 
             // 如果任务完成，检查是否有异常，如果有，将其传播出去
-            if ( completedTask == task )
+            if (completedTask == task)
             {
                 await task; // 等待任务完成，以便传播异常
             }
@@ -69,7 +70,7 @@ public static class ActionHelper
                 "任务超时取消".LogInfo();
             }
         }
-        catch ( OperationCanceledException )
+        catch (OperationCanceledException)
         {
             // 处理由取消引发的异常
             "任务超时取消".LogInfo();

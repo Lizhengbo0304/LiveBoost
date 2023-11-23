@@ -9,7 +9,7 @@ public class ShouluFormat
     {
         using var stream = Assembly.GetExecutingAssembly()
             .GetManifestResourceStream("LiveBoost.Toolkit.Configs.ShouluFormat.json");
-        if ( stream is not null )
+        if (stream is not null)
         {
             using var reader = new StreamReader(stream);
             var json = reader.ReadToEnd();
@@ -23,7 +23,7 @@ public class ShouluFormat
 
     public static List<ShouluFormat> ShouluFormats { get; set; }
 
-#region Property
+    #region Property
 
     [JsonProperty("Format")] public string? Format { get; set; }
 
@@ -31,5 +31,5 @@ public class ShouluFormat
 
     [JsonProperty("audioRecordCodec")] public List<string>? AudioRecordCodec { get; set; }
 
-#endregion
+    #endregion
 }

@@ -11,34 +11,38 @@ namespace LiveBoost.ViewModels;
 
 public class CombinationSettingWindowVm : INotifyPropertyChanged
 {
-#region Ctor
+    #region Ctor
 
     public CombinationSettingWindowVm()
     {
         ChangeViewCommand = new DelegateCommand<RadioButton>(button =>
         {
-            if ( Window.GetWindow(button) is not { } settingWindow )
+            if (Window.GetWindow(button) is not { } settingWindow)
             {
                 return;
             }
-            if ( RegionManager.GetRegionManager(settingWindow) is not { } regionManager )
+
+            if (RegionManager.GetRegionManager(settingWindow) is not { } regionManager)
             {
                 return;
             }
+
             regionManager.RequestNavigate("SettingShow", button.Tag as string);
         });
     }
 
-#endregion
-#region Command
+    #endregion
+
+    #region Command
 
     /// <summary>
     ///     更改管理界面
     /// </summary>
     public DelegateCommand<RadioButton> ChangeViewCommand { get; set; }
 
-#endregion
-#region INotifyPropertyChangedEvent
+    #endregion
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -49,14 +53,15 @@ public class CombinationSettingWindowVm : INotifyPropertyChanged
 
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 }

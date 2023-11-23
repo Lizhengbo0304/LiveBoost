@@ -14,7 +14,7 @@ public sealed class RecordTemplate : INotifyPropertyChanged
 {
     public RecordTemplate() => RecordFiles = new ObservableList<RecordFile>();
 
-#region INotifyPropertyChangedEvent
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -30,18 +30,19 @@ public sealed class RecordTemplate : INotifyPropertyChanged
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 
-#region Property
+    #region Property
 
     [JsonProperty("id")] public string? Id { get; set; }
 
@@ -60,9 +61,9 @@ public sealed class RecordTemplate : INotifyPropertyChanged
 
     [JsonProperty("createTime")] public DateTime? CreateTime { get; set; }
 
-#endregion
+    #endregion
 
-#region UI - Property
+    #region UI - Property
 
     /// <summary>
     ///     播单列表
@@ -81,5 +82,5 @@ public sealed class RecordTemplate : INotifyPropertyChanged
     public PlayListDragHandler PlayListDragHandler => new();
     public PlayListDropHandler PlayListDropHandler => new();
 
-#endregion
+    #endregion
 }

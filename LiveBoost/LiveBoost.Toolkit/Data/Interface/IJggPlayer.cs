@@ -16,10 +16,12 @@ public interface IJggPlayer
     ///     设置通道名称
     /// </summary>
     void SetName(string accessName);
+
     /// <summary>
     ///     设置播放路径
     /// </summary>
     void SetPlayFile(string playFilePath);
+
     /// <summary>
     ///     停止播放
     /// </summary>
