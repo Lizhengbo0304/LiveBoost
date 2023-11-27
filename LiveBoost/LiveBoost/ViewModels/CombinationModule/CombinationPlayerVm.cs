@@ -569,7 +569,6 @@ public sealed partial class CombinationMainWindowVm
         // 设置播放文件相关的属性
         PlayName = file.Name;
         PlayMode = PlayMode.RecordFile;
-        CurrentMarks = file.Markers ??= new ObservableList<RecordMark>();
         PlayFile = file;
 
         // 检查文件是否存在
@@ -584,6 +583,8 @@ public sealed partial class CombinationMainWindowVm
         // 打开并播放文件
         await MdElement.Open(new Uri(file.FullPath));
         await MdElement.Play();
+
+        CurrentMarks = file.Markers ??= new ObservableList<RecordMark>();
     }
 
     public async Task PlayRecordAccess(RecordAccess access)

@@ -121,6 +121,7 @@
         <Compile Include="Tools\DragDropHandler\PlayListDropHandler.cs"/>
         <Compile Include="Tools\Extension\ListExtension.cs"/>
         <Compile Include="Tools\Extension\ObservableListExtension.cs"/>
+        <Compile Include="Tools\Extension\RecordMarkExtension.cs" />
         <Compile Include="Tools\Extension\StringExtension.cs"/>
         <Compile Include="Tools\Helper\ActionHelper.cs"/>
         <Compile Include="Tools\Helper\AesHelper.cs"/>

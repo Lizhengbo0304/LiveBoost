@@ -102,4 +102,19 @@ public static class StringExtension
         // 组合路径，使用Enumerable.Aggregate方法，并将所有反斜杠替换为正斜杠
         return relativePaths.Aggregate(basePath, Path.Combine).Replace('\\', '/');
     }
+
+    /// <summary>
+    ///     尝试解析输入字符串为TimeSpan对象
+    /// </summary>
+    /// <param name="input"> 输入字符串 </param>
+    /// <returns> 如果解析成功，则返回TimeSpan对象，否则返回null </returns>
+    public static TimeSpan? ParseTimeSpan(this string? input)
+    {
+        if (TimeSpan.TryParse(input, out var result))
+        {
+            return result;
+        }
+
+        return null;
+    }
 }

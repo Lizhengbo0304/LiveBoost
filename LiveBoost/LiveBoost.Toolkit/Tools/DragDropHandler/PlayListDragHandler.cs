@@ -4,6 +4,7 @@
 #region
 
 using GongSolutions.Wpf.DragDrop;
+using LiveBoost.ToolKit.Tools;
 
 #endregion
 
@@ -16,7 +17,7 @@ public class PlayListDragHandler : IDragSource
         var type = TypeUtilities.GetCommonBaseClass(dragInfo.SourceItems);
         if (type == typeof(RecordMark))
         {
-            dragInfo.Data = dragInfo.SourceItems.OfType<RecordMark>().Select<RecordMark, RecordFile?>(mark => mark)
+            dragInfo.Data = dragInfo.SourceItems.OfType<RecordMark>().Select<RecordMark, RecordFile?>(mark => mark.CastToRecordFile())
                 .ToList();
         }
 
