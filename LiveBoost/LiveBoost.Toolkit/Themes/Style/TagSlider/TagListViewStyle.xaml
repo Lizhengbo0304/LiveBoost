@@ -1,8 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:controls="clr-namespace:LiveBoost.Toolkit.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:data="clr-namespace:LiveBoost.Toolkit.Data"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
@@ -17,8 +15,7 @@
                         Maximum="{Binding RelativeSource={RelativeSource AncestorType=controls:TagSlider}, Path=Maximum}"
                         Minimum="{Binding RelativeSource={RelativeSource AncestorType=controls:TagSlider}, Path=Minimum}"
                         ValueEnd="{Binding OutPointValue}"
-                        ValueStart="{Binding InPointValue}"
-                        d:DataContext="{d:DesignInstance data:ITag}">
+                        ValueStart="{Binding InPointValue}">
                         <controls:TagRangeTrack.DecreaseRepeatButton>
                             <RepeatButton IsHitTestVisible="False" Style="{StaticResource SliderRepeatButtonHorizontalStyle}" />
                         </controls:TagRangeTrack.DecreaseRepeatButton>

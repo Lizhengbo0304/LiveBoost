@@ -144,7 +144,7 @@
                 </TextBlock.Text>
             </TextBlock>
         </UniformGrid>
-        <Slider
+        <TagSlider
             Background="#646668"
             Cursor="Hand"
             Foreground="#0071FF"
@@ -152,12 +152,8 @@
             Height="20"
             IsEnabled="{Binding MdElement.IsOpen}"
             IsMoveToPointEnabled="True"
-            IsSelectionRangeEnabled="True"
             Maximum="{Binding PlayerOutpoint, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
             Minimum="{Binding PlayerInpoint, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
-            SelectionEnd="{Binding SliderOut}"
-            SelectionStart="{Binding SliderIn}"
-            Template="{StaticResource PlayerSlider}"
             UseLayoutRounding="True"
             Value="{Binding MdElement.Position, Converter={StaticResource TimeSpanToMillSecondsConverter}, Mode=TwoWay}"
             VerticalAlignment="Bottom"
@@ -168,8 +164,8 @@
                     <hc:EventToCommand Command="{Binding SliderValueChangedCmd}" PassEventArgsToCommand="True" />
                 </hc:EventTrigger>
             </hc:Interaction.Triggers>
-        </Slider>
-        <Slider
+        </TagSlider>
+        <TagSlider
             Background="#646668"
             Cursor="Hand"
             Foreground="#0071FF"
@@ -177,12 +173,9 @@
             Height="20"
             IsEnabled="{Binding MdElement.IsOpen}"
             IsMoveToPointEnabled="True"
-            IsSelectionRangeEnabled="True"
             Maximum="{Binding MdElement.PlaybackEndTime, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
             Minimum="{Binding MdElement.PlaybackStartTime, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
-            SelectionEnd="{Binding SliderOut}"
-            SelectionStart="{Binding SliderIn}"
-            Template="{StaticResource PlayerSlider}"
+            TagsSource="{Binding CurrentMarks}"
             UseLayoutRounding="True"
             Value="{Binding MdElement.Position, Converter={StaticResource TimeSpanToMillSecondsConverter}}"
             VerticalAlignment="Bottom"

@@ -80,7 +80,6 @@
         <Compile Include="Data\Interface\IIndex.cs"/>
         <Compile Include="Data\Interface\IJggItem.cs"/>
         <Compile Include="Data\Interface\IJggPlayer.cs"/>
-        <Compile Include="Data\Interface\ITag.cs"/>
         <Compile Include="Data\Interface\ITagThumb.cs"/>
         <Compile Include="Data\Model\AppConfig.cs"/>
         <Compile Include="Data\Model\DoubleNullableRange.cs"/>
