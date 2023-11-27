@@ -4,9 +4,6 @@ using HandyControl.Tools;
 
 namespace LiveBoost.Toolkit.Controls;
 
-/// <summary>
-///     表示滑块范围的轨道。
-/// </summary>
 public sealed class TagRangeTrack : FrameworkElement
 {
     #region Ctor
@@ -226,10 +223,7 @@ public sealed class TagRangeTrack : FrameworkElement
         var value = (double?)basevalue;
 
         // 如果新的值小于最小值，则返回最小值
-        if (value < minimum)
-        {
-            return minimum;
-        }
+        if (value < minimum) return minimum;
 
         // 获取最大值
         var maximum = track.Maximum;
@@ -327,10 +321,7 @@ public sealed class TagRangeTrack : FrameworkElement
         set
         {
             // 如果_decreaseButton或_centerButton等于输入的值，抛出NotSupportedException异常
-            if (Equals(_decreaseButton, value) || Equals(_centerButton, value))
-            {
-                throw new NotSupportedException("SameButtons");
-            }
+            if (Equals(_decreaseButton, value) || Equals(_centerButton, value)) throw new NotSupportedException("SameButtons");
 
             // 调用UpdateComponent方法更新组件
             UpdateComponent(_increaseButton, value);
@@ -339,10 +330,7 @@ public sealed class TagRangeTrack : FrameworkElement
             _increaseButton = value;
 
             // 如果_increaseButton不为null，调用CommandManager.InvalidateRequerySuggested方法更新命令的状态
-            if (_increaseButton != null)
-            {
-                CommandManager.InvalidateRequerySuggested(); // Should post an idle queue item to update IsEnabled on button
-            }
+            if (_increaseButton != null) CommandManager.InvalidateRequerySuggested(); // Should post an idle queue item to update IsEnabled on button
         }
     }
 
@@ -361,10 +349,7 @@ public sealed class TagRangeTrack : FrameworkElement
         set
         {
             // 如果_increaseButton或_decreaseButton等于输入的值，抛出NotSupportedException异常
-            if (Equals(_increaseButton, value) || Equals(_decreaseButton, value))
-            {
-                throw new NotSupportedException("SameButtons");
-            }
+            if (Equals(_increaseButton, value) || Equals(_decreaseButton, value)) throw new NotSupportedException("SameButtons");
 
             // 调用UpdateComponent方法更新组件
             UpdateComponent(_centerButton, value);
@@ -373,10 +358,7 @@ public sealed class TagRangeTrack : FrameworkElement
             _centerButton = value;
 
             // 如果_centerButton不为null，调用CommandManager.InvalidateRequerySuggested方法更新命令的状态
-            if (_centerButton != null)
-            {
-                CommandManager.InvalidateRequerySuggested(); // Should post an idle queue item to update IsEnabled on button
-            }
+            if (_centerButton != null) CommandManager.InvalidateRequerySuggested(); // Should post an idle queue item to update IsEnabled on button
         }
     }
 
@@ -395,10 +377,7 @@ public sealed class TagRangeTrack : FrameworkElement
         set
         {
             // 如果_increaseButton或_centerButton等于输入的值，抛出NotSupportedException异常
-            if (Equals(_increaseButton, value) || Equals(_centerButton, value))
-            {
-                throw new NotSupportedException("SameButtons");
-            }
+            if (Equals(_increaseButton, value) || Equals(_centerButton, value)) throw new NotSupportedException("SameButtons");
 
             // 调用UpdateComponent方法更新组件
             UpdateComponent(_decreaseButton, value);
@@ -407,10 +386,7 @@ public sealed class TagRangeTrack : FrameworkElement
             _decreaseButton = value;
 
             // 如果_decreaseButton不为null，调用CommandManager.InvalidateRequerySuggested方法更新命令的状态
-            if (_decreaseButton != null)
-            {
-                CommandManager.InvalidateRequerySuggested(); // Should post an idle queue item to update IsEnabled on button
-            }
+            if (_decreaseButton != null) CommandManager.InvalidateRequerySuggested(); // Should post an idle queue item to update IsEnabled on button
         }
     }
 
@@ -432,10 +408,7 @@ public sealed class TagRangeTrack : FrameworkElement
 
             // 将_thumbStart设置为输入的值
             _thumbStart = value;
-            if (_thumbStart != null)
-            {
-                _thumbStart.ToolTip = ValueStart;
-            }
+            if (_thumbStart != null) _thumbStart.ToolTip = ValueStart;
         }
     }
 
@@ -457,10 +430,7 @@ public sealed class TagRangeTrack : FrameworkElement
 
             // 将_thumbEnd设置为输入的值
             _thumbEnd = value;
-            if (_thumbEnd != null)
-            {
-                _thumbEnd.ToolTip = ValueEnd;
-            }
+            if (_thumbEnd != null) _thumbEnd.ToolTip = ValueEnd;
         }
     }
 
@@ -473,11 +443,6 @@ public sealed class TagRangeTrack : FrameworkElement
     ///     表示滑块的密度。用于将值映射到长度。
     /// </summary>
     private double Density { get; set; } = double.NaN;
-
-    /// <summary>
-    ///     标记点
-    /// </summary>
-    private ITag? TagModel { get; set; }
 
     #endregion
 
@@ -493,9 +458,7 @@ public sealed class TagRangeTrack : FrameworkElement
         // 当 IsEnabled 属性的新值为 true 时执行
         if ((bool)e.NewValue)
             // 同步鼠标状态
-        {
             Mouse.Synchronize();
-        }
     }
 
     /// <summary>
@@ -516,11 +479,7 @@ public sealed class TagRangeTrack : FrameworkElement
             default:
             {
                 // 如果组件长度大于轨道长度或为 NaN，将其设置为轨道长度
-                if ((componentLength.Value > trackLength) || double.IsNaN(componentLength.Value))
-                {
-                    componentLength = trackLength;
-                }
-
+                if (componentLength.Value > trackLength || double.IsNaN(componentLength.Value)) componentLength = trackLength;
                 break;
             }
         }
@@ -541,10 +500,7 @@ public sealed class TagRangeTrack : FrameworkElement
         else
         {
             // 如果组件长度大于轨道长度或为 NaN，将其设置为轨道长度
-            if ((componentLength > trackLength) || double.IsNaN(componentLength))
-            {
-                componentLength = trackLength;
-            }
+            if (componentLength > trackLength || double.IsNaN(componentLength)) componentLength = trackLength;
         }
     }
 
@@ -560,9 +516,10 @@ public sealed class TagRangeTrack : FrameworkElement
     /// </summary>
     /// <param name="pt">一个点，表示鼠标的位置。</param>
     /// <returns>一个值，表示在滑块上的相对位置。</returns>
-    public double ValueFromPoint(Point pt) =>
+    public double ValueFromPoint(Point pt)
+    {
         // 如果滑块是水平的
-        Orientation == Orientation.Horizontal
+        return Orientation == Orientation.Horizontal
             ?
             // 如果滑块的方向没有被反转，返回一个值，这个值基于鼠标的X坐标
             pt.X / RenderSize.Width * Maximum
@@ -570,6 +527,7 @@ public sealed class TagRangeTrack : FrameworkElement
             :
             // 如果滑块的方向没有被反转，返回一个值，这个值基于鼠标的Y坐标
             pt.Y / RenderSize.Height * Maximum;
+    }
 
 
     /// <summary>
@@ -578,9 +536,11 @@ public sealed class TagRangeTrack : FrameworkElement
     /// <param name="horizontal">水平距离。</param>
     /// <param name="vertical">垂直距离。</param>
     /// <returns>计算得到的值。</returns>
-    public double ValueFromDistance(double horizontal, double vertical) =>
+    public double ValueFromDistance(double horizontal, double vertical)
+    {
         // 根据方向选择计算方式，水平方向使用水平距离乘以密度，垂直方向使用负值的垂直距离乘以密度
-        Orientation == Orientation.Horizontal ? horizontal * Density : -1.0 * vertical * Density;
+        return Orientation == Orientation.Horizontal ? horizontal * Density : -1.0 * vertical * Density;
+    }
 
     #endregion
 
@@ -635,21 +595,13 @@ public sealed class TagRangeTrack : FrameworkElement
 
             offset.Y = increaseButtonLength + (thumbStartLength ?? 0) + centerButtonLength;
             pieceSize.Height = thumbStartLength ?? 0;
-            if (ThumbStart is not null)
-            {
-                ThumbStart.Visibility = thumbStartLength is null ? Visibility.Collapsed : Visibility.Visible;
-            }
-
+            if (ThumbStart is not null) ThumbStart.Visibility = thumbStartLength is null ? Visibility.Collapsed : Visibility.Visible;
             // 布局滑块（未滑动部分）
             ArrangeThumb(false, offset, pieceSize);
 
             offset.Y = increaseButtonLength;
             pieceSize.Height = thumbEndLength ?? 0;
-            if (ThumbEnd is not null)
-            {
-                ThumbEnd.Visibility = thumbEndLength is null ? Visibility.Collapsed : Visibility.Visible;
-            }
-
+            if (ThumbEnd is not null) ThumbEnd.Visibility = thumbEndLength is null ? Visibility.Collapsed : Visibility.Visible;
             // 布局滑块（已滑动部分）
             ArrangeThumb(true, offset, pieceSize);
         }
@@ -684,21 +636,13 @@ public sealed class TagRangeTrack : FrameworkElement
 
             offset.X = decreaseButtonLength;
             pieceSize.Width = thumbStartLength ?? 0;
-            if (ThumbStart is not null)
-            {
-                ThumbStart.Visibility = thumbStartLength is null ? Visibility.Collapsed : Visibility.Visible;
-            }
-
+            if (ThumbStart is not null) ThumbStart.Visibility = thumbStartLength is null ? Visibility.Collapsed : Visibility.Visible;
             // 布局滑块（未滑动部分）
             ArrangeThumb(false, offset, pieceSize);
 
             offset.X = decreaseButtonLength + (thumbEndLength ?? 0) + centerButtonLength;
             pieceSize.Width = thumbEndLength ?? 0;
-            if (ThumbEnd is not null)
-            {
-                ThumbEnd.Visibility = thumbEndLength is null ? Visibility.Collapsed : Visibility.Visible;
-            }
-
+            if (ThumbEnd is not null) ThumbEnd.Visibility = thumbEndLength is null ? Visibility.Collapsed : Visibility.Visible;
             // 布局滑块（已滑动部分）
             ArrangeThumb(true, offset, pieceSize);
         }
@@ -728,11 +672,7 @@ public sealed class TagRangeTrack : FrameworkElement
         }
 
         // 如果_thumbEnd不为null
-        if (_thumbEnd == null)
-        {
-            return desiredSize;
-        }
-
+        if (_thumbEnd == null) return desiredSize;
         // 调用_thumbEnd.Measure方法
         _thumbEnd.Measure(availableSize);
 
@@ -755,20 +695,13 @@ public sealed class TagRangeTrack : FrameworkElement
         get
         {
             // 如果VisualChildren为null，返回0
-            if (VisualChildren == null)
-            {
-                return 0;
-            }
+            if (VisualChildren == null) return 0;
 
             // 遍历VisualChildren
             for (var i = 0; i < VisualChildren.Length; i++)
                 // 如果VisualChildren中存在null元素，返回该元素的索引
-            {
                 if (VisualChildren[i] == null)
-                {
                     return i;
-                }
-            }
 
             // 如果VisualChildren中不存在null元素，返回VisualChildren的长度
             return VisualChildren.Length;
@@ -783,13 +716,10 @@ public sealed class TagRangeTrack : FrameworkElement
     protected override Visual? GetVisualChild(int index)
     {
         // 如果 VisualChildren 不为 null，且索引有效，返回对应索引处的元素
-        if ((VisualChildren != null) && (index >= 0) && (index < VisualChildren.Length) && (VisualChildren[index] != null))
-        {
-            return VisualChildren[index];
-        }
+        if (VisualChildren != null && index >= 0 && index < VisualChildren.Length && VisualChildren[index] != null) return VisualChildren[index];
 
         // 如果索引无效，抛出参数异常
-        throw new ArgumentOutOfRangeException(nameof(index), index, @"Visual_ArgumentOutOfRange");
+        throw new ArgumentOutOfRangeException(nameof(index), index, "Visual_ArgumentOutOfRange");
     }
 
     #endregion
@@ -863,14 +793,10 @@ public sealed class TagRangeTrack : FrameworkElement
     {
         // 如果isStart为true
         if (isStart)
-        {
             ThumbEnd?.Arrange(new Rect(offset, pieceSize));
-        }
         // 如果isStart为false
         else
-        {
             ThumbStart?.Arrange(new Rect(offset, pieceSize));
-        }
     }
 
     /// <summary>
@@ -882,9 +808,7 @@ public sealed class TagRangeTrack : FrameworkElement
     {
         // 如果新旧控件相同，无需更新
         if (oldValue == newValue)
-        {
             return;
-        }
 
         // 初始化 VisualChildren 数组，用于存储子视觉元素
         VisualChildren ??= new Visual?[5];

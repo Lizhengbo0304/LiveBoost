@@ -1,8 +1,5 @@
 ﻿namespace LiveBoost.Toolkit.Controls;
 
-/// <summary>
-///     表示一个滑块的轨道。
-/// </summary>
 public sealed class TagTrack : FrameworkElement
 {
     #region Ctor
@@ -30,9 +27,7 @@ public sealed class TagTrack : FrameworkElement
         // 当 IsEnabled 属性的新值为 true 时执行
         if ((bool)e.NewValue)
             // 同步鼠标状态
-        {
             Mouse.Synchronize();
-        }
     }
 
     /// <summary>
@@ -50,10 +45,7 @@ public sealed class TagTrack : FrameworkElement
         else
         {
             // 如果组件长度大于轨道长度或为 NaN，将其设置为轨道长度
-            if ((componentLength > trackLength) || double.IsNaN(componentLength))
-            {
-                componentLength = trackLength;
-            }
+            if (componentLength > trackLength || double.IsNaN(componentLength)) componentLength = trackLength;
         }
     }
 
@@ -175,9 +167,7 @@ public sealed class TagTrack : FrameworkElement
         {
             // 如果设置的按钮与减小按钮相同，则抛出异常
             if (_decreaseButton == value)
-            {
                 throw new NotSupportedException("Track_SameButtons");
-            }
 
             // 更新组件
             UpdateComponent(_increaseButton, value);
@@ -187,9 +177,7 @@ public sealed class TagTrack : FrameworkElement
 
             // 如果增大按钮为 null，则不进行后续操作
             if (_increaseButton == null)
-            {
                 return;
-            }
 
             // 通知命令管理器重新评估命令
             CommandManager.InvalidateRequerySuggested();
@@ -214,9 +202,7 @@ public sealed class TagTrack : FrameworkElement
         {
             // 如果设置的按钮与增大按钮相同，则抛出异常
             if (Equals(_increaseButton, value))
-            {
                 throw new NotSupportedException("SameButtons");
-            }
 
             // 更新组件
             UpdateComponent(_decreaseButton, value);
@@ -226,9 +212,7 @@ public sealed class TagTrack : FrameworkElement
 
             // 如果减小按钮为 null，则不进行后续操作
             if (_decreaseButton == null)
-            {
                 return;
-            }
 
             // 通知命令管理器重新评估命令
             CommandManager.InvalidateRequerySuggested();
@@ -320,9 +304,11 @@ public sealed class TagTrack : FrameworkElement
     /// <param name="horizontal">水平距离。</param>
     /// <param name="vertical">垂直距离。</param>
     /// <returns>计算得到的值。</returns>
-    public double ValueFromDistance(double horizontal, double vertical) =>
+    public double ValueFromDistance(double horizontal, double vertical)
+    {
         // 根据方向选择计算方式，水平方向使用水平距离乘以密度，垂直方向使用负值的垂直距离乘以密度
-        Orientation == Orientation.Horizontal ? horizontal * Density : -1.0 * vertical * Density;
+        return Orientation == Orientation.Horizontal ? horizontal * Density : -1.0 * vertical * Density;
+    }
 
 
     /// <summary>
@@ -334,9 +320,7 @@ public sealed class TagTrack : FrameworkElement
     {
         // 如果新旧控件相同，无需更新
         if (oldValue == newValue)
-        {
             return;
-        }
 
         // 初始化 _visualChildren 数组，用于存储子视觉元素
         VisualChildren ??= new Visual?[4];
@@ -446,10 +430,7 @@ public sealed class TagTrack : FrameworkElement
     protected override Visual? GetVisualChild(int index)
     {
         // 如果 _visualChildren 不为 null，且索引有效，返回对应索引处的元素
-        if ((VisualChildren != null) && (index >= 0) && (index < VisualChildren.Length) && (VisualChildren[index] != null))
-        {
-            return VisualChildren[index];
-        }
+        if (VisualChildren != null && index >= 0 && index < VisualChildren.Length && VisualChildren[index] != null) return VisualChildren[index];
 
         // 如果索引无效，抛出参数异常
         throw new ArgumentOutOfRangeException(nameof(index), index, @"Visual_ArgumentOutOfRange");
@@ -466,20 +447,13 @@ public sealed class TagTrack : FrameworkElement
         get
         {
             // 如果VisualChildren为null，返回0
-            if (VisualChildren == null)
-            {
-                return 0;
-            }
+            if (VisualChildren == null) return 0;
 
             // 遍历VisualChildren
             for (var i = 0; i < VisualChildren.Length; i++)
                 // 如果VisualChildren中存在null元素，返回该元素的索引
-            {
                 if (VisualChildren[i] == null)
-                {
                     return i;
-                }
-            }
 
             // 如果VisualChildren中不存在null元素，返回VisualChildren的长度
             return VisualChildren.Length;
@@ -497,11 +471,7 @@ public sealed class TagTrack : FrameworkElement
         var size = new Size(0.0, 0.0);
 
         // 如果 Thumb 不为 null，测量 Thumb 并获取其期望大小
-        if (Thumb == null)
-        {
-            return size;
-        }
-
+        if (Thumb == null) return size;
         Thumb.Measure(availableSize);
         size = Thumb.DesiredSize;
         // 返回计算得到的大小

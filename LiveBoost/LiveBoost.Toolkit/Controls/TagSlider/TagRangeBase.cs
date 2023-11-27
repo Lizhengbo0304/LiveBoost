@@ -2,9 +2,6 @@
 
 namespace LiveBoost.Toolkit.Controls;
 
-/// <summary>
-///     表示TagSlider的基类。
-/// </summary>
 public class TagRangeBase : Control
 {
     #region Constructors
@@ -150,10 +147,7 @@ public class TagRangeBase : Control
         var min = ctrl.Minimum;
         var v = (double)basevalue;
         // 如果新的值小于Minimum属性的值，则将新的值设为Minimum属性的值
-        if (v < min)
-        {
-            return min;
-        }
+        if (v < min) return min;
 
         var max = ctrl.Maximum;
         // 如果新的值大于Maximum属性的值，则将新的值设为Maximum属性的值

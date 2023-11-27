@@ -1,19 +1,10 @@
 namespace LiveBoost.Toolkit.Controls;
 
-/// <summary>
-///     表示一个可以拖动的控件，用于表示一个范围的开始或结束。
-/// </summary>
 public class TagRangeThumb : Thumb, ITagThumb
 {
-    /// <summary>
-    ///     表示这个控件是否表示范围的开始。
-    /// </summary>
     public static readonly DependencyProperty IsStartProperty = DependencyProperty.Register(
         nameof(IsStart), typeof(bool), typeof(TagRangeThumb), new PropertyMetadata(default(bool)));
 
-    /// <summary>
-    ///     获取或设置这个控件是否表示范围的开始。
-    /// </summary>
     public bool IsStart
     {
         get => (bool)GetValue(IsStartProperty);
@@ -44,14 +35,10 @@ public class TagRangeThumb : Thumb, ITagThumb
         });
     }
 
-    /// <summary>
-    ///     在鼠标移动时执行的操作。
-    /// </summary>
     protected override void OnMouseMove(MouseEventArgs e)
     {
-        // 这个方法可能是空的，因为它是在鼠标移动时执行的操作，
-        // 但在这个类中，我们不需要在鼠标移动时执行任何操作。
     }
+
 
     /// <summary>
     ///     取消当前的拖动操作，并模拟一次鼠标左键释放的事件。

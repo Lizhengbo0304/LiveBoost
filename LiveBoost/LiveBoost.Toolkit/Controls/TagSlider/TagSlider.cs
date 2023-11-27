@@ -52,19 +52,13 @@ public sealed class TagSlider : TagRangeBase
     private void MoveToNextTick(double direction)
     {
         // 检查方向是否接近于0，如果是则返回
-        if (MathHelper.AreClose(direction, 0))
-        {
-            return;
-        }
+        if (MathHelper.AreClose(direction, 0)) return;
 
         // 计算下一个刻度
         var next = CalculateNextTick(direction);
 
         // 检查新的值是否有效，如果是则设置为当前值
-        if (IsValidValue(next))
-        {
-            SetCurrentValue(ValueProperty, next);
-        }
+        if (IsValidValue(next)) SetCurrentValue(ValueProperty, next);
     }
 
     /// <summary>
@@ -82,21 +76,12 @@ public sealed class TagSlider : TagRangeBase
         var greaterThan = direction > 0;
 
         // 如果下一个刻度的预设值与当前值接近，或者当前值已经接近最大值或最小值，则直接返回下一个刻度的预设值
-        if (!MathHelper.AreClose(next, value) || (greaterThan && MathHelper.AreClose(value, Maximum)) || (!greaterThan && MathHelper.AreClose(value, Minimum)))
-        {
-            return next;
-        }
-
+        if (!MathHelper.AreClose(next, value) || (greaterThan && MathHelper.AreClose(value, Maximum)) || (!greaterThan && MathHelper.AreClose(value, Minimum))) return next;
         // 如果刻度列表有元素，则在刻度列表中查找下一个刻度
         if (Ticks is { Count: > 0 })
-        {
             next = FindNextTickInTicks(value, greaterThan, next);
-        }
         // 如果刻度频率大于0，则根据刻度频率计算下一个刻度
-        else if (MathHelper.GreaterThan(TickFrequency, 0.0))
-        {
-            next = CalculateNextTickByFrequency(value, greaterThan);
-        }
+        else if (MathHelper.GreaterThan(TickFrequency, 0.0)) next = CalculateNextTickByFrequency(value, greaterThan);
 
         return next;
     }
@@ -114,9 +99,7 @@ public sealed class TagSlider : TagRangeBase
         foreach (var tick in Ticks!.Where(tick => (greaterThan && MathHelper.GreaterThan(tick, value) && (MathHelper.LessThan(tick, next) || MathHelper.AreClose(next, value)))
                                                   || (!greaterThan && MathHelper.LessThan(tick, value) && (MathHelper.GreaterThan(tick, next) || MathHelper.AreClose(next, value)))))
             // 更新下一个刻度
-        {
             next = tick;
-        }
 
         return next;
     }
@@ -134,13 +117,9 @@ public sealed class TagSlider : TagRangeBase
 
         // 根据移动的方向，增加或减少刻度位置
         if (greaterThan)
-        {
             tickNumber += 1.0;
-        }
         else
-        {
             tickNumber -= 1.0;
-        }
 
         // 计算下一个刻度
         var next = Minimum + tickNumber * TickFrequency;
@@ -153,7 +132,10 @@ public sealed class TagSlider : TagRangeBase
     /// </summary>
     /// <param name="value">需要检查的值</param>
     /// <returns>如果值有效则返回true，否则返回false</returns>
-    private bool IsValidValue(double value) => !MathHelper.AreClose(value, Value);
+    private bool IsValidValue(double value)
+    {
+        return !MathHelper.AreClose(value, Value);
+    }
 
     /// <summary>
     ///     将给定的值捕捉到最近的刻度值。
@@ -164,9 +146,7 @@ public sealed class TagSlider : TagRangeBase
     {
         // 如果不启用刻度捕捉，则直接返回原值
         if (!IsSnapToTickEnabled)
-        {
             return value;
-        }
 
         // 初始化前一个和后一个刻度值为最小值和最大值
         var previous = Minimum;
@@ -180,23 +160,16 @@ public sealed class TagSlider : TagRangeBase
 
             // 如果找到了与当前值相等的刻度，直接返回原值
             if (tickIndex >= 0)
-            {
                 return value;
-            }
 
             // 计算当前值在刻度集合中的插入点
             tickIndex = ~tickIndex;
 
             // 根据插入点获取前一个和后一个刻度值
             if (tickIndex > 0)
-            {
                 previous = Ticks[tickIndex - 1];
-            }
-
             if (tickIndex < Ticks.Count)
-            {
                 next = Ticks[tickIndex];
-            }
         }
         // 如果不存在刻度集合，但刻度频率大于零
         else if (MathHelper.GreaterThan(TickFrequency, 0.0))
@@ -226,10 +199,7 @@ public sealed class TagSlider : TagRangeBase
         var snapValue = SnapToTick(value);
 
         // 如果刻度捕捉后的值与原值相等，更新当前值
-        if (!MathHelper.AreClose(Value, snapValue))
-        {
-            SetCurrentValue(ValueProperty, Math.Max(Minimum, Math.Min(Maximum, snapValue)));
-        }
+        if (!MathHelper.AreClose(Value, snapValue)) SetCurrentValue(ValueProperty, Math.Max(Minimum, Math.Min(Maximum, snapValue)));
     }
 
     /// <summary>
@@ -243,10 +213,7 @@ public sealed class TagSlider : TagRangeBase
         var snappedValue = SnapToTick(value);
 
         // 如果当前轨道为空，直接返回
-        if (_currentTrack is null)
-        {
-            return;
-        }
+        if (_currentTrack is null) return;
 
         // 根据 isStart 参数确定需要更新的属性和对应的值
         // 如果 isStart 为 true，则更新起始值；否则，更新结束值
@@ -258,10 +225,7 @@ public sealed class TagSlider : TagRangeBase
         var otherThumb = isStart ? _currentTrack.ThumbEnd : _currentTrack.ThumbStart;
 
         // 如果新的值接近当前的值，直接返回
-        if (MathHelper.AreClose(snappedValue, currentValue!.Value))
-        {
-            return;
-        }
+        if (MathHelper.AreClose(snappedValue, currentValue!.Value)) return;
 
         // 计算新的值，新的值不能超出范围
         var newValue = Math.Max(Minimum, Math.Min(Maximum, snappedValue));
@@ -316,9 +280,7 @@ public sealed class TagSlider : TagRangeBase
             // 验证新值是否在有效范围内
             if (ValidateHelper.IsInRangeOfDouble(newValue))
                 // 更新值
-            {
                 UpdateValue(newValue);
-            }
 
             // 标记事件已处理
             e.Handled = true;
@@ -348,28 +310,16 @@ public sealed class TagSlider : TagRangeBase
     protected override void OnMouseMove(MouseEventArgs e)
     {
         // 检查鼠标的左键是否被按下，如果没有，就返回
-        if (e.MouseDevice.LeftButton != MouseButtonState.Pressed)
-        {
-            return;
-        }
-
+        if (e.MouseDevice.LeftButton != MouseButtonState.Pressed) return;
         // 检查滑块是否正在拖动，如果不是，就返回
-        if (!((_currentThumb as Thumb)?.IsDragging ?? false))
-        {
-            return;
-        }
+        if (!((_currentThumb as Thumb)?.IsDragging ?? false)) return;
 
         // 获取滑块的坐标位置
         var thumbCoordPosition = e.GetPosition(_currentThumb as Thumb);
-        Debug.WriteLine(thumbCoordPosition);
         // 转换为屏幕坐标
         var screenCoordPosition = PointFromScreen(thumbCoordPosition);
         // 检查这个位置是否与上一个位置相同，如果相同，就返回
-        if (screenCoordPosition == _previousScreenCoordPosition)
-        {
-            return;
-        }
-
+        if (screenCoordPosition == _previousScreenCoordPosition) return;
         // 更新上一个位置
         _previousScreenCoordPosition = screenCoordPosition;
         // 触发滑块的DragDelta事件
@@ -394,10 +344,10 @@ public sealed class TagSlider : TagRangeBase
     /// <summary>
     ///     获取或设置标签源
     /// </summary>
-    public IEnumerable TagsSource
+    public IEnumerable? TagsSource
     {
         // 获取标签源属性的值
-        get => (IEnumerable)GetValue(TagsSourceProperty);
+        get => (IEnumerable?)GetValue(TagsSourceProperty);
         // 设置标签源属性的值
         set => SetValue(TagsSourceProperty, value);
     }
@@ -534,9 +484,7 @@ public sealed class TagSlider : TagRangeBase
 
         // 如果延迟时间小于0或大于3，则将延迟时间设为0
         if (delay is < 0 or > 3)
-        {
             delay = 0;
-        }
 
         // 返回延迟时间加1后的值乘以250
         return (delay + 1) * 250;
@@ -553,9 +501,7 @@ public sealed class TagSlider : TagRangeBase
 
         // 如果速度小于0或大于31，则设置为31。
         if (speed is < 0 or > 31)
-        {
             speed = 31;
-        }
 
         // 根据速度计算每分钟按键次数，并返回结果。
         return (31 - speed) * (400 - 1000 / 30) / 31 + 1000 / 30;
@@ -581,7 +527,10 @@ public sealed class TagSlider : TagRangeBase
     /// </summary>
     /// <param name="o">要进行判断的对象。</param>
     /// <returns>如果传入的对象是大于等于0的整数，则返回true；否则返回false。</returns>
-    private static bool IsValidAutoToolTipPrecision(object o) => (int)o >= 0;
+    private static bool IsValidAutoToolTipPrecision(object o)
+    {
+        return (int)o >= 0;
+    }
 
     /// <summary>
     ///     判断给定的对象 o 是否是有效的刻度放置选项
@@ -878,21 +827,11 @@ public sealed class TagSlider : TagRangeBase
     private static void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         // 检查是否为左键按下事件
-        if (e.ChangedButton is not MouseButton.Left)
-        {
-            return;
-        }
+        if (e.ChangedButton is not MouseButton.Left) return;
 
-        if (sender is not TagSlider slider)
-        {
-            return;
-        }
-
+        if (sender is not TagSlider slider) return;
         // 检查事件源是否为TagSlider，并且键盘焦点不在内部
-        if (!slider.IsKeyboardFocusWithin)
-        {
-            e.Handled = slider.Focus() || e.Handled;
-        }
+        if (!slider.IsKeyboardFocusWithin) e.Handled = slider.Focus() || e.Handled;
 
         if (slider._tagTrack?.Thumb is { IsMouseOver: true })
         {
@@ -950,21 +889,14 @@ public sealed class TagSlider : TagRangeBase
             // 计算新的值
             var newValue = Value + _tagTrack.ValueFromDistance(e.HorizontalChange, e.VerticalChange);
             // 如果新的值在有效范围内，就更新滑块的值
-            if (ValidateHelper.IsInRangeOfDouble(newValue))
-            {
-                UpdateValue(newValue);
-            }
+            if (ValidateHelper.IsInRangeOfDouble(newValue)) UpdateValue(newValue);
         }
         else if (e.OriginalSource is TagRangeThumb rangeThumb)
         {
             // 计算新的值
             var newValue = (rangeThumb.IsStart ? _currentTrack!.ValueStart!.Value : _currentTrack!.ValueEnd!.Value) + _currentTrack!.ValueFromDistance(e.HorizontalChange, e.VerticalChange);
             // 如果新的值在有效范围内，就更新滑块的值
-            if (!ValidateHelper.IsInRangeOfDouble(newValue))
-            {
-                return;
-            }
-
+            if (!ValidateHelper.IsInRangeOfDouble(newValue)) return;
             UpdateValue(newValue, (_currentThumb as TagRangeThumb)!.IsStart);
             _currentTrack.SetCurrentValue(rangeThumb.IsStart ? TagRangeTrack.ValueStartProperty : TagRangeTrack.ValueEndProperty, newValue);
         }
@@ -989,11 +921,7 @@ public sealed class TagSlider : TagRangeBase
     private void OnThumbDragStarted(DragStartedEventArgs e)
     {
         // 检查事件的原始源是否是TagThumb类型，如果不是，就返回
-        if (e.OriginalSource is not ITagThumb thumb)
-        {
-            return;
-        }
-
+        if (e.OriginalSource is not ITagThumb thumb) return;
         // 获取鼠标的位置
         _originThumbPoint = Mouse.GetPosition(thumb as Thumb);
         // 开始拖动

@@ -38,10 +38,10 @@
                         x:Name="Thumb" />
                     <!--  定义一个DataTrigger，当TagRangeThumb的IsStart属性为True时，改变Path的数据源为UpTagGeometry，并改变边距  -->
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsStart}" Value="True">
+                        <Trigger Property="IsStart" Value="True">
                             <Setter Property="Data" TargetName="Thumb" Value="{StaticResource UpTagGeometry}" />
                             <Setter Property="Margin" Value="-5,11,-5,-11" />
-                        </DataTrigger>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
