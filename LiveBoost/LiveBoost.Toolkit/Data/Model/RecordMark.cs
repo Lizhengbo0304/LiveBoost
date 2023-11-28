@@ -18,6 +18,15 @@ public sealed class RecordMark : INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        switch (propertyName)
+        {
+            case nameof(InPoint):
+                Tag.InPointValue = InPoint?.ParseTimeSpan()?.TotalMilliseconds;
+                return;
+            case nameof(OutPoint):
+                Tag.OutPointValue = OutPoint?.ParseTimeSpan()?.TotalMilliseconds;
+                return;
+        }
     }
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
@@ -119,6 +128,12 @@ public sealed class RecordMark : INotifyPropertyChanged
     ///     图标真实路径
     /// </summary>
     public LazyProperty<TimeSpan> Duration { get; }
+
+    #endregion
+
+    #region TagData
+
+    public RecordTag Tag { get; set; } = new();
 
     #endregion
 }

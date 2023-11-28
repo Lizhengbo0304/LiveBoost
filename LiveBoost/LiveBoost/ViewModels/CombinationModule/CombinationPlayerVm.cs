@@ -585,6 +585,11 @@ public sealed partial class CombinationMainWindowVm
         await MdElement.Play();
 
         CurrentMarks = file.Markers ??= new ObservableList<RecordMark>();
+        CurrentTags = CurrentMarks?.Select(x =>new RecordTag()
+        {
+            InPointValue = x.InPoint?.ParseTimeSpan()?.TotalMilliseconds,
+            OutPointValue = x.OutPoint?.ParseTimeSpan()?.TotalMilliseconds,
+        }).ToObservableList();
     }
 
     public async Task PlayRecordAccess(RecordAccess access)

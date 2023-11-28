@@ -98,6 +98,7 @@
         <Compile Include="Data\Model\RecordMission.cs"/>
         <Compile Include="Data\Model\RecordServer.cs"/>
         <Compile Include="Data\Model\RecordServerConfig.cs"/>
+        <Compile Include="Data\Model\RecordTag.cs" />
         <Compile Include="Data\Model\RecordTemplate.cs"/>
         <Compile Include="Data\Model\Resolution.cs"/>
         <Compile Include="Data\Model\ShouluFormat.cs"/>

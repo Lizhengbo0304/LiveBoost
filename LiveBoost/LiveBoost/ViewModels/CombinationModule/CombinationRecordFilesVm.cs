@@ -21,6 +21,7 @@ public partial class CombinationMainWindowVm
     ///     当前素材Mark点
     /// </summary>
     public ObservableList<RecordMark>? CurrentMarks { get; set; }
+    public ObservableList<RecordTag>? CurrentTags { get; set; }
 
     /// <summary>
     ///     拖拽事件

@@ -39,6 +39,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
     <Style TargetType="controls:TagListView">
         <Setter Property="ItemsPanel">
             <Setter.Value>

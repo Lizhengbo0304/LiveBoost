@@ -5,6 +5,7 @@
 
 using LiveBoost.ToolKit.Tools;
 using MediaElement = Unosquare.FFME.MediaElement;
+// ReSharper disable UnusedMember.Local
 
 #endregion
 
