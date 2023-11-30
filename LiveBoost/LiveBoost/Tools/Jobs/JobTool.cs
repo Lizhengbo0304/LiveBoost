@@ -13,16 +13,24 @@ namespace LiveBoost.Tools;
 // JobTool 类用于管理定时任务
 public static class JobTool
 {
-    // 检查QR状态的JobKey
+    /// <summary>
+    /// 检查QR状态的JobKey
+    /// </summary>
     private static readonly JobKey RenewalJobKey = JobKey.Create("RenewalJob", "RenewalJobGroup");
 
-    // 检查QR状态的Job
+    /// <summary>
+    /// 检查QR状态的Job
+    /// </summary>
     private static IJobDetail? _renewalJob;
 
-    // 启动定时任务
+    /// <summary>
+    /// 启动定时任务
+    /// </summary>
     public static async Task StartRenewalJob()
     {
-        var scheduler = StdSchedulerFactory.GetDefaultScheduler().Result;
+        // 获取调度器
+        var scheduler = await StdSchedulerFactory.GetDefaultScheduler();
+        // 如果调度器未启动，启动它
         if (!scheduler.IsStarted)
         {
             await scheduler.Start();
@@ -49,9 +57,12 @@ public static class JobTool
         await scheduler.ScheduleJob(_renewalJob, trigger);
     }
 
-    // 停止定时任务
+    /// <summary>
+    /// 停止定时任务
+    /// </summary>
     public static async Task StopRenewalJob()
     {
+        // 如果 RenewalJob 存在，删除它
         if (_renewalJob != null)
         {
             await (await StdSchedulerFactory.GetDefaultScheduler()).DeleteJob(RenewalJobKey);

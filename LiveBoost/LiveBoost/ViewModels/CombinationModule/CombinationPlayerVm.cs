@@ -630,16 +630,19 @@ public sealed partial class CombinationMainWindowVm
         {
             var remainingDuration = MdElement.RemainingDuration.Value;
 
-            if (remainingDuration.TotalSeconds > 20)
+            switch (remainingDuration.TotalSeconds)
             {
-                // 如果剩余时长大于 20 秒，则从剩余时长的倒数第 20 秒开始播放
-                await MdElement.Seek(remainingDuration.Add(TimeSpan.FromSeconds(-20)));
-            }
-            else if (remainingDuration.TotalSeconds > 0)
-            {
-                // 如果剩余时长小于等于 20 秒，则延迟播放剩余时长的秒数
-                var delay = remainingDuration.TotalSeconds;
-                await Task.Delay(TimeSpan.FromSeconds(delay));
+                case > 20:
+                    // 如果剩余时长大于 20 秒，则从剩余时长的倒数第 20 秒开始播放
+                    await MdElement.Seek(remainingDuration.Add(TimeSpan.FromSeconds(-20)));
+                    break;
+                case > 0:
+                {
+                    // 如果剩余时长小于等于 20 秒，则延迟播放剩余时长的秒数
+                    var delay = remainingDuration.TotalSeconds;
+                    await Task.Delay(TimeSpan.FromSeconds(delay));
+                    break;
+                }
             }
         }
     }

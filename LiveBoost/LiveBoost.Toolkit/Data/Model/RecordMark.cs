@@ -4,6 +4,7 @@
 #region
 
 using LiveBoost.ToolKit.Tools;
+// ReSharper disable UnusedMember.Local
 
 #endregion
 

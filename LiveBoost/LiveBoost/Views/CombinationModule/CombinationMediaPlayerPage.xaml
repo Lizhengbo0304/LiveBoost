@@ -12,7 +12,8 @@
     xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:viewModels="clr-namespace:LiveBoost.ViewModels">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -148,6 +149,7 @@
             Background="#646668"
             Cursor="Hand"
             Foreground="#0071FF"
+            d:DataContext="{d:DesignInstance Type=viewModels:CombinationMainWindowVm, IsDesignTimeCreatable=True}"
             Grid.Row="0"
             Height="20"
             IsEnabled="{Binding MdElement.IsOpen}"
