@@ -1,31 +1,21 @@
-﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml" >
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost;component/Themes/Basic/Converter.xaml" />
-        <!-- HandyControlTheme -->
-        <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/skindark.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
-        <!-- Controls -->
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/Controls/CombinationItemStyle.xaml" />
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/Controls/JggItemStyle.xaml" />
-        <!-- CombinationStyle -->
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ButtonStyle.xaml" />
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/SearchBarStyle.xaml" />
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/TabControlStyle.xaml" />
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ComboBoxStyle.xaml" />
-        <!-- JggModule -->
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/JggModule/ListViewStyle.xaml" />
-        <ResourceDictionary
-            Source = "pack://application:,,,/LiveBoost;component/Themes/Style/JggModule/ExpanderStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Basic/Converter.xaml" />
+        <!--  HandyControlTheme  -->
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/skindark.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
+        <!--  Controls  -->
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/Controls/CombinationItemStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/Controls/JggItemStyle.xaml" />
+        <!--  CombinationStyle  -->
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ButtonStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ListViewStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/SearchBarStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/TabControlStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/CombinationStyle/ComboBoxStyle.xaml" />
+        <!--  JggModule  -->
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/JggModule/ListViewStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost;component/Themes/Style/JggModule/ExpanderStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

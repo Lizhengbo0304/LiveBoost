@@ -12,10 +12,11 @@ public static partial class UrlHelper
     public static async Task<(bool, string?)> GetConfig()
     {
         // 检查接口地址是否为空
-        if ( string.IsNullOrEmpty(AppConfig.Instance.MamCommonIp) )
+        if (string.IsNullOrEmpty(AppConfig.Instance.MamCommonIp))
         {
-            return ( false, "接口地址为空,获取配置信息异常" );
+            return (false, "接口地址为空,获取配置信息异常");
         }
+
         var url = $"{AppConfig.Instance.MamCommonIp}/a/rest/mam/config";
 
         var stamp = DateTimeHelper.GetTimeStamp();
@@ -34,14 +35,14 @@ public static partial class UrlHelper
 
                 // 将 jobj 中的数据反序列化到 AppConfig.Instance 对象中
                 JsonConvert.PopulateObject(jobj["data"]?.ToString() ?? "{}", AppConfig.Instance);
-                return ( true, string.Empty );
+                return (true, string.Empty);
             },
             response =>
             {
                 var jobj = JObject.Parse(response);
                 // 返回错误消息
-                return ( false, $"{jobj["msg"]?.Value<string>()},获取配置信息异常" );
+                return (false, $"{jobj["msg"]?.Value<string>()},获取配置信息异常");
             },
-            e => ( false, $"{e.InnerException?.Message ?? e.Message},获取配置信息异常" ));
+            e => (false, $"{e.InnerException?.Message ?? e.Message},获取配置信息异常"));
     }
 }

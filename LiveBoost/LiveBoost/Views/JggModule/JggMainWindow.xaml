@@ -1,32 +1,45 @@
-﻿<hc:Window x:Class = "LiveBoost.Views.JggMainWindow" xmlns:prism = "http://prismlibrary.com/"
-           SnapsToDevicePixels = "True" xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-           xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-           xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" xmlns:local = "clr-namespace:LiveBoost.Views"
-           xmlns:hc = "https://handyorg.github.io/handycontrol" mc:Ignorable = "d" Title = "LiveBoost"
-           prism:ViewModelLocator.AutoWireViewModel = "False" BorderBrush = "Transparent" BorderThickness = "0"
-           FontFamily = "Microsoft YaHei" Background = "Transparent"
-           Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
-           WindowStyle = "None" >
+﻿<hc:Window
+    Background="Transparent"
+    BorderBrush="Transparent"
+    BorderThickness="0"
+    FontFamily="Microsoft YaHei"
+    Icon="pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
+    SnapsToDevicePixels="True"
+    Title="LiveBoost"
+    WindowStyle="None"
+    mc:Ignorable="d"
+    prism:ViewModelLocator.AutoWireViewModel="False"
+    x:Class="LiveBoost.Views.JggMainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:LiveBoost.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height = "Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <!-- 标题栏 -->
-        <local:JggTitleBar Grid.Row = "0" />
-        <hc:SimplePanel Grid.Row = "1" >
-            <Border Background = "#484A4E" />
-            <hc:Divider Margin = "0,5,0,0" VerticalAlignment = "Top" LineStroke = "#3C3D3F" LineStrokeThickness = "2" />
+        <!--  标题栏  -->
+        <local:JggTitleBar Grid.Row="0" />
+        <hc:SimplePanel Grid.Row="1">
+            <Border Background="#484A4E" />
+            <hc:Divider
+                LineStroke="#3C3D3F"
+                LineStrokeThickness="2"
+                Margin="0,5,0,0"
+                VerticalAlignment="Top" />
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width = "Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
-                    <ColumnDefinition Width = "Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <local:JggMonitoringSource Grid.Column = "0" Margin = "20,33,12,22" />
-                <local:JggPreviewAccessPage Grid.Column = "1" Margin = "0 33 0 22" />
-                <local:JggLayoutPage Grid.Column = "2" Margin = "10 33 10 0" />
+                <local:JggMonitoringSource Grid.Column="0" Margin="20,33,12,22" />
+                <local:JggPreviewAccessPage Grid.Column="1" Margin="0,33,0,22" />
+                <local:JggLayoutPage Grid.Column="2" Margin="10,33,10,0" />
             </Grid>
         </hc:SimplePanel>
     </Grid>

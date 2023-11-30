@@ -8,8 +8,8 @@ public static partial class UrlHelper
     /// <summary>
     ///     登录用户的方法。
     /// </summary>
-    /// <param name = "loginName" > 用户名。 </param>
-    /// <param name = "password" > 密码（可为null）。 </param>
+    /// <param name="loginName"> 用户名。 </param>
+    /// <param name="password"> 密码（可为null）。 </param>
     /// <returns> 登录是否成功。 </returns>
     public static async Task<bool> Login(string loginName, string? password)
     {
@@ -30,13 +30,14 @@ public static partial class UrlHelper
             response =>
             {
                 var jobj = JObject.Parse(response);
-                if ( jobj["data"]?["entity"]?.ToString() is { } entity && jobj["data"]?["access_token"]?.ToString() is { } token )
+                if (jobj["data"]?["entity"]?.ToString() is { } entity && jobj["data"]?["access_token"]?.ToString() is { } token)
                 {
                     // 登录成功，将用户信息反序列化并存储
                     AppProgram.Instance.LoginUser = JsonConvert.DeserializeObject<LoginUser>(entity);
                     AppProgram.Instance.LoginUser.Token = token;
                     return true;
                 }
+
                 MessageBox.Warning("返回用户为空", "用户查询异常");
                 return false;
             },

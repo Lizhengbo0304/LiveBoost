@@ -16,7 +16,8 @@ public class AppProgram
 
         Instance.App.Run();
     }
-#region Event
+
+    #region Event
 
     /// <summary>
     ///     开始程序（展示界面前的初始化）
@@ -24,7 +25,7 @@ public class AppProgram
     public async Task StartAsync()
     {
         // 检查当前进程是否是唯一的进程
-        if ( Mutex.IsOnlyProcess() )
+        if (Mutex.IsOnlyProcess())
         {
             // 并行初始化App和配置文件
             await Task.WhenAll(InitAppAsync(), InitConfigAsync());
@@ -44,7 +45,7 @@ public class AppProgram
         return Task.Run(() =>
         {
             // 等待ContainerLocator.Current初始化完成
-            while ( ContainerLocator.Current == null )
+            while (ContainerLocator.Current == null)
             {
                 // 添加延迟以避免CPU使用率过高
                 Task.Delay(100);
@@ -70,7 +71,7 @@ public class AppProgram
         var result = await UrlHelper.GetConfig();
         AppConfig.Instance.IsInit = result.Item1;
         // 如果获取配置文件失败，显示警告消息
-        if ( result.Item1 )
+        if (result.Item1)
         {
             FlurlHttp.ConfigureClient(AppConfig.Instance.MamApiIp, cli =>
                 cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
@@ -105,13 +106,13 @@ public class AppProgram
     private void AppMainWndOnClosed(object? sender, EventArgs e)
     {
         // 如果窗口关闭后主窗口为null，则关闭程序（如果最后关闭的为MainWnd，则执行Logout操作）
-        switch ( sender )
+        switch (sender)
         {
             case LoginWindow loginWnd:
             {
                 loginWnd.Closed -= AppMainWndOnClosed;
 
-                if ( App.MainWindow == null )
+                if (App.MainWindow == null)
                 {
                     App.Shutdown();
                 }
@@ -121,7 +122,7 @@ public class AppProgram
             case CombinationMainWindow mainWnd:
             {
                 mainWnd.Closed -= AppMainWndOnClosed;
-                if ( App.MainWindow == null )
+                if (App.MainWindow == null)
                 {
                     IsClosed = true;
                     GlobalEvent.Instance.GetEvent<CloseCombinationPlayerProcess>().Publish();
@@ -131,6 +132,7 @@ public class AppProgram
                 {
                     LoginWnd!.Closed += AppMainWndOnClosed;
                 }
+
                 break;
             }
         }
@@ -146,14 +148,15 @@ public class AppProgram
             await Task.Yield();
             await task;
         }
-        catch ( Exception )
+        catch (Exception)
         {
             Instance.App.Shutdown();
         }
     }
 
-#endregion
-#region Global
+    #endregion
+
+    #region Global
 
     private static readonly Lazy<AppProgram> AppProgramLazy = new(() => new AppProgram());
 
@@ -168,9 +171,9 @@ public class AppProgram
 
     public static AppProgram Instance => AppProgramLazy.Value;
 
-#endregion
+    #endregion
 
-#region Property
+    #region Property
 
     /// <summary>
     ///     互斥锁
@@ -183,25 +186,29 @@ public class AppProgram
     public readonly App App;
 
     public bool IsClosed { get; set; }
+
     /// <summary>
     ///     登录窗口
     /// </summary>
     public LoginWindow? LoginWnd { get; set; }
+
     /// <summary>
     ///     用户
     /// </summary>
     public LoginUser? LoginUser { get; set; }
+
     /// <summary>
     ///     主窗口
     /// </summary>
     public CombinationMainWindow? MainWnd { get; set; }
 
-#endregion
-#region Public - Event
+    #endregion
+
+    #region Public - Event
 
     public async Task LoginInit()
     {
-        if ( LoginWnd == null )
+        if (LoginWnd == null)
         {
             return;
         }
@@ -214,15 +221,17 @@ public class AppProgram
         MainWnd.Show();
         LoginWnd = null;
         // 取消登录页的订阅
-        if ( LoginWndInputBoxFocus.SubscriptionTokens.Any() )
+        if (LoginWndInputBoxFocus.SubscriptionTokens.Any())
         {
             LoginWndInputBoxFocus.SubscriptionTokens.ForEach(it => GlobalEvent.Instance.GetEvent<LoginWndInputBoxFocus>().Unsubscribe(it));
         }
-        await JobTool.StartRenewalJob();
 
+        await JobTool.StartRenewalJob();
     }
 
-    public void LogoutInit() { }
+    public void LogoutInit()
+    {
+    }
 
-#endregion
+    #endregion
 }

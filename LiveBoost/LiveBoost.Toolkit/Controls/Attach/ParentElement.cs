@@ -17,7 +17,7 @@ public class ParentElement
     /// <summary>
     ///     获取父级Element
     /// </summary>
-    public static FrameworkElement? GetParentElement(DependencyObject element) => (FrameworkElement?) element.GetValue(ParentElementProperty);
+    public static FrameworkElement? GetParentElement(DependencyObject element) => (FrameworkElement?)element.GetValue(ParentElementProperty);
 
     /// <summary>
     ///     设置父级Element

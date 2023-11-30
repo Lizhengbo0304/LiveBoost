@@ -15,10 +15,11 @@ public class LayoutIndex2ItemsPanelConverter : IValueConverter
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         // 确保输入值是整数类型
-        if ( value is not int index )
+        if (value is not int index)
         {
             return null;
         }
+
         return index switch
         {
             0 =>

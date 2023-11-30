@@ -27,13 +27,15 @@ public class Resolution
         Height = height;
         DisplayName = displayName;
     }
+
     public static List<Resolution> Resolutions { get; private set; }
-#region Properties
+
+    #region Properties
 
     public string Width { get; set; }
     public string Height { get; set; }
     public string DisplayName { get; set; }
     public string ResolutionValue { get; set; }
 
-#endregion
+    #endregion
 }

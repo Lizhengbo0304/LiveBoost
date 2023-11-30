@@ -14,7 +14,7 @@ public sealed class Ticker : INotifyPropertyChanged
     // 上午或下午
     public string AmOrPm => Now.Hour >= 12 ? "PM" : "AM";
 
-#region INotifyPropertyChangedEvent
+    #region INotifyPropertyChangedEvent
 
     // 属性更改事件
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -28,18 +28,19 @@ public sealed class Ticker : INotifyPropertyChanged
     // 设置字段的值，并触发属性更改事件
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 
-#region Ctor
+    #region Ctor
 
     // 使用Lazy<T>实现延迟加载的单例模式
     private static readonly Lazy<Ticker> TickerLazy = new(() => new Ticker());
@@ -64,5 +65,5 @@ public sealed class Ticker : INotifyPropertyChanged
     // 获取Ticker的单例实例
     public static Ticker Instance => TickerLazy.Value;
 
-#endregion
+    #endregion
 }

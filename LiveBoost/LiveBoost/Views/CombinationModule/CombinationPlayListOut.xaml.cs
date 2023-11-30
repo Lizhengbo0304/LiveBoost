@@ -11,7 +11,7 @@ namespace LiveBoost.Views;
 
 public partial class CombinationPlayListOut
 {
-#region Static-Event
+    #region Static-Event
 
     public static (string, RecordTemplate) ShowOut()
     {
@@ -20,9 +20,9 @@ public partial class CombinationPlayListOut
         return outWindow._outResult;
     }
 
-#endregion
+    #endregion
 
-#region Private Event
+    #region Private Event
 
     private (string, RecordTemplate) _outResult;
 
@@ -35,37 +35,38 @@ public partial class CombinationPlayListOut
 
     private void Done_OnClick(object sender, RoutedEventArgs e)
     {
-        if ( string.IsNullOrEmpty(OutName) )
+        if (string.IsNullOrEmpty(OutName))
         {
             MessageBox.Warning("文件名称不得为空", "导出视频");
             return;
         }
-        if ( OutName.HasInvalidSymbol() )
+
+        if (OutName.HasInvalidSymbol())
         {
             MessageBox.Warning("文件名称包含非法字符，请重新输入", "导出视频");
             return;
         }
 
-        if ( SelectedTemplate is null )
+        if (SelectedTemplate is null)
         {
             MessageBox.Warning("请选择导出模板", "导出视频");
             return;
         }
 
-        if ( string.IsNullOrEmpty(SelectedTemplate.Id) )
+        if (string.IsNullOrEmpty(SelectedTemplate.Id))
         {
             MessageBox.Warning("导出模板Id为空，请重新选择", "导出播单");
 
             return;
         }
 
-        _outResult = ( OutName, SelectedTemplate );
+        _outResult = (OutName, SelectedTemplate);
         Close();
     }
 
-#endregion
+    #endregion
 
-#region depe
+    #region depe
 
     /// <summary>
     ///     导出模板列表
@@ -79,7 +80,7 @@ public partial class CombinationPlayListOut
     /// </summary>
     public List<RecordTemplate> OutTemplates
     {
-        get => (List<RecordTemplate>) GetValue(OutTemplatesProperty);
+        get => (List<RecordTemplate>)GetValue(OutTemplatesProperty);
         set => SetValue(OutTemplatesProperty, value);
     }
 
@@ -95,7 +96,7 @@ public partial class CombinationPlayListOut
     /// </summary>
     public RecordTemplate? SelectedTemplate
     {
-        get => (RecordTemplate?) GetValue(SelectedTemplateProperty);
+        get => (RecordTemplate?)GetValue(SelectedTemplateProperty);
         set => SetValue(SelectedTemplateProperty, value);
     }
 
@@ -110,9 +111,9 @@ public partial class CombinationPlayListOut
     /// </summary>
     public string OutName
     {
-        get => (string) GetValue(OutNameProperty);
+        get => (string)GetValue(OutNameProperty);
         set => SetValue(OutNameProperty, value);
     }
 
-#endregion
+    #endregion
 }

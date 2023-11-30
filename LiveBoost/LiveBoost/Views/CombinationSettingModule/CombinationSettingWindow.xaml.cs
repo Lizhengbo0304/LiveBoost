@@ -21,7 +21,7 @@ public partial class CombinationSettingWindow
         RegionManager.SetRegionManager(this, regionManager);
 
         // 检查是否已经注册了名为 "SettingShow" 的区域，如果没有则进行注册
-        if ( !regionManager.Regions.ContainsRegionWithName("SettingShow") )
+        if (!regionManager.Regions.ContainsRegionWithName("SettingShow"))
         {
             // 注册名为 "SettingShow" 的区域，并指定视图类型为 ContentControl
             regionManager.RegisterViewWithRegion("SettingShow", typeof(ContentControl));
@@ -33,7 +33,7 @@ public partial class CombinationSettingWindow
         Closed += (_, _) =>
         {
             // 窗口关闭时执行以下操作
-            if ( regionManager.Regions.ContainsRegionWithName("SettingShow") )
+            if (regionManager.Regions.ContainsRegionWithName("SettingShow"))
             {
                 // 移除名为 "SettingShow" 的区域中的所有视图
                 regionManager.Regions.Remove("SettingShow");

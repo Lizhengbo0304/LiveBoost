@@ -16,47 +16,50 @@ public static class LoadImageHelper
     ///     获取缩略图
     /// </summary>
     /// <param
-    ///     name = "filePath" >
+    ///     name="filePath">
     /// </param>
     /// <param
-    ///     name = "defaultImage" >
+    ///     name="defaultImage">
     ///     默认图片
     /// </param>
     /// <returns> ImageSource </returns>
     public static ImageSource GetThumbnailByPath(this string filePath, ImageSource defaultImage)
     {
-        if ( !File.Exists(filePath) )
+        if (!File.Exists(filePath))
         {
             return defaultImage;
         }
+
         using var shellFile = ShellFile.FromFilePath(filePath);
         try
         {
-            if ( shellFile.Thumbnail is null )
+            if (shellFile.Thumbnail is null)
             {
                 return defaultImage;
             }
+
             shellFile.Thumbnail.RetrievalOption = ShellThumbnailRetrievalOption.Default;
             shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.ThumbnailOnly;
             ImageSource source = shellFile.Thumbnail.MediumBitmapSource;
             source.Freeze();
             return source;
         }
-        catch ( Exception )
+        catch (Exception)
         {
             try
             {
-                if ( shellFile.Thumbnail is null )
+                if (shellFile.Thumbnail is null)
                 {
                     return defaultImage;
                 }
+
                 shellFile.Thumbnail.RetrievalOption = ShellThumbnailRetrievalOption.Default;
                 shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.IconOnly;
                 ImageSource source = shellFile.Thumbnail.MediumBitmapSource;
                 source.Freeze();
                 return source;
             }
-            catch ( Exception )
+            catch (Exception)
             {
                 return defaultImage;
             }
@@ -67,11 +70,11 @@ public static class LoadImageHelper
     ///     保存图片
     /// </summary>
     /// <param
-    ///     name = "image" >
+    ///     name="image">
     ///     图片
     /// </param>
     /// <param
-    ///     name = "fileName" >
+    ///     name="fileName">
     ///     保存地址
     /// </param>
     /// <returns> 保存结果 </returns>
@@ -81,11 +84,11 @@ public static class LoadImageHelper
         {
             using var fileStream = new FileStream(fileName, FileMode.Create);
             BitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create((BitmapSource) image));
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)image));
             encoder.Save(fileStream);
             return true;
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             e.LogError("缩略图保存异常");
             return false;

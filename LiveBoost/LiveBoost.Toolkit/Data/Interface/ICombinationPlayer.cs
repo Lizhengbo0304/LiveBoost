@@ -21,6 +21,7 @@ public interface ICombinationPlayer
     ///     设置播放路径
     /// </summary>
     void SetPlayFile(string playFilePath);
+
     /// <summary>
     ///     设置存储使用率
     /// </summary>

@@ -14,7 +14,7 @@ public static partial class UrlHelper
     /// <summary>
     ///     查询模板列表
     /// </summary>
-    /// <param name = "templateType" >
+    /// <param name="templateType">
     ///     1=任务模板，2=导出模板，3=推流模板，10-播单
     /// </param>
     /// <returns> </returns>
@@ -31,6 +31,7 @@ public static partial class UrlHelper
                 return new List<RecordTemplate>();
             }) ?? new List<RecordTemplate>();
     }
+
     /// <summary>
     ///     获取推流通道
     /// </summary>
@@ -46,12 +47,13 @@ public static partial class UrlHelper
                 return new List<PushAccess>();
             }) ?? new List<PushAccess>();
     }
+
     /// <summary>
     ///     创建新的播单。
     /// </summary>
-    /// <param name = "id" > 播单ID。 </param>
-    /// <param name = "title" > 播单标题。 </param>
-    /// <param name = "mode" > 播单模式。 </param>
+    /// <param name="id"> 播单ID。 </param>
+    /// <param name="title"> 播单标题。 </param>
+    /// <param name="mode"> 播单模式。 </param>
     /// <returns> 创建播单是否成功。 </returns>
     public static async Task<bool> NewPlayList(string id, string title, int mode)
     {
@@ -87,8 +89,8 @@ public static partial class UrlHelper
     /// <summary>
     ///     播单推流，start, stop, pause, restore 操作。
     /// </summary>
-    /// <param name = "pushAccess" > 推流访问对象。 </param>
-    /// <param name = "operate" > 操作类型（start, stop, pause, restore）。 </param>
+    /// <param name="pushAccess"> 推流访问对象。 </param>
+    /// <param name="operate"> 操作类型（start, stop, pause, restore）。 </param>
     /// <returns> 操作是否成功。 </returns>
     public static async Task<bool> PlayListPush(this PushAccess pushAccess, string operate)
     {
@@ -122,9 +124,9 @@ public static partial class UrlHelper
     /// <summary>
     ///     导出视频的方法。
     /// </summary>
-    /// <param name = "playListId" > 要导出的播单的ID。 </param>
-    /// <param name = "exportName" > 导出的视频文件名。 </param>
-    /// <param name = "templateId" > 播单模板的ID。 </param>
+    /// <param name="playListId"> 要导出的播单的ID。 </param>
+    /// <param name="exportName"> 导出的视频文件名。 </param>
+    /// <param name="templateId"> 播单模板的ID。 </param>
     public static async Task OutPlayList2Video(this string playListId, string exportName, string templateId)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/export";
@@ -161,8 +163,8 @@ public static partial class UrlHelper
     /// <summary>
     ///     导出播单为Xml的方法。
     /// </summary>
-    /// <param name = "playListId" > 要导出的播单的ID。 </param>
-    /// <param name = "exportName" > 导出的Xml文件名。 </param>
+    /// <param name="playListId"> 要导出的播单的ID。 </param>
+    /// <param name="exportName"> 导出的Xml文件名。 </param>
     public static async Task OutPlayList2Xml(this string playListId, string exportName)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template/exportxml";
@@ -175,10 +177,7 @@ public static partial class UrlHelper
 
         // 调用通用的Post方法来执行导出Xml操作，成功时显示成功消息框，处理字段错误响应和异常情况
         await url.Post(para,
-            _ =>
-            {
-                MessageBox.Success("导出Xml成功", "导出Xml");
-            },
+            _ => { MessageBox.Success("导出Xml成功", "导出Xml"); },
             response =>
             {
                 var jobj = JObject.Parse(response);
@@ -195,7 +194,7 @@ public static partial class UrlHelper
     /// <summary>
     ///     客户端播单推流播单修改的方法。
     /// </summary>
-    /// <param name = "pushAccess" > 要编辑的推流播单访问对象。 </param>
+    /// <param name="pushAccess"> 要编辑的推流播单访问对象。 </param>
     /// <returns> 操作是否成功的布尔值。 </returns>
     public static async Task<bool> EditPushPlayList(this PushAccess pushAccess)
     {
@@ -228,7 +227,7 @@ public static partial class UrlHelper
     /// <summary>
     ///     编辑播单的方法。
     /// </summary>
-    /// <param name = "recordTemplate" > 要编辑的播单模板对象。 </param>
+    /// <param name="recordTemplate"> 要编辑的播单模板对象。 </param>
     public static async Task EditPlayList(this RecordTemplate recordTemplate)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/template";

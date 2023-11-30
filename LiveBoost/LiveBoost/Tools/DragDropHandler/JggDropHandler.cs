@@ -12,23 +12,28 @@ namespace LiveBoost.Tools;
 
 public class JggDropHandler : IDropTarget
 {
-    public void DragEnter(IDropInfo dropInfo) { }
+    public void DragEnter(IDropInfo dropInfo)
+    {
+    }
 
     public void DragOver(IDropInfo dropInfo)
     {
-        if ( dropInfo.VisualTargetItem is null )
+        if (dropInfo.VisualTargetItem is null)
         {
             dropInfo.Effects = DragDropEffects.None;
             return;
         }
+
         dropInfo.Effects = DragDropEffects.All;
     }
 
-    public void DragLeave(IDropInfo dropInfo) { }
+    public void DragLeave(IDropInfo dropInfo)
+    {
+    }
 
     public void Drop(IDropInfo dropInfo)
     {
-        switch ( dropInfo.VisualTargetItem )
+        switch (dropInfo.VisualTargetItem)
         {
             case null:
                 return;

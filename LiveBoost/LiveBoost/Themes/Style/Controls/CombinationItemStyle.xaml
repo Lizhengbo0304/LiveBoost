@@ -1,40 +1,53 @@
-﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:hc = "https://handyorg.github.io/handycontrol"
-                    xmlns:controls1 = "clr-namespace:LiveBoost.Controls" >
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:controls1="clr-namespace:LiveBoost.Controls"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source = "pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
-        <ResourceDictionary Source = "pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/theme.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveBoost.Toolkit;component/Themes/Theme.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <Style TargetType = "controls1:CombinationItem" >
-        <Setter Property = "Margin" Value = "0" />
-        <Setter Property = "BorderThickness" Value = "5" />
-        <Setter Property = "BorderBrush" Value = "Transparent" />
-        <Setter Property = "Background" Value = "Black" />
-        <Setter Property = "HorizontalAlignment" Value = "Stretch" />
-        <Setter Property = "VerticalAlignment" Value = "Stretch" />
-        <Setter Property = "Template" >
+    <Style TargetType="controls1:CombinationItem">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="BorderThickness" Value="5" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="Black" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType = "controls1:CombinationItem" >
+                <ControlTemplate TargetType="controls1:CombinationItem">
                     <hc:SimplePanel>
-                        <Border BorderBrush = "{TemplateBinding BorderBrush}"
-                                Background = "{TemplateBinding Background}"
-                                BorderThickness = "{TemplateBinding BorderThickness}" />
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" />
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <Button Grid.Row = "0" Margin = "0 0 0 -5" Width = "46" Height = "46"
-                                    IconElement.Width = "46" IconElement.Height = "46" VerticalAlignment = "Bottom"
-                                    Command = "{Binding RelativeSource={RelativeSource TemplatedParent},Path=AddShouluChannelCommand}"
-                                    IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/add.png"
-                                    Style = "{StaticResource IconButtonStyle}" />
-                            <Image Grid.Row = "1" Margin = "0 20 0 0" VerticalAlignment = "Top" Width = "75"
-                                   Stretch = "Uniform" HorizontalAlignment = "Center"
-                                   Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/liveboost.png" />
+                            <Button
+                                Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AddShouluChannelCommand}"
+                                Grid.Row="0"
+                                Height="46"
+                                IconElement.Height="46"
+                                IconElement.Source="pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/add.png"
+                                IconElement.Width="46"
+                                Margin="0,0,0,-5"
+                                Style="{StaticResource IconButtonStyle}"
+                                VerticalAlignment="Bottom"
+                                Width="46" />
+                            <Image
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                Margin="0,20,0,0"
+                                Source="pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/liveboost.png"
+                                Stretch="Uniform"
+                                VerticalAlignment="Top"
+                                Width="75" />
                         </Grid>
-                        <ContentPresenter Content = "{TemplateBinding Content}" Margin = "5" />
+                        <ContentPresenter Content="{TemplateBinding Content}" Margin="5" />
                     </hc:SimplePanel>
                 </ControlTemplate>
             </Setter.Value>

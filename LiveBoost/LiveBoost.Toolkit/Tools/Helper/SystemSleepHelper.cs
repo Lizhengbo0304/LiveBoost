@@ -17,11 +17,13 @@ public static class SystemSleepHelper
     /// <summary>
     ///     设置此线程此时开始一直将处于运行状态，此时计算机不应该进入睡眠状态。
     ///     此线程退出后，设置将失效。
-    ///     如果需要恢复，请调用 <see
-    ///                    cref = "RestoreForCurrentThread" /> 方法。
+    ///     如果需要恢复，请调用
+    ///     <see
+    ///         cref="RestoreForCurrentThread" />
+    ///     方法。
     /// </summary>
     /// <param
-    ///     name = "keepDisplayOn" >
+    ///     name="keepDisplayOn">
     ///     表示是否应该同时保持屏幕不关闭。
     ///     对于游戏、视频和演示相关的任务需要保持屏幕不关闭；而对于后台服务、下载和监控等任务则不需要。
     /// </param>
@@ -44,7 +46,7 @@ public static class SystemSleepHelper
     ///     重置系统睡眠或者关闭屏幕的计时器，这样系统睡眠或者屏幕能够继续持续工作设定的超时时间。
     /// </summary>
     /// <param
-    ///     name = "keepDisplayOn" >
+    ///     name="keepDisplayOn">
     ///     表示是否应该同时保持屏幕不关闭。
     ///     对于游戏、视频和演示相关的任务需要保持屏幕不关闭；而对于后台服务、下载和监控等任务则不需要。
     /// </param>

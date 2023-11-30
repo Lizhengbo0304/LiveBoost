@@ -14,10 +14,11 @@ public class JggDragHandler : IDragSource
 {
     public void StartDrag(IDragInfo dragInfo)
     {
-        if ( dragInfo.SourceItems.ToList<RecordChannel>() is not {Count: 1} channels )
+        if (dragInfo.SourceItems.ToList<RecordChannel>() is not { Count: 1 } channels)
         {
             return;
         }
+
         // 设置拖动数据为第一个通道
         dragInfo.Data = channels.First();
         // 设置拖放效果为所有可用效果
@@ -30,12 +31,13 @@ public class JggDragHandler : IDragSource
     public bool CanStartDrag(IDragInfo dragInfo)
     {
         // 使用 HitTestUtilities.HitTest4Type 方法检查是否点击在 ListViewItem 上
-        if ( !HitTestUtilities.HitTest4Type<ListViewItem>(dragInfo.VisualSource, dragInfo.DragStartPosition) )
+        if (!HitTestUtilities.HitTest4Type<ListViewItem>(dragInfo.VisualSource, dragInfo.DragStartPosition))
         {
             return false;
         }
+
         // 检查源项是否只有一个，以确定是否可以启动拖动
-        return dragInfo.SourceItems.ToList<RecordChannel>() is {Count: 1};
+        return dragInfo.SourceItems.ToList<RecordChannel>() is { Count: 1 };
     }
 
     public void Dropped(IDropInfo dropInfo)

@@ -23,11 +23,15 @@ public partial class CombinationMainWindow
     {
         // 检查是否有未停止的推流通道
         if (_vm.PlayAccesses?.FindAll(it => !it.Status) is not { Count: > 0 } pushAccesses)
+        {
             return;
+        }
 
         // 弹出确认对话框，询问用户是否关闭程序
         if (MessageBox.Ask($"有{pushAccesses.Count}个通道正在推流，关闭程序会立即停止推流，是否确定关闭", "关闭") is not MessageBoxResult.OK)
+        {
             return;
+        }
 
         // 取消窗口关闭
         e.Cancel = true;
@@ -40,5 +44,4 @@ public partial class CombinationMainWindow
 
         Close();
     }
-
 }

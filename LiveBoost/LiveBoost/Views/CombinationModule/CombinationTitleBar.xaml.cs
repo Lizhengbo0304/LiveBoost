@@ -12,12 +12,13 @@ public partial class CombinationTitleBar
 
     private void OpenSetting_OnClick(object sender, RoutedEventArgs e)
     {
-        if ( Window.GetWindow(this) is not { } window )
+        if (Window.GetWindow(this) is not { } window)
         {
             return;
         }
+
         var setting = new CombinationSettingWindow
-            {Owner = window};
+            { Owner = window };
         setting.ShowDialog();
     }
 }

@@ -43,5 +43,4 @@ public partial class LoginWindow
         // 当密码输入框获得焦点时，清空文本
         UserPasswordBox.Clear();
     }
-
 }

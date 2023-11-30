@@ -16,10 +16,11 @@ public class TitleWidth2MarginConverter : IValueConverter
     /// <inheritdoc />
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if ( value is not DependencyObject dependencyObject )
+        if (value is not DependencyObject dependencyObject)
         {
             return new Thickness(2, 2, 0, 0);
         }
+
         var width = TitleElement.GetTitleWidth(dependencyObject).Value;
         return new Thickness(width + 2, 2, 0, 0);
     }

@@ -27,29 +27,32 @@ namespace LiveBoost.Player.Controls;
 [TemplatePart(Name = "Part_ffPlay", Type = typeof(MediaElement))]
 public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
 {
-#region Field
+    #region Field
 
     // 播放器
     private MediaElement? _ffPlay;
 
-#endregion
-#region Property
+    #endregion
+
+    #region Property
 
     /// <summary>
     ///     频道名称
     /// </summary>
     public string? ChannelName { get; set; }
 
-#endregion
-#region Command
+    #endregion
+
+    #region Command
 
     /// <summary>
     ///     清除频道信息
     /// </summary>
     public DelegateCommand ClearChannelCmd { get; }
 
-#endregion
-#region Ctor
+    #endregion
+
+    #region Ctor
 
     static JggPlayer()
     {
@@ -57,6 +60,7 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
             typeof(JggPlayer),
             new FrameworkPropertyMetadata(typeof(JggPlayer)));
     }
+
     public JggPlayer()
     {
         Resources.MergedDictionaries.Add(
@@ -76,14 +80,15 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
         ClearChannelCmd = new DelegateCommand(ClearChannelExecute);
     }
 
-#endregion
-#region Event
+    #endregion
+
+    #region Event
 
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
         _ffPlay = GetTemplateChild("Part_ffPlay") as MediaElement;
-        if ( _ffPlay != null )
+        if (_ffPlay != null)
         {
             _ffPlay.RenderingAudio += FfPlayOnRenderingAudio;
         }
@@ -98,13 +103,13 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
         {
             await ActionHelper.RunWithTimeout(IpcClientHelper.JggPlayer.ClearChannel);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             e.LogError("清除频道信息异常");
         }
     }
 
-#region RenderingAudioField
+    #region RenderingAudioField
 
     public double DrawVuMeterLeftValue { get; set; }
     public double DrawVuMeterRightValue { get; set; }
@@ -112,22 +117,24 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
     private short[]? _drawVuMeterRightSamples;
     private readonly object _drawVuMeterRmsLock = new();
 
-#endregion
+    #endregion
+
     private void FfPlayOnRenderingAudio(object sender, RenderingAudioEventArgs e)
     {
         // 分析即将渲染的音频数据
         // 如果不存在音频，则不需要分析
-        if ( e.EngineState.HasAudio == false )
+        if (e.EngineState.HasAudio == false)
         {
             return;
         }
+
         // 把音频数据分为左右声道
-        if ( _drawVuMeterLeftSamples == null || _drawVuMeterLeftSamples.Length != e.SamplesPerChannel )
+        if ((_drawVuMeterLeftSamples == null) || (_drawVuMeterLeftSamples.Length != e.SamplesPerChannel))
         {
             _drawVuMeterLeftSamples = new short[e.SamplesPerChannel];
         }
 
-        if ( _drawVuMeterRightSamples == null || _drawVuMeterRightSamples.Length != e.SamplesPerChannel )
+        if ((_drawVuMeterRightSamples == null) || (_drawVuMeterRightSamples.Length != e.SamplesPerChannel))
         {
             _drawVuMeterRightSamples = new short[e.SamplesPerChannel];
         }
@@ -140,7 +147,7 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
 
         // 使用 Parallel.Invoke 同时计算左右声道的 RMS 值
         double leftValue = 0.0, rightValue = 0.0;
-        lock ( _drawVuMeterRmsLock )
+        lock (_drawVuMeterRmsLock)
         {
             Parallel.Invoke(
                 () => { leftValue = VolumeHelper.CalculateRms(_drawVuMeterLeftSamples); },
@@ -151,8 +158,9 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
         }
     }
 
-#endregion
-#region INotifyPropertyChangedEvent
+    #endregion
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -163,17 +171,19 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
-#region IJggPlayerEvent
+    #endregion
+
+    #region IJggPlayerEvent
 
     public void SetName(string accessName)
     {
@@ -182,7 +192,7 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
 
     public async void SetPlayFile(string playFilePath)
     {
-        if ( _ffPlay is null )
+        if (_ffPlay is null)
         {
             return;
         }
@@ -191,17 +201,19 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
         await AdjustRemainingTimeAsync();
         await _ffPlay.Play();
     }
+
     private async Task OpenFileAsync(string playFilePath)
     {
         var openFile = false;
-        while ( !openFile )
+        while (!openFile)
         {
-            if ( !File.Exists(playFilePath) )
+            if (!File.Exists(playFilePath))
             {
                 $"{ChannelName}预览文件：{playFilePath}不存在".LogFileInfo();
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
                 continue;
             }
+
             $"{ChannelName}预览文件：{playFilePath}正在打开".LogFileInfo();
             openFile = await _ffPlay!.Open(new Uri(playFilePath));
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -210,28 +222,33 @@ public sealed class JggPlayer : Control, INotifyPropertyChanged, IJggPlayer
 
     private async Task AdjustRemainingTimeAsync()
     {
-        if ( _ffPlay!.RemainingDuration is not null )
+        if (_ffPlay!.RemainingDuration is not null)
         {
-            if ( _ffPlay.RemainingDuration.Value.TotalSeconds > 20 )
+            if (_ffPlay.RemainingDuration.Value.TotalSeconds > 20)
             {
                 await _ffPlay.Seek(_ffPlay.RemainingDuration.Value.Add(TimeSpan.FromSeconds(-20)));
             }
             else
             {
                 var delay = 20 - _ffPlay.RemainingDuration.Value.TotalSeconds;
-                if ( delay > 0 )
+                if (delay > 0)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(delay));
                 }
             }
         }
     }
+
     public async void StopPlay()
     {
-        if ( _ffPlay is null ) return;
+        if (_ffPlay is null)
+        {
+            return;
+        }
+
         await _ffPlay.Close();
         DrawVuMeterLeftValue = DrawVuMeterRightValue = 0;
     }
 
-#endregion
+    #endregion
 }

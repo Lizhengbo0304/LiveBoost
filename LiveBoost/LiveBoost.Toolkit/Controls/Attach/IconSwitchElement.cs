@@ -29,7 +29,7 @@ public class IconSwitchElement : IconElement
     /// <summary>
     ///     获取切换图标
     /// </summary>
-    public static ImageSource GetSourceSelected(DependencyObject element) => (ImageSource) element.GetValue(SourceSelectedProperty);
+    public static ImageSource GetSourceSelected(DependencyObject element) => (ImageSource)element.GetValue(SourceSelectedProperty);
 
     /// <summary>
     ///     设置切换图标
@@ -42,7 +42,7 @@ public class IconSwitchElement : IconElement
     /// <summary>
     ///     获取选中后的图标宽度
     /// </summary>
-    public static double GetWidthSelected(DependencyObject element) => (double) element.GetValue(WidthSelectedProperty);
+    public static double GetWidthSelected(DependencyObject element) => (double)element.GetValue(WidthSelectedProperty);
 
     /// <summary>
     ///     设置选中后的图标宽度
@@ -55,7 +55,7 @@ public class IconSwitchElement : IconElement
     /// <summary>
     ///     获取选中后的图标高度
     /// </summary>
-    public static double GetHeightSelected(DependencyObject element) => (double) element.GetValue(HeightSelectedProperty);
+    public static double GetHeightSelected(DependencyObject element) => (double)element.GetValue(HeightSelectedProperty);
 
     /// <summary>
     ///     设置选中后的图标高度

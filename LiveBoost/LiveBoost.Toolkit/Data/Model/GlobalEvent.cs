@@ -7,7 +7,7 @@ public class GlobalEvent
 {
     private readonly IEventAggregator _event;
 
-#region Global
+    #region Global
 
     private static readonly Lazy<GlobalEvent> GlobalEventLazy = new(() => new GlobalEvent());
 
@@ -19,7 +19,7 @@ public class GlobalEvent
     ///     of
     ///     the
     ///     <see
-    ///         cref = "GlobalEvent" />
+    ///         cref="GlobalEvent" />
     ///     class
     ///     from
     ///     being
@@ -30,5 +30,5 @@ public class GlobalEvent
 
     public static IEventAggregator Instance => GlobalEventLazy.Value._event;
 
-#endregion
+    #endregion
 }

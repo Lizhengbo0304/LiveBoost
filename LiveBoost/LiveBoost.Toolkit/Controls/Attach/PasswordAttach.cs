@@ -20,9 +20,9 @@ public class PasswordAttach
     private static readonly DependencyProperty IsUpdatingProperty =
         DependencyProperty.RegisterAttached("IsUpdating", typeof(bool), typeof(PasswordAttach));
 
-    public static bool GetAttach(DependencyObject dp) => (bool) dp.GetValue(AttachProperty);
+    public static bool GetAttach(DependencyObject dp) => (bool)dp.GetValue(AttachProperty);
 
-    public static string GetPassword(DependencyObject dp) => (string) dp.GetValue(PasswordProperty);
+    public static string GetPassword(DependencyObject dp) => (string)dp.GetValue(PasswordProperty);
 
     public static void SetAttach(DependencyObject dp, bool value)
     {
@@ -36,35 +36,36 @@ public class PasswordAttach
 
     private static void Attach(DependencyObject sender, DependencyPropertyChangedEventArgs e)
     {
-        if ( sender is not PasswordBox passwordBox )
+        if (sender is not PasswordBox passwordBox)
         {
             return;
         }
 
-        if ( (bool) e.OldValue )
+        if ((bool)e.OldValue)
         {
             passwordBox.PasswordChanged -= PasswordChanged;
         }
 
-        if ( (bool) e.NewValue )
+        if ((bool)e.NewValue)
         {
             passwordBox.PasswordChanged += PasswordChanged;
         }
     }
 
-    private static bool GetIsUpdating(DependencyObject dp) => (bool) dp.GetValue(IsUpdatingProperty);
+    private static bool GetIsUpdating(DependencyObject dp) => (bool)dp.GetValue(IsUpdatingProperty);
 
     private static void OnPasswordPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
     {
-        if ( sender is not PasswordBox passwordBox )
+        if (sender is not PasswordBox passwordBox)
         {
             return;
         }
+
         passwordBox.PasswordChanged -= PasswordChanged;
 
-        if ( !GetIsUpdating(passwordBox) )
+        if (!GetIsUpdating(passwordBox))
         {
-            passwordBox.Password = (string) e.NewValue;
+            passwordBox.Password = (string)e.NewValue;
         }
 
         passwordBox.PasswordChanged += PasswordChanged;

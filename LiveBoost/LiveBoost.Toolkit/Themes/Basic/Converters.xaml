@@ -1,7 +1,8 @@
-﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:tools1 = "clr-namespace:LiveBoost.Toolkit.Tools" >
-    <tools1:TimeSpanToMillSecondsConverter x:Key = "TimeSpanToMillSecondsConverter" />
-    <tools1:TimeSpanFormatter x:Key = "TimeSpanFormatter" />
-    <tools1:TitleWidth2MarginConverter x:Key = "TitleWidth2MarginConverter" />
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:tools1="clr-namespace:LiveBoost.Toolkit.Tools"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <tools1:TimeSpanToMillSecondsConverter x:Key="TimeSpanToMillSecondsConverter" />
+    <tools1:TimeSpanFormatter x:Key="TimeSpanFormatter" />
+    <tools1:TitleWidth2MarginConverter x:Key="TitleWidth2MarginConverter" />
 </ResourceDictionary>

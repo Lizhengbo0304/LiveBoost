@@ -12,7 +12,7 @@ namespace LiveBoost.Toolkit.Data;
 
 public class AppConfig
 {
-#region SingleInstance
+    #region SingleInstance
 
     private static readonly Lazy<AppConfig> AppConfigLazy = new(() => new AppConfig());
 
@@ -21,9 +21,9 @@ public class AppConfig
     public static AppConfig Instance => AppConfigLazy.Value;
     private readonly string _configPath;
 
-#endregion
+    #endregion
 
-#region AutoPropertyEvent
+    #region AutoPropertyEvent
 
     [GetInterceptor]
     // ReSharper disable once UnusedMember.Local
@@ -31,9 +31,9 @@ public class AppConfig
     {
         try
         {
-            return (T?) Convert.ChangeType(_configPath.GetValueWithKey(name), typeof(T));
+            return (T?)Convert.ChangeType(_configPath.GetValueWithKey(name), typeof(T));
         }
-        catch ( Exception )
+        catch (Exception)
         {
             return default;
         }
@@ -46,35 +46,39 @@ public class AppConfig
         _configPath.SetValue(name, newValue.ToString());
     }
 
-#endregion
+    #endregion
 
-#region ConfigProperty
+    #region ConfigProperty
 
     /// <summary>
     ///     媒资IP地址-qiao
     /// </summary>
     public string? MamCommonIp { get; set; }
+
     /// <summary>
     ///     串口名称
     /// </summary>
     public string? SerialPort { get; set; }
+
     /// <summary>
     ///     是否支持串口小屏
     /// </summary>
     public bool IsPortSupported { get; set; }
+
     /// <summary>
     ///     预览窗口样式
     /// </summary>
     public int PreviewIndex { get; set; }
+
     /// <summary>
     ///     是否初始化完成
     /// </summary>
     [InterceptIgnore]
     public bool IsInit { get; set; }
 
-#endregion
+    #endregion
 
-#region Property
+    #region Property
 
     /// <summary>
     ///     收录存储地址
@@ -97,8 +101,9 @@ public class AppConfig
     [InterceptIgnore]
     public string? ShouluWebSocket { get; set; }
 
-#endregion
-#region Fields
+    #endregion
+
+    #region Fields
 
     public readonly ImageSource FolderIcon =
         BitmapFrame.Create(
@@ -108,5 +113,5 @@ public class AppConfig
         BitmapFrame.Create(
             new Uri("pack://application:,,,/LiveBoost.Toolkit;component/Images/ButtonModule/Default.png"));
 
-#endregion
+    #endregion
 }

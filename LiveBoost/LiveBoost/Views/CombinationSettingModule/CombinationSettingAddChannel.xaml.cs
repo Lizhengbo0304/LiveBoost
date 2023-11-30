@@ -45,13 +45,16 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
         addChannel.ShowDialog();
         return addChannel.AddResult;
     }
-#region Properties
+
+    #region Properties
 
     private RecordChannel? Channel;
+
     /// <summary>
     ///     频道名称
     /// </summary>
     public string ChannelName { get; set; } = string.Empty;
+
     /// <summary>
     ///     视频流协议类型
     /// </summary>
@@ -59,6 +62,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
     {
         "HTTPS", "UDP", "RTMP", "SDI", "NDI", "其他"
     };
+
     /// <summary>
     ///     选中的协议类型
     /// </summary>
@@ -68,33 +72,40 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
     ///     频道地址
     /// </summary>
     public string ChannelUrl { get; set; } = string.Empty;
+
     /// <summary>
     ///     频道地址是否必须
     /// </summary>
     public bool IsChannelUrlNecessary { get; set; } = true;
+
     /// <summary>
     ///     收录服务器列表
     /// </summary>
     public List<RecordServer>? ServerList { get; set; }
+
     /// <summary>
     ///     选中的服务器
     /// </summary>
     public RecordServer? SelectedServer { get; set; }
+
     /// <summary>
     ///     NDI组名称
     /// </summary>
     public string NdiGroup { get; set; } = string.Empty;
+
     /// <summary>
     ///     NDI流名称
     /// </summary>
     public string NdiName { get; set; } = string.Empty;
+
     /// <summary>
     ///     添加频道结果
     /// </summary>
     private bool AddResult { get; set; }
 
-#endregion
-#region Commands
+    #endregion
+
+    #region Commands
 
     /// <summary>
     ///     提交命令
@@ -106,15 +117,16 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
     /// </summary>
     public DelegateCommand ResetCommand { get; set; }
 
-#endregion
-#region Event Handlers
+    #endregion
+
+    #region Event Handlers
 
     public async void SubmitCommandExecute()
     {
         // 验证输入是否合法
         var errorMessage = ValidateInput();
 
-        if ( !string.IsNullOrEmpty(errorMessage) )
+        if (!string.IsNullOrEmpty(errorMessage))
         {
             MessageBox.Warning(errorMessage, "提交");
 
@@ -125,7 +137,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
         var channelParams = CreateChannelParams();
         bool success;
         // 添加频道并检查是否成功
-        if ( Channel is null )
+        if (Channel is null)
         {
             success = await channelParams.AddChannel().ConfigureAwait(false);
         }
@@ -135,7 +147,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
         }
 
 
-        if ( success )
+        if (success)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -148,17 +160,17 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
 // 验证输入是否合法的方法
     private string? ValidateInput()
     {
-        if ( string.IsNullOrEmpty(ChannelName) )
+        if (string.IsNullOrEmpty(ChannelName))
         {
             return "频道名称不能为空，请输入频道名称";
         }
 
-        if ( string.IsNullOrEmpty(SelectedProtocol) )
+        if (string.IsNullOrEmpty(SelectedProtocol))
         {
             return "协议类型不能为空，请选择协议类型";
         }
 
-        switch ( SelectedProtocol )
+        switch (SelectedProtocol)
         {
             case "SDI" when SelectedServer == null:
                 return "服务器不能为空，请选择服务器";
@@ -166,13 +178,14 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
                 return "流名称不能为空，请输入流名称";
         }
 
-        if ( string.IsNullOrEmpty(ChannelUrl) && SelectedProtocol != "SDI" && SelectedProtocol != "NDI" )
+        if (string.IsNullOrEmpty(ChannelUrl) && (SelectedProtocol != "SDI") && (SelectedProtocol != "NDI"))
         {
             return "频道地址不能为空，请输入频道地址";
         }
 
         return null; // 验证通过
     }
+
 // 创建频道参数对象的方法
     private object CreateChannelParams()
     {
@@ -224,8 +237,9 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
         ServerList = await UrlHelper.GetShouluServers().ConfigureAwait(false);
     }
 
-#endregion
-#region INotifyPropertyChangedEvent
+    #endregion
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -234,7 +248,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         // 根据属性名称执行相应操作
-        switch ( propertyName )
+        switch (propertyName)
         {
             case nameof(SelectedProtocol):
                 HandleSelectedProtocolChange();
@@ -254,7 +268,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
     private void HandleSelectedProtocolChange()
     {
         // 根据 SelectedProtocol 更新窗口高度和 IsChannelUrlNecessary
-        switch ( SelectedProtocol )
+        switch (SelectedProtocol)
         {
             case "SDI":
             case "NDI":
@@ -274,7 +288,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
     private void HandleChannelNameChange()
     {
         // 限制 ChannelName 长度为 64 个字符
-        if ( ChannelName.Length > 64 )
+        if (ChannelName.Length > 64)
         {
             ChannelName = ChannelName.Substring(0, 64);
         }
@@ -286,7 +300,7 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
     private void HandleChannelUrlChange()
     {
         // 限制 ChannelName 长度为 64 个字符
-        if ( ChannelUrl.Length > 255 )
+        if (ChannelUrl.Length > 255)
         {
             ChannelUrl = ChannelUrl.Substring(0, 255);
         }
@@ -294,14 +308,15 @@ public sealed partial class CombinationSettingAddChannel : INotifyPropertyChange
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 }

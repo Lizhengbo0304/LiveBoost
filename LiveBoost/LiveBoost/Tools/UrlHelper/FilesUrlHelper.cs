@@ -8,8 +8,8 @@ public static partial class UrlHelper
     /// <summary>
     ///     查询收录列表的方法。
     /// </summary>
-    /// <param name = "id" > 查询的ID。 </param>
-    /// <param name = "type" > 查询类型（可选，默认为0）：0 - programList, 1 - myList, 其他 - publicList。 </param>
+    /// <param name="id"> 查询的ID。 </param>
+    /// <param name="type"> 查询类型（可选，默认为0）：0 - programList, 1 - myList, 其他 - publicList。 </param>
     /// <returns> 查询到的收录列表。 </returns>
     public static async Task<ObservableList<RecordFile>> GetRecordPrograms(this string id, int type = 0)
     {
@@ -54,7 +54,7 @@ public static partial class UrlHelper
     /// <summary>
     ///     添加标记点的方法。
     /// </summary>
-    /// <param name = "item" > 标记点数据。 </param>
+    /// <param name="item"> 标记点数据。 </param>
     /// <returns> 新添加标记点的ID。 </returns>
     public static async Task<string?> SaveMark(this RecordMark item)
     {
@@ -106,8 +106,8 @@ public static partial class UrlHelper
     /// <summary>
     ///     获取标记点的方法。
     /// </summary>
-    /// <param name = "channelId" > 标记点所属的频道ID。 </param>
-    /// <param name = "fileUrl" > 标记点关联的文件URL。 </param>
+    /// <param name="channelId"> 标记点所属的频道ID。 </param>
+    /// <param name="fileUrl"> 标记点关联的文件URL。 </param>
     /// <returns> 标记点列表。 </returns>
     public static async Task<ObservableList<RecordMark>> GetMarks(this string channelId, string fileUrl)
     {

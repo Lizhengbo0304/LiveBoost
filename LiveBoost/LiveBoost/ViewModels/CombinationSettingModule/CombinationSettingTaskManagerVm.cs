@@ -48,13 +48,13 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
         DeleteCommand = new DelegateCommand<RecordMission>(async channel =>
         {
             // 弹出确认删除的对话框，如果用户不确认删除，则不执行后续操作
-            if ( MessageBox.Ask("是否确定删除任务", "删除") is not MessageBoxResult.OK )
+            if (MessageBox.Ask("是否确定删除任务", "删除") is not MessageBoxResult.OK)
             {
                 return;
             }
 
             // 调用频道的删除方法，如果删除成功，执行搜索命令以刷新列表
-            if ( await channel.DeleteMission().ConfigureAwait(false) )
+            if (await channel.DeleteMission().ConfigureAwait(false))
             {
                 SearchCommand.Execute();
             }
@@ -64,7 +64,7 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
         EditCommand = new DelegateCommand<RecordMission>(mission =>
         {
             // 检查主窗口是否存在子窗口，如果没有子窗口，则不执行编辑操作
-            if ( !( AppProgram.Instance.App.MainWindow?.OwnedWindows.Count > 0 ) )
+            if (!(AppProgram.Instance.App.MainWindow?.OwnedWindows.Count > 0))
             {
                 return;
             }
@@ -79,7 +79,7 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
         EditStatusCommand = new DelegateCommand<RecordMission>(async channel =>
         {
             // 调用编辑频道状态的方法，如果编辑失败，则还原频道状态
-            if ( !await channel.EditMissionStatus().ConfigureAwait(false) )
+            if (!await channel.EditMissionStatus().ConfigureAwait(false))
             {
                 channel.Status = !channel.Status;
             }
@@ -88,22 +88,24 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
         // 执行初始搜索
         SearchCommand.Execute();
     }
-#region Events
+
+    #region Events
 
     public async void GetServers()
     {
         Servers = await UrlHelper.GetShouluServersAll().ConfigureAwait(false);
     }
 
-#endregion
-#region INotifyPropertyChangedEvent
+    #endregion
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        switch ( propertyName )
+        switch (propertyName)
         {
             case nameof(SelectedClientName):
                 SearchCommand.Execute();
@@ -113,18 +115,19 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
 
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 
-#region Properties
+    #region Properties
 
     /// <summary>
     ///     搜索关键词
@@ -135,6 +138,7 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
     ///     服务器列表
     /// </summary>
     public List<RecordServer> Servers { get; set; } = new();
+
     /// <summary>
     ///     选中的服务器名称
     /// </summary>
@@ -144,6 +148,7 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
     ///     任务列表
     /// </summary>
     public List<RecordMission> Missions { get; set; } = new();
+
     /// <summary>
     ///     频道总页数
     /// </summary>
@@ -154,17 +159,20 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
     /// </summary>
     public int CurrentPage { get; set; } = 1;
 
-#endregion
-#region Commands
+    #endregion
+
+    #region Commands
 
     /// <summary>
     ///     编辑状态频道
     /// </summary>
     public DelegateCommand<RecordMission> EditStatusCommand { get; set; }
+
     /// <summary>
     ///     搜索命令
     /// </summary>
     public DelegateCommand SearchCommand { get; }
+
     /// <summary>
     ///     重置命令
     /// </summary>
@@ -179,10 +187,11 @@ public class CombinationSettingTaskManagerVm : INotifyPropertyChanged
     ///     删除频道
     /// </summary>
     public DelegateCommand<RecordMission> DeleteCommand { get; set; }
+
     /// <summary>
     ///     编辑频道
     /// </summary>
     public DelegateCommand<RecordMission> EditCommand { get; set; }
 
-#endregion
+    #endregion
 }

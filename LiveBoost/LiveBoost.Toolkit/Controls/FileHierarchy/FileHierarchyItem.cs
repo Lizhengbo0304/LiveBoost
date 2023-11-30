@@ -25,9 +25,9 @@ public class FileHierarchyItem : IFileHierarchy
     {
         get
         {
-            var list = new List<IFileHierarchy> {this};
+            var list = new List<IFileHierarchy> { this };
             var item = ParentFile;
-            while ( item != null )
+            while (item != null)
             {
                 list.Add(item);
                 item = item.ParentFile;

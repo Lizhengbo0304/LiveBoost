@@ -1,72 +1,151 @@
-﻿<hc:Window x:Class = "LiveBoost.Views.CombinationPlayListOut"
-           xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-           xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-           xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable = "d"
-           xmlns:hc = "https://handyorg.github.io/handycontrol" xmlns:views1 = "clr-namespace:LiveBoost.Views"
-           Background = "Transparent" BorderThickness = "0" FontFamily = "Microsoft YaHei"
-           Icon = "pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
-           ResizeMode = "NoResize" ShowInTaskbar = "True" WindowStartupLocation = "CenterScreen" WindowStyle = "None"
-           Width = "415" Title = "导出视频" Height = "230" >
+﻿<hc:Window
+    Background="Transparent"
+    BorderThickness="0"
+    FontFamily="Microsoft YaHei"
+    Height="230"
+    Icon="pack://application:,,,/LiveBoost.Toolkit;component/Images/IconModule/Icon@3x.png"
+    ResizeMode="NoResize"
+    ShowInTaskbar="True"
+    Title="导出视频"
+    Width="415"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d"
+    x:Class="LiveBoost.Views.CombinationPlayListOut"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views1="clr-namespace:LiveBoost.Views"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness = "-1" UseAeroCaptionButtons = "True" CaptionHeight = "40" />
+        <WindowChrome
+            CaptionHeight="40"
+            GlassFrameThickness="-1"
+            UseAeroCaptionButtons="True" />
     </WindowChrome.WindowChrome>
-    <Grid Margin = "0 0 20 20" Effect = "{StaticResource DefaultEffect}" >
+    <Grid Effect="{StaticResource DefaultEffect}" Margin="0,0,20,20">
         <Grid.RowDefinitions>
-            <RowDefinition Height = "44" />
-            <RowDefinition Height = "*" />
+            <RowDefinition Height="44" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <hc:SimplePanel Grid.Row = "0" >
-            <Border hc:WindowAttach.IsDragElement = "True" Background = "#FFFFFF" BorderBrush = "#FFCACACA"
-                    BorderThickness = "0,0,0,1" CornerRadius = "4 4 0 0" />
-            <TextBlock Margin = "19,0,0,0" HorizontalAlignment = "Left" VerticalAlignment = "Center" FontSize = "14"
-                       FontWeight = "Regular" Foreground = "#FF10243C"
-                       Text = "{Binding RelativeSource={RelativeSource AncestorType=views1:CombinationPlayListOut}, Path=Title}" />
-            <Button Width = "44" Height = "44" HorizontalAlignment = "Right" IconElement.Height = "15"
-                    IconElement.Source = "pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login_Close.png"
-                    IconElement.Width = "15" WindowChrome.IsHitTestVisibleInChrome = "True"
-                    hc:BackgroundSwitchElement.MouseDownBackground = "{StaticResource DangerBrush}"
-                    hc:BackgroundSwitchElement.MouseHoverBackground = "{StaticResource DangerBrush}"
-                    hc:BorderElement.CornerRadius = "0 5 0 0" Command = "ControlCommands.CloseWindowCommand"
-                    CommandParameter = "{Binding RelativeSource={RelativeSource Self}}" IsTabStop = "False"
-                    Style = "{StaticResource IconButtonStyle}" />
+        <hc:SimplePanel Grid.Row="0">
+            <Border
+                Background="#FFFFFF"
+                BorderBrush="#FFCACACA"
+                BorderThickness="0,0,0,1"
+                CornerRadius="4 4 0 0"
+                hc:WindowAttach.IsDragElement="True" />
+            <TextBlock
+                FontSize="14"
+                FontWeight="Regular"
+                Foreground="#FF10243C"
+                HorizontalAlignment="Left"
+                Margin="19,0,0,0"
+                Text="{Binding RelativeSource={RelativeSource AncestorType=views1:CombinationPlayListOut}, Path=Title}"
+                VerticalAlignment="Center" />
+            <Button
+                Command="ControlCommands.CloseWindowCommand"
+                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                Height="44"
+                HorizontalAlignment="Right"
+                IconElement.Height="15"
+                IconElement.Source="pack://application:,,,/LiveBoost.Toolkit;component/Images/LoginModule/Login_Close.png"
+                IconElement.Width="15"
+                IsTabStop="False"
+                Style="{StaticResource IconButtonStyle}"
+                Width="44"
+                WindowChrome.IsHitTestVisibleInChrome="True"
+                hc:BackgroundSwitchElement.MouseDownBackground="{StaticResource DangerBrush}"
+                hc:BackgroundSwitchElement.MouseHoverBackground="{StaticResource DangerBrush}"
+                hc:BorderElement.CornerRadius="0 5 0 0" />
         </hc:SimplePanel>
-        <Border Grid.Row = "1" Background = "#FFFFFF" CornerRadius = "0 0 5 5" />
-        <Grid Grid.Row = "1" >
+        <Border
+            Background="#FFFFFF"
+            CornerRadius="0 0 5 5"
+            Grid.Row="1" />
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height = "Auto" />
-                <RowDefinition Height = "Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBox Grid.Row = "0" Height = "30" Margin = "33,14,46,0" HorizontalAlignment = "Stretch"
-                     VerticalAlignment = "Stretch" VerticalContentAlignment = "Center"
-                     hc:InfoElement.Necessary = "True" hc:InfoElement.Placeholder = "请输入文件名称"
-                     hc:InfoElement.Symbol = "*" hc:InfoElement.Title = "视频名称" hc:InfoElement.TitlePlacement = "Left"
-                     Background = "Transparent" CaretBrush = "Black" IsTabStop = "True" Foreground = "Black"
-                     Style = "{StaticResource TextBoxExtend}"
-                     Text = "{Binding RelativeSource={RelativeSource AncestorType=views1:CombinationPlayListOut}, Path=OutName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     TextWrapping = "NoWrap" />
-            <ComboBox Grid.Row = "1" Height = "30" Margin = "33,14,46,0" HorizontalAlignment = "Stretch"
-                      VerticalAlignment = "Stretch" VerticalContentAlignment = "Center"
-                      hc:InfoElement.Necessary = "True" hc:InfoElement.Placeholder = "请选择导出模板"
-                      hc:InfoElement.Symbol = "*" hc:InfoElement.Title = "导出设置" hc:InfoElement.TitlePlacement = "Left"
-                      BorderBrush = "#FFD9D9D9" BorderThickness = "1" Background = "Transparent" IsTabStop = "True"
-                      Foreground = "Black"
-                      ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType=views1:CombinationPlayListOut}, Path=OutTemplates}"
-                      SelectedItem = "{Binding RelativeSource={RelativeSource AncestorType=views1:CombinationPlayListOut}, Path=SelectedTemplate}"
-                      DisplayMemberPath = "Title" Template = "{StaticResource FlyComboBoxTemplate}"
-                      ItemContainerStyle = "{StaticResource FlyComboBoxItemStyle}"
-                      Style = "{StaticResource ComboBoxExtend}" />
-            <Button Grid.Row = "2" Width = "89" Height = "33" Margin = "0,22,151,20" HorizontalAlignment = "Right"
-                    VerticalAlignment = "Bottom" hc:BorderElement.CornerRadius = "3" Background = "#FF0081FF"
-                    Click = "Done_OnClick" Content = "完成" IsTabStop = "False" FontSize = "12" IsDefault = "True"
-                    FontWeight = "Regular" Style = "{StaticResource IconButtonStyle}" />
-            <Button Grid.Row = "2" Width = "89" Height = "33" Margin = "0,22,46,20" HorizontalAlignment = "Right"
-                    VerticalAlignment = "Bottom" IsTabStop = "False" hc:BorderElement.CornerRadius = "3"
-                    Background = "#FF9F9F9F" IsCancel = "True" Command = "ControlCommands.CloseWindowCommand"
-                    CommandParameter = "{Binding RelativeSource={RelativeSource Self}}" Content = "关闭" FontSize = "12"
-                    FontWeight = "Regular" Style = "{StaticResource IconButtonStyle}" />
+            <TextBox
+                Background="Transparent"
+                CaretBrush="Black"
+                Foreground="Black"
+                Grid.Row="0"
+                Height="30"
+                HorizontalAlignment="Stretch"
+                IsTabStop="True"
+                Margin="33,14,46,0"
+                Style="{StaticResource TextBoxExtend}"
+                Text="{Binding RelativeSource={RelativeSource AncestorType=views1:CombinationPlayListOut}, Path=OutName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextWrapping="NoWrap"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center"
+                hc:InfoElement.Necessary="True"
+                hc:InfoElement.Placeholder="请输入文件名称"
+                hc:InfoElement.Symbol="*"
+                hc:InfoElement.Title="视频名称"
+                hc:InfoElement.TitlePlacement="Left" />
+            <ComboBox
+                Background="Transparent"
+                BorderBrush="#FFD9D9D9"
+                BorderThickness="1"
+                DisplayMemberPath="Title"
+                Foreground="Black"
+                Grid.Row="1"
+                Height="30"
+                HorizontalAlignment="Stretch"
+                IsTabStop="True"
+                ItemContainerStyle="{StaticResource FlyComboBoxItemStyle}"
+                ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=views1:CombinationPlayListOut}, Path=OutTemplates}"
+                Margin="33,14,46,0"
+                SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=views1:CombinationPlayListOut}, Path=SelectedTemplate}"
+                Style="{StaticResource ComboBoxExtend}"
+                Template="{StaticResource FlyComboBoxTemplate}"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center"
+                hc:InfoElement.Necessary="True"
+                hc:InfoElement.Placeholder="请选择导出模板"
+                hc:InfoElement.Symbol="*"
+                hc:InfoElement.Title="导出设置"
+                hc:InfoElement.TitlePlacement="Left" />
+            <Button
+                Background="#FF0081FF"
+                Click="Done_OnClick"
+                Content="完成"
+                FontSize="12"
+                FontWeight="Regular"
+                Grid.Row="2"
+                Height="33"
+                HorizontalAlignment="Right"
+                IsDefault="True"
+                IsTabStop="False"
+                Margin="0,22,151,20"
+                Style="{StaticResource IconButtonStyle}"
+                VerticalAlignment="Bottom"
+                Width="89"
+                hc:BorderElement.CornerRadius="3" />
+            <Button
+                Background="#FF9F9F9F"
+                Command="ControlCommands.CloseWindowCommand"
+                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                Content="关闭"
+                FontSize="12"
+                FontWeight="Regular"
+                Grid.Row="2"
+                Height="33"
+                HorizontalAlignment="Right"
+                IsCancel="True"
+                IsTabStop="False"
+                Margin="0,22,46,20"
+                Style="{StaticResource IconButtonStyle}"
+                VerticalAlignment="Bottom"
+                Width="89"
+                hc:BorderElement.CornerRadius="3" />
         </Grid>
     </Grid>
 </hc:Window>

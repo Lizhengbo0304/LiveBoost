@@ -8,8 +8,8 @@ public static class ConfigHelper
     /// <summary>
     ///     通过Key获取对应config的value
     /// </summary>
-    /// <param name = "configPath" > 配置文件地址 </param>
-    /// <param name = "key" > key值 </param>
+    /// <param name="configPath"> 配置文件地址 </param>
+    /// <param name="key"> key值 </param>
     /// <returns> value </returns>
     public static string? GetValueWithKey(this string configPath, string key)
     {
@@ -23,7 +23,7 @@ public static class ConfigHelper
                 },
                 ConfigurationUserLevel.None);
 
-            if ( !config.HasFile )
+            if (!config.HasFile)
             {
                 return string.Empty;
             }
@@ -32,7 +32,7 @@ public static class ConfigHelper
             var value = config.AppSettings.Settings[key]?.Value;
             return value;
         }
-        catch ( Exception ex )
+        catch (Exception ex)
         {
             // 记录错误信息并抛出异常
             ex.LogFileError($@"读取配置文件失败：\r\nPath={configPath}\r\nKey={key}");
@@ -43,9 +43,9 @@ public static class ConfigHelper
     /// <summary>
     ///     配置节增加一对键值对
     /// </summary>
-    /// <param name = "configPath" > 配置文件地址 </param>
-    /// <param name = "newKey" > key </param>
-    /// <param name = "newValue" > value </param>
+    /// <param name="configPath"> 配置文件地址 </param>
+    /// <param name="newKey"> key </param>
+    /// <param name="newValue"> value </param>
     public static void SetValue(this string configPath, string newKey, string? newValue)
     {
         try
@@ -58,13 +58,13 @@ public static class ConfigHelper
                 },
                 ConfigurationUserLevel.None);
 
-            if ( !controlConfig.HasFile )
+            if (!controlConfig.HasFile)
             {
                 return;
             }
 
             // 检查是否存在相同的键，如果存在则先移除
-            if ( controlConfig.AppSettings.Settings.AllKeys.ToList().Contains(newKey) )
+            if (controlConfig.AppSettings.Settings.AllKeys.ToList().Contains(newKey))
             {
                 controlConfig.AppSettings.Settings.Remove(newKey);
             }
@@ -76,7 +76,7 @@ public static class ConfigHelper
             controlConfig.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             // 记录错误信息并抛出异常
             e.LogFileError($"设置Key：{newKey} value：{newValue}失败");

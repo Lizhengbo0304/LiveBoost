@@ -5,7 +5,7 @@ namespace LiveBoost.Toolkit.Controls;
 
 public class FlyListView : ListView
 {
-#region 是否可以点击空白处
+    #region 是否可以点击空白处
 
     /// <summary>
     ///     是否可以点击空白处
@@ -15,12 +15,12 @@ public class FlyListView : ListView
 
     private static void CanClickItemOutPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if ( d is not FlyListView flyListView )
+        if (d is not FlyListView flyListView)
         {
             return;
         }
 
-        if ( flyListView.CanClickItemOut )
+        if (flyListView.CanClickItemOut)
         {
             flyListView.PreviewMouseDown += flyListView.OnPreviewMouseDown;
         }
@@ -35,7 +35,7 @@ public class FlyListView : ListView
     /// </summary>
     public bool CanClickItemOut
     {
-        get => (bool) GetValue(CanClickItemOutProperty);
+        get => (bool)GetValue(CanClickItemOutProperty);
         set => SetValue(CanClickItemOutProperty, value);
     }
 
@@ -43,14 +43,15 @@ public class FlyListView : ListView
     private void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
         // 如果点击的不是 ListViewItem，则将 SelectedItem 设置为 null
-        if ( !HitTestUtilities.HitTest4Type<ListViewItem>(sender, e.GetPosition(this)) )
+        if (!HitTestUtilities.HitTest4Type<ListViewItem>(sender, e.GetPosition(this)))
         {
             SelectedItem = null;
         }
     }
 
-#endregion
-#region 鼠标滚动设置
+    #endregion
+
+    #region 鼠标滚动设置
 
     /// <summary>
     ///     设置是否为滚动视图的子控件
@@ -62,12 +63,12 @@ public class FlyListView : ListView
     // IsScrollChild 属性变更时的回调方法
     private static void IsScrollChildPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if ( d is not FlyListView flyListView )
+        if (d is not FlyListView flyListView)
         {
             return;
         }
 
-        if ( flyListView.IsScrollChild )
+        if (flyListView.IsScrollChild)
         {
             flyListView.PreviewMouseWheel += flyListView.ItemsHost_PreviewMouseWheel;
         }
@@ -84,7 +85,7 @@ public class FlyListView : ListView
         {
             RoutedEvent = MouseWheelEvent, Source = sender
         };
-        ( (ListView) sender ).RaiseEvent(eventArg);
+        ((ListView)sender).RaiseEvent(eventArg);
     }
 
     /// <summary>
@@ -92,13 +93,13 @@ public class FlyListView : ListView
     /// </summary>
     public bool IsScrollChild
     {
-        get => (bool) GetValue(IsScrollChildProperty);
+        get => (bool)GetValue(IsScrollChildProperty);
         set => SetValue(IsScrollChildProperty, value);
     }
 
-#endregion
+    #endregion
 
-#region ItemsChanged
+    #region ItemsChanged
 
     // ItemsSourceChanged 事件
     private static readonly RoutedEvent ItemsSourceChangedEvent = EventManager.RegisterRoutedEvent("ItemsSourceChanged",
@@ -120,6 +121,7 @@ public class FlyListView : ListView
         base.OnItemsSourceChanged(oldValue, newValue);
         RaiseEvent(new FlyItemsSourceChangedEventArgs(ItemsSourceChangedEvent, this, oldValue, newValue));
     }
+
 // ItemsChanged 事件
     private static readonly RoutedEvent ItemsChangedEvent = EventManager.RegisterRoutedEvent("ItemsChanged",
         RoutingStrategy.Direct,
@@ -141,5 +143,5 @@ public class FlyListView : ListView
         RaiseEvent(new FlyItemsSourceChangedEventArgs(ItemsChangedEvent, this, e.OldItems, e.NewItems));
     }
 
-#endregion
+    #endregion
 }

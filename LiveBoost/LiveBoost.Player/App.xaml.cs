@@ -31,19 +31,20 @@ public partial class App
         // 非UI线程未捕获异常处理事件
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
     }
+
     /// <summary>
     ///     非UI线程未捕获异常处理事件
     /// </summary>
     public void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         var sbEx = new StringBuilder();
-        if ( e.IsTerminating )
+        if (e.IsTerminating)
         {
             sbEx.Append("程序发生致命错误，将终止，请联系管理员！\n");
         }
 
         sbEx.Append("捕获未处理异常：");
-        if ( e.ExceptionObject is Exception exception )
+        if (e.ExceptionObject is Exception exception)
         {
             sbEx.Append(exception.Message);
         }
@@ -74,7 +75,7 @@ public partial class App
         {
             e.Handled = true; // 把 Handled 属性设为true，表示此异常已处理，程序可以继续运行，不会强制退出
         }
-        catch ( Exception ex )
+        catch (Exception ex)
         {
             // 此时程序出现严重异常，将强制结束退出
             MessageBox.Show("程序发生致命错误，将终止，请联系管理员！" + ex.Message);
@@ -82,7 +83,9 @@ public partial class App
     }
 
     /// <inheritdoc />
-    protected override void RegisterTypes(IContainerRegistry containerRegistry) { }
+    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+    }
 
     /// <inheritdoc />
     protected override Window? CreateShell() => null;

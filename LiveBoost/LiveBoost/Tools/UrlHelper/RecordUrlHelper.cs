@@ -70,6 +70,7 @@ public static partial class UrlHelper
                 return new List<RecordChannel>();
             }) ?? new List<RecordChannel>();
     }
+
     /// <summary>
     ///     开始收录
     /// </summary>
@@ -88,21 +89,22 @@ public static partial class UrlHelper
             response =>
             {
                 var jobj = JObject.Parse(response);
-                return ( jobj["data"]?.ToString(), para.taskId );
+                return (jobj["data"]?.ToString(), para.taskId);
             },
             response =>
             {
                 var jobj = JObject.Parse(response);
                 MessageBox.Warning(jobj["msg"]?.ToString(), "开始收录");
-                return ( string.Empty, string.Empty );
+                return (string.Empty, string.Empty);
             },
             e =>
             {
                 MessageBox.Error(e.InnerException?.Message ?? e.Message, "开始收录");
                 e.LogUrlError("开始收录");
-                return ( string.Empty, string.Empty );
+                return (string.Empty, string.Empty);
             });
     }
+
     /// <summary>
     ///     新增频道
     /// </summary>
@@ -130,6 +132,7 @@ public static partial class UrlHelper
                 return false;
             });
     }
+
     /// <summary>
     ///     修改频道
     /// </summary>
@@ -157,6 +160,7 @@ public static partial class UrlHelper
                 return false;
             });
     }
+
     /// <summary>
     ///     修改频道状态
     /// </summary>
@@ -188,6 +192,7 @@ public static partial class UrlHelper
                 return false;
             });
     }
+
     /// <summary>
     ///     删除频道
     /// </summary>
@@ -215,6 +220,7 @@ public static partial class UrlHelper
                 return false;
             });
     }
+
     /// <summary>
     ///     开始收录
     /// </summary>
@@ -233,31 +239,33 @@ public static partial class UrlHelper
             response =>
             {
                 var jobj = JObject.Parse(response);
-                return ( jobj["data"]?.ToString(), para.taskId );
+                return (jobj["data"]?.ToString(), para.taskId);
             },
             response =>
             {
                 var jobj = JObject.Parse(response);
                 MessageBox.Warning(jobj["msg"]?.ToString(), "开始收录");
-                return ( string.Empty, string.Empty );
+                return (string.Empty, string.Empty);
             },
             e =>
             {
                 MessageBox.Error(e.InnerException?.Message ?? e.Message, "开始收录");
                 e.LogUrlError("开始收录");
-                return ( string.Empty, string.Empty );
+                return (string.Empty, string.Empty);
             });
     }
+
     /// <summary>
     ///     停止收录
     /// </summary>
     public static async Task<bool> StopRecord(this string taskId)
     {
         var url = $"{AppConfig.Instance.MamApiIp}/record/task/stop";
-        if ( url.StartsWith("https") || url.StartsWith("http") )
+        if (url.StartsWith("https") || url.StartsWith("http"))
         {
             FlurlHttp.ConfigureClient(url, cli => cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
+
         var para = new
         {
             taskId
@@ -282,9 +290,9 @@ public static partial class UrlHelper
     /// <summary>
     ///     导出视频的方法。
     /// </summary>
-    public static async Task Export2Video(this string videoId,TimeSpan startTime,TimeSpan stopTime,string outputPath)
+    public static async Task Export2Video(this string videoId, TimeSpan startTime, TimeSpan stopTime, string outputPath)
     {
-        var url =  $"{AppConfig.Instance.MamApiIp}/record/task/dotVideo";
+        var url = $"{AppConfig.Instance.MamApiIp}/record/task/dotVideo";
 
         var para = new
         {

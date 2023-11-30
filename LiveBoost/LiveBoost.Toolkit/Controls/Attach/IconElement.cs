@@ -66,7 +66,7 @@ public class IconElement
     /// <summary>
     ///     获取图标显示模式
     /// </summary>
-    public static Stretch GetStretch(DependencyObject element) => (Stretch) element.GetValue(StretchProperty);
+    public static Stretch GetStretch(DependencyObject element) => (Stretch)element.GetValue(StretchProperty);
 
     /// <summary>
     ///     设置图标显示模式
@@ -79,12 +79,12 @@ public class IconElement
     /// <summary>
     ///     获取图标高度
     /// </summary>
-    public static double GetHeight(DependencyObject element) => (double) element.GetValue(HeightProperty);
+    public static double GetHeight(DependencyObject element) => (double)element.GetValue(HeightProperty);
 
     /// <summary>
     ///     获取图标宽度
     /// </summary>
-    public static double GetWidth(DependencyObject element) => (double) element.GetValue(WidthProperty);
+    public static double GetWidth(DependencyObject element) => (double)element.GetValue(WidthProperty);
 
     /// <summary>
     ///     设置图标宽度
@@ -97,7 +97,7 @@ public class IconElement
     /// <summary>
     ///     获取图标Margin
     /// </summary>
-    public static Thickness GetMargin(DependencyObject element) => (Thickness) element.GetValue(MarginProperty);
+    public static Thickness GetMargin(DependencyObject element) => (Thickness)element.GetValue(MarginProperty);
 
     /// <summary>
     ///     设置图标Margin
@@ -118,7 +118,7 @@ public class IconElement
     /// <summary>
     ///     获取图标方向
     /// </summary>
-    public static PlacementType GetPlacement(DependencyObject element) => (PlacementType) element.GetValue(PlacementProperty);
+    public static PlacementType GetPlacement(DependencyObject element) => (PlacementType)element.GetValue(PlacementProperty);
 
     /// <summary>
     ///     设置图标方向
@@ -131,7 +131,7 @@ public class IconElement
     /// <summary>
     ///     获取图标
     /// </summary>
-    public static ImageSource GetSource(DependencyObject element) => (ImageSource) element.GetValue(SourceProperty);
+    public static ImageSource GetSource(DependencyObject element) => (ImageSource)element.GetValue(SourceProperty);
 
     /// <summary>
     ///     设置图标

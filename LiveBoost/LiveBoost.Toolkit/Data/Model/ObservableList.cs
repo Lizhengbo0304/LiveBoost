@@ -5,18 +5,23 @@ namespace LiveBoost.Toolkit.Data;
 
 public sealed class ObservableList<T> : List<T>, INotifyCollectionChanged
 {
-    public ObservableList() { }
+    public ObservableList()
+    {
+    }
 
-    public ObservableList(int capacity) : base(capacity) { }
+    public ObservableList(int capacity) : base(capacity)
+    {
+    }
 
 
     public ObservableList(List<T>? list)
     {
-        if ( list is {Count: > 0} )
+        if (list is { Count: > 0 })
         {
             AddRange(list);
         }
     }
+
     private List<T>? BackupList { get; set; }
 
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
@@ -27,10 +32,11 @@ public sealed class ObservableList<T> : List<T>, INotifyCollectionChanged
     public void BackupRecover()
     {
         Clear();
-        if ( BackupList != null )
+        if (BackupList != null)
         {
             AddRange(BackupList);
         }
+
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
 
@@ -43,6 +49,7 @@ public sealed class ObservableList<T> : List<T>, INotifyCollectionChanged
         Add(t);
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, t));
     }
+
     /// <summary>
     ///     请空列表
     /// </summary>
@@ -68,10 +75,11 @@ public sealed class ObservableList<T> : List<T>, INotifyCollectionChanged
     /// </summary>
     public void AddItemRange(List<T>? list)
     {
-        if ( list is not {Count: > 0} )
+        if (list is not { Count: > 0 })
         {
             return;
         }
+
         Backup();
         AddRange(list);
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
@@ -82,7 +90,7 @@ public sealed class ObservableList<T> : List<T>, INotifyCollectionChanged
     /// </summary>
     public async void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
     {
-        if ( Dispatcher.CurrentDispatcher == Application.Current.Dispatcher )
+        if (Dispatcher.CurrentDispatcher == Application.Current.Dispatcher)
         {
             CollectionChanged?.Invoke(this, e);
         }
@@ -110,27 +118,30 @@ public sealed class ObservableList<T> : List<T>, INotifyCollectionChanged
         Backup();
         RemoveAt(index);
     }
+
     public void RemoveItem(Predicate<T> match)
     {
         Backup();
         var item = Find(match);
-        if ( item != null )
+        if (item != null)
         {
             RemoveItem(item);
         }
     }
+
     public void RemoveItem(T t, IEqualityComparer<T> comparer)
     {
         Backup();
         var item = Find(item => comparer.Equals(t, item));
-        if ( item != null )
+        if (item != null)
         {
             RemoveItem(item);
         }
     }
+
     public void ResetIndex(int index, T t)
     {
-        if ( index < 0 || index > Count - 1 )
+        if ((index < 0) || (index > (Count - 1)))
         {
             return;
         }
@@ -139,15 +150,16 @@ public sealed class ObservableList<T> : List<T>, INotifyCollectionChanged
         this[index] = t;
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, this[index], index));
     }
+
     public void Move(T t, int newIndex)
     {
         var oldIndex = IndexOf(t);
-        if ( oldIndex < 0 || newIndex < 0 )
+        if ((oldIndex < 0) || (newIndex < 0))
         {
             return;
         }
 
-        if ( oldIndex == newIndex )
+        if (oldIndex == newIndex)
         {
             return;
         }
@@ -157,6 +169,7 @@ public sealed class ObservableList<T> : List<T>, INotifyCollectionChanged
         RemoveAt(oldIndex > newIndex ? oldIndex + 1 : oldIndex);
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
+
     /// <summary>
     ///     备份当前列表
     /// </summary>

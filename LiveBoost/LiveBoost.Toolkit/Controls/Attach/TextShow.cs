@@ -13,11 +13,11 @@ namespace LiveBoost.Toolkit.Controls;
 [TemplatePart(Name = "Part_MainGrid", Type = typeof(Grid))]
 public class TextShow : Control
 {
-#region Property
+    #region Property
 
     private Grid? MainGrid;
 
-#endregion
+    #endregion
 
     public TextShow()
     {
@@ -28,7 +28,7 @@ public class TextShow : Control
     // 当依赖属性改变时，重置网格
     private static void PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if ( d is TextShow {MainGrid: not null} textShow )
+        if (d is TextShow { MainGrid: not null } textShow)
         {
             textShow.ResetGrid();
         }
@@ -39,28 +39,29 @@ public class TextShow : Control
     /// </summary>
     private void ResetGrid()
     {
-        if ( MainGrid is null )
-        {
-            return;
-        }
-        MainGrid.Children.Clear();
-        MainGrid.ColumnDefinitions.Clear();
-        if ( string.IsNullOrEmpty(Text) )
+        if (MainGrid is null)
         {
             return;
         }
 
-        for ( var i = 0; i < Text.Length * 2 - 1; i++ )
+        MainGrid.Children.Clear();
+        MainGrid.ColumnDefinitions.Clear();
+        if (string.IsNullOrEmpty(Text))
         {
-            if ( i % 2 == 1 )
+            return;
+        }
+
+        for (var i = 0; i < (Text.Length * 2 - 1); i++)
+        {
+            if ((i % 2) == 1)
             {
                 // 添加一个宽度为1的列，用于在字符之间添加空白
-                MainGrid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
+                MainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
             else
             {
                 // 添加一个自动宽度的列，用于放置文本块
-                MainGrid.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});
+                MainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
                 // 创建和配置文本块
                 var textBlock = CreateTextBlock(i);
@@ -69,10 +70,11 @@ public class TextShow : Control
             }
         }
     }
+
     /// <summary>
     ///     创建和配置文本块
     /// </summary>
-    /// <param name = "index" > 文本块的索引 </param>
+    /// <param name="index"> 文本块的索引 </param>
     /// <returns> 配置好的文本块 </returns>
     private TextBlock CreateTextBlock(int index)
     {
@@ -83,12 +85,12 @@ public class TextShow : Control
         };
 
         // 使用数据绑定来自动更新文本块的属性
-        textBlock.SetBinding(TextBlock.FontSizeProperty, new Binding(nameof(FontSize)) {Source = this});
-        textBlock.SetBinding(TextBlock.FontWeightProperty, new Binding(nameof(FontWeight)) {Source = this});
-        textBlock.SetBinding(TextBlock.FontFamilyProperty, new Binding(nameof(FontFamily)) {Source = this});
-        textBlock.SetBinding(TextBlock.FontStretchProperty, new Binding(nameof(FontStretch)) {Source = this});
-        textBlock.SetBinding(TextBlock.FontStyleProperty, new Binding(nameof(FontStyle)) {Source = this});
-        textBlock.SetBinding(TextBlock.ForegroundProperty, new Binding(nameof(Foreground)) {Source = this});
+        textBlock.SetBinding(TextBlock.FontSizeProperty, new Binding(nameof(FontSize)) { Source = this });
+        textBlock.SetBinding(TextBlock.FontWeightProperty, new Binding(nameof(FontWeight)) { Source = this });
+        textBlock.SetBinding(TextBlock.FontFamilyProperty, new Binding(nameof(FontFamily)) { Source = this });
+        textBlock.SetBinding(TextBlock.FontStretchProperty, new Binding(nameof(FontStretch)) { Source = this });
+        textBlock.SetBinding(TextBlock.FontStyleProperty, new Binding(nameof(FontStyle)) { Source = this });
+        textBlock.SetBinding(TextBlock.ForegroundProperty, new Binding(nameof(Foreground)) { Source = this });
 
         return textBlock;
     }
@@ -99,7 +101,7 @@ public class TextShow : Control
         MainGrid = GetTemplateChild("Part_MainGrid") as Grid;
     }
 
-#region Depe
+    #region Depe
 
     /// <summary>
     ///     显示内容
@@ -112,9 +114,9 @@ public class TextShow : Control
     /// </summary>
     public string Text
     {
-        get => (string) GetValue(TextProperty);
+        get => (string)GetValue(TextProperty);
         set => SetValue(TextProperty, value);
     }
 
-#endregion
+    #endregion
 }

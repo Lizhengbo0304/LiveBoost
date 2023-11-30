@@ -15,10 +15,11 @@ public class Int2VisibilityReConverter : IValueConverter
     /// <inheritdoc />
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if ( value is int index )
+        if (value is int index)
         {
             return index == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
+
         return Visibility.Visible;
     }
 

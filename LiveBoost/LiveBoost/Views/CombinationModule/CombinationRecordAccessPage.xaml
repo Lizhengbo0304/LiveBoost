@@ -1,37 +1,67 @@
-﻿<Border x:Class = "LiveBoost.Views.CombinationRecordAccessPage" Margin = "20"
-        xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:hc = "https://handyorg.github.io/handycontrol" xmlns:controls1 = "clr-namespace:LiveBoost.Controls"
-        Background = "#585A5D" BorderBrush = "#A0A0A0" BorderThickness = "1" mc:Ignorable = "d" d:DesignHeight = "300"
-        d:DesignWidth = "300" >
+﻿<Border
+    Background="#585A5D"
+    BorderBrush="#A0A0A0"
+    BorderThickness="1"
+    Margin="20"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d"
+    x:Class="LiveBoost.Views.CombinationRecordAccessPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:controls1="clr-namespace:LiveBoost.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height = "Auto" />
-            <RowDefinition Height = "Auto" />
-            <RowDefinition Height = "Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row = "0" Text = "信号监看" FontSize = "17" Foreground = "#A0A0A0" Margin = "20 15 0 0" />
-        <Button Grid.Row = "0" Content = "预览窗口" Command = "{Binding ShowJggCmd}"
-                Style = "{StaticResource IconButtonStyle}" HorizontalAlignment = "Right" FontSize = "17"
-                Margin = "0 15 20 0" />
-        <controls1:CombinationListView Grid.Row = "1" Margin = "15" ItemsSource = "{Binding RecordItems}" Width = "655"
-                                       Height = "375" SelectionMode = "Multiple"
-                                       Style = "{StaticResource BaseListViewStyle}"
-                                       ItemContainerStyle = "{StaticResource {x:Type controls1:CombinationItem}}" >
+        <TextBlock
+            FontSize="17"
+            Foreground="#A0A0A0"
+            Grid.Row="0"
+            Margin="20,15,0,0"
+            Text="信号监看" />
+        <Button
+            Command="{Binding ShowJggCmd}"
+            Content="预览窗口"
+            FontSize="17"
+            Grid.Row="0"
+            HorizontalAlignment="Right"
+            Margin="0,15,20,0"
+            Style="{StaticResource IconButtonStyle}" />
+        <controls1:CombinationListView
+            Grid.Row="1"
+            Height="375"
+            ItemContainerStyle="{StaticResource {x:Type controls1:CombinationItem}}"
+            ItemsSource="{Binding RecordItems}"
+            Margin="15"
+            SelectionMode="Multiple"
+            Style="{StaticResource BaseListViewStyle}"
+            Width="655">
             <controls1:CombinationListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows = "2" Columns = "2" FirstColumn = "0" SnapsToDevicePixels = "True" />
+                    <UniformGrid
+                        Columns="2"
+                        FirstColumn="0"
+                        Rows="2"
+                        SnapsToDevicePixels="True" />
                 </ItemsPanelTemplate>
             </controls1:CombinationListView.ItemsPanel>
         </controls1:CombinationListView>
-        <hc:Pagination Grid.Row = "2" MaxPageCount = "{Binding TotalPage}" MaxPageInterval = "5"
-                       PageIndex = "{Binding CurrentPage,Mode=TwoWay}" Margin = "15 0 15 15"
-                       HorizontalAlignment = "Center" >
+        <hc:Pagination
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            Margin="15,0,15,15"
+            MaxPageCount="{Binding TotalPage}"
+            MaxPageInterval="5"
+            PageIndex="{Binding CurrentPage, Mode=TwoWay}">
             <hc:Interaction.Triggers>
-                <hc:EventTrigger EventName = "PageUpdated" >
-                    <hc:EventToCommand Command = "{Binding PageUpdatedCmd}" PassEventArgsToCommand = "True" />
+                <hc:EventTrigger EventName="PageUpdated">
+                    <hc:EventToCommand Command="{Binding PageUpdatedCmd}" PassEventArgsToCommand="True" />
                 </hc:EventTrigger>
             </hc:Interaction.Triggers>
         </hc:Pagination>

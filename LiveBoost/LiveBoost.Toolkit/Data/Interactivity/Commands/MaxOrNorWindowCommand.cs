@@ -14,10 +14,11 @@ public class MaxOrNorWindowCommand : ICommand
 
     public void Execute(object? parameter)
     {
-        if ( parameter is not DependencyObject dependencyObject || Window.GetWindow(dependencyObject) is not { } window )
+        if (parameter is not DependencyObject dependencyObject || Window.GetWindow(dependencyObject) is not { } window)
         {
             return;
         }
+
         window.WindowState = window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
     }
 

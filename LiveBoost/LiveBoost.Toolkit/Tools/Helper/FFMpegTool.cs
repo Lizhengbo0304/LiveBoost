@@ -6,19 +6,20 @@ namespace LiveBoost.ToolKit.Tools;
 public static class FfMpegTool
 {
     /// <summary> 获取首帧图片作为缩略图 </summary>
-    /// <param name = "videoPath" > 视频路径 </param>
-    /// <param name = "picName" > 图片路径 </param>
-    /// <param name = "timeSpan" > 指定时间 </param>
+    /// <param name="videoPath"> 视频路径 </param>
+    /// <param name="picName"> 图片路径 </param>
+    /// <param name="timeSpan"> 指定时间 </param>
     public static async Task GetFrameWithTimeSpan(this string videoPath, string picName, TimeSpan timeSpan)
     {
         try
         {
             var folder = Path.GetDirectoryName(picName);
-            if ( string.IsNullOrEmpty(folder) )
+            if (string.IsNullOrEmpty(folder))
             {
                 return;
             }
-            if ( !Directory.Exists(folder) )
+
+            if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
             }
@@ -28,7 +29,7 @@ public static class FfMpegTool
                               -i "{videoPath}" -f image2 -vframes 1 -ss {timeSpan} -y "{picName}"
                              """;
 
-            using var process = new Process( );
+            using var process = new Process();
             process.StartInfo = new ProcessStartInfo
             {
                 FileName = ffmpegPath,
@@ -49,12 +50,12 @@ public static class FfMpegTool
             process.BeginErrorReadLine();
             await Task.Run(() => process.WaitForExit());
 
-            if ( process.ExitCode != 0 )
+            if (process.ExitCode != 0)
             {
                 throw new Exception($"ffmpeg failed with exit code {process.ExitCode}: {errorData}");
             }
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             e.LogError("缩略图截取失败");
         }

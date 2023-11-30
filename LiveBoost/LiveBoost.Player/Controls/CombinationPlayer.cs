@@ -21,6 +21,7 @@ using LiveBoost.Toolkit.Data;
 using LiveBoost.Toolkit.Tools;
 using Prism.Commands;
 using Unosquare.FFME.Common;
+
 // ReSharper disable AsyncVoidLambda
 
 #endregion
@@ -30,7 +31,7 @@ namespace LiveBoost.Player.Controls;
 [TemplatePart(Name = "Part_ffPlay", Type = typeof(MediaElement))]
 public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyPropertyChanged
 {
-#region Ctor
+    #region Ctor
 
     static CombinationPlayer()
     {
@@ -56,9 +57,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         server.Start();
     }
 
-#endregion
+    #endregion
 
-#region Field
+    #region Field
 
     // 播放器
     private MediaElement? _ffPlay;
@@ -66,30 +67,35 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     // 收录闪烁
     private DispatcherTimer? _dispatcherTimerBlink;
 
-#endregion
+    #endregion
 
-#region Property
+    #region Property
 
     // 通道名称
     public string? AccessName { get; set; }
+
     // 协议
     public string? Protocol { get; set; }
+
     // 视频尺寸
     public string? VideoSize { get; set; }
+
     /// <summary>
     ///     开始时间
     /// </summary>
     public TimeSpan? StartTime { get; set; }
+
     /// <summary>
     ///     截止时间
     /// </summary>
     public TimeSpan? EndTime { get; set; }
+
     // 打入出点图标
     public string PlayPauseImage { get; set; } = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording1.png";
 
-#endregion
+    #endregion
 
-#region Command
+    #region Command
 
     // 切换频道
     public DelegateCommand ChangedChannelCmd => new(async () =>
@@ -98,7 +104,7 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         {
             await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.ChangedChannel);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             e.LogError("切换频道异常");
         }
@@ -111,16 +117,17 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         {
             await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.ClearChannel);
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             e.LogError("清除频道异常");
         }
     });
+
     public DelegateCommand SetTimeCmd => new(async () =>
     {
         try
         {
-            if ( StartTime is null )
+            if (StartTime is null)
             {
                 StartTime = _ffPlay!.Position;
                 PlayPauseImage = "pack://application:,,,/LiveBoost.ToolKit;component/Images/Recording.png";
@@ -135,27 +142,27 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
                 EndTime = null;
             }
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             e.LogError("设置开始、结束时间异常");
         }
     });
 
-#endregion
+    #endregion
 
-#region Event
+    #region Event
 
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
         _ffPlay = GetTemplateChild("Part_ffPlay") as MediaElement;
-        if ( _ffPlay != null )
+        if (_ffPlay != null)
         {
             _ffPlay.RenderingAudio += FfPlayOnRenderingAudio;
         }
     }
 
-#region RenderingAudioField
+    #region RenderingAudioField
 
     public double DrawVuMeterLeftValue { get; set; }
     public double DrawVuMeterRightValue { get; set; }
@@ -163,22 +170,24 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     private short[]? _drawVuMeterRightSamples;
     private readonly object _drawVuMeterRmsLock = new();
 
-#endregion
+    #endregion
+
     private void FfPlayOnRenderingAudio(object sender, RenderingAudioEventArgs e)
     {
         // 分析即将渲染的音频数据
         // 如果不存在音频，则不需要分析
-        if ( e.EngineState.HasAudio == false )
+        if (e.EngineState.HasAudio == false)
         {
             return;
         }
+
         // 把音频数据分为左右声道
-        if ( _drawVuMeterLeftSamples == null || _drawVuMeterLeftSamples.Length != e.SamplesPerChannel )
+        if ((_drawVuMeterLeftSamples == null) || (_drawVuMeterLeftSamples.Length != e.SamplesPerChannel))
         {
             _drawVuMeterLeftSamples = new short[e.SamplesPerChannel];
         }
 
-        if ( _drawVuMeterRightSamples == null || _drawVuMeterRightSamples.Length != e.SamplesPerChannel )
+        if ((_drawVuMeterRightSamples == null) || (_drawVuMeterRightSamples.Length != e.SamplesPerChannel))
         {
             _drawVuMeterRightSamples = new short[e.SamplesPerChannel];
         }
@@ -191,7 +200,7 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
 
         // 使用 Parallel.Invoke 同时计算左右声道的 RMS 值
         double leftValue = 0.0, rightValue = 0.0;
-        lock ( _drawVuMeterRmsLock )
+        lock (_drawVuMeterRmsLock)
         {
             Parallel.Invoke(
                 () => { leftValue = VolumeHelper.CalculateRms(_drawVuMeterLeftSamples); },
@@ -210,15 +219,15 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         {
             await ActionHelper.RunWithTimeout(IpcClientHelper.CombinationPlayer.Send2MainPlayer);
         }
-        catch ( Exception exception )
+        catch (Exception exception)
         {
             exception.LogError("双击播放窗口异常");
         }
     }
 
-#endregion
+    #endregion
 
-#region ICombinationPlayer
+    #region ICombinationPlayer
 
     public void SetName(string accessName)
     {
@@ -231,7 +240,7 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
         _dispatcherTimerBlink?.Stop();
         StartBlinking();
 
-        if ( _ffPlay is null )
+        if (_ffPlay is null)
         {
             return;
         }
@@ -255,14 +264,15 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     private async Task OpenFileAsync(string playFilePath)
     {
         var openFile = false;
-        while ( !openFile )
+        while (!openFile)
         {
-            if ( !File.Exists(playFilePath) )
+            if (!File.Exists(playFilePath))
             {
                 $"{AccessName}收录文件：{playFilePath}不存在".LogFileInfo();
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
                 continue;
             }
+
             $"{AccessName}收录文件：{playFilePath}正在打开".LogFileInfo();
             openFile = await _ffPlay!.Open(new Uri(playFilePath));
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -276,16 +286,16 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
 
     private async Task AdjustRemainingTimeAsync()
     {
-        if ( _ffPlay!.RemainingDuration is not null )
+        if (_ffPlay!.RemainingDuration is not null)
         {
-            if ( _ffPlay.RemainingDuration.Value.TotalSeconds > 20 )
+            if (_ffPlay.RemainingDuration.Value.TotalSeconds > 20)
             {
                 await _ffPlay.Seek(_ffPlay.RemainingDuration.Value.Add(TimeSpan.FromSeconds(-20)));
             }
             else
             {
                 var delay = 20 - _ffPlay.RemainingDuration.Value.TotalSeconds;
-                if ( delay > 0 )
+                if (delay > 0)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(delay));
                 }
@@ -294,7 +304,9 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
     }
 
 
-    public void SetStorageUse(double rate) { }
+    public void SetStorageUse(double rate)
+    {
+    }
 
     public void SetStreamProtocal(string protocal)
     {
@@ -303,17 +315,18 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
 
     public async void StopPlay()
     {
-        if ( _ffPlay is not null )
+        if (_ffPlay is not null)
         {
             await _ffPlay.Close();
         }
+
         VideoSize = string.Empty;
         _dispatcherTimerBlink?.Stop();
     }
 
-#endregion
+    #endregion
 
-#region INotifyPropertyChanged
+    #region INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -324,14 +337,15 @@ public sealed class CombinationPlayer : Control, ICombinationPlayer, INotifyProp
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 }

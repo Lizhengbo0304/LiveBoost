@@ -46,13 +46,13 @@ public class CombinationSettingChannelManagerVm : INotifyPropertyChanged
         DeleteCommand = new DelegateCommand<RecordChannel>(async channel =>
         {
             // 弹出确认删除的对话框，如果用户不确认删除，则不执行后续操作
-            if ( MessageBox.Ask("是否确定删除频道", "删除") is not MessageBoxResult.OK )
+            if (MessageBox.Ask("是否确定删除频道", "删除") is not MessageBoxResult.OK)
             {
                 return;
             }
 
             // 调用频道的删除方法，如果删除成功，执行搜索命令以刷新列表
-            if ( await channel.DeleteChannel().ConfigureAwait(false) )
+            if (await channel.DeleteChannel().ConfigureAwait(false))
             {
                 SearchCommand.Execute();
             }
@@ -62,7 +62,7 @@ public class CombinationSettingChannelManagerVm : INotifyPropertyChanged
         EditCommand = new DelegateCommand<RecordChannel>(channel =>
         {
             // 检查主窗口是否存在子窗口，如果没有子窗口，则不执行编辑操作
-            if ( !( AppProgram.Instance.App.MainWindow?.OwnedWindows.Count > 0 ) )
+            if (!(AppProgram.Instance.App.MainWindow?.OwnedWindows.Count > 0))
             {
                 return;
             }
@@ -76,7 +76,7 @@ public class CombinationSettingChannelManagerVm : INotifyPropertyChanged
         EditStatusCommand = new DelegateCommand<RecordChannel>(async channel =>
         {
             // 调用编辑频道状态的方法，如果编辑失败，则还原频道状态
-            if ( !await channel.EditChannelStatus().ConfigureAwait(false) )
+            if (!await channel.EditChannelStatus().ConfigureAwait(false))
             {
                 channel.Status = !channel.Status;
             }
@@ -85,7 +85,8 @@ public class CombinationSettingChannelManagerVm : INotifyPropertyChanged
         // 执行初始搜索
         SearchCommand.Execute();
     }
-#region INotifyPropertyChangedEvent
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -96,18 +97,19 @@ public class CombinationSettingChannelManagerVm : INotifyPropertyChanged
 
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 
-#region Properties
+    #region Properties
 
     /// <summary>
     ///     搜索关键词
@@ -129,17 +131,20 @@ public class CombinationSettingChannelManagerVm : INotifyPropertyChanged
     /// </summary>
     public int CurrentPage { get; set; } = 1;
 
-#endregion
-#region Commands
+    #endregion
+
+    #region Commands
 
     /// <summary>
     ///     编辑状态频道
     /// </summary>
     public DelegateCommand<RecordChannel> EditStatusCommand { get; set; }
+
     /// <summary>
     ///     搜索命令
     /// </summary>
     public DelegateCommand SearchCommand { get; }
+
     /// <summary>
     ///     重置命令
     /// </summary>
@@ -154,10 +159,11 @@ public class CombinationSettingChannelManagerVm : INotifyPropertyChanged
     ///     删除频道
     /// </summary>
     public DelegateCommand<RecordChannel> DeleteCommand { get; set; }
+
     /// <summary>
     ///     编辑频道
     /// </summary>
     public DelegateCommand<RecordChannel> EditCommand { get; set; }
 
-#endregion
+    #endregion
 }

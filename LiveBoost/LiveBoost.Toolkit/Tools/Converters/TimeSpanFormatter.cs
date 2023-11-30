@@ -19,7 +19,7 @@ public class TimeSpanFormatter : IMultiValueConverter
     public object Convert(object?[] values, Type targetType, object parameter, CultureInfo culture)
     {
         // 验证输入值的数量
-        if ( values.Length != 2 && values.Length != 3 )
+        if ((values.Length != 2) && (values.Length != 3))
         {
             return DefaultTimeFormat;
         }
@@ -27,11 +27,11 @@ public class TimeSpanFormatter : IMultiValueConverter
         TimeSpan start = TimeSpan.Zero, positionStep = TimeSpan.Zero;
 
         // 获取开始时间和时间步长
-        if ( values.Length == 2 )
+        if (values.Length == 2)
         {
             positionStep = values[1] as TimeSpan? ?? TimeSpan.Zero;
         }
-        else if ( values.Length == 3 )
+        else if (values.Length == 3)
         {
             start = values[1] as TimeSpan? ?? TimeSpan.Zero;
             positionStep = values[2] as TimeSpan? ?? TimeSpan.Zero;
@@ -40,10 +40,10 @@ public class TimeSpanFormatter : IMultiValueConverter
         var duration = values[0] as TimeSpan?;
 
         // 如果持续时间为 null，则尝试从 Duration 类型的输入值中获取有效的 TimeSpan 值
-        if ( duration == null )
+        if (duration == null)
         {
             var durationObject = values[0] as Duration? ?? default;
-            if ( durationObject.HasTimeSpan )
+            if (durationObject.HasTimeSpan)
             {
                 duration = durationObject.TimeSpan;
             }
@@ -56,7 +56,7 @@ public class TimeSpanFormatter : IMultiValueConverter
         var position = duration.Value;
 
         // 如果时间步长为零，则返回默认的时间格式字符串
-        if ( positionStep == TimeSpan.Zero )
+        if (positionStep == TimeSpan.Zero)
         {
             return DefaultTimeFormat;
         }
@@ -67,7 +67,7 @@ public class TimeSpanFormatter : IMultiValueConverter
         var millisecondsDivisor = positionStep.Milliseconds < 1 ? 40 : positionStep.Milliseconds;
 
         // 格式化时间字符串
-        var formattedTime = $"{(int) position.TotalHours:00}:{position.Minutes:00}:{position.Seconds:00}:{position.Milliseconds / millisecondsDivisor:00}";
+        var formattedTime = $"{(int)position.TotalHours:00}:{position.Minutes:00}:{position.Seconds:00}:{position.Milliseconds / millisecondsDivisor:00}";
         return formattedTime;
     }
 

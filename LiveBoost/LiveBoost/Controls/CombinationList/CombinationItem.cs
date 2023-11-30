@@ -14,7 +14,7 @@ namespace LiveBoost.Controls;
 
 public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICombinationItem
 {
-#region Command
+    #region Command
 
     /// <summary>
     ///     添加收录频道命令
@@ -22,33 +22,36 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     public DelegateCommand AddShouluChannelCommand => new(async () =>
     {
         // 如果CombinationMainWindowVm或RecordAccess为null则直接返回
-        if ( CombinationMainWindowVm is null || RecordAccess is null )
+        if (CombinationMainWindowVm is null || RecordAccess is null)
         {
             MessageBox.Warning("无法选择频道", "添加收录频道");
             return;
         }
-        if ( string.IsNullOrEmpty(AppConfig.Instance.ShouluPath) )
+
+        if (string.IsNullOrEmpty(AppConfig.Instance.ShouluPath))
         {
             MessageBox.Warning("收录路径为空，无法选择频道", "添加收录频道");
             return;
         }
+
         var channel = await CombinationChooseRecordChannelWindow.ShowChooseWindow(CombinationMainWindowVm.TotalRecordAccesses);
         // 屏蔽channel为空或channelID为空的情况
-        if ( channel is null || string.IsNullOrEmpty(channel.ChannelId) )
+        if (channel is null || string.IsNullOrEmpty(channel.ChannelId))
         {
             return;
         }
+
         RecordAccess.Channel = channel;
         // 开启收录任务
         var result = await RecordAccess.StartRecord(RecordAccess.Channel.ChannelId!);
         // 如果收录任务开启失败，则重置频道
-        if ( string.IsNullOrEmpty(result.taskId) )
+        if (string.IsNullOrEmpty(result.taskId))
         {
             RecordAccess.Channel = null;
             return;
         }
 
-        if ( string.IsNullOrEmpty(result.filePath) )
+        if (string.IsNullOrEmpty(result.filePath))
         {
             MessageBox.Warning("收录路径为空", "开始收录");
             return;
@@ -66,14 +69,15 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
                 Combination.SetStreamProtocal(RecordAccess.Channel!.Protocol!);
             });
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             e.LogError("向子进程设置播放路径、名称、收录协议时发生异常");
         }
     });
 
-#endregion
-#region PropertyChaneged
+    #endregion
+
+    #region PropertyChaneged
 
     /// <summary>
     ///     收录通道改变时，设置是否可用、Content是否隐藏、与子进程通信
@@ -85,18 +89,20 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             // 设置IsEnabled属性
             IsEnabled = RecordAccess is not null;
             Content = IsEnabled ? string.IsNullOrEmpty(RecordAccess?.VideoPath) ? null : PlayerHost : null;
-            if ( Content == null )
+            if (Content == null)
             {
                 try
                 {
                     await ActionHelper.RunWithTimeout(Combination.StopPlay);
                 }
-                catch ( Exception e )
+                catch (Exception e)
                 {
                     e.LogError("向子进程发送停止播放命令异常");
                 }
+
                 return;
             }
+
             try
             {
                 await ActionHelper.RunWithTimeout(() =>
@@ -106,26 +112,27 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
                     Combination.SetStreamProtocal(RecordAccess.Channel!.Protocol!);
                 });
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
                 e.LogError("向子进程设置播放路径、名称、收录协议时发生异常");
             }
-
         });
     }
 
-#endregion
-#region Event
+    #endregion
+
+    #region Event
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         Loaded -= OnLoaded; // 从Loaded事件中移除当前方法，以确保只执行一次
 
-        if ( this.FindVisualParent<CombinationListView>() is not { } combination )
+        if (this.FindVisualParent<CombinationListView>() is not { } combination)
         {
             return; // 如果无法找到CombinationListView的父级元素，则直接返回
         }
-        if ( combination.FindVisualChild<UniformGrid>() is not { } uniformGrid )
+
+        if (combination.FindVisualChild<UniformGrid>() is not { } uniformGrid)
         {
             return; // 如果无法找到UniformGrid，直接返回
         }
@@ -188,7 +195,7 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     // 初始化播放器
     private async Task InitPlayer()
     {
-        while ( !AppProgram.Instance.IsClosed )
+        while (!AppProgram.Instance.IsClosed)
         {
             try
             {
@@ -196,7 +203,7 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
                 PlayProcess.Start(); // 启动播放器进程
                 await Task.Run(() => PlayProcess?.WaitForExit()); // 等待播放器进程退出
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 // 处理异常，例如记录日志或者进行其他操作
                 MessageBox.Warning(ex.Message, "初始化播放器时发生异常"); // 显示异常信息
@@ -205,8 +212,9 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
         }
     }
 
-#endregion
-#region Construct
+    #endregion
+
+    #region Construct
 
     static CombinationItem()
     {
@@ -235,7 +243,7 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
                 {
                     PlayProcess?.Kill();
                 }
-                catch ( Exception )
+                catch (Exception)
                 {
                     // ignored
                 }
@@ -250,23 +258,23 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
 
         // 别忘了启动服务器哦！
         server.Start();
-        Task.Run(async () =>
-        {
-            await InitPlayer();
-        });
+        Task.Run(async () => { await InitPlayer(); });
     }
 
-#endregion
-#region Property
+    #endregion
+
+    #region Property
 
     /// <summary>
     ///     父级ListView的DataContext
     /// </summary>
     public CombinationMainWindowVm? CombinationMainWindowVm { get; set; }
+
     /// <summary>
     ///     收录通道
     /// </summary>
     public RecordAccess? RecordAccess { get; set; }
+
     public ViewHost? PlayerHost { get; set; }
 
     private readonly string Guid = System.Guid.NewGuid().ToString("N");
@@ -274,24 +282,27 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     public Process? PlayProcess { get; set; }
 
     public ICombinationPlayer Combination => IpcLazy.Value;
+
     /// <summary>
     ///     开始时间
     /// </summary>
     public TimeSpan? StartTime { get; set; }
+
     /// <summary>
     ///     截止时间
     /// </summary>
     public TimeSpan? EndTime { get; set; }
 
-#endregion
-#region INotifyPropertyChangedEvent
+    #endregion
+
+    #region INotifyPropertyChangedEvent
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        switch ( propertyName )
+        switch (propertyName)
         {
             case nameof(RecordAccess):
                 RecordAccessChanged();
@@ -301,27 +312,30 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
-#region ICombinationItemEventHandler
+    #endregion
+
+    #region ICombinationItemEventHandler
 
     private static readonly SemaphoreSlim _controlSemaphoreSlim = new(1, 1);
 
     /// <inheritdoc />
     public async void SendPlayer(int handle)
     {
-        if ( _controlSemaphoreSlim.CurrentCount <= 0 )
+        if (_controlSemaphoreSlim.CurrentCount <= 0)
         {
             return;
         }
+
         await _controlSemaphoreSlim.WaitAsync();
         try
         {
@@ -338,25 +352,26 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     /// 关闭收录
     public async void ClearChannel()
     {
-        if ( _controlSemaphoreSlim.CurrentCount <= 0 )
+        if (_controlSemaphoreSlim.CurrentCount <= 0)
         {
             return;
         }
+
         await _controlSemaphoreSlim.WaitAsync();
         try
         {
-            if ( RecordAccess == null || string.IsNullOrEmpty(RecordAccess.TaskId) )
+            if ((RecordAccess == null) || string.IsNullOrEmpty(RecordAccess.TaskId))
             {
                 return;
             }
 
-            if ( MessageBox.Ask("是否确定停止收录", "收录") is not MessageBoxResult.OK )
+            if (MessageBox.Ask("是否确定停止收录", "收录") is not MessageBoxResult.OK)
             {
                 return;
             }
 
             // 停止任务
-            if ( !await RecordAccess.TaskId!.StopRecord() )
+            if (!await RecordAccess.TaskId!.StopRecord())
             {
                 return;
             }
@@ -369,10 +384,11 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
             {
                 await ActionHelper.RunWithTimeout(Combination.StopPlay);
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
                 e.LogError("向子进程发送停止播放命令异常");
             }
+
             Content = null;
         }
         finally
@@ -384,15 +400,16 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     /// <inheritdoc />
     public async void ChangedChannel()
     {
-        if ( _controlSemaphoreSlim.CurrentCount <= 0 )
+        if (_controlSemaphoreSlim.CurrentCount <= 0)
         {
             return;
         }
+
         await _controlSemaphoreSlim.WaitAsync();
         try
         {
             // 修改频道
-            if ( MessageBox.Ask("是否确定修改收录频道", "收录") is not MessageBoxResult.OK )
+            if (MessageBox.Ask("是否确定修改收录频道", "收录") is not MessageBoxResult.OK)
             {
                 return;
             }
@@ -408,33 +425,34 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     public async void Send2MainPlayer()
     {
         // 检查控制信号量是否已被占用
-        if ( _controlSemaphoreSlim.CurrentCount <= 0 )
+        if (_controlSemaphoreSlim.CurrentCount <= 0)
         {
             return;
         }
+
         await _controlSemaphoreSlim.WaitAsync();
         try
         {
             // 检查 CombinationMainWindowVm 是否为空
-            if ( CombinationMainWindowVm is null )
+            if (CombinationMainWindowVm is null)
             {
                 return;
             }
 
             // 检查 RecordAccess 的 ChannelId 是否为空
-            if ( string.IsNullOrEmpty(RecordAccess?.Channel?.ChannelId) )
+            if (string.IsNullOrEmpty(RecordAccess?.Channel?.ChannelId))
             {
                 return;
             }
 
             // 检查 RecordAccess 的 VideoPath 是否为空
-            if ( string.IsNullOrEmpty(RecordAccess?.VideoPath) )
+            if (string.IsNullOrEmpty(RecordAccess?.VideoPath))
             {
                 return;
             }
 
             // 检查 VideoPath 对应的文件是否存在
-            if ( !File.Exists(RecordAccess!.VideoPath) )
+            if (!File.Exists(RecordAccess!.VideoPath))
             {
                 return;
             }
@@ -457,19 +475,20 @@ public sealed class CombinationItem : ListViewItem, INotifyPropertyChanged, ICom
     public async void SetStopTime(TimeSpan stopTime)
     {
         EndTime = stopTime;
-        if ( RecordAccess is null )
-        {
-            return;
-        }
-        if ( string.IsNullOrEmpty(RecordAccess.TaskId) || string.IsNullOrEmpty(RecordAccess.VideoPath))
+        if (RecordAccess is null)
         {
             return;
         }
 
-        await    RecordAccess.TaskId!.Export2Video(StartTime!.Value, EndTime!.Value, $"{Path.GetFileNameWithoutExtension(RecordAccess.VideoPath)}_{StartTime.Value.ToString("hhmmss")}_{EndTime.Value.ToString("hhmmss")}");
+        if (string.IsNullOrEmpty(RecordAccess.TaskId) || string.IsNullOrEmpty(RecordAccess.VideoPath))
+        {
+            return;
+        }
+
+        await RecordAccess.TaskId!.Export2Video(StartTime!.Value, EndTime!.Value, $"{Path.GetFileNameWithoutExtension(RecordAccess.VideoPath)}_{StartTime.Value.ToString("hhmmss")}_{EndTime.Value.ToString("hhmmss")}");
         StartTime = null;
         EndTime = null;
     }
 
-#endregion
+    #endregion
 }

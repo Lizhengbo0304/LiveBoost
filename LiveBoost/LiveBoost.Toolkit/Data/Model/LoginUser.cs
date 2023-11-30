@@ -5,7 +5,7 @@ namespace LiveBoost.Toolkit.Data;
 
 public sealed class LoginUser : INotifyPropertyChanged
 {
-#region INotifyPropertyChanged-Event
+    #region INotifyPropertyChanged-Event
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -16,18 +16,19 @@ public sealed class LoginUser : INotifyPropertyChanged
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(field, value) )
+        if (EqualityComparer<T>.Default.Equals(field, value))
         {
             return false;
         }
+
         field = value;
         OnPropertyChanged(propertyName);
         return true;
     }
 
-#endregion
+    #endregion
 
-#region LoginProperty
+    #region LoginProperty
 
     public string? Token { get; set; }
 
@@ -57,5 +58,5 @@ public sealed class LoginUser : INotifyPropertyChanged
 
     public string DisplayInfo => string.IsNullOrEmpty(RoleNames) ? $"{Name} | " : $"{Name} | {RoleNames} | ";
 
-#endregion
+    #endregion
 }

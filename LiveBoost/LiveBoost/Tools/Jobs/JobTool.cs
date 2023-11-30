@@ -23,13 +23,13 @@ public static class JobTool
     public static async Task StartRenewalJob()
     {
         var scheduler = StdSchedulerFactory.GetDefaultScheduler().Result;
-        if ( !scheduler.IsStarted )
+        if (!scheduler.IsStarted)
         {
             await scheduler.Start();
         }
 
         // 如果 RenewalJob 存在，删除它
-        if ( _renewalJob is not null )
+        if (_renewalJob is not null)
         {
             await scheduler.DeleteJob(RenewalJobKey);
         }
@@ -52,9 +52,9 @@ public static class JobTool
     // 停止定时任务
     public static async Task StopRenewalJob()
     {
-        if ( _renewalJob != null )
+        if (_renewalJob != null)
         {
-            await ( await StdSchedulerFactory.GetDefaultScheduler() ).DeleteJob(RenewalJobKey);
+            await (await StdSchedulerFactory.GetDefaultScheduler()).DeleteJob(RenewalJobKey);
         }
     }
 }
