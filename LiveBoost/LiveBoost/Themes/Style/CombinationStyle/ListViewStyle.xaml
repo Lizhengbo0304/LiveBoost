@@ -97,7 +97,7 @@
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
                                 VerticalAlignment="Top"
-                                Visibility="Collapsed"
+                                Visibility="Visible"
                                 x:Name="timeBlock" />
                             <TextBlock
                                 Foreground="{TemplateBinding Foreground}"
@@ -106,14 +106,13 @@
                                 Text="{Binding Name}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
-                                ToolTip="{Binding ToolTip}"
                                 VerticalAlignment="Center"
                                 hc:TextBlockAttach.AutoTooltip="True" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Type}" Value="2">
-                            <Setter Property="Visibility" TargetName="timeBlock" Value="Visible" />
+                        <DataTrigger Binding="{Binding Type}" Value="1">
+                            <Setter Property="Visibility" TargetName="timeBlock" Value="Collapsed" />
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" TargetName="bd" Value="Red" />

@@ -1,10 +1,6 @@
 ﻿// 创建时间：2023-09-04-14:36
 // 修改时间：2023-10-13-16:17
 
-#region
-
-#endregion
-
 namespace LiveBoost.Toolkit.Controls;
 
 public class IconElement

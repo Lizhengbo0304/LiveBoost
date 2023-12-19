@@ -25,11 +25,23 @@ public class IconSwitchElement : IconElement
     /// </summary>
     public static readonly DependencyProperty HeightSelectedProperty = DependencyProperty.RegisterAttached(
         "HeightSelected", typeof(double), typeof(IconSwitchElement), new PropertyMetadata(default(double)));
-
+    /// <summary>
+    /// 是否选中
+    /// </summary>
+    public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.RegisterAttached(
+        "IsSelected", typeof(bool), typeof(IconSwitchElement), new PropertyMetadata(default(bool)));
     /// <summary>
     ///     获取切换图标
     /// </summary>
     public static ImageSource GetSourceSelected(DependencyObject element) => (ImageSource)element.GetValue(SourceSelectedProperty);
+    /// <summary>
+    /// 获取是否选中
+    /// </summary>
+    public static bool GetIsSelected(DependencyObject element) => (bool)element.GetValue(IsSelectedProperty);
+    /// <summary>
+    /// 设置是否选中
+    /// </summary>
+    public static void SetIsSelected(DependencyObject element, bool value) => element.SetValue(IsSelectedProperty, value);
 
     /// <summary>
     ///     设置切换图标

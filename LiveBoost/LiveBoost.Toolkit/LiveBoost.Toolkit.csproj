@@ -272,7 +272,7 @@
         <PackageReference Include="ConfigureAwait.Fody" Version="3.3.2">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Flurl.Http" Version="3.2.4"/>
+        <PackageReference Include="Flurl.Http" Version="3.2.4" />
         <PackageReference Include="Fody" Version="6.8.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -285,7 +285,7 @@
         <PackageReference Include="log4net" Version="2.0.15"/>
         <PackageReference Include="MD5" Version="2.0.4"/>
         <PackageReference Include="MediaInfo.Wrapper" Version="21.9.3"/>
-        <PackageReference Include="Prism.Unity" Version="8.1.97"/>
+        <PackageReference Include="Prism.Unity" Version="8.1.97" />
         <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>

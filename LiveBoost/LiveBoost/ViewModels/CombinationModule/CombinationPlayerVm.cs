@@ -315,7 +315,7 @@ public sealed partial class CombinationMainWindowVm
     /// <returns> 标记点 </returns>
     private RecordMark CreateRecordMark(string frameName)
     {
-        var playerPath = Path.GetFullPath(MdElement.Source.LocalPath);
+        var playerPath = Path.GetFullPath(MdElement.Source.OriginalString);
         var basePath = Path.GetFullPath(AppConfig.Instance.ShouluPath);
         if (PlayMode == PlayMode.Access)
         {
@@ -371,14 +371,14 @@ public sealed partial class CombinationMainWindowVm
 
         if (PlayMode == PlayMode.Access)
         {
-            if (string.IsNullOrEmpty(MdElement.Source.LocalPath))
+            if (string.IsNullOrEmpty(MdElement.Source.OriginalString))
             {
                 return;
             }
 
             // 获取目标目录和文件名
-            targetDir = Path.GetDirectoryName(MdElement.Source.LocalPath);
-            fileName = Path.GetFileNameWithoutExtension(MdElement.Source.LocalPath);
+            targetDir = Path.GetDirectoryName(MdElement.Source.OriginalString);
+            fileName = Path.GetFileNameWithoutExtension(MdElement.Source.OriginalString);
         }
         else
         {
@@ -389,7 +389,7 @@ public sealed partial class CombinationMainWindowVm
 
             // 获取目标目录和文件名
             targetDir = Path.GetDirectoryName(PlayFile?.FullPath);
-            fileName = Path.GetFileNameWithoutExtension(MdElement.Source.LocalPath);
+            fileName = Path.GetFileNameWithoutExtension(MdElement.Source.OriginalString);
         }
 
         if (string.IsNullOrEmpty(targetDir) || !Directory.Exists(targetDir) || string.IsNullOrEmpty(fileName))
@@ -408,7 +408,6 @@ public sealed partial class CombinationMainWindowVm
 
         // 添加记录标记
         await AddRecordMark(mark);
-        $"MdElement.Source.LocalPath = {MdElement.Source.LocalPath}\n\ttargetDir = {targetDir}\n\tfileName = {fileName}\n\tframeName = {frameName}\n\tmark = {JsonConvert.SerializeObject(mark)}".LogFileInfo();
     }
 
     /// <summary>
@@ -641,8 +640,8 @@ public sealed partial class CombinationMainWindowVm
 // 获取更新后的标记
     private async Task<ObservableList<RecordMark>> GetUpdatedMarks(RecordAccess access)
     {
-        var videoPath = MdElement.Source.LocalPath.Replace(
-            AppConfig.Instance.ShouluPath!.ToLower().Replace('/', '\\'),
+        var videoPath = MdElement.Source.OriginalString.Replace('\\','/').Replace(
+            AppConfig.Instance.ShouluPath!.Replace('\\', '/'),
             string.Empty).Replace('\\', '/');
 
         return await access.Channel!.ChannelId!.GetMarks(videoPath);

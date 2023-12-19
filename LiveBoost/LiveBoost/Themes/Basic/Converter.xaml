@@ -8,5 +8,6 @@
     <tools:Resolution2Visibility x:Key="Resolution2Visibility" />
     <tools:VideoFram2Visibility x:Key="VideoFram2Visibility" />
     <tools:Int2VisibilityReConverter x:Key="Int2VisibilityReConverter" />
+    <tools:Boolean2PlayPauseToolTipConverter x:Key="Boolean2PlayPauseToolTipConverter" />
 
 </ResourceDictionary>

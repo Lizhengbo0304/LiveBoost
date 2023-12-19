@@ -209,14 +209,15 @@
                 IconElement.Width="73"
                 Style="{StaticResource IconButtonStyle}"
                 ToolTip="上一帧" />
-            <ToggleButton
+            <Button
                 Command="{Binding RecordPlaybackFfPlayerPlayPauseCmd}"
                 IconElement.Height="55"
                 IconElement.Source="pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/play.png"
                 IconElement.Width="73"
                 IconSwitchElement.SourceSelected="pack://application:,,,/LiveBoost.Toolkit;component/Images/MainModule/pause (2).png"
-                IsChecked="{Binding MdElement.IsPlaying, Mode=OneWay}"
-                Style="{StaticResource IconToggleButtonStyle}" />
+                IconSwitchElement.IsSelected="{Binding MdElement.IsPlaying, Mode=OneWay}"
+                Style="{StaticResource IconButtonStyle}"
+                ToolTip="{Binding MdElement.IsPlaying, Mode=OneWay,Converter={StaticResource Boolean2PlayPauseToolTipConverter}}"/>
             <Button
                 Command="{Binding RecordPlaybackFfPlayerStepForwardCmd}"
                 IconElement.Height="55"

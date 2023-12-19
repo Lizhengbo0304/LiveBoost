@@ -94,6 +94,9 @@
                             <Setter Property="Height" TargetName="RowDefinition0" Value="*" />
                             <Setter Property="Height" TargetName="RowDefinition1" Value="0" />
                         </Trigger>
+                        <Trigger Property="controls:IconSwitchElement.IsSelected" Value="True">
+                            <Setter Property="Source" TargetName="Icon" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:IconSwitchElement.SourceSelected)}" />
+                        </Trigger>
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="ContentPresenterMain" Value="Collapsed" />
                         </Trigger>
@@ -207,6 +210,9 @@
                             <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto" />
                             <Setter Property="Height" TargetName="RowDefinition0" Value="*" />
                             <Setter Property="Height" TargetName="RowDefinition1" Value="0" />
+                        </Trigger>
+                        <Trigger Property="controls:IconSwitchElement.IsSelected" Value="True">
+                            <Setter Property="Source" TargetName="Icon" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:IconSwitchElement.SourceSelected)}" />
                         </Trigger>
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="ContentPresenterMain" Value="Collapsed" />
